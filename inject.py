@@ -1,0 +1,169 @@
+#!/usr/bin/env python3
+"""
+Reads listings.json, deduplicates, normalises, and embeds
+the data into suumo-compare.html replacing the listings array.
+"""
+
+import json
+import re
+import unicodedata
+
+# ── Load ─────────────────────────────────────────────
+with open("listings.json", encoding="utf-8") as f:
+    raw = json.load(f)
+
+# ── Deduplicate by (price, areaM2, landM2) ───────────
+seen = set()
+data = []
+for d in raw:
+    key = (d["price"], d["areaM2"], d.get("landM2"))
+    if key not in seen:
+        seen.add(key)
+        data.append(d)
+
+print(f"Kept {len(data)} unique listings (removed {len(raw)-len(data)} duplicates)")
+
+# ── Normalise helpers ─────────────────────────────────
+def fullwidth_to_ascii(text):
+    """Convert fullwidth ASCII chars (ＪＲ) to normal ASCII."""
+    return unicodedata.normalize("NFKC", text or "")
+
+def clean_layout(text):
+    """Return a clean layout string like 4LDK."""
+    text = fullwidth_to_ascii(text or "")
+    # First match: digit followed by letters (greedy SLDK)
+    m = re.search(r"(\d+[SLDK]+)", text)
+    if not m:
+        return "?"
+    raw = m.group(1)
+    # Normalise: collapse duplicate letters (e.g. LLDKK -> LDK)
+    # Valid suffixes only contain the characters S, L, D, K once each
+    digit = re.match(r"\d+", raw).group(0)
+    suffix = re.sub(r"[^SLDK]", "", raw[len(digit):])
+    # Deduplicate consecutive same letters
+    cleaned = ""
+    for ch in suffix:
+        if not cleaned or cleaned[-1] != ch:
+            cleaned += ch
+    return digit + cleaned
+
+WARD_DISPLAY = {
+    "sc_chibashimihama":     "Mihama-ku, Chiba",
+    "sc_chibashihanamigawa": "Hanamigawa-ku, Chiba",
+    "sc_chibashiinage":      "Inage-ku, Chiba",
+    "sc_chibashichuo":       "Chuo-ku, Chiba",
+    "sc_chibashimidori":     "Midori-ku, Chiba",
+    "sc_chibashiwakaba":     "Wakaba-ku, Chiba",
+}
+
+def _normalize_img(url):
+    """Normalize SUUMO resize API URLs to a consistent display size."""
+    if not url:
+        return None
+    # Upscale any tiny thumbnails to card-friendly dimensions
+    if "resizeImage" in url:
+        url = re.sub(r"&?w=\d+", "", url)
+        url = re.sub(r"&?h=\d+", "", url)
+        url = url.rstrip("&?") + "&w=640&h=480"
+    return url
+
+def ward_from_url(url):
+    """Extract the ward display name from a SUUMO listing URL."""
+    m = re.search(r"(sc_chiba[^/]+)", url or "")
+    if not m:
+        return "Chiba"
+    return WARD_DISPLAY.get(m.group(1), m.group(1))
+
+GRAD_POOL = [
+    "linear-gradient(140deg,#e8c46a 0%,#d4703a 100%)",
+    "linear-gradient(140deg,#1a3f6b 0%,#2f6fb0 100%)",
+    "linear-gradient(140deg,#5a9e6a 0%,#a8d8a0 100%)",
+    "linear-gradient(140deg,#7a5fb0 0%,#c0a0d8 100%)",
+    "linear-gradient(140deg,#c84b31 0%,#64616e 100%)",
+    "linear-gradient(140deg,#38b8b8 0%,#a0e0e0 100%)",
+    "linear-gradient(140deg,#7a2e2e 0%,#b86060 100%)",
+    "linear-gradient(140deg,#6a9e2e 0%,#c8e068 100%)",
+    "linear-gradient(140deg,#1a3a70 0%,#3a70b8 100%)",
+    "linear-gradient(140deg,#8a4a1e 0%,#d09060 100%)",
+    "linear-gradient(140deg,#2e6a5a 0%,#60b8a0 100%)",
+    "linear-gradient(140deg,#5a1a6a 0%,#a060c0 100%)",
+]
+
+# ── Clean each listing ────────────────────────────────
+cleaned = []
+for i, d in enumerate(data):
+    cleaned.append({
+        "id":         i + 1,
+        "price":      d["price"],
+        "area":       ward_from_url(d.get("suumoUrl", "")),
+        "address":    fullwidth_to_ascii(d.get("address", "")),
+        "layout":     clean_layout(d.get("layout", "")),
+        "areaM2":     d["areaM2"],
+        "landM2":     d.get("landM2"),
+        "age":        d.get("age", 0),
+        "station":    fullwidth_to_ascii(d.get("station", "–")),
+        "line":       fullwidth_to_ascii(d.get("line", "–")),
+        "walk":       d.get("walk", 99),
+        "structure":  d.get("structure", "Wood"),
+        "floors":     d.get("floors", "?"),
+        "parking":    d.get("parking", 0),
+        "renovation": d.get("renovation", False),
+        "landRights": d.get("landRights", "owned"),
+        "cityGas":    d.get("cityGas", True),
+        "isNew":      False,
+        "suumoUrl":   d.get("suumoUrl", "https://suumo.jp"),
+        "imageUrl":   _normalize_img(d.get("imageUrl")),
+        "grad":       GRAD_POOL[i % len(GRAD_POOL)],
+    })
+
+# Save cleaned version too
+with open("listings_clean.json", "w", encoding="utf-8") as f:
+    json.dump(cleaned, f, ensure_ascii=False, indent=2)
+print("Saved listings_clean.json")
+
+# ── Inject into HTML ──────────────────────────────────
+with open("suumo-compare.html", encoding="utf-8") as f:
+    html = f.read()
+
+js_array = json.dumps(cleaned, ensure_ascii=False, indent=2)
+
+# Replace everything between the /* DATA */ markers
+new_block = f"/* ═══════════════════════════════════════════════\n   DATA  (auto-generated by inject.py)\n════════════════════════════════════════════════ */\nconst listings = {js_array};"
+
+html_new = re.sub(
+    r"/\* ═+\s*DATA[\s\S]*?const listings = \[[\s\S]*?\];",
+    new_block,
+    html,
+    count=1,
+)
+
+if html_new == html:
+    print("WARNING: Could not find DATA block to replace — injecting before SCORING block")
+    # Fallback: replace `const listings = [` ... `];` directly
+    html_new = re.sub(
+        r"const listings = \[[\s\S]*?\];",
+        f"const listings = {js_array};",
+        html,
+        count=1,
+    )
+
+with open("suumo-compare.html", "w", encoding="utf-8") as f:
+    f.write(html_new)
+
+print(f"Injected {len(cleaned)} listings into suumo-compare.html")
+
+# ── Quick summary ─────────────────────────────────────
+prices  = [d["price"] for d in cleaned]
+areas   = [d["areaM2"] for d in cleaned]
+walks   = [d["walk"] for d in cleaned if d["walk"] < 90]
+layouts = {}
+for d in cleaned:
+    layouts[d["layout"]] = layouts.get(d["layout"], 0) + 1
+
+print(f"\nSummary:")
+print(f"  Listings : {len(cleaned)}")
+print(f"  Price    : Y{min(prices):,} - Y{max(prices):,} man  (avg Y{sum(prices)//len(prices):,})")
+print(f"  Area     : {min(areas):.0f} - {max(areas):.0f} m2")
+print(f"  Walk     : {min(walks)} - {max(walks)} min")
+print(f"  Layouts  : {dict(sorted(layouts.items()))}")
+print(f"  Reno     : {sum(1 for d in cleaned if d['renovation'])}/{len(cleaned)}")
