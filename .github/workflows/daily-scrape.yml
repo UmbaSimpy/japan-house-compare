@@ -31,7 +31,7 @@ jobs:
         run: python scraper.py
 
       - name: Inject listings into HTML
-        run: python inject.py
+        run: python inject.py | tee /tmp/inject_out.txt
 
       - name: Sync index.html
         run: cp suumo-compare.html index.html
@@ -46,3 +46,38 @@ jobs:
 
       - name: Push
         run: git push
+
+      - name: Notify Telegram
+        if: always()
+        env:
+          TELEGRAM_TOKEN:  ${{ secrets.TELEGRAM_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+          JOB_STATUS: ${{ job.status }}
+        run: |
+          DATE=$(date -u +'%Y-%m-%d')
+
+          if [ "$JOB_STATUS" = "success" ]; then
+            # Parse summary stats from inject.py output saved in the previous step
+            LISTINGS=$(grep -oP 'Injected \K\d+' /tmp/inject_out.txt 2>/dev/null || echo "?")
+            AVG=$(grep -oP 'avg Y\K[\d,]+' /tmp/inject_out.txt 2>/dev/null | head -1 || echo "?")
+            STATUS_ICON="✅"
+            MSG="${STATUS_ICON} *SUUMO daily update* — ${DATE}
+
+Mihama-ku, Chiba listings refreshed.
+📋 Listings: *${LISTINGS}*
+💴 Avg price: ¥${AVG}万
+
+[View site](https://umbasimpy.github.io/japan-house-compare/)"
+          else
+            STATUS_ICON="❌"
+            MSG="${STATUS_ICON} *SUUMO scrape failed* — ${DATE}
+
+The daily scrape encountered an error.
+[Check Actions log](https://github.com/UmbaSimpy/japan-house-compare/actions)"
+          fi
+
+          curl -s -X POST "https://api.telegram.org/bot${TELEGRAM_TOKEN}/sendMessage" \
+            --data-urlencode "chat_id=${TELEGRAM_CHAT_ID}" \
+            --data-urlencode "text=${MSG}" \
+            --data-urlencode "parse_mode=Markdown" \
+            --data-urlencode "disable_web_page_preview=false"
