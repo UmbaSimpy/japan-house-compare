@@ -2,8 +2,11 @@ name: Daily SUUMO Scrape
 
 on:
   schedule:
-    - cron: '0 13 * * *'  # 2:00 PM Rome time (UTC+1 winter / UTC+2 summer ≈ 13:00 UTC)
+    - cron: '0 5 * * *'   # 2:00 PM Japan time (JST = UTC+9)
   workflow_dispatch:       # Allow manual trigger from GitHub UI
+
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true  # opt into Node.js 24 now (mandatory Sep 2026)
 
 jobs:
   scrape-and-deploy:
