@@ -1,0 +1,45 @@
+name: Daily SUUMO Scrape
+
+on:
+  schedule:
+    - cron: '0 13 * * *'  # 2:00 PM Rome time (UTC+1 winter / UTC+2 summer ≈ 13:00 UTC)
+  workflow_dispatch:       # Allow manual trigger from GitHub UI
+
+jobs:
+  scrape-and-deploy:
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: write  # needed to push the updated HTML
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: pip install requests beautifulsoup4
+
+      - name: Run scraper
+        run: python scraper.py
+
+      - name: Inject listings into HTML
+        run: python inject.py
+
+      - name: Sync index.html
+        run: cp suumo-compare.html index.html
+
+      - name: Commit updated listings
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add suumo-compare.html index.html
+          git diff --staged --quiet && echo "No changes to commit" || \
+            git commit -m "chore: auto-update listings $(date -u +'%Y-%m-%d')"
+
+      - name: Push
+        run: git push
