@@ -1,5 +1,4 @@
 name: Daily SUUMO Scrape
-
 on:
   schedule:
     - cron: '0 5 * * *'   # 2:00 PM Japan time (JST = UTC+9)
