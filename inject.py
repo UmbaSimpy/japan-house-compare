@@ -8,6 +8,8 @@ import json
 import re
 import unicodedata
 
+from pathlib import Path
+
 # ── Load ─────────────────────────────────────────────
 with open("listings.json", encoding="utf-8") as f:
     raw = json.load(f)
@@ -138,7 +140,6 @@ html_new = re.sub(
 )
 
 if html_new == html:
-    print("WARNING: Could not find DATA block to replace — injecting before SCORING block")
     # Fallback: replace `const listings = [` ... `];` directly
     html_new = re.sub(
         r"const listings = \[[\s\S]*?\];",
@@ -146,6 +147,16 @@ if html_new == html:
         html,
         count=1,
     )
+
+# ── Inject history ────────────────────────────
+history = json.loads(Path("history.json").read_text(encoding="utf-8")) if Path("history.json").exists() else []
+history_js = json.dumps(history, ensure_ascii=False)
+html_new = re.sub(
+    r"const history = \[[\s\S]*?\];",
+    f"const history = {history_js};",
+    html_new,
+    count=1,
+)
 
 with open("suumo-compare.html", "w", encoding="utf-8") as f:
     f.write(html_new)

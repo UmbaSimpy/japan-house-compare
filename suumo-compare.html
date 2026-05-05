@@ -7,6 +7,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js"></script>
   <style>
     :root {
       --bg:        #0d0d14;
@@ -534,6 +535,108 @@
     @media (max-width: 480px) {
       .filter-inner { gap: .8rem; }
     }
+
+    /* ── TAB NAV ─────────────────────────────── */
+    .tab-nav {
+      background: rgba(13,13,20,.92);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--border-lt);
+      padding: 0 2rem;
+    }
+    .tab-nav-inner {
+      max-width: 1440px;
+      margin: 0 auto;
+      display: flex;
+      gap: .1rem;
+    }
+    .tab-btn {
+      background: none;
+      border: none;
+      border-bottom: 2px solid transparent;
+      color: var(--text-3);
+      font-family: var(--ff-body);
+      font-size: .75rem;
+      font-weight: 500;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      padding: .85rem 1.1rem;
+      cursor: pointer;
+      transition: color .15s, border-color .15s;
+    }
+    .tab-btn:hover { color: var(--text-2); }
+    .tab-btn.active { color: var(--text-1); border-bottom-color: var(--accent); }
+
+    /* ── PANELS ──────────────────────────────── */
+    .panel { display: none; }
+    .panel.active { display: block; }
+
+    /* ── TRENDS ──────────────────────────────── */
+    .trends-main {
+      max-width: 1440px;
+      margin: 0 auto;
+      padding: 2rem;
+    }
+    .charts-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+    }
+    @media (max-width: 900px) { .charts-grid { grid-template-columns: 1fr; } }
+    .chart-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border-lt);
+      border-radius: var(--r);
+      padding: 1.75rem 2rem 1.5rem;
+      box-shadow: var(--sh-sm);
+    }
+    .chart-card-title {
+      font-family: var(--ff-disp);
+      font-size: 1.5rem;
+      font-weight: 500;
+      color: var(--text-1);
+      letter-spacing: .02em;
+      line-height: 1.1;
+    }
+    .chart-card-sub {
+      font-size: .67rem;
+      font-weight: 500;
+      color: var(--text-3);
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      margin-top: .3rem;
+      margin-bottom: 1.75rem;
+    }
+    .chart-canvas-wrap { position: relative; height: 260px; }
+    .chart-no-data {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 260px;
+      gap: .75rem;
+      color: var(--text-3);
+      font-size: .82rem;
+    }
+    .chart-no-data svg { opacity: .3; }
+    .chart-stat-row {
+      display: flex;
+      gap: 2rem;
+      margin-top: 1.25rem;
+      padding-top: 1.25rem;
+      border-top: 1px solid var(--border-lt);
+    }
+    .chart-stat { display: flex; flex-direction: column; gap: .15rem; }
+    .chart-stat-val {
+      font-family: var(--ff-disp);
+      font-size: 1.3rem;
+      font-weight: 500;
+      color: var(--text-1);
+    }
+    .chart-stat-lbl { font-size: .65rem; color: var(--text-3); letter-spacing: .1em; text-transform: uppercase; }
+    .chart-stat-delta { font-size: .72rem; font-weight: 500; }
+    .chart-stat-delta.up   { color: var(--accent); }
+    .chart-stat-delta.down { color: var(--green); }
+    .chart-stat-delta.flat { color: var(--text-3); }
   </style>
 </head>
 <body>
@@ -549,6 +652,17 @@
     <div class="header-count" id="hdr-count"><strong>9</strong> listings</div>
   </div>
 </header>
+
+<!-- TAB NAV -->
+<nav class="tab-nav">
+  <div class="tab-nav-inner">
+    <button class="tab-btn active" data-tab="listings">Listings</button>
+    <button class="tab-btn" data-tab="trends">Trends</button>
+  </div>
+</nav>
+
+<!-- PANEL: LISTINGS -->
+<div class="panel active" id="panel-listings">
 
 <!-- FILTER BAR -->
 <div class="filter-bar">
@@ -597,6 +711,33 @@
   </div>
   <div class="grid" id="grid"></div>
 </main>
+
+</div><!-- /panel-listings -->
+
+<!-- PANEL: TRENDS -->
+<div class="panel" id="panel-trends">
+  <div class="trends-main">
+    <div class="charts-grid">
+
+      <!-- Average Price -->
+      <div class="chart-card">
+        <div class="chart-card-title">Average Price</div>
+        <div class="chart-card-sub">万円 · Mihama-ku listings</div>
+        <div class="chart-canvas-wrap"><canvas id="chart-price"></canvas></div>
+        <div class="chart-stat-row" id="stat-price"></div>
+      </div>
+
+      <!-- Listing Count -->
+      <div class="chart-card">
+        <div class="chart-card-title">Number of Listings</div>
+        <div class="chart-card-sub">Unique properties tracked</div>
+        <div class="chart-canvas-wrap"><canvas id="chart-count"></canvas></div>
+        <div class="chart-stat-row" id="stat-count"></div>
+      </div>
+
+    </div>
+  </div>
+</div><!-- /panel-trends -->
 
 <script>
 /* ═══════════════════════════════════════════════
@@ -974,6 +1115,11 @@ const listings = [
 ];
 
 /* ═══════════════════════════════════════════════
+   HISTORY  (auto-generated by inject.py)
+════════════════════════════════════════════════ */
+const history = [{"date": "2026-05-05", "count": 16, "avgPrice": 4792}];
+
+/* ═══════════════════════════════════════════════
    SCORING SYSTEM
    100 points total across 5 categories:
 
@@ -1292,6 +1438,189 @@ document.getElementById('sort-sel').addEventListener('change', e => {
 });
 
 render();
+
+/* ═══════════════════════════════════════════════
+   TAB SWITCHING
+════════════════════════════════════════════════ */
+document.querySelectorAll('.tab-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById('panel-' + btn.dataset.tab).classList.add('active');
+    if (btn.dataset.tab === 'trends') initCharts();
+  });
+});
+
+/* ═══════════════════════════════════════════════
+   TREND CHARTS  (Chart.js)
+════════════════════════════════════════════════ */
+let chartsReady = false;
+
+function fmtMan(v) {
+  return v >= 10000
+    ? (v / 10000).toFixed(1).replace(/\.0$/, '') + '億'
+    : v.toLocaleString() + '万';
+}
+
+function delta(arr, key) {
+  if (arr.length < 2) return null;
+  const diff = arr[arr.length - 1][key] - arr[arr.length - 2][key];
+  return diff;
+}
+
+function statHTML(val, lbl, d, isPrice) {
+  const fmt = isPrice ? fmtMan(val) + '円' : val;
+  let deltaHTML = '';
+  if (d !== null) {
+    const sign = d > 0 ? '+' : '';
+    const cls  = isPrice ? (d > 0 ? 'up' : d < 0 ? 'down' : 'flat')
+                         : (d > 0 ? 'up' : d < 0 ? 'down' : 'flat');
+    const fmtD = isPrice ? sign + fmtMan(Math.abs(d)) + '円' : sign + d;
+    deltaHTML = `<span class="chart-stat-delta ${cls}">${fmtD} vs prev</span>`;
+  }
+  return `<div class="chart-stat">
+    <span class="chart-stat-val">${fmt}</span>
+    <span class="chart-stat-lbl">${lbl}</span>
+    ${deltaHTML}
+  </div>`;
+}
+
+function initCharts() {
+  if (chartsReady) return;
+  chartsReady = true;
+
+  const C = {
+    bg:      '#16161f',
+    grid:    'rgba(37,35,48,.8)',
+    text:    '#908ca0',
+    accent:  '#e05a3a',
+    green:   '#00c46a',
+    font:    "'DM Sans', system-ui, sans-serif",
+  };
+
+  const labels = history.map(h => h.date);
+  const noData = history.length === 0;
+
+  const baseOpts = (yLabel, color) => ({
+    responsive: true,
+    maintainAspectRatio: false,
+    interaction: { mode: 'index', intersect: false },
+    plugins: {
+      legend: { display: false },
+      tooltip: {
+        backgroundColor: '#1e1e2a',
+        borderColor: '#252330',
+        borderWidth: 1,
+        titleColor: '#eeeaf4',
+        bodyColor: '#908ca0',
+        padding: 10,
+        callbacks: {
+          label: ctx => yLabel === 'price'
+            ? ' ¥' + fmtMan(ctx.parsed.y) + '円'
+            : ' ' + ctx.parsed.y + ' listings',
+        }
+      }
+    },
+    scales: {
+      x: {
+        ticks: { color: C.text, font: { family: C.font, size: 11 }, maxRotation: 30 },
+        grid:  { color: C.grid },
+      },
+      y: {
+        ticks: {
+          color: C.text,
+          font: { family: C.font, size: 11 },
+          callback: v => yLabel === 'price' ? fmtMan(v) : v,
+        },
+        grid: { color: C.grid },
+      }
+    }
+  });
+
+  function makeGradient(ctx, color) {
+    const g = ctx.createLinearGradient(0, 0, 0, 260);
+    g.addColorStop(0,   color.replace(')', ', .35)').replace('rgb', 'rgba'));
+    g.addColorStop(1,   color.replace(')', ', 0)').replace('rgb', 'rgba'));
+    return g;
+  }
+
+  // ── Price chart ──────────────────────────────
+  const priceCtx = document.getElementById('chart-price').getContext('2d');
+  const priceGrad = (() => {
+    const g = priceCtx.createLinearGradient(0, 0, 0, 260);
+    g.addColorStop(0, 'rgba(224,90,58,.3)');
+    g.addColorStop(1, 'rgba(224,90,58,0)');
+    return g;
+  })();
+
+  if (!noData) {
+    new Chart(priceCtx, {
+      type: 'line',
+      data: {
+        labels,
+        datasets: [{
+          data: history.map(h => h.avgPrice),
+          borderColor: C.accent,
+          backgroundColor: priceGrad,
+          borderWidth: 2,
+          pointRadius: history.length === 1 ? 5 : 3,
+          pointHoverRadius: 6,
+          pointBackgroundColor: C.accent,
+          fill: true,
+          tension: .35,
+        }]
+      },
+      options: baseOpts('price', C.accent),
+    });
+
+    const last = history[history.length - 1];
+    const d = delta(history, 'avgPrice');
+    document.getElementById('stat-price').innerHTML =
+      statHTML(last.avgPrice, 'Latest avg', d, true);
+  } else {
+    priceCtx.canvas.parentElement.innerHTML =
+      '<div class="chart-no-data"><svg width="32" height="32" viewBox="0 0 24 24" fill="none"><path d="M3 17l5-5 4 4 9-9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Collecting data — check back tomorrow</span></div>';
+  }
+
+  // ── Count chart ──────────────────────────────
+  const countCtx = document.getElementById('chart-count').getContext('2d');
+  const countGrad = (() => {
+    const g = countCtx.createLinearGradient(0, 0, 0, 260);
+    g.addColorStop(0, 'rgba(0,196,106,.25)');
+    g.addColorStop(1, 'rgba(0,196,106,0)');
+    return g;
+  })();
+
+  if (!noData) {
+    new Chart(countCtx, {
+      type: 'line',
+      data: {
+        labels,
+        datasets: [{
+          data: history.map(h => h.count),
+          borderColor: C.green,
+          backgroundColor: countGrad,
+          borderWidth: 2,
+          pointRadius: history.length === 1 ? 5 : 3,
+          pointHoverRadius: 6,
+          pointBackgroundColor: C.green,
+          fill: true,
+          tension: .35,
+        }]
+      },
+      options: baseOpts('count', C.green),
+    });
+
+    const last = history[history.length - 1];
+    const d = delta(history, 'count');
+    document.getElementById('stat-count').innerHTML =
+      statHTML(last.count, 'Latest count', d, false);
+  } else {
+    countCtx.canvas.parentElement.innerHTML =
+      '<div class="chart-no-data"><svg width="32" height="32" viewBox="0 0 24 24" fill="none"><path d="M3 17l5-5 4 4 9-9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Collecting data — check back tomorrow</span></div>';
+  }
+}
 </script>
 </body>
 </html>

@@ -127,3 +127,12 @@ if __name__ == '__main__':
     # Persist current nc_ids so next run can diff
     known_file.write_text(json.dumps([nc_id(d['suumoUrl']) for d in scored], indent=2))
     print(f"Saved {len(scored)} nc_ids to {known_file}")
+
+    # Append data point to history (skip if same date already recorded)
+    history_file = Path('history.json')
+    history = json.loads(history_file.read_text(encoding='utf-8')) if history_file.exists() else []
+    if not history or history[-1]['date'] != today:
+        avg_price = round(sum(d['price'] for d in scored) / len(scored)) if scored else 0
+        history.append({'date': today, 'count': len(scored), 'avgPrice': avg_price})
+        history_file.write_text(json.dumps(history, indent=2))
+        print(f"History: {len(history)} data points")
