@@ -30,6 +30,32 @@
       --r-sm:      6px;
       --ff-disp:   'Cormorant Garamond', Georgia, serif;
       --ff-body:   'DM Sans', system-ui, sans-serif;
+      /* sticky element backgrounds (need separate var for opacity) */
+      --glass-bg:  rgba(13,13,20,.92);
+      --glass-bar: rgba(13,13,20,.88);
+      --dot-color: rgba(255,255,255,.04);
+    }
+
+    html.light {
+      --bg:        #f4f2ee;
+      --card-bg:   #ffffff;
+      --surface:   #eceaf4;
+      --text-1:    #1c1828;
+      --text-2:    #5a566e;
+      --text-3:    #a09cb4;
+      --accent:    #d44e2e;
+      --accent-h:  #c04428;
+      --accent-lt: #fdf0ec;
+      --border:    #ddd9e8;
+      --border-lt: #e8e5f2;
+      --green:     #00955a;
+      --green-lt:  #e6f7ef;
+      --amber:     #b8840e;
+      --sh-sm:     0 1px 4px rgba(0,0,0,.08), 0 1px 2px rgba(0,0,0,.05);
+      --sh-lg:     0 20px 48px rgba(0,0,0,.15), 0 4px 10px rgba(0,0,0,.08);
+      --glass-bg:  rgba(244,242,238,.94);
+      --glass-bar: rgba(244,242,238,.90);
+      --dot-color: rgba(0,0,0,.04);
     }
 
     *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
@@ -38,7 +64,7 @@
     body {
       font-family: var(--ff-body);
       background-color: var(--bg);
-      background-image: radial-gradient(circle, rgba(255,255,255,.04) 1px, transparent 1px);
+      background-image: radial-gradient(circle, var(--dot-color) 1px, transparent 1px);
       background-size: 22px 22px;
       color: var(--text-1);
       min-height: 100vh;
@@ -47,7 +73,7 @@
 
     /* ── HEADER ──────────────────────────────── */
     .header {
-      background: rgba(13,13,20,.92);
+      background: var(--glass-bg);
       backdrop-filter: blur(14px);
       border-bottom: 1px solid var(--border);
       padding: 0 2rem;
@@ -104,10 +130,28 @@
     .source-badge b { color: var(--green); font-weight: 700; }
     .header-count { margin-left: auto; font-size: .78rem; color: var(--text-2); }
     .header-count strong { font-weight: 600; color: var(--text-1); }
+    .theme-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 34px; height: 34px;
+      border: 1px solid var(--border);
+      border-radius: 50%;
+      background: transparent;
+      color: var(--text-3);
+      cursor: pointer;
+      transition: color .2s, border-color .2s, background .2s;
+      flex-shrink: 0;
+    }
+    .theme-btn:hover { color: var(--text-1); border-color: var(--text-2); }
+    .theme-btn .icon-sun  { display: none; }
+    .theme-btn .icon-moon { display: block; }
+    html.light .theme-btn .icon-sun  { display: block; }
+    html.light .theme-btn .icon-moon { display: none; }
 
     /* ── FILTER BAR ──────────────────────────── */
     .filter-bar {
-      background: rgba(13,13,20,.88);
+      background: var(--glass-bar);
       backdrop-filter: blur(10px);
       border-bottom: 1px solid var(--border-lt);
       padding: .9rem 2rem;
@@ -538,7 +582,7 @@
 
     /* ── TAB NAV ─────────────────────────────── */
     .tab-nav {
-      background: rgba(13,13,20,.92);
+      background: var(--glass-bg);
       backdrop-filter: blur(10px);
       border-bottom: 1px solid var(--border-lt);
       padding: 0 2rem;
@@ -650,6 +694,20 @@
     </a>
     <div class="source-badge">Data source: <b>SUUMO</b></div>
     <div class="header-count" id="hdr-count"><strong>9</strong> listings</div>
+    <button class="theme-btn" id="theme-btn" title="Toggle light/dark mode" aria-label="Toggle theme">
+      <!-- moon = currently dark, click for light -->
+      <svg class="icon-moon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+      </svg>
+      <!-- sun = currently light, click for dark -->
+      <svg class="icon-sun" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="12" cy="12" r="4"/>
+        <line x1="12" y1="2"  x2="12" y2="4"/><line x1="12" y1="20" x2="12" y2="22"/>
+        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
+        <line x1="2" y1="12" x2="4"  y2="12"/><line x1="20" y1="12" x2="22" y2="12"/>
+        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+      </svg>
+    </button>
   </div>
 </header>
 
@@ -863,29 +921,6 @@ const listings = [
     "id": 6,
     "price": 3480,
     "area": "Mihama-ku, Chiba",
-    "address": "千葉県千葉市美浜区磯辺2",
-    "layout": "3LDK",
-    "areaM2": 95.64,
-    "landM2": 102.6,
-    "age": 11,
-    "station": "検見川浜",
-    "line": "JR京葉線",
-    "walk": 21,
-    "structure": "Wood",
-    "floors": "2F",
-    "parking": 2,
-    "renovation": false,
-    "landRights": "owned",
-    "cityGas": true,
-    "isNew": false,
-    "suumoUrl": "https://suumo.jp/chukoikkodate/chiba/sc_chibashimihama/nc_20227163/",
-    "imageUrl": "https://img01.suumo.com/jj/resizeImage?src=gazo%2Fbukken%2F030%2FN010000%2Fimg%2F163%2F20227163%2F20227163_0006.jpg&w=640&h=480",
-    "grad": "linear-gradient(140deg,#38b8b8 0%,#a0e0e0 100%)"
-  },
-  {
-    "id": 7,
-    "price": 3480,
-    "area": "Mihama-ku, Chiba",
     "address": "千葉県千葉市美浜区稲毛海岸1",
     "layout": "4LDK",
     "areaM2": 96.18,
@@ -903,6 +938,29 @@ const listings = [
     "isNew": false,
     "suumoUrl": "https://suumo.jp/chukoikkodate/chiba/sc_chibashimihama/nc_20435748/",
     "imageUrl": "https://img01.suumo.com/jj/resizeImage?src=gazo%2Fbukken%2F030%2FN010000%2Fimg%2F748%2F20435748%2F20435748_0001.jpg&w=640&h=480",
+    "grad": "linear-gradient(140deg,#38b8b8 0%,#a0e0e0 100%)"
+  },
+  {
+    "id": 7,
+    "price": 3480,
+    "area": "Mihama-ku, Chiba",
+    "address": "千葉県千葉市美浜区磯辺2",
+    "layout": "3LDK",
+    "areaM2": 95.64,
+    "landM2": 102.6,
+    "age": 11,
+    "station": "検見川浜",
+    "line": "JR京葉線",
+    "walk": 21,
+    "structure": "Wood",
+    "floors": "2F",
+    "parking": 2,
+    "renovation": false,
+    "landRights": "owned",
+    "cityGas": true,
+    "isNew": false,
+    "suumoUrl": "https://suumo.jp/chukoikkodate/chiba/sc_chibashimihama/nc_20227163/",
+    "imageUrl": "https://img01.suumo.com/jj/resizeImage?src=gazo%2Fbukken%2F030%2FN010000%2Fimg%2F163%2F20227163%2F20227163_0006.jpg&w=640&h=480",
     "grad": "linear-gradient(140deg,#7a2e2e 0%,#b86060 100%)"
   },
   {
@@ -1440,6 +1498,33 @@ document.getElementById('sort-sel').addEventListener('change', e => {
 render();
 
 /* ═══════════════════════════════════════════════
+   THEME TOGGLE
+════════════════════════════════════════════════ */
+(function () {
+  const html = document.documentElement;
+  const btn  = document.getElementById('theme-btn');
+
+  // Restore saved preference
+  if (localStorage.getItem('theme') === 'light') html.classList.add('light');
+
+  btn.addEventListener('click', () => {
+    const isLight = html.classList.toggle('light');
+    localStorage.setItem('theme', isLight ? 'light' : 'dark');
+    // Re-draw charts with correct colours if they're already visible
+    if (chartsReady) {
+      chartsReady = false;
+      document.getElementById('chart-price').replaceWith(
+        Object.assign(document.createElement('canvas'), { id: 'chart-price' })
+      );
+      document.getElementById('chart-count').replaceWith(
+        Object.assign(document.createElement('canvas'), { id: 'chart-count' })
+      );
+      initCharts();
+    }
+  });
+})();
+
+/* ═══════════════════════════════════════════════
    TAB SWITCHING
 ════════════════════════════════════════════════ */
 document.querySelectorAll('.tab-btn').forEach(btn => {
@@ -1490,12 +1575,13 @@ function initCharts() {
   if (chartsReady) return;
   chartsReady = true;
 
+  const light = document.documentElement.classList.contains('light');
   const C = {
-    bg:      '#16161f',
-    grid:    'rgba(37,35,48,.8)',
-    text:    '#908ca0',
-    accent:  '#e05a3a',
-    green:   '#00c46a',
+    bg:      light ? '#ffffff'              : '#16161f',
+    grid:    light ? 'rgba(180,175,200,.3)' : 'rgba(37,35,48,.8)',
+    text:    light ? '#5a566e'              : '#908ca0',
+    accent:  light ? '#d44e2e'             : '#e05a3a',
+    green:   light ? '#00955a'             : '#00c46a',
     font:    "'DM Sans', system-ui, sans-serif",
   };
 
@@ -1549,7 +1635,7 @@ function initCharts() {
   const priceCtx = document.getElementById('chart-price').getContext('2d');
   const priceGrad = (() => {
     const g = priceCtx.createLinearGradient(0, 0, 0, 260);
-    g.addColorStop(0, 'rgba(224,90,58,.3)');
+    g.addColorStop(0, light ? 'rgba(212,78,46,.2)' : 'rgba(224,90,58,.3)');
     g.addColorStop(1, 'rgba(224,90,58,0)');
     return g;
   })();
@@ -1587,7 +1673,7 @@ function initCharts() {
   const countCtx = document.getElementById('chart-count').getContext('2d');
   const countGrad = (() => {
     const g = countCtx.createLinearGradient(0, 0, 0, 260);
-    g.addColorStop(0, 'rgba(0,196,106,.25)');
+    g.addColorStop(0, light ? 'rgba(0,149,90,.15)' : 'rgba(0,196,106,.25)');
     g.addColorStop(1, 'rgba(0,196,106,0)');
     return g;
   })();
