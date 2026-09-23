@@ -16,6 +16,13 @@ Source per area is set in areas.json ("liquefaction": "<source key>").
                The newer FY2025 web map (other/jf_hazardmap/) forbids data
                extraction in its terms, so it is only linked to ("verify"),
                never read. © City of Chiba — derived levels for personal use.
+  gsi_landform — 国土地理院 ベクトルタイル「地形分類」 (open, 国土地理院コンテンツ
+               利用規約 — attribution). Each landform carries GSI's liquefaction
+               tendency sentence (e.g. 盛土地・埋立地「非常に強い」, 台地「弱い」),
+               mapped onto the same 4 levels. Nationwide but coarser: it rates
+               the ground type, not a quake scenario. Used where the city's own
+               map is unavailable or its terms forbid extraction (Narashino,
+               Inzai/Shiroi as of 2026-09).
 Areas without a source get no rating (shown as "not rated" on the site).
 
 Results are cached in hazard_cache.json (committed), so only new addresses
@@ -52,7 +59,16 @@ SOURCES = {
         "colors": {(255, 128, 0): "high", (255, 255, 64): "mid",
                    (0, 164, 143): "low", (128, 255, 255): "vlow"},
     },
+    "gsi_landform": {
+        "label": "国土地理院 地形分類",
+        "kind":  "landform",
+        "verify": "https://maps.gsi.go.jp/#16/{lat}/{lon}/&base=std&ls=std%7Cexperimental_landformclassification1%7Cexperimental_landformclassification2&disp=111",
+        "layers": ["experimental_landformclassification2",    # artificial (fill/cut) — wins where present
+                   "experimental_landformclassification1"],   # natural landforms
+    },
 }
+GSI_TILE  = "https://cyberjapandata.gsi.go.jp/xyz/{layer}/{z}/{x}/{y}.geojson"
+GSI_STYLE = "https://cyberjapandata.gsi.go.jp/xyz/{layer}/style.js"
 LEVEL_ORDER = ["high", "mid", "low", "vlow"]
 
 session = requests.Session()
@@ -120,6 +136,99 @@ def sample(src, lat, lon, radius=SAMPLE_RADIUS_M):
     return {"level": counts.most_common(1)[0][0], "dist": dist}
 
 
+# ── GSI landform classification ──────────────────────────────────
+_landform_codes = {}   # code → (landform name, level or None)
+_geo_tiles = {}
+
+
+def _liq_level(name, risk):
+    """GSI's liquefaction sentence → our 4 levels (None = no rating, e.g. water)."""
+    if name in ("水部",) or "拡大" in name or not risk:
+        return None
+    if name == "砂州・砂丘":
+        return "mid"
+    if "液状化" not in risk:
+        return "vlow"                       # hills, slopes, cut land: firm ground
+    if "非常に強" in risk:
+        return "high"
+    if "弱" in risk and "強" not in risk:
+        return "low"                        # 台地・段丘
+    return "mid"                            # 強い / やや強い / 発生傾向がある / 注意
+
+
+def _load_codes():
+    if _landform_codes:
+        return
+    for layer in SOURCES["gsi_landform"]["layers"]:
+        js = session.get(GSI_STYLE.format(layer=layer), timeout=20).text
+        js = js[js.find("onEachFeature"):]
+        for code, name, _origin, risk in re.findall(r'\[(\d+),"([^"]*)","([^"]*)","([^"]*)"\]', js):
+            _landform_codes[code] = (name, _liq_level(name, risk))
+        time.sleep(0.2)
+
+
+def _geo_tile(layer, x, y):
+    key = (layer, x, y)
+    if key not in _geo_tiles:
+        r = session.get(GSI_TILE.format(layer=layer, z=ZOOM, x=x, y=y), timeout=20)
+        feats = r.json().get("features", []) if r.ok else []
+        polys = []
+        for f in feats:
+            g = f["geometry"]
+            rings = [g["coordinates"]] if g["type"] == "Polygon" else g["coordinates"] if g["type"] == "MultiPolygon" else []
+            for p in rings:
+                xs = [c[0] for c in p[0]]; ys = [c[1] for c in p[0]]
+                polys.append((str(f["properties"].get("code")), p, (min(xs), min(ys), max(xs), max(ys))))
+        _geo_tiles[key] = polys
+        time.sleep(0.15)
+    return _geo_tiles[key]
+
+
+def _in_poly(lon, lat, poly):
+    inside = False
+    for ring in poly:
+        for i in range(len(ring)):
+            x1, y1 = ring[i]; x2, y2 = ring[i - 1]
+            if (y1 > lat) != (y2 > lat) and lon < (x2 - x1) * (lat - y1) / (y2 - y1) + x1:
+                inside = not inside
+    return inside
+
+
+def _landform_at(lat, lon):
+    """(name, level) of the landform under a point — artificial layer first."""
+    px, py = _pixel(lat, lon)
+    for layer in SOURCES["gsi_landform"]["layers"]:
+        for code, poly, (x0, y0, x1, y1) in _geo_tile(layer, px // 256, py // 256):
+            if x0 <= lon <= x1 and y0 <= lat <= y1 and _in_poly(lon, lat, poly):
+                name, level = _landform_codes.get(code, ("?", None))
+                if level is not None or name == "水部":
+                    return name, level
+                break                         # e.g. 農耕平坦化地 → fall through to natural layer
+    return None, None
+
+
+def sample_landform(lat, lon, radius=SAMPLE_RADIUS_M):
+    _load_codes()
+    m_lat, m_lon = 111_320, 111_320 * math.cos(math.radians(lat))
+    steps = int(radius / SAMPLE_STEP_M)
+    levels, forms = Counter(), Counter()
+    for i in range(-steps, steps + 1):
+        for j in range(-steps, steps + 1):
+            dx, dy = i * SAMPLE_STEP_M, j * SAMPLE_STEP_M
+            if dx * dx + dy * dy > radius ** 2:
+                continue
+            name, level = _landform_at(lat + dy / m_lat, lon + dx / m_lon)
+            if level:
+                levels[level] += 1
+                forms[name] += 1
+    total = sum(levels.values())
+    if not total:
+        return None
+    return {"level": levels.most_common(1)[0][0],
+            "dist": {lv: round(levels[lv] / total * 100) for lv in LEVEL_ORDER if levels[lv]},
+            "landforms": {n: round(c / total * 100) for n, c in forms.most_common(4)}}
+
+
 def lookup(address, src, cache):
     """Return the liquefaction record for an address (cached)."""
     key = f"{src}|{address}"
@@ -130,8 +239,14 @@ def lookup(address, src, cache):
             if geo:
                 rec.update(geo)
                 radius = BLOCK_RADIUS_M if "番" in geo["matched"] else SAMPLE_RADIUS_M
-                s = sample(src, geo["lat"], geo["lon"], radius)
+                s = (sample_landform(geo["lat"], geo["lon"], radius)
+                     if SOURCES[src].get("kind") == "landform" else sample(src, geo["lat"], geo["lon"], radius))
                 rec["radius"] = radius
+                if not s and SOURCES[src].get("kind") != "landform":
+                    # scenario maps leave "no risk" cells uncoloured (e.g. inland plateau) —
+                    # indistinguishable from "no data", so rate from the landform instead
+                    s = sample_landform(geo["lat"], geo["lon"], radius)
+                    rec.update(src=SOURCES["gsi_landform"]["label"], srcKey="gsi_landform")
                 if s:
                     rec.update(s)
         except Exception as e:           # network hiccup → retry next run
@@ -149,9 +264,11 @@ def annotate(listings, areas, area_of):
     for d in listings:
         src = src_by_area.get(area_of(d))
         rec = lookup(d["address"], src, cache) if src in SOURCES and d.get("address") else None
+        used = SOURCES[rec.get("srcKey", src)] if rec else None     # may differ after a fallback
         d["liq"] = ({"level": rec["level"], "dist": rec["dist"], "src": rec["src"],
                      "matched": rec.get("matched"), "radius": rec.get("radius"),
-                     "verify": SOURCES[src]["verify"].format(lat=rec["lat"], lon=rec["lon"])}
+                     "kind": used.get("kind", "scenario"), "landforms": rec.get("landforms"),
+                     "verify": used["verify"].format(lat=rec["lat"], lon=rec["lon"])}
                     if rec and rec.get("level") else None)
     CACHE_FILE.write_text(json.dumps(cache, ensure_ascii=False, indent=1), encoding="utf-8")
     rated = sum(1 for d in listings if d["liq"])

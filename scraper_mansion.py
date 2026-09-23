@@ -183,10 +183,10 @@ def card_fields(card):
 
 
 def main():
-    areas = json.loads(AREAS_FILE.read_text(encoding="utf-8"))
+    areas = [a for a in json.loads(AREAS_FILE.read_text(encoding="utf-8")) if "ms" in a.get("types", ["ms"])]
     cache = json.loads(CACHE_FILE.read_text(encoding="utf-8")) if CACHE_FILE.exists() else {}
     today = date.today().isoformat()
-    seeding = not cache            # first ever run: firstSeen dates are not real
+    known_areas = {e.get("area") for e in cache.values()}
     results = []
     seen_ids = set()
 
@@ -199,13 +199,14 @@ def main():
             print(f" flag: {flag}")
             flags[flag] = set(crawl_index(base + q, area["slug"]))
 
+        seeding = area["key"] not in known_areas   # area's first scrape: firstSeen dates are not real
         todo = [nc for nc in cards if nc not in cache]
         print(f" {len(cards)} listings, {len(todo)} need detail pages")
         for i, nc in enumerate(todo, 1):
             det = scrape_detail(cards[nc]["_url"])
             print(f"  [{i:>3}/{len(todo)}] nc_{nc} {'OK' if det else 'FAIL'}")
             if det:
-                cache[nc] = {"detail": det, "firstSeen": today, "seeded": seeding, "priceHistory": []}
+                cache[nc] = {"detail": det, "area": area["key"], "firstSeen": today, "seeded": seeding, "priceHistory": []}
             time.sleep(DELAY)
 
         for nc, card in cards.items():

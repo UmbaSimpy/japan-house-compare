@@ -104,6 +104,12 @@ const GRAD_MS = [
   'linear-gradient(140deg,#38b8b8 0%,#a0e0e0 100%)', 'linear-gradient(140deg,#c84b31 0%,#64616e 100%)',
 ];
 
+/* Apartment sub-categories (areas.json "group") — colour + name per group */
+const groupOf = d => msGroups.find(g => g.key === d.group) || { key: d.areaKey, name: d.area, nameJa: d.areaJa, color: '#888888' };
+const groupName = g => (LANG === 'ja' && g.nameJa) || g.name;
+const areaStyle = d => `--area-c:${groupOf(d).color}`;
+const areaPill = d => `<span class="area-pill" style="${areaStyle(d)}">${escHTML(groupName(groupOf(d)))}</span>`;
+
 /* ═══════════════════════════════════════════════
    SHARED TAGS & TOOLTIPS
 ═══════════════════════════════════════════════ */
@@ -118,7 +124,8 @@ function liqTip(d, kind) {
   const q = d.liq;
   if (!q) return t('tipLiqNA');
   const dist = Object.entries(q.dist);
-  return t('tipLiq', {
+  return t(q.kind === 'landform' ? 'tipLiqLandform' : 'tipLiq', {
+    forms: Object.entries(q.landforms || {}).map(([n, p]) => `<li><span>${escHTML(n)}</span><span>${p}%</span></li>`).join(''),
     level: t('liq.' + q.level), jp: LIQ_META[q.level].jp, radius: q.radius || 200,
     place: escHTML(q.matched || d.address), block: q.radius === 80,
     bar: `<div class="tip-bar">${dist.map(([lv, p]) => `<span style="width:${p}%;background:${LIQ_META[lv].color}"></span>`).join('')}</div>`,
@@ -175,7 +182,7 @@ function msWhy(d, key) {
   switch (key) {
     case 'value': return t('msValue', {
       s: s.value, ppm: d.ppm, exp: w.expectedPpm, v: d.vsExpected, beat: w.valueBeat, n: w.n,
-      traits: [T.built(d.builtYear), T.walk(d.walk, escHTML(d.station), d.bus), (d.bldgFloors || 0) >= 20 ? T.tower : '',
+      traits: [escHTML(groupName(groupOf(d))), T.built(d.builtYear), T.walk(d.walk, escHTML(d.station), d.bus), (d.bldgFloors || 0) >= 20 ? T.tower : '',
                d.renovation ? T.reno : '', d.elevator ? T.elev : T.noElev].filter(Boolean).join(LANG === 'ja' ? '・' : ', '),
     });
     case 'access': return t('msAccess', { s: s.access, walk: d.walk, station: escHTML(d.station), line: escHTML(d.line), bus: d.bus });
@@ -474,12 +481,15 @@ function msCardHTML(d) {
   const floorBadge = d.floor ? `${d.floor}F${d.bldgFloors ? ' / ' + d.bldgFloors + 'F' : ''}` : d.structure;
 
   return `
-  <div class="card">
+  <div class="card has-area" style="${areaStyle(d)}">
     <div class="card-photo">
       <div class="card-photo-bg" style="background:${GRAD_MS[d.id % GRAD_MS.length]}">${d.imageUrl ? '' : ICON.condo}</div>
       ${d.imageUrl ? `<img class="card-photo-img" src="${d.imageUrl}" alt="${t('photoAlt')}" loading="lazy" onerror="this.style.display='none'">` : ''}
       <span class="badge-layout">${d.layout}</span>
-      ${isNew ? `<span class="badge-new">${t('badgeNew')}</span>` : ''}
+      <div class="badge-tr">
+        <span class="badge-area">${escHTML(groupName(groupOf(d)))}</span>
+        ${isNew ? `<span class="badge-new">${t('badgeNew')}</span>` : ''}
+      </div>
       <span class="badge-type">${floorBadge}</span>
       <div class="badge-score ${grade}" data-tip="${escAttr(totalTip(s, MS_SCORE_MAX))}">
         <span class="badge-score-n">${s.total}</span><span class="badge-score-max">/100</span>
@@ -490,7 +500,7 @@ function msCardHTML(d) {
       ${msDealHTML(d)}
       <div class="card-addr">
         <span class="addr-pin">${ICON.pin}</span>
-        <div><div class="addr-area">${escHTML(d.name)}</div><div class="addr-street">${escHTML(d.address)}</div></div>
+        <div><div class="addr-area">${escHTML(d.name)}</div><div class="addr-street">${areaPill(d)} ${escHTML(d.address)}</div></div>
       </div>
       <div class="divider"></div>
       <div class="specs">
@@ -521,11 +531,11 @@ function msCardHTML(d) {
   </div>`;
 }
 
-function msFiltered() {
+function msFiltered(ignoreArea = false) {
   const q = ms.q.trim().toLowerCase(), tg = ms.toggles, sl = ms.sl;
   return mansions.filter(d => {
     const rooms = parseInt(d.layout) || 1;
-    if (ms.area !== 'all' && d.areaKey !== ms.area) return false;
+    if (!ignoreArea && ms.area !== 'all' && d.group !== ms.area) return false;
     if (d.areaM2 < sl.minM2 || d.price > sl.maxPrice || d.walk > sl.maxWalk) return false;
     if ((d.builtYear || 0) < sl.minYear) return false;
     if (ms.layout !== 'all') {
@@ -540,7 +550,7 @@ function msFiltered() {
     if (tg.has('liqlow') && !(d.liq && !['high', 'mid'].includes(d.liq.level))) return false;
     if (tg.has('new') && !(d.daysListed !== null && d.daysListed <= 7)) return false;
     if (ms.bldg && d.bldgKey !== ms.bldg) return false;
-    if (!ms.bldg && q && !`${d.name} ${d.station} ${d.address} ${d.line}`.toLowerCase().includes(q)) return false;
+    if (!ms.bldg && q && !`${d.name} ${d.station} ${d.address} ${d.line} ${groupOf(d).name} ${groupOf(d).nameJa}`.toLowerCase().includes(q)) return false;
     return true;
   });
 }
@@ -560,7 +570,21 @@ const MS_SORTS = {
   'drop-asc':    (a, b) => (a.priceChange || 0) - (b.priceChange || 0) || b.scores.total - a.scores.total,
 };
 
+function renderSubcats() {
+  const box = document.getElementById('ms-subcats');
+  if (msGroups.length < 2) { box.hidden = true; return; }
+  const counts = {};
+  msFiltered(true).forEach(d => { counts[d.group] = (counts[d.group] || 0) + 1; });
+  const total = Object.values(counts).reduce((a, b) => a + b, 0);
+  const allVars = msGroups.slice(0, 4).map((g, i) => `--g${i + 1}:${g.color}`).join(';');
+  box.innerHTML = `<button type="button" role="tab" class="subcat all${ms.area === 'all' ? ' active' : ''}" data-v="all" style="${allVars}">
+      <span class="dot"></span>${t('allAreas')} <span class="n">${total}</span></button>` +
+    msGroups.map(g => `<button type="button" role="tab" class="subcat${ms.area === g.key ? ' active' : ''}" data-v="${g.key}" style="--c:${g.color}">
+      <span class="dot"></span>${escHTML(groupName(g))} <span class="n">${counts[g.key] || 0}</span></button>`).join('');
+}
+
 function msRender() {
+  renderSubcats();
   const data = msFiltered().sort(MS_SORTS[ms.sort]);
   const n = data.length;
   document.getElementById('ms-grid').innerHTML = n === 0
@@ -587,13 +611,18 @@ function initApartments() {
     ms.shown = MS_PAGE;
     msRender();
   });
-  const areas = [...new Map(mansions.map(d => [d.areaKey, d])).values()];
-  if (areas.length > 1) {
-    document.getElementById('ms-area-group').style.display = '';
-    document.getElementById('ms-area-chips').innerHTML = `<button class="chip active" data-v="all" data-i18n="all"></button>` +
-      areas.map(d => `<button class="chip" data-v="${d.areaKey}" data-area="${d.areaKey}"></button>`).join('');
-  }
-  chipGroup('ms-area-chips', 'area');
+  // Area sub-categories (remembered per browser)
+  try {
+    const saved = localStorage.getItem('msArea');
+    if (saved && (saved === 'all' || msGroups.some(g => g.key === saved))) ms.area = saved;
+  } catch (e) {}
+  document.getElementById('ms-subcats').addEventListener('click', e => {
+    const btn = e.target.closest('.subcat'); if (!btn) return;
+    ms.area = btn.dataset.v;
+    try { localStorage.setItem('msArea', ms.area); } catch (e) {}
+    ms.shown = MS_PAGE;
+    msRender();
+  });
   chipGroup('ms-layout-chips', 'layout');
 
   const areasM2 = mansions.map(d => d.areaM2), prices = mansions.map(d => d.price);
@@ -701,9 +730,9 @@ function renderTray() {
     <div class="cmp-tray-inner">
       <div class="cmp-tray-count">${t('cmpTray', items.length)}</div>
       <div class="cmp-tray-items">${items.map(d => `
-        <div class="cmp-chip">
+        <div class="cmp-chip${cmp.kind === 'ms' ? ' has-area' : ''}" style="${cmp.kind === 'ms' ? areaStyle(d) : ''}">
           ${d.imageUrl ? `<img src="${d.imageUrl}" alt="">` : `<span class="cmp-chip-ph"></span>`}
-          <div class="cmp-chip-txt"><b>${escHTML(itemTitle(d))}</b><span>${fmtYen(d.price)}</span></div>
+          <div class="cmp-chip-txt"><b>${escHTML(itemTitle(d))}</b><span>${cmp.kind === 'ms' ? escHTML(groupName(groupOf(d))) + ' · ' : ''}${fmtYen(d.price)}</span></div>
           <button type="button" class="cmp-x" data-cmp-x="${escAttr(cmp.kind === 'ms' ? d.ncId : houseKey(d))}" aria-label="${t('cmpRemove')}">×</button>
         </div>`).join('')}
       </div>
@@ -725,6 +754,9 @@ function cmpRows(kind) {
   const listedShow = d => d.daysListed == null ? t('notTracked') : d.daysListed;
 
   if (kind === 'ms') return [
+    ['district', [
+      R('district', d => d.group, d => areaPill(d)),
+    ]],
     ['price', [
       R('price', d => d.price, d => fmtYen(d.price), 'low'),
       R('ppm', d => d.ppm, d => `${d.ppm}万/m²`, 'low'),
@@ -848,12 +880,12 @@ function renderCompare() {
   }).join('');
 
   const head = items.map((d, i) => `
-    <th class="cmp-col">
+    <th class="cmp-col${cmp.kind === 'ms' ? ' has-area' : ''}" style="${cmp.kind === 'ms' ? areaStyle(d) : ''}">
       <div class="cmp-photo" style="background:${cmp.kind === 'ms' ? GRAD_MS[d.id % GRAD_MS.length] : d.grad}">
         ${d.imageUrl ? `<img src="${d.imageUrl}" alt="" onerror="this.style.display='none'">` : ''}
         <span class="badge-score ${scoreGrade(d.scores.total)}"><span class="badge-score-n">${d.scores.total}</span><span class="badge-score-max">/100</span></span>
       </div>
-      <div class="cmp-name">${escHTML(itemTitle(d))}</div>
+      <div class="cmp-name">${cmp.kind === 'ms' ? areaPill(d) + '<br>' : ''}${escHTML(itemTitle(d))}</div>
       <div class="cmp-price">${fmtYen(d.price)}</div>
       <div class="cmp-wins">${t('cmpWins', wins[i])}</div>
       <div class="cmp-links">
@@ -946,10 +978,16 @@ function initCharts() {
     { id: 'chart-count',    hist: history,        key: 'count',     color: C.green,  fill: true, stat: 'stat-count',    lbl: 'latestCount',
       fmt: v => `${v} ${t('listingsUnit')}`, tick: v => v },
     { id: 'chart-ms-ppm',   hist: mansionHistory, key: 'medianPpm', color: C.accent, stat: 'stat-ms-ppm',   lbl: 'latestMedian',
-      fmt: v => `${v} 万/m²`, tick: v => v },
+      fmt: v => `${v} 万/m²`, tick: v => v, byArea: 'legend-ms-ppm' },
     { id: 'chart-ms-count', hist: mansionHistory, key: 'count',     color: C.green,  stat: 'stat-ms-count', lbl: 'latestCount',
-      fmt: v => `${v} ${t('listingsUnit')}`, tick: v => v },
+      fmt: v => `${v} ${t('listingsUnit')}`, tick: v => v, byArea: 'legend-ms-count' },
   ];
+  // One line per apartment area (history entries carry an "areas" breakdown)
+  const areaDatasets = s => msGroups.map(g => ({
+    label: groupName(g), data: s.hist.map(h => h.areas?.[g.key]?.[s.key] ?? null),
+    borderColor: g.color, backgroundColor: 'transparent', pointBackgroundColor: g.color, borderWidth: 2,
+    pointRadius: s.hist.length === 1 ? 5 : 3, pointHoverRadius: 6, tension: .35, spanGaps: true,
+  })).filter(ds => ds.data.some(v => v != null));
   series.forEach(s => {
     const canvas = document.getElementById(s.id);
     if (!canvas) return;
@@ -964,7 +1002,7 @@ function initCharts() {
     }
     new Chart(ctx, {
       type: 'line',
-      data: { labels: s.hist.map(h => h.date), datasets: [{
+      data: { labels: s.hist.map(h => h.date), datasets: s.byArea ? areaDatasets(s) : [{
         data: s.hist.map(h => h[s.key]), borderColor: s.color, backgroundColor: bg, borderWidth: 2,
         pointRadius: s.hist.length === 1 ? 5 : 3, pointHoverRadius: 6, pointBackgroundColor: s.color, fill: !!s.fill, tension: .35,
       }]},
@@ -972,13 +1010,17 @@ function initCharts() {
         responsive: true, maintainAspectRatio: false, interaction: { mode: 'index', intersect: false },
         plugins: { legend: { display: false }, tooltip: {
           backgroundColor: '#1e1e2a', borderColor: '#252330', borderWidth: 1, titleColor: '#eeeaf4', bodyColor: '#908ca0', padding: 10,
-          callbacks: { label: c => ' ' + s.fmt(c.parsed.y) } } },
+          callbacks: { label: c => ' ' + (s.byArea ? c.dataset.label + ': ' : '') + s.fmt(c.parsed.y) } } },
         scales: {
           x: { ticks: { color: C.text, font: { family: C.font, size: 11 }, maxRotation: 30 }, grid: { color: C.grid } },
           y: { ticks: { color: C.text, font: { family: C.font, size: 11 }, callback: s.tick }, grid: { color: C.grid } },
         },
       },
     });
+    if (s.byArea) {
+      document.getElementById(s.byArea).innerHTML = msGroups.map(g =>
+        `<span><i style="background:${g.color}"></i>${escHTML(groupName(g))}</span>`).join('');
+    }
     const last = s.hist[s.hist.length - 1][s.key];
     const prev = s.hist.length > 1 ? s.hist[s.hist.length - 2][s.key] : null;
     const d = prev == null ? null : +(last - prev).toFixed(1);

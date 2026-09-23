@@ -9,8 +9,8 @@ so there is a single source of truth.
 
 SCORING (100 pts)
   VALUE     25  Price/m² vs what similar condos cost (age, walk, station,
-                tower, renovated, elevator) — regression residual,
-                percentile-ranked.
+                area, tower, renovated, elevator) — regression residual,
+                percentile-ranked across all areas.
   ACCESS    20  Door-to-station minutes: ≤5=20 ≤10=16 ≤15=12 ≤20=8 ≤30=4.
   CONDITION 20  Age: ≤5y=16 ≤10=14 ≤15=12 ≤20=10 ≤30=7, older but built
                 1982+ (新耐震)=4, pre-1982=0.  Renovated +4.
@@ -34,7 +34,9 @@ SRC      = Path("mansions.json")
 CLEAN     = Path("mansions_clean.json")
 HISTORY   = Path("mansion_history.json")
 HTML      = Path("suumo-compare.html")
-AREA_JA   = {a["key"]: a.get("nameJa") for a in json.loads(Path("areas.json").read_text(encoding="utf-8"))}
+AREAS     = json.loads(Path("areas.json").read_text(encoding="utf-8"))
+AREA_JA   = {a["key"]: a.get("nameJa") for a in AREAS}
+AREA_GROUP = {a["key"]: a.get("group", a["key"]) for a in AREAS}
 SHIN_TAISHIN_YEAR = 1982   # 新耐震 (post-June-1981 code); also the 住宅ローン控除 cut-off
 
 
@@ -81,6 +83,7 @@ def solve(A, b):
 def fair_price_residuals(rows):
     """Return log-residuals (actual − expected price/m²). Negative = cheaper than peers."""
     stations = [s for s, c in Counter(r["station"] for r in rows).items() if c >= 15]
+    areas = sorted({r["areaKey"] for r in rows})[1:]        # area dummies (first = baseline)
 
     def feats(r):
         a = r["age"] if r["age"] is not None else 30
@@ -88,7 +91,8 @@ def fair_price_residuals(rows):
                  1.0 if (r["bldgFloors"] or 0) >= 20 else 0.0,
                  1.0 if r["renovation"] else 0.0,
                  1.0 if r["elevator"] else 0.0]
-                + [1.0 if r["station"] == s else 0.0 for s in stations])
+                + [1.0 if r["station"] == s else 0.0 for s in stations]
+                + [1.0 if r["areaKey"] == ak else 0.0 for ak in areas])
 
     X = [feats(r) for r in rows]
     y = [math.log(r["ppm"]) for r in rows]
@@ -171,7 +175,7 @@ def bldg_keys(names):
 def build(raw, today):
     keys = bldg_keys({r["name"] for r in raw})
     for r in raw:
-        r["bldgKey"] = keys[r["name"]]
+        r["bldgKey"] = f'{r["areaKey"]}:{keys[r["name"]]}'   # same brand name can exist in two cities
         r["name"] = clean_name(r["name"]) or r["name"]
 
     # ── Deduplicate the same unit listed by several agents ──
@@ -238,7 +242,7 @@ def build(raw, today):
         }
         out.append({
             "id": i + 1,
-            "ncId": r["ncId"], "area": r["areaName"], "areaJa": AREA_JA.get(r["areaKey"]), "areaKey": r["areaKey"],
+            "ncId": r["ncId"], "area": r["areaName"], "areaJa": AREA_JA.get(r["areaKey"]), "areaKey": r["areaKey"], "group": AREA_GROUP.get(r["areaKey"]),
             "name": r["name"], "bldgKey": r["bldgKey"], "address": r["address"],
             "price": r["price"], "areaM2": r["areaM2"], "layout": r["layout"],
             "ppm": round(r["ppm"], 1), "vsExpected": round((math.exp(resid[i]) - 1) * 100),
@@ -276,8 +280,19 @@ def main():
     html = HTML.read_text(encoding="utf-8")
     html = re.sub(r"const mansions = \[[\s\S]*?\];\n",
                   lambda _: f"const mansions = {json.dumps(clean, ensure_ascii=False)};\n", html, count=1)
+    groups = []
+    for a in AREAS:
+        g = a.get("group", a["key"])
+        if "ms" in a.get("types", ["ms"]) and g not in [x["key"] for x in groups]:
+            groups.append({"key": g, "name": a.get("groupName", a["name"]),
+                           "nameJa": a.get("groupNameJa", a.get("nameJa")), "color": a.get("color", "#888888")})
+    html = re.sub(r"const msGroups = \[[\s\S]*?\];\n",
+                  lambda _: f"const msGroups = {json.dumps(groups, ensure_ascii=False)};\n", html, count=1)
     html = re.sub(r"const mansionHistory = \[[\s\S]*?\];\n",
                   lambda _: f"const mansionHistory = {json.dumps(history, ensure_ascii=False)};\n", html, count=1)
+    for marker, value in (("const mansions = ", clean), ("const msGroups = ", groups), ("const mansionHistory = ", history)):
+        if f"{marker}{json.dumps(value, ensure_ascii=False)};" not in html:
+            raise SystemExit(f"injection failed for {marker.strip()}")
     HTML.write_text(html, encoding="utf-8")
 
     print(f"Injected {len(clean)} condos into {HTML}")

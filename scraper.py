@@ -328,7 +328,7 @@ def collect_area_urls(area):
 
 def main():
     with open(AREAS_FILE, encoding="utf-8") as f:
-        areas = json.load(f)
+        areas = [a for a in json.load(f) if "house" in a.get("types", ["house"])]
     print(f"[SUUMO] House scraper -- {', '.join(a['name'] for a in areas)}")
     print(f"  Max pages : {MAX_PAGES} per area")
     print(f"  Delay     : {DELAY}s between requests")

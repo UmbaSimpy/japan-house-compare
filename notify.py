@@ -112,7 +112,7 @@ def price_drop_section(houses, condos, today):
     condo_drops = sorted([x for x in condo_drops if x[1]], key=lambda x: -x[0]['scores']['total'])
     for d, dr in condo_drops[:MS_TOP_N]:
         lines.append(f"  🏢 {d['layout']} {d['areaM2']:.0f}m²  {fmt_drop(*dr)}  |  Score: {d['scores']['total']}/100")
-        lines.append(f"    {d['name']} {d['floor'] or '?'}F")
+        lines.append(f"    [{AREA_LABEL.get(d.get('group'), d['area'])}] {d['name']} {d['floor'] or '?'}F")
         lines.append(f"    {d['suumoUrl']}")
     if len(condo_drops) > MS_TOP_N:
         lines.append(f"  …+{len(condo_drops) - MS_TOP_N} more condo price cuts on the site")
@@ -123,6 +123,8 @@ def price_drop_section(houses, condos, today):
 
 # ── Condos ────────────────────────────────────────────
 MS_TOP_N = 10
+AREA_LABEL = {a.get('group', a['key']): a.get('groupName', a['name'])
+              for a in json.loads(Path('areas.json').read_text(encoding='utf-8'))}
 
 def unit_key(d):
     """Same flat relisted by another agent keeps its identity (SUUMO id changes)."""
@@ -137,7 +139,11 @@ def condo_section(today):
 
     condos = json.loads(clean.read_text(encoding='utf-8'))
     known_file = Path('known_ms_units.json')
-    lines = [f"\n🏢 APARTMENTS — {len(condos)} tracked"]
+    per_area = {}
+    for d in condos:
+        label = AREA_LABEL.get(d.get('group'), d['area'])
+        per_area[label] = per_area.get(label, 0) + 1
+    lines = [f"\n🏢 APARTMENTS — {len(condos)} tracked ({' · '.join(f'{k} {v}' for k, v in per_area.items())})"]
 
     if not known_file.exists():
         lines.append("Tracking started today — new listings will be reported from tomorrow.")
@@ -161,7 +167,7 @@ def condo_section(today):
                     f"  |  Score: {d['scores']['total']}/100"
                     f"  |  {d['walk']} min{' bus' if d['bus'] else ''}{fees}{seismic}"
                 )
-                lines.append(f"    {d['name']} {d['floor'] or '?'}F")
+                lines.append(f"    [{AREA_LABEL.get(d.get('group'), d['area'])}] {d['name']} {d['floor'] or '?'}F")
                 lines.append(f"    {d['suumoUrl']}")
             if len(new) > MS_TOP_N:
                 lines.append(f"  …+{len(new) - MS_TOP_N} more on the site (Apartments → Recently listed)")
@@ -172,10 +178,15 @@ def condo_section(today):
         hist_file = Path('mansion_history.json')
         hist = json.loads(hist_file.read_text(encoding='utf-8')) if hist_file.exists() else []
         if not hist or hist[-1]['date'] != today:
-            ppms = sorted(d['ppm'] for d in condos)
-            hist.append({'date': today, 'count': len(condos),
-                         'avgPrice': round(sum(d['price'] for d in condos) / len(condos)),
-                         'medianPpm': ppms[len(ppms) // 2]})
+            def stats(ds):
+                ppms = sorted(d['ppm'] for d in ds)
+                return {'count': len(ds), 'avgPrice': round(sum(d['price'] for d in ds) / len(ds)),
+                        'medianPpm': ppms[len(ppms) // 2]}
+            by_group = {}
+            for d in condos:
+                by_group.setdefault(d.get('group') or d['areaKey'], []).append(d)
+            hist.append({'date': today, **stats(condos),
+                         'areas': {g: stats(ds) for g, ds in by_group.items()}})
             hist_file.write_text(json.dumps(hist, indent=2), encoding='utf-8')
         print(f"Condos: saved {len(condos)} unit keys, history {len(hist)} points")
     return lines, persist

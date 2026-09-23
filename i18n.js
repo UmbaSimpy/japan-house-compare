@@ -79,8 +79,19 @@ const I18N = {
         ? 'Wooden houses on shallow foundations can tilt and need costly re-levelling (common in Mihama in 2011).'
         : 'A piled RC building usually stays level, but grounds, pipes, parking and roads around it can be damaged, and repairs hit the reserve fund.'}
       Score: Extras −${c.penalty}.</div>
-      <div class="tip-note">Source: ${c.src}, scenario 千葉市直下地震 M7.3. All of Mihama-ku is reclaimed land; the long 2011 shaking liquefied some “low” areas too (e.g. 磯辺), so treat levels as relative.
+      <div class="tip-note">Source: ${c.src}, scenario 千葉市直下地震 M7.3. The bay-side wards are reclaimed land; the long 2011 shaking liquefied some “low” areas there too (e.g. 美浜区磯辺), so treat levels as relative.
       <b>Click to check the official current (FY2025) map at this spot.</b></div>`,
+    tipLiqLandform: c => `<div class="tip-h">Liquefaction tendency: ${c.level}</div>
+      Ground types within ${c.radius} m of ${c.place}
+      (${c.block ? 'block-level address' : '丁目 centre; SUUMO gives no exact lot'}):
+      <ul class="tip-list">${c.forms}</ul>${c.bar}<ul class="tip-list">${c.rows}</ul>
+      <div class="tip-note"><b>How it's rated:</b> GSI's landform map says how prone each ground type is to liquefaction —
+      fill / reclaimed land, old river channels and ponds: very strong → <i>high</i>; lowlands, shallow valleys: strong → <i>somewhat high</i>;
+      plateau: weak → <i>low</i>; hills and cut land → <i>very low</i>. ${c.house
+        ? 'Wooden houses on shallow foundations are the most exposed.'
+        : 'A piled RC building usually stays level; grounds, pipes and roads are what get damaged.'} Score: Extras −${c.penalty}.</div>
+      <div class="tip-note">Source: ${c.src} (landform-based, coarser than a city quake-scenario map — no city map is usable here).
+      <b>Click to open the GSI landform map at this spot.</b></div>`,
     tipMonthly: c => `<div class="tip-h">Estimated monthly cost</div><ul class="tip-list">
       <li><span>Loan ${c.price}, ${c.years}y @ ${c.rate}%</span><span>${c.loan}</span></li>
       <li><span>管理費 + 修繕積立金</span><span>${c.fees}</span></li>
@@ -147,16 +158,16 @@ const I18N = {
       <div class="tip-note">Parking 1 car +5, 2+ cars +8 · owned land +5 · city gas +2 (cheaper than propane) · liquefaction high −4 / somewhat high −2. Result kept within 0–15.</div>`,
 
     // ── compare ──
-    cmpTray: n => `${n} / 3 selected`, cmpNow: 'Compare now', cmpClear: 'Clear', cmpTitle: 'Comparison',
+    allAreas: 'All areas', cmpTray: n => `${n} / 3 selected`, cmpNow: 'Compare now', cmpClear: 'Clear', cmpTitle: 'Comparison',
     cmpNeedTwo: 'Select at least 2 listings', cmpMax: 'You can compare up to 3 listings. Remove one first.',
     cmpSwitched: kind => `Compare list reset: ${kind === 'ms' ? 'apartments' : 'houses'} can't be compared with ${kind === 'ms' ? 'houses' : 'apartments'}.`,
     cmpLegend: '<b class="cmp-g">Green</b> = better, <b class="cmp-r">red</b> = worse among the selected. No colour = equal, not comparable or a matter of taste.',
     cmpDiffOnly: 'Differences only', cmpRemove: 'Remove', cmpClose: 'Close', cmpWins: n => `${n} better`,
     cmpHouseScoreNote: 'House scores are computed against all tracked houses here, so they can differ slightly from the filtered grid.',
-    sec: { price: 'Price & value', size: 'Size & layout', building: 'Building', costs: 'Running costs', access: 'Location & access',
+    sec: { district: 'Area', price: 'Price & value', size: 'Size & layout', building: 'Building', costs: 'Running costs', access: 'Location & access',
            risk: 'Risk', features: 'Features & extras', listing: 'Listing', scores: 'Scores' },
     row: {
-      price: 'Price', ppm: '¥ per m²', vsSimilar: 'vs similar condos', monthly: 'Est. monthly (loan + fees)', priceChange: 'Price change',
+      district: 'Area', price: 'Price', ppm: '¥ per m²', vsSimilar: 'vs similar condos', monthly: 'Est. monthly (loan + fees)', priceChange: 'Price change',
       area: 'Floor area', land: 'Land area', balcony: 'Balcony', layout: 'Layout', built: 'Built', age: 'Age', seismic: 'Seismic code',
       structure: 'Structure', floor: 'Floor', bldgFloors: 'Building height', units: 'Total units', facing: 'Facing',
       fees: 'Fees / month', mgmt: '管理費 (management)', repair: '修繕積立金 (repair fund)', feesM2: 'Fees per m²', repairM2: 'Repair fund per m²',
@@ -248,8 +259,19 @@ const I18N = {
         ? '浅い基礎の木造住宅は傾き、修正に多額の費用がかかることがあります（2011年の美浜区で多発）。'
         : '杭基礎のRC造建物自体は傾きにくいものの、敷地・配管・駐車場・道路が被害を受け、修繕積立金に影響します。'}
       スコア：その他 −${c.penalty}。</div>
-      <div class="tip-note">出典：${c.src}、想定地震は千葉市直下地震（M7.3）。美浜区は全域が埋立地で、2011年の長い揺れでは「低い」地域（例：磯辺）でも液状化が起きたため、相対的な目安としてご覧ください。
+      <div class="tip-note">出典：${c.src}、想定地震は千葉市直下地震（M7.3）。湾岸部は埋立地で、2011年の長い揺れでは「低い」地域（例：美浜区磯辺）でも液状化が起きたため、相対的な目安としてご覧ください。
       <b>クリックすると、この地点の最新（令和7年度）公式マップを開きます。</b></div>`,
+    tipLiqLandform: c => `<div class="tip-h">液状化の発生傾向：${c.level}</div>
+      ${c.place} の周辺${c.radius}m以内の地形
+      （${c.block ? '番地レベルの住所' : '丁目の中心点。SUUMOには正確な地番がありません'}）：
+      <ul class="tip-list">${c.forms}</ul>${c.bar}<ul class="tip-list">${c.rows}</ul>
+      <div class="tip-note"><b>評価方法：</b>国土地理院の地形分類が示す地形ごとの液状化の発生傾向を使用 ―
+      盛土地・埋立地・旧河道・旧水部：非常に強い → <i>高い</i>、低地・浅い谷：強い → <i>やや高い</i>、
+      台地：弱い → <i>低い</i>、山地・切土地 → <i>極めて低い</i>。${c.house
+        ? '浅い基礎の木造住宅が最も影響を受けやすい。'
+        : '杭基礎のRC造建物自体は傾きにくく、被害を受けるのは敷地・配管・道路です。'}スコア：その他 −${c.penalty}。</div>
+      <div class="tip-note">出典：${c.src}（地形に基づく評価で、市の地震想定マップより粗い目安。この地域では利用できる市のマップがありません）。
+      <b>クリックすると、この地点の地理院地図（地形分類）を開きます。</b></div>`,
     tipMonthly: c => `<div class="tip-h">月々の支払い目安</div><ul class="tip-list">
       <li><span>ローン ${c.price}・${c.years}年・金利${c.rate}%</span><span>${c.loan}</span></li>
       <li><span>管理費＋修繕積立金</span><span>${c.fees}</span></li>
@@ -314,16 +336,16 @@ const I18N = {
       <li><span>液状化 ${c.liq}</span><span>${c.liqP ? '−' + c.liqP : '0'}</span></li></ul>
       <div class="tip-note">駐車場1台 +5、2台以上 +8・所有権 +5・都市ガス +2（プロパンより安い）・液状化 高い −4／やや高い −2。0〜15の範囲に収めます。</div>`,
 
-    cmpTray: n => `${n} / 3件を選択中`, cmpNow: '比較する', cmpClear: 'クリア', cmpTitle: '物件比較',
+    allAreas: 'すべてのエリア', cmpTray: n => `${n} / 3件を選択中`, cmpNow: '比較する', cmpClear: 'クリア', cmpTitle: '物件比較',
     cmpNeedTwo: '2件以上選択してください', cmpMax: '比較できるのは最大3件です。先に1件外してください。',
     cmpSwitched: kind => `比較リストをリセットしました：${kind === 'ms' ? 'マンション' : '一戸建て'}と${kind === 'ms' ? '一戸建て' : 'マンション'}は比較できません。`,
     cmpLegend: '<b class="cmp-g">緑</b>＝選択中の中で有利、<b class="cmp-r">赤</b>＝不利。色なし＝同じ・比較不可・好みによる項目。',
     cmpDiffOnly: '違いのみ表示', cmpRemove: '外す', cmpClose: '閉じる', cmpWins: n => `有利 ${n}項目`,
     cmpHouseScoreNote: '一戸建てのスコアはここでは全物件を基準に計算しているため、絞り込み中の一覧と少し異なる場合があります。',
-    sec: { price: '価格・割安度', size: '広さ・間取り', building: '建物', costs: 'ランニングコスト', access: '立地・交通',
+    sec: { district: 'エリア', price: '価格・割安度', size: '広さ・間取り', building: '建物', costs: 'ランニングコスト', access: '立地・交通',
            risk: 'リスク', features: '設備・その他', listing: '掲載情報', scores: 'スコア' },
     row: {
-      price: '価格', ppm: '㎡単価', vsSimilar: '似た物件との比較', monthly: '月々の目安（ローン＋管理費等）', priceChange: '価格変更',
+      district: 'エリア', price: '価格', ppm: '㎡単価', vsSimilar: '似た物件との比較', monthly: '月々の目安（ローン＋管理費等）', priceChange: '価格変更',
       area: '面積', land: '土地面積', balcony: 'バルコニー', layout: '間取り', built: '築年', age: '築年数', seismic: '耐震基準',
       structure: '構造', floor: '所在階', bldgFloors: '建物の階数', units: '総戸数', facing: '向き',
       fees: '管理費・修繕積立金（月）', mgmt: '管理費', repair: '修繕積立金', feesM2: '㎡あたり管理費等', repairM2: '㎡あたり修繕積立金',

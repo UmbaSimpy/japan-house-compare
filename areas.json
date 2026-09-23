@@ -1,12 +1,37 @@
 [
   {
-    "key": "mihama",
-    "name": "Mihama-ku, Chiba",
-    "ar": "030",
-    "ta": "12",
-    "sc": "12106",
-    "slug": "sc_chibashimihama",
-    "liquefaction": "chiba_city",
-    "nameJa": "千葉市美浜区"
+    "key": "mihama", "name": "Mihama-ku, Chiba", "nameJa": "千葉市美浜区",
+    "ar": "030", "ta": "12", "sc": "12106", "slug": "sc_chibashimihama",
+    "types": ["house", "ms"],
+    "group": "mihama", "groupName": "Mihama-ku", "groupNameJa": "美浜区", "color": "#3b8fd9",
+    "liquefaction": "chiba_city"
+  },
+  {
+    "key": "inzai", "name": "Inzai (Chiba New Town)", "nameJa": "印西市（千葉ニュータウン）",
+    "ar": "030", "ta": "12", "sc": "12231", "slug": "sc_inzai",
+    "types": ["ms"],
+    "group": "chibant", "groupName": "Chiba New Town", "groupNameJa": "千葉ニュータウン", "color": "#3aa66b",
+    "liquefaction": "gsi_landform"
+  },
+  {
+    "key": "shiroi", "name": "Shiroi (Chiba New Town)", "nameJa": "白井市（千葉ニュータウン）",
+    "ar": "030", "ta": "12", "sc": "12232", "slug": "sc_shiroi",
+    "types": ["ms"],
+    "group": "chibant", "groupName": "Chiba New Town", "groupNameJa": "千葉ニュータウン", "color": "#3aa66b",
+    "liquefaction": "gsi_landform"
+  },
+  {
+    "key": "midori", "name": "Midori-ku, Chiba", "nameJa": "千葉市緑区",
+    "ar": "030", "ta": "12", "sc": "12105", "slug": "sc_chibashimidori",
+    "types": ["ms"],
+    "group": "midori", "groupName": "Midori-ku", "groupNameJa": "緑区（おゆみ野）", "color": "#d99a2b",
+    "liquefaction": "chiba_city"
+  },
+  {
+    "key": "narashino", "name": "Narashino", "nameJa": "習志野市",
+    "ar": "030", "ta": "12", "sc": "12216", "slug": "sc_narashino",
+    "types": ["ms"],
+    "group": "narashino", "groupName": "Narashino", "groupNameJa": "習志野市", "color": "#9b6bd6",
+    "liquefaction": "gsi_landform"
   }
 ]
