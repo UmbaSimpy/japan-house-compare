@@ -1,0 +1,37 @@
+{
+ "67729827": {
+  "priceMin": 4100,
+  "priceMax": 6290,
+  "units": 25,
+  "phase": "先着順",
+  "stock": 25
+ },
+ "mihama:b:千葉県千葉市美浜区若葉3:38": {
+  "priceMin": 6480,
+  "priceMax": 10480,
+  "units": 18,
+  "phase": null,
+  "stock": 18
+ },
+ "67732575": {
+  "priceMin": 7340,
+  "priceMax": 13000,
+  "units": null,
+  "phase": "第3期",
+  "stock": null
+ },
+ "67723770": {
+  "priceMin": 4890,
+  "priceMax": 5990,
+  "units": 9,
+  "phase": "先着順",
+  "stock": 9
+ },
+ "67736149": {
+  "priceMin": null,
+  "priceMax": null,
+  "units": 8,
+  "phase": "第1期2次",
+  "stock": 8
+ }
+}

@@ -187,7 +187,7 @@ function msWhy(d, key) {
     });
     case 'access': return t('msAccess', { s: s.access, walk: d.walk, station: escHTML(d.station), line: escHTML(d.line), bus: d.bus });
     case 'condition': {
-      const reno = d.renovation ? 4 : 0;
+      const reno = d.renoCounts ? 4 : 0;
       return t('msCondition', { s: s.condition, year: d.builtYear, age: d.age, shin: d.shinTaishin, base: s.condition - reno,
         reno, note: d.renoNote ? escHTML(d.renoNote.slice(0, 40)) : '' });
     }
@@ -443,7 +443,7 @@ function initHouses() {
    APARTMENTS
 ═══════════════════════════════════════════════ */
 const ms = {
-  layout: 'all', area: 'all', sl: null,   // sl = slider state (minM2, maxPrice, maxWalk, minYear)
+  layout: 'all', area: 'all', cat: 'used', sl: null,   // cat: used | new · sl = slider state
   toggles: new Set(), q: '', bldg: null, sort: 'score-desc', shown: MS_PAGE, rate: 1.0,
 };
 try {
@@ -471,6 +471,8 @@ function msCardHTML(d) {
   if (!d.elevator && (d.floor || 0) >= 3) tags.push(`<span class="tag tag-amber">${t('tagNoElev', d.floor)}</span>`);
   if (d.pet) tags.push(`<span class="tag tag-green">${t('tagPets')}</span>`);
   if (d.parking === 'onsite') tags.push(`<span class="tag tag-green" title="${escAttr(t('tagParkingTitle'))}">${t('tagParkingFrom', d.parkingFee)}</span>`);
+  else if (d.parking === 'full') tags.push(`<span class="tag tag-amber" title="${escAttr(t('tagParkingFullTitle'))}">${t('tagParkingFull', d.parkingFee)}</span>`);
+  else if (d.parking === 'building') tags.push(`<span class="tag tag-muted" title="${escAttr(t('tagParkingBldgTitle'))}">${t('tagParkingBldg', d.parkingFee)}</span>`);
   else if (d.parking === 'none') tags.push(`<span class="tag tag-muted">${t('tagNoParking')}</span>`);
   if (d.landRights === 'leased') tags.push(`<span class="tag tag-amber">${t('tagLeasehold')}</span>`);
   if (d.sameBldg > 0) tags.push(`<button class="tag tag-muted tag-btn" type="button" data-bldg="${escAttr(d.bldgKey)}" data-name="${escAttr(d.name)}">${t('tagInBldg', d.sameBldg)}</button>`);
@@ -574,7 +576,7 @@ function renderSubcats() {
   const box = document.getElementById('ms-subcats');
   if (msGroups.length < 2) { box.hidden = true; return; }
   const counts = {};
-  msFiltered(true).forEach(d => { counts[d.group] = (counts[d.group] || 0) + 1; });
+  (ms.cat === 'new' ? nwFiltered(true) : msFiltered(true)).forEach(d => { counts[d.group] = (counts[d.group] || 0) + 1; });
   const total = Object.values(counts).reduce((a, b) => a + b, 0);
   const allVars = msGroups.slice(0, 4).map((g, i) => `--g${i + 1}:${g.color}`).join(';');
   box.innerHTML = `<button type="button" role="tab" class="subcat all${ms.area === 'all' ? ' active' : ''}" data-v="all" style="${allVars}">
@@ -621,7 +623,14 @@ function initApartments() {
     ms.area = btn.dataset.v;
     try { localStorage.setItem('msArea', ms.area); } catch (e) {}
     ms.shown = MS_PAGE;
-    msRender();
+    renderApartments();
+  });
+  try { const c = localStorage.getItem('msCat'); if (c === 'used' || c === 'new') ms.cat = c; } catch (e) {}
+  document.getElementById('ms-cat').addEventListener('click', e => {
+    const btn = e.target.closest('.cat-btn'); if (!btn) return;
+    ms.cat = btn.dataset.cat;
+    try { localStorage.setItem('msCat', ms.cat); } catch (e) {}
+    renderApartments();
   });
   chipGroup('ms-layout-chips', 'layout');
 
@@ -673,12 +682,17 @@ function initApartments() {
 const cmp = { kind: null, ids: [], diffOnly: false };
 try {
   const saved = JSON.parse(localStorage.getItem('compare'));
-  if (saved && ['ms', 'house'].includes(saved.kind) && Array.isArray(saved.ids)) Object.assign(cmp, saved);
+  if (saved && ['ms', 'house', 'new'].includes(saved.kind) && Array.isArray(saved.ids)) Object.assign(cmp, saved);
 } catch (e) {}
 
 const cmpSave = () => { try { localStorage.setItem('compare', JSON.stringify({ kind: cmp.kind, ids: cmp.ids })); } catch (e) {} };
 
+// "kind:id" — ids may contain ':' themselves (building keys), so split on the first one only
+const splitCmp = s => [s.slice(0, s.indexOf(':')), s.slice(s.indexOf(':') + 1)];
+const cmpKey = d => cmp.kind === 'ms' ? d.ncId : cmp.kind === 'new' ? d.key : houseKey(d);
+
 function cmpItems() {
+  if (cmp.kind === 'new') return cmp.ids.map(id => newMansions.find(d => d.key === id)).filter(Boolean);
   if (cmp.kind === 'ms') return cmp.ids.map(id => mansions.find(d => d.ncId === id)).filter(Boolean);
   if (cmp.kind === 'house') {
     const scored = scoreSet(listings);      // score against all houses for a stable comparison
@@ -704,7 +718,7 @@ function cmpToggle(kind, id) {
 
 function refreshCompareButtons() {
   document.querySelectorAll('[data-cmp]').forEach(b => {
-    const [kind, id] = b.dataset.cmp.split(':');
+    const [kind, id] = splitCmp(b.dataset.cmp);
     const on = cmp.kind === kind && cmp.ids.includes(id);
     b.classList.toggle('on', on);
     b.textContent = t(on ? 'cmpAdded' : 'cmpAdd');
@@ -712,6 +726,7 @@ function refreshCompareButtons() {
 }
 
 function itemTitle(d) {
+  if (cmp.kind === 'new') return d.name;
   return cmp.kind === 'ms' ? `${d.name}${d.floor ? ' ' + t('floorN', d.floor) : ''}` : `${d.layout} · ${d.address}`;
 }
 
@@ -719,7 +734,7 @@ function renderTray() {
   const tray = document.getElementById('cmp-tray');
   const items = cmpItems();
   if (items.length !== cmp.ids.length) {               // listing sold / withdrawn since selected
-    cmp.ids = items.map(d => cmp.kind === 'ms' ? d.ncId : houseKey(d));
+    cmp.ids = items.map(d => cmpKey(d));
     if (!cmp.ids.length) cmp.kind = null;
     cmpSave();
   }
@@ -730,10 +745,10 @@ function renderTray() {
     <div class="cmp-tray-inner">
       <div class="cmp-tray-count">${t('cmpTray', items.length)}</div>
       <div class="cmp-tray-items">${items.map(d => `
-        <div class="cmp-chip${cmp.kind === 'ms' ? ' has-area' : ''}" style="${cmp.kind === 'ms' ? areaStyle(d) : ''}">
+        <div class="cmp-chip${cmp.kind !== 'house' ? ' has-area' : ''}" style="${cmp.kind !== 'house' ? areaStyle(d) : ''}">
           ${d.imageUrl ? `<img src="${d.imageUrl}" alt="">` : `<span class="cmp-chip-ph"></span>`}
-          <div class="cmp-chip-txt"><b>${escHTML(itemTitle(d))}</b><span>${cmp.kind === 'ms' ? escHTML(groupName(groupOf(d))) + ' · ' : ''}${fmtYen(d.price)}</span></div>
-          <button type="button" class="cmp-x" data-cmp-x="${escAttr(cmp.kind === 'ms' ? d.ncId : houseKey(d))}" aria-label="${t('cmpRemove')}">×</button>
+          <div class="cmp-chip-txt"><b>${escHTML(itemTitle(d))}</b><span>${cmp.kind !== 'house' ? escHTML(groupName(groupOf(d))) + ' · ' : ''}${d.price ? fmtYen(d.price) : t('nwPriceTBD')}</span></div>
+          <button type="button" class="cmp-x" data-cmp-x="${escAttr(cmpKey(d))}" aria-label="${t('cmpRemove')}">×</button>
         </div>`).join('')}
       </div>
       <div class="cmp-tray-actions">
@@ -752,6 +767,62 @@ function cmpRows(kind) {
   const liqShow = d => d.liq ? `<span class="tag ${LIQ_META[d.liq.level].cls}">${t('liq.' + d.liq.level)}</span>` : '—';
   const change = d => d.priceChange ? signedPrice(d.priceChange) : t('none');
   const listedShow = d => d.daysListed == null ? t('notTracked') : d.daysListed;
+
+  if (kind === 'new') return [
+    ['district', [R('district', d => d.group, d => areaPill(d))]],
+    ['price', [
+      R('nwPriceFrom', d => d.priceMin, d => d.priceMin ? fmtYen(d.priceMin) : t('nwPriceTBD'), 'low'),
+      R('nwPriceTo', d => d.priceMax, d => d.priceMax ? fmtYen(d.priceMax) : t('nwPriceTBD')),
+      R('nwBandRow', d => d.priceBand, d => d.priceBand ? escHTML(d.priceBand) : '—'),
+      R('ppm', d => d.ppm, d => d.ppm ? `${d.ppmApprox ? '~' : ''}${d.ppm}万/m²` : '—', 'low'),
+      R('nwPremiumRow', d => d.premium, d => d.premium == null ? '—' : t('nwPremium', d.premium), 'low'),
+      R('nwStatus', d => ({ set: 2, partial: 1, tbd: 0 })[d.priceStatus], d => t('nwStatus.' + d.priceStatus), 'high'),
+    ]],
+    ['timing', [
+      R('nwMoveIn', d => d.monthsToMove, d => moveText(d), 'low'),
+      R('nwCompletion', d => d.completion?.[0], d => d.completed ? t('nwCompleted', d.completion?.[0]) : d.completion?.[0] ? `${d.completion[0]}/${d.completion[1] ?? '?'}` : '—'),
+      R('nwScheduleRow', d => d.schedule, d => d.schedule ? `<div class="cmp-sub">${escHTML(d.schedule.slice(0, 90))}</div>` : '—'),
+    ]],
+    ['demand', [
+      R('nwPhase', d => d.phase, d => d.phase ? escHTML(d.phase) : '—'),
+      R('nwPhaseChange', d => d.phaseChange, d => d.phaseChange == null ? '—' : `${d.phaseChange > 0 ? '+' : ''}${d.phaseChange}% vs ${escHTML(d.phasePrev)}`),
+      R('nwStock', d => d.stockNow, d => d.stockNow ?? '—'),
+      R('nwSoldWeek', d => d.soldWeek, d => d.soldWeek ?? '—', 'high'),
+      R('nwPace', d => d.pacePerWeek, d => d.pacePerWeek ?? '—', 'high'),
+    ]],
+    ['size', [
+      R('area', d => d.maxM2, d => `${d.areaRange[0] ?? '?'}–${d.areaRange[1] ?? '?'} m²`, 'high'),
+      R('layout', d => d.layoutRange, d => escHTML(d.layoutRange || '—')),
+      R('nwTypesRow', d => d.types.length, d => d.types.length),
+    ]],
+    ['costs', [
+      R('mgmt', d => d.mgmtFee?.[0], d => yenRange(d.mgmtFee), 'low'),
+      R('repair', d => d.repairFund?.[0], d => yenRange(d.repairFund)),
+      R('nwEffRow', d => d.feesPerM2Eff, d => d.feesPerM2Eff ? t('perM2', yen(d.feesPerM2Eff)) : t('nwTBD'), 'low'),
+      R('nwUpfront', d => d.kind === 'unsold' ? 0 : d.upfront, d => d.upfront ? yen(d.upfront) : t(d.kind === 'unsold' ? 'nwNone' : 'nwTBD'), 'low'),
+      R('parkingFee', d => d.parkingFee?.[0], d => yenRange(d.parkingFee), 'low'),
+    ]],
+    ['building', [
+      R('nwKindRow', d => d.kind, d => t('nwKind.' + nwKindClass(d))),
+      R('units', d => d.totalUnits, d => d.totalUnits ?? '—'),
+      R('nwUnits', d => d.unitsOnSale, d => d.unitsOnSale ?? '—'),
+      R('bldgFloors', d => d.bldgFloors, d => d.bldgFloors ? t('bldgFloorsN', d.bldgFloors) : '—'),
+      R('nwParkingRatio', d => d.parkingRatio, d => d.parkingRatio != null ? Math.round(d.parkingRatio * 100) + '%' : '—', 'high'),
+      R('nwDev', d => d.major.length, d => escHTML(d.developers.join(', ') || '—'), 'high'),
+      R('nwIso', d => d.seismicIso, d => t(d.seismicIso ? 'yes' : 'no'), 'yes'),
+      R('rights', d => d.landRights === 'owned', d => t(d.landRights === 'owned' ? 'rightsOwned' : 'rightsLeased'), 'yes'),
+    ]],
+    ['access', [
+      R('station', d => d.station, d => `${escHTML(t('stationName', d.station))}<div class="cmp-sub">${escHTML(d.line)}</div>`),
+      R('walk', d => d.walk, d => t('minShort', d.walk), 'low'),
+      R('address', d => d.address, d => escHTML(d.address)),
+    ]],
+    ['risk', [R('liq', liqVal, liqShow, 'low')]],
+    ['scores', [
+      R('total', d => d.scores.total, d => `<b>${d.scores.total}</b> / 100`, 'high'),
+      ...Object.keys(NW_SCORE_MAX).map(k => R('cat.' + k, d => d.scores[k], d => `${d.scores[k]} / ${NW_SCORE_MAX[k]}`, 'high')),
+    ]],
+  ];
 
   if (kind === 'ms') return [
     ['district', [
@@ -798,7 +869,7 @@ function cmpRows(kind) {
     ['features', [
       R('elev', d => d.elevator, d => bool(d.elevator), 'yes'),
       R('pet', d => d.pet, d => bool(d.pet), 'yes'),
-      R('parking', d => ({ onsite: 3, nearby: 2, other: 1, none: 0 })[d.parking] ?? null, d => t('parkingKind.' + d.parking), 'high'),
+      R('parking', d => ({ onsite: 3, building: 2, full: 2, nearby: 2, other: 1, none: 0 })[d.parking] ?? null, d => t('parkingKind.' + d.parking), 'high'),
       R('parkingFee', d => d.parking === 'onsite' ? d.parkingFee : null, d => d.parking === 'onsite' && d.parkingFee ? yen(d.parkingFee) : '—', 'low'),
       R('rights', d => d.landRights === 'owned', d => t(d.landRights === 'owned' ? 'rightsOwned' : 'rightsLeased'), 'yes'),
     ]],
@@ -880,17 +951,17 @@ function renderCompare() {
   }).join('');
 
   const head = items.map((d, i) => `
-    <th class="cmp-col${cmp.kind === 'ms' ? ' has-area' : ''}" style="${cmp.kind === 'ms' ? areaStyle(d) : ''}">
-      <div class="cmp-photo" style="background:${cmp.kind === 'ms' ? GRAD_MS[d.id % GRAD_MS.length] : d.grad}">
+    <th class="cmp-col${cmp.kind !== 'house' ? ' has-area' : ''}" style="${cmp.kind !== 'house' ? areaStyle(d) : ''}">
+      <div class="cmp-photo" style="background:${cmp.kind === 'house' ? d.grad : GRAD_MS[(d.id || 0) % GRAD_MS.length]}">
         ${d.imageUrl ? `<img src="${d.imageUrl}" alt="" onerror="this.style.display='none'">` : ''}
         <span class="badge-score ${scoreGrade(d.scores.total)}"><span class="badge-score-n">${d.scores.total}</span><span class="badge-score-max">/100</span></span>
       </div>
-      <div class="cmp-name">${cmp.kind === 'ms' ? areaPill(d) + '<br>' : ''}${escHTML(itemTitle(d))}</div>
-      <div class="cmp-price">${fmtYen(d.price)}</div>
+      <div class="cmp-name">${cmp.kind !== 'house' ? areaPill(d) + '<br>' : ''}${escHTML(itemTitle(d))}</div>
+      <div class="cmp-price">${d.price ? fmtYen(d.price) + (d.priceMax && d.priceMax !== d.price ? ' –' : '') : t('nwPriceTBD')}</div>
       <div class="cmp-wins">${t('cmpWins', wins[i])}</div>
       <div class="cmp-links">
         <a href="${d.suumoUrl}" target="_blank" rel="noopener">SUUMO ${ICON.out}</a>
-        <button type="button" data-cmp-x="${escAttr(cmp.kind === 'ms' ? d.ncId : houseKey(d))}">${t('cmpRemove')}</button>
+        <button type="button" data-cmp-x="${escAttr(cmpKey(d))}">${t('cmpRemove')}</button>
       </div>
     </th>`).join('');
 
@@ -922,7 +993,7 @@ function initCompare() {
   document.addEventListener('click', e => {
     const add = e.target.closest('[data-cmp]');
     if (add) {
-      const [kind, id] = add.dataset.cmp.split(':');
+      const [kind, id] = splitCmp(add.dataset.cmp);
       return cmpToggle(kind, id);
     }
     const x = e.target.closest('[data-cmp-x]');
@@ -1032,6 +1103,218 @@ function initCharts() {
 }
 
 /* ═══════════════════════════════════════════════
+   NEW CONDOS (新築マンション) — scores pre-computed in inject_newms.py
+   Value 25 · Access 20 · Certainty 15 · Fees 15 · Space 10 · Project 15
+   Items are developer projects (price ranges, often 予定/未定) or buildings of
+   never-occupied units (新築未入居, one price per unit).
+═══════════════════════════════════════════════ */
+const NW_SCORE_MAX = { value: 25, access: 20, certainty: 15, running: 15, space: 10, project: 15 };
+const nw = { toggles: new Set(), sort: 'score-desc', sl: null };
+
+const nwKindClass = d => d.kind === 'unsold' ? 'unsold' : d.priceStatus === 'tbd' ? 'presale' : 'onsale';
+const nwPriceHTML = d => {
+  if (!d.priceMin) return `<div class="nw-price tbd">${t('nwPriceTBD')}</div>`;
+  return `<div class="nw-price">${d.priceMax && d.priceMax !== d.priceMin
+    ? `${t('priceShort', d.priceMin)} – ${t('priceShort', d.priceMax)}` : fmtYen(d.priceMin)}</div>`;
+};
+const yenRange = r => !r || r[0] == null ? t('nwTBD') : r[0] === r[1] ? yen(r[0]) : `${yen(r[0])}–${yen(r[1])}`;
+const moveText = d => d.monthsToMove === 0 ? t('nwMoveNow')
+  : d.delivery?.[0] ? t('nwMoveAt', d.delivery[0], d.delivery[1], d.monthsToMove) : t('nwTBD');
+
+function nwWhy(d, key) {
+  const s = d.scores, w = d.why;
+  switch (key) {
+    case 'value': return t('nwValueTip', { s: s.value, ppm: d.ppm, approx: d.ppmApprox, bench: d.bench, prem: d.premium,
+      station: escHTML(d.station), area: escHTML(groupName(groupOf(d))) });
+    case 'access': return t('msAccess', { s: s.access, walk: d.walk, station: escHTML(d.station), line: escHTML(d.line), bus: d.bus });
+    case 'certainty': return t('nwCertaintyTip', { s: s.certainty, status: d.priceStatus, fees: d.feesKnown, move: w.move, when: moveText(d) });
+    case 'running': return t('nwRunningTip', { s: s.running, mgmt: yenRange(d.mgmtFee), repair: yenRange(d.repairFund),
+      eff: d.feesPerM2Eff, repairM2: d.repairPerM2, upfront: d.upfront ? yen(d.upfront) : t('nwTBD') });
+    case 'space': return t('nwSpaceTip', { s: s.space, max: d.maxM2, range: d.areaRange });
+    case 'project': return t('nwProjectTip', s.project, w.extras.map(([code, param, p]) =>
+      `<li><span>${escHTML(t('nwEx.' + code, param))}</span><span>${p > 0 ? '+' : '−'}${Math.abs(p)}</span></li>`).join(''));
+  }
+}
+
+function nwTypesHTML(d) {
+  if (!d.types.length) return '';
+  const rows = d.types.map(ty => {
+    const price = ty.priceMin ? (ty.priceMax && ty.priceMax !== ty.priceMin ? `${t('priceShort', ty.priceMin)}–${t('priceShort', ty.priceMax)}` : t('priceShort', ty.priceMin)) : null;
+    const ppm = ty.priceMin && ty.m2 ? ((ty.priceMin + (ty.priceMax || ty.priceMin)) / 2 / ty.m2).toFixed(1) : null;
+    const floors = ty.rooms.map(r => r.floor).filter(Boolean);
+    const where = d.kind === 'unsold' ? `<a href="${ty.url}" target="_blank" rel="noopener">SUUMO ${ICON.out}</a>`
+      : floors.length ? floors.map(f => t('floorN', f)).join(', ') + (ty.roomCount > floors.length ? ` +${ty.roomCount - floors.length}` : '') : '';
+    return `<tr><td>${escHTML(ty.name)}${ty.corner ? ' ◢' : ''}</td><td>${escHTML((ty.layout || '').replace(/\(.*?\)/g, '').slice(0, 14))}</td>
+      <td>${ty.m2 ?? '—'}m²</td><td class="${price ? '' : 'tbd'}">${price || escHTML(ty.priceText || t('nwTBD'))}</td>
+      <td>${ppm ? ppm + '万' : ''}</td><td>${where}</td></tr>`;
+  }).join('');
+  return `<details class="nw-types"${d.types.length <= 4 ? ' open' : ''}><summary>${t('nwTypes', d.types.length, d.kind)}</summary>
+    <table><tr><th>${t(d.kind === 'unsold' ? 'nwColFloor' : 'nwColType')}</th><th>${t('layout')}</th><th>m²</th><th>${t('row.price')}</th><th>万/m²</th><th></th></tr>${rows}</table></details>`;
+}
+
+function nwPriceTagHTML(d) {
+  if (d.priceAnnounced) return `<span class="tag tag-green">${t('nwAnnounced')}</span>`;
+  if (!d.priceChange) return '';
+  const first = d.history.find(h => h[1])?.[1];
+  const tip = `<div class="tip-h">${t('nwPriceHist')}</div><ul class="tip-list">${d.history.map(h =>
+    `<li><span>${h[0]}</span><span>${h[1] ? t('priceShort', h[1]) + (h[2] && h[2] !== h[1] ? '–' + t('priceShort', h[2]) : '') : t('nwTBD')}</span></li>`).join('')}</ul>`;
+  const pct = Math.abs(d.priceChange / first * 100).toFixed(1);
+  return d.priceChange < 0
+    ? `<span class="tag tag-green" data-tip="${escAttr(tip)}">↓ ${t('priceShort', -d.priceChange)} (−${pct}%)</span>`
+    : `<span class="tag tag-amber" data-tip="${escAttr(tip)}">↑ ${t('priceShort', d.priceChange)} (+${pct}%)</span>`;
+}
+
+function nwSalesHTML(d) {
+  const lines = [];
+  if (d.phase) lines.push(t('nwPhaseLine', d.phase, d.phasePrev, d.phaseChange));
+  lines.push(t('nwStockLine', { stock: d.stockNow, types: d.typesListed, sold: d.sold, since: d.trackSince,
+                                pace: d.pacePerWeek, sellOut: d.sellOutWeeks }));
+  return `<div class="nw-sched" data-tip="${escAttr(t('nwSalesTip'))}"><b>${t('nwSales')}</b><br>${lines.join('<br>')}</div>`;
+}
+
+function nwCardHTML(d) {
+  const s = d.scores, grade = scoreGrade(s.total), kc = nwKindClass(d);
+  const tags = [];
+  const pt = nwPriceTagHTML(d);
+  if (pt) tags.push(pt);
+  tags.push(liqTagHTML(d, 'condo'));
+  if (d.major.length) tags.push(`<span class="tag tag-green" title="${escAttr(d.major.join(', '))}">${t('nwMajorTag')}</span>`);
+  if (d.repairPerM2 != null && d.repairPerM2 < LOW_REPAIR_PER_M2)
+    tags.push(`<span class="tag tag-amber" data-tip="${escAttr(t('nwLowRepairTip', d.repairPerM2))}">${t('nwLowRepair')}</span>`);
+  if (d.seismicIso) tags.push(`<span class="tag tag-green">${t('nwIso')}</span>`);
+  if (d.zeh) tags.push(`<span class="tag tag-green">ZEH</span>`);
+  if (d.landRights === 'leased') tags.push(`<span class="tag tag-amber">${t('tagLeasehold')}</span>`);
+  if (d.daysListed !== null) tags.push(`<span class="tag tag-muted">${t('tagListed', d.daysListed)}</span>`);
+  const dealLine = d.premium == null ? `<div class="deal-line" data-tip="${escAttr(nwWhy(d, 'value'))}">${t('nwNoPremium')}</div>`
+    : `<div class="deal-line" data-tip="${escAttr(nwWhy(d, 'value'))}">${d.ppmApprox ? '~' : ''}${d.ppm}万/m² · <span class="${d.premium <= 10 ? 'deal-good' : d.premium >= 25 ? 'deal-bad' : ''}">${t('nwPremium', d.premium)}</span></div>`;
+
+  return `
+  <div class="card has-area" style="${areaStyle(d)}">
+    <div class="card-photo">
+      <div class="card-photo-bg" style="background:${GRAD_MS[d.name.length % GRAD_MS.length]}">${d.image ? '' : ICON.condo}</div>
+      ${d.image ? `<img class="card-photo-img" src="${d.image}" alt="${t('photoAlt')}" loading="lazy" onerror="this.style.display='none'">` : ''}
+      <span class="badge-layout badge-kind ${kc}">${t('nwKind.' + kc)}</span>
+      <div class="badge-tr"><span class="badge-area">${escHTML(groupName(groupOf(d)))}</span></div>
+      <span class="badge-type">${d.bldgFloors ? t('bldgFloorsN', d.bldgFloors) : ''}</span>
+      <div class="badge-score ${grade}" data-tip="${escAttr(totalTip(s, NW_SCORE_MAX))}">
+        <span class="badge-score-n">${s.total}</span><span class="badge-score-max">/100</span>
+      </div>
+    </div>
+    <div class="card-body">
+      ${nwPriceHTML(d)}
+      ${d.priceBand ? `<div class="nw-band">${t('nwBand', escHTML(d.priceBand))}</div>` : ''}
+      ${dealLine}
+      <div class="card-addr">
+        <span class="addr-pin">${ICON.pin}</span>
+        <div><div class="addr-area">${escHTML(d.name)}</div><div class="addr-street">${areaPill(d)} ${escHTML(d.address)}</div></div>
+      </div>
+      <div class="divider"></div>
+      <div class="specs">
+        <div class="spec" data-tip="${escAttr(nwWhy(d, 'certainty'))}"><span class="spec-lbl">${t('nwMoveIn')}</span>
+          <span class="spec-val">${moveText(d)}</span></div>
+        <div class="spec"><span class="spec-lbl">${t('nwUnits')}</span>
+          <span class="spec-val">${d.unitsOnSale ?? '—'} <span class="spec-sub">/ ${d.totalUnits ?? '?'} ${t('nwTotal')}</span></span></div>
+        <div class="spec"><span class="spec-lbl">${t('floorArea')}</span>
+          <span class="spec-val">${d.areaRange[0] ?? '?'}${d.areaRange[1] !== d.areaRange[0] ? '–' + d.areaRange[1] : ''} m²</span></div>
+        <div class="spec" data-tip="${escAttr(nwWhy(d, 'running'))}"><span class="spec-lbl">${t('feesMonth')}</span>
+          <span class="spec-val">${d.fees ? '~' + yen(d.fees) : t('nwTBD')}</span></div>
+        <div class="spec" data-tip="${escAttr(t('nwUpfrontTip'))}"><span class="spec-lbl">${t('nwUpfront')}</span>
+          <span class="spec-val">${d.upfront ? '~' + yen(d.upfront) : d.kind === 'unsold' ? t('nwNone') : t('nwTBD')}</span></div>
+        <div class="spec"><span class="spec-lbl">${t('row.parking')}</span>
+          <span class="spec-val">${d.parkingSpaces ? `${d.parkingSpaces}${t('nwSpaces')}` : '—'} <span class="spec-sub">${d.parkingFee?.[0] ? yenRange(d.parkingFee) : ''}</span></span></div>
+      </div>
+      ${stationHTML(d)}
+      ${nwSalesHTML(d)}
+      ${d.developers.length ? `<div class="nw-sched"><b>${t('nwDev')}</b> ${escHTML(d.developers.join(' · '))}</div>` : ''}
+      ${d.schedule ? `<div class="nw-sched" title="${escAttr(d.schedule)}"><b>${t('nwSchedule')}</b> ${escHTML(d.schedule.slice(0, 70))}${d.schedule.length > 70 ? '…' : ''}</div>` : ''}
+      ${nwTypesHTML(d)}
+      <div class="score-section">
+        <div class="score-top">
+          <span class="score-heading">${t('scoreBreakdown')}</span>
+          <div class="score-num"><span class="score-big ${grade}">${s.total}</span><span class="score-denom">&thinsp;/ 100</span></div>
+        </div>
+        ${scoreBars(d, NW_SCORE_MAX, nwWhy, 'six nw')}
+      </div>
+      <div class="tags">${tags.join('')}</div>
+      ${cardFoot('new', d.key, d.url)}
+    </div>
+  </div>`;
+}
+
+function nwFiltered(ignoreArea = false) {
+  const tg = nw.toggles, sl = nw.sl;
+  return newMansions.filter(d => {
+    if (!ignoreArea && ms.area !== 'all' && d.group !== ms.area) return false;
+    if (d.priceMin && d.priceMin > sl.maxPrice) return false;
+    if (d.maxM2 < sl.minM2) return false;
+    if (d.monthsToMove != null && d.monthsToMove > sl.maxMove) return false;
+    if (tg.has('priced') && !d.priceMin) return false;
+    if (tg.has('ready') && d.monthsToMove !== 0) return false;
+    if (tg.has('project') && d.kind !== 'project') return false;
+    if (tg.has('unsold') && d.kind !== 'unsold') return false;
+    if (tg.has('major') && !d.major.length) return false;
+    if (tg.has('liqlow') && !(d.liq && !['high', 'mid'].includes(d.liq.level))) return false;
+    return true;
+  });
+}
+
+const NW_SORTS = {
+  'score-desc':  (a, b) => b.scores.total - a.scores.total,
+  'price-asc':   (a, b) => (a.priceMin ?? 1e9) - (b.priceMin ?? 1e9),
+  'ppm-asc':     (a, b) => (a.ppm ?? 1e9) - (b.ppm ?? 1e9),
+  'premium-asc': (a, b) => (a.premium ?? 1e9) - (b.premium ?? 1e9),
+  'move-asc':    (a, b) => (a.monthsToMove ?? 999) - (b.monthsToMove ?? 999),
+  'area-desc':   (a, b) => b.maxM2 - a.maxM2,
+  'pace-desc':   (a, b) => (b.pacePerWeek ?? -1) - (a.pacePerWeek ?? -1) || (b.soldWeek ?? -1) - (a.soldWeek ?? -1),
+};
+
+function nwRender() {
+  const data = nwFiltered().sort(NW_SORTS[nw.sort]);
+  document.getElementById('nw-grid').innerHTML = data.length
+    ? data.map(nwCardHTML).join('')
+    : `<div class="empty"><p>${t(newMansions.some(d => ms.area === 'all' || d.group === ms.area) ? 'emptyMs' : 'nwNoneInArea')}</p></div>`;
+  document.getElementById('nw-res-count').textContent = data.length;
+  tabCounts.apartments = data.length;
+  refreshHeader();
+}
+
+function initNew() {
+  const prices = newMansions.map(d => d.priceMax || d.priceMin).filter(Boolean);
+  const maxP = prices.length ? Math.ceil(Math.max(...prices) / 100) * 100 : 10000;
+  const minP = newMansions.map(d => d.priceMin).filter(Boolean);
+  const moves = newMansions.map(d => d.monthsToMove).filter(v => v != null);
+  const maxMove = Math.max(12, ...moves);
+  nw.sl = makeSliders('nw-sliders', 'nwSliders', [
+    { key: 'maxPrice', label: 'maxPrice', min: minP.length ? Math.floor(Math.min(...minP) / 100) * 100 : 0, max: maxP, step: 100, value: maxP, fmt: 'fmtMaxPrice' },
+    { key: 'minM2',    label: 'minSize',  min: 30, max: 120, step: 1, value: 30, fmt: 'fmtMinM2' },
+    { key: 'maxMove',  label: 'nwMoveBy', min: 0, max: maxMove, step: 1, value: maxMove, fmt: 'nwFmtMove' },
+  ], () => { renderSubcats(); nwRender(); });
+  document.getElementById('nw-toggle-chips').addEventListener('click', e => {
+    const btn = e.target.closest('.chip'); if (!btn) return;
+    btn.classList.toggle('active') ? nw.toggles.add(btn.dataset.v) : nw.toggles.delete(btn.dataset.v);
+    renderSubcats(); nwRender();
+  });
+  document.getElementById('nw-sort-sel').addEventListener('change', e => { nw.sort = e.target.value; nwRender(); });
+}
+
+/* Used | New switch (per area) */
+function renderCat() {
+  const inArea = list => list.filter(d => ms.area === 'all' || d.group === ms.area).length;
+  document.getElementById('ms-cat').innerHTML = ['used', 'new'].map(c =>
+    `<button type="button" role="tab" class="cat-btn${ms.cat === c ? ' active' : ''}" data-cat="${c}">${t('cat_' + c)}
+      <span class="n">${inArea(c === 'new' ? newMansions : mansions)}</span></button>`).join('');
+  document.getElementById('ms-cat-note').textContent = ms.cat === 'new' ? t('nwCatNote') : '';
+  document.getElementById('ms-used').hidden = ms.cat !== 'used';
+  document.getElementById('ms-new').hidden = ms.cat !== 'new';
+}
+
+function renderApartments() {
+  renderSubcats();
+  renderCat();
+  ms.cat === 'new' ? nwRender() : msRender();
+}
+
+/* ═══════════════════════════════════════════════
    HEADER · TABS · THEME · LANGUAGE
 ═══════════════════════════════════════════════ */
 function refreshHeader() {
@@ -1059,7 +1342,7 @@ function setLang(lang) {
   applyStaticText();
   sliderSets.forEach(relabel => relabel());
   render();
-  msRender();
+  renderApartments();
   renderTray();
   if (!document.getElementById('cmp-modal').hidden) renderCompare();
   resetCharts();
@@ -1091,11 +1374,13 @@ function initChrome() {
 /* ═══════════════════════════════════════════════
    INIT
 ═══════════════════════════════════════════════ */
+newMansions.forEach((d, i) => Object.assign(d, { id: i, price: d.priceMin, imageUrl: d.image, suumoUrl: d.url }));
 applyStaticText();
 initTips();
 initChrome();
 initHouses();
 initApartments();
+initNew();
 initCompare();
 render();
-msRender();
+renderApartments();

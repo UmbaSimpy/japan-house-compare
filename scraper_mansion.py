@@ -117,7 +117,9 @@ def parse_parking(text):
     t = nfkc(text).strip()
     if t in ("", "-"):
         return "unknown", None
-    if t in ("無", "なし") or "空無" in t:
+    if re.search(r"空無|空き?なし|満車|空車待ち|キャンセル待ち", t):
+        return "full", parse_yen(t)          # parking exists, just no vacancy right now (waitlist)
+    if t in ("無", "なし"):
         return "none", None
     fee = parse_yen(t)
     if "敷地内" in t:
@@ -133,7 +135,8 @@ def scrape_detail(url):
         return None
     d = build_data_dict(BeautifulSoup(html, "html.parser"))
     floor, bldg_floors, structure = parse_floor(d)
-    parking, parking_fee = parse_parking(first_match(d, "駐車場"))
+    parking_text = nfkc(first_match(d, "駐車場")).strip()
+    parking, parking_fee = parse_parking(parking_text)
     reno = nfkc(first_match(d, "リフォーム"))
     units = re.search(r"(\d+)戸", nfkc(first_match(d, "総戸数")))
     balcony = re.search(r"バルコニー面積[:：]?\s*([\d.]+)", nfkc(first_match(d, "その他面積")))
@@ -147,6 +150,7 @@ def scrape_detail(url):
         "facing":      nfkc(first_match(d, "向き")).strip(" -") or None,
         "parking":     parking,
         "parkingFee":  parking_fee,
+        "parkingText": parking_text[:80] or None,
         "renovation":  bool(reno) and reno.strip() not in ("-", "無"),
         "renoNote":    re.sub(r"\s*※.*", "", reno)[:80] if reno.strip() not in ("", "-") else None,
         "landRights":  "leased" if re.search(r"借地|地上権", first_match(d, "敷地の権利形態")) else "owned",

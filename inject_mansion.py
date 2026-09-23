@@ -8,17 +8,21 @@ Scores are computed here only — the site and notify.py both read them,
 so there is a single source of truth.
 
 SCORING (100 pts)
-  VALUE     25  Price/m² vs what similar condos cost (age, walk, station,
+  VALUE     25  Price/m² vs what similar condos cost (age, walk, floor, station,
                 area, tower, renovated, elevator) — regression residual,
                 percentile-ranked across all areas.
   ACCESS    20  Door-to-station minutes: ≤5=20 ≤10=16 ≤15=12 ≤20=8 ≤30=4.
   CONDITION 20  Age: ≤5y=16 ≤10=14 ≤15=12 ≤20=10 ≤30=7, older but built
-                1982+ (新耐震)=4, pre-1982=0.  Renovated +4.
+                1982+ (新耐震)=4, pre-1982=0.  Renovated +4 (buildings ≥10 years
+                old only — younger ones' リフォーム is a cosmetic refresh).
   RUNNING   15  Monthly 管理費+修繕積立金 per m², percentile (cheaper wins).
   SPACE     10  Floor area, percentile.
   EXTRAS    10  Floor ≥10F +3 / ≥4F +2 / ≥2F +1, south-ish +2, elevator +2,
-                on-site parking +1, pets OK +1, ≥50 units +1; leasehold −3,
+                parking in the building +1, pets OK +1, ≥50 units +1; leasehold −3,
                 liquefaction risk high −2 / somewhat high −1 (see hazard.py).
+
+Building facts (elevator, pets, parking) are unified per building before
+scoring — see apply_building_consensus().
 """
 
 import json
@@ -80,21 +84,23 @@ def solve(A, b):
     return [M[i][n] / M[i][i] if abs(M[i][i]) > 1e-12 else 0.0 for i in range(n)]
 
 
+def model_feats(r, stations, areas):
+    a = r["age"] if r["age"] is not None else 30
+    return ([1.0, a / 10, (a / 10) ** 2, min(r["walk"], 40) / 10,
+             min(r["floor"] or 1, 40) / 10,          # higher floors cost more by design
+             1.0 if (r["bldgFloors"] or 0) >= 20 else 0.0,
+             1.0 if r["renoCounts"] else 0.0,
+             1.0 if r["elevator"] else 0.0]
+            + [1.0 if r["station"] == s else 0.0 for s in stations]
+            + [1.0 if r["areaKey"] == ak else 0.0 for ak in areas])
+
+
 def fair_price_residuals(rows):
     """Return log-residuals (actual − expected price/m²). Negative = cheaper than peers."""
     stations = [s for s, c in Counter(r["station"] for r in rows).items() if c >= 15]
     areas = sorted({r["areaKey"] for r in rows})[1:]        # area dummies (first = baseline)
 
-    def feats(r):
-        a = r["age"] if r["age"] is not None else 30
-        return ([1.0, a / 10, (a / 10) ** 2, min(r["walk"], 40) / 10,
-                 1.0 if (r["bldgFloors"] or 0) >= 20 else 0.0,
-                 1.0 if r["renovation"] else 0.0,
-                 1.0 if r["elevator"] else 0.0]
-                + [1.0 if r["station"] == s else 0.0 for s in stations]
-                + [1.0 if r["areaKey"] == ak else 0.0 for ak in areas])
-
-    X = [feats(r) for r in rows]
+    X = [model_feats(r, stations, areas) for r in rows]
     y = [math.log(r["ppm"]) for r in rows]
     if len(rows) < 3 * len(X[0]):          # too few points to fit — plain ¥/m² instead
         mean = sum(y) / len(y)
@@ -118,7 +124,7 @@ def condition_pts(r):
         base = 0
     else:
         base = 16 if a <= 5 else 14 if a <= 10 else 12 if a <= 15 else 10 if a <= 20 else 7 if a <= 30 else 4
-    return min(20, base + (4 if r["renovation"] else 0))
+    return min(20, base + (4 if r["renoCounts"] else 0))
 
 
 LIQ_PENALTY = {"high": 2, "mid": 1}   # piled RC building usually survives; grounds/utilities don't
@@ -133,8 +139,8 @@ def extras_pts(r):
         items.append(["south", r["facing"], 2])
     if r["elevator"]:
         items.append(["elevator", None, 2])
-    if r["parking"] == "onsite":
-        items.append(["parking", None, 1])
+    if r["parking"] in ("onsite", "full", "building"):
+        items.append(["parking", r["parking"], 1])
     if r["pet"]:
         items.append(["pet", None, 1])
     if (r["totalUnits"] or 0) >= 50:
@@ -152,7 +158,8 @@ SMALL_KANA = str.maketrans("ァィゥェォャュョッヮ", "アイウエオヤ
 
 def clean_name(name):
     """Strip agent prefixes / marketing / SUUMO's '...' truncation from a building name."""
-    n = re.sub(r"^Asobi\+\s*", "", name)
+    n = re.sub(r"【[^】]*】", " ", name).strip()          # 【売主】【社有】【仲介手数料ゼロ】…
+    n = re.sub(r"^Asobi\+\s*", "", n)
     n = re.sub(r"\s+\S*(駅|徒歩|向き|リノベ|リフォーム)[\s\S]*$", "", n)
     n = re.sub(r"・?\d+階.*$|[(（]最上階[)）]", "", n)
     return n.replace("...", "").replace("…", "").strip()
@@ -172,11 +179,38 @@ def bldg_keys(names):
     return out
 
 
+ELEVATOR_MIN_FLOORS = 6     # Japanese condos this tall practically always have one
+RENO_MIN_AGE = 10           # below this, "リフォーム" is a cosmetic refresh (wallpaper, cleaning)
+
+
+def apply_building_consensus(raw):
+    """Elevator, pet policy and parking belong to the building, but reach us per listing:
+    elevator/pets from SUUMO search filters the agent may not tick, parking from free text
+    ("空無" = full, "-" = not stated). A missing tick is not a "no": if any listing in the
+    building confirms a fact, every unit in it gets it."""
+    by_bldg = {}
+    for r in raw:
+        by_bldg.setdefault(r["bldgKey"], []).append(r)
+    for rs in by_bldg.values():
+        floors = Counter(r["bldgFloors"] for r in rs if r["bldgFloors"]).most_common(1)
+        elevator = any(r["elevator"] for r in rs) or bool(floors and floors[0][0] >= ELEVATOR_MIN_FLOORS)
+        pet = any(r["pet"] for r in rs)
+        has_parking = any(r["parking"] in ("onsite", "full") for r in rs)
+        fees = [r["parkingFee"] for r in rs if r["parkingFee"]]
+        for r in rs:
+            r["elevator"], r["pet"] = elevator, pet
+            if has_parking and r["parking"] not in ("onsite", "full"):
+                r["parking"] = "building"            # exists; this listing doesn't say if a space is free
+            if r["parking"] in ("building", "full") and not r["parkingFee"] and fees:
+                r["parkingFee"] = min(fees)
+
+
 def build(raw, today):
     keys = bldg_keys({r["name"] for r in raw})
     for r in raw:
         r["bldgKey"] = f'{r["areaKey"]}:{keys[r["name"]]}'   # same brand name can exist in two cities
         r["name"] = clean_name(r["name"]) or r["name"]
+    apply_building_consensus(raw)
 
     # ── Deduplicate the same unit listed by several agents ──
     groups = {}
@@ -202,6 +236,7 @@ def build(raw, today):
     bldg_count = Counter(r["bldgKey"] for r in rows)
     for r in rows:
         r["age"]        = age_of(r["builtYear"], r["builtMonth"], today)
+        r["renoCounts"] = bool(r["renovation"]) and (r["age"] or 0) >= RENO_MIN_AGE
         r["shinTaishin"] = (r["builtYear"] or 0) >= SHIN_TAISHIN_YEAR
         r["ppm"]        = r["price"] / r["areaM2"]                       # 万円/m²
         fees = (r["mgmtFee"] or 0) + (r["repairFund"] or 0)
@@ -254,7 +289,7 @@ def build(raw, today):
             "station": r["station"], "line": r["line"], "walk": r["walk"], "bus": r["bus"],
             "access": r["access"],
             "parking": r["parking"], "parkingFee": r["parkingFee"],
-            "renovation": r["renovation"], "renoNote": r["renoNote"],
+            "renovation": r["renovation"], "renoCounts": r["renoCounts"], "renoNote": r["renoNote"],
             "landRights": r["landRights"], "pet": r["pet"], "elevator": r["elevator"],
             "balconyM2": r["balconyM2"], "sameBldg": r["sameBldg"], "agents": r["agents"],
             "priceCut": r["priceCut"], "priceChange": r["priceChange"], "priceHistory": r["priceHistory"],

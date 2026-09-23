@@ -5,6 +5,8 @@ Houses:  compares against known_nc_ids.json; scores computed here
          (mirrors the JS scoreSet() function).
 Condos:  compares unit keys against known_ms_units.json; scores come
          pre-computed in mansions_clean.json (inject_mansion.py).
+New:     compares projects/buildings against known_new.json (new, prices
+         announced, price changes, extra never-occupied units).
 """
 
 import json, os, re, urllib.request, urllib.parse
@@ -192,6 +194,75 @@ def condo_section(today):
     return lines, persist
 
 
+# ── New condos ────────────────────────────────────────
+NEW_STATUS = os.environ.get('NEW_STATUS', 'success')   # outcome of the new-condo scrape step
+
+
+def fmt_range(lo, hi):
+    if not lo:
+        return "price TBD"
+    return f"¥{fmt_price(lo)}" + (f"–{fmt_price(hi)}" if hi and hi != lo else "")
+
+
+def new_condo_section(today):
+    """New projects / buildings, prices announced, price changes, extra never-occupied units."""
+    clean = Path('newms_clean.json')
+    if NEW_STATUS != 'success' or not clean.exists():
+        return [f"\n🏗 NEW CONDOS — ⚠️ scrape failed, site shows the previous data\n{ACTIONS}"], None
+    items = json.loads(clean.read_text(encoding='utf-8'))
+    known_file = Path('known_new.json')
+    per_area = {}
+    for d in items:
+        label = AREA_LABEL.get(d.get('group'), d['area'])
+        per_area[label] = per_area.get(label, 0) + 1
+    lines = [f"\n🏗 NEW CONDOS — {len(items)} listed ({' · '.join(f'{k} {v}' for k, v in per_area.items())})"]
+    tag = lambda d: f"[{AREA_LABEL.get(d.get('group'), d['area'])}] {d['name']}"
+    move = lambda d: "move in now" if d['monthsToMove'] == 0 else \
+        f"move-in {d['delivery'][0]}/{d['delivery'][1]}" if d['delivery'] and d['delivery'][0] else "move-in TBD"
+
+    if not known_file.exists():
+        lines.append("Tracking started today — changes will be reported from tomorrow.")
+    else:
+        known = json.loads(known_file.read_text(encoding='utf-8'))
+        events = []
+        for d in items:
+            k = known.get(d['key'])
+            if k is None:
+                events.append(f"  🆕 {tag(d)}\n    {fmt_range(d['priceMin'], d['priceMax'])}  |  {move(d)}"
+                              f"  |  Score: {d['scores']['total']}/100\n    {d['url']}")
+            elif not k['priceMin'] and d['priceMin']:
+                events.append(f"  💴 Prices announced: {tag(d)}\n    {fmt_range(d['priceMin'], d['priceMax'])}"
+                              f"  |  Score: {d['scores']['total']}/100\n    {d['url']}")
+            elif k['priceMin'] and d['priceMin'] and (k['priceMin'], k['priceMax']) != (d['priceMin'], d['priceMax']):
+                arrow = "📉" if d['priceMin'] < k['priceMin'] else "📈"
+                events.append(f"  {arrow} {tag(d)}: {fmt_range(k['priceMin'], k['priceMax'])} → "
+                              f"{fmt_range(d['priceMin'], d['priceMax'])}\n    {d['url']}")
+            elif d['kind'] == 'unsold' and (d['unitsOnSale'] or 0) > (k.get('units') or 0):
+                events.append(f"  ➕ {d['unitsOnSale'] - (k.get('units') or 0)} more never-occupied unit(s): {tag(d)}"
+                              f"\n    {fmt_range(d['priceMin'], d['priceMax'])}\n    {d['url']}")
+            if k is None:
+                continue
+            # demand signals — reported alongside any price event above
+            if d.get('phase') and k.get('phase') and d['phase'] != k['phase']:
+                ch = d.get('phaseChange')
+                events.append(f"  🔔 New sales phase: {tag(d)} — {k['phase']} → {d['phase']}"
+                              + (f" (prices {ch:+}% vs {d.get('phasePrev')})" if ch is not None else "")
+                              + f"\n    {d['url']}")
+            if d.get('stockNow') is not None and k.get('stock') is not None and d['stockNow'] < k['stock']:
+                pace = f", ~{d['pacePerWeek']}/week" if d.get('pacePerWeek') else ""
+                events.append(f"  🔥 {tag(d)}: {k['stock'] - d['stockNow']} sold since last run "
+                              f"({d['stockNow']} left{pace})")
+        lines += events or ["No changes since last run."]
+
+    def persist():
+        known_file.write_text(json.dumps({d['key']: {'priceMin': d['priceMin'], 'priceMax': d['priceMax'],
+                                                     'units': d['unitsOnSale'], 'phase': d.get('phase'),
+                                                     'stock': d.get('stockNow')} for d in items},
+                                         ensure_ascii=False, indent=1), encoding='utf-8')
+        print(f"New condos: saved {len(items)} keys")
+    return lines, persist
+
+
 # ── Main ──────────────────────────────────────────────
 if __name__ == '__main__':
     today = date.today().isoformat()
@@ -231,6 +302,8 @@ if __name__ == '__main__':
 
     ms_lines, ms_persist = condo_section(today)
     lines += ms_lines
+    nw_lines, nw_persist = new_condo_section(today)
+    lines += nw_lines
     clean = Path('mansions_clean.json')
     condos = json.loads(clean.read_text(encoding='utf-8')) if MS_STATUS == 'success' and clean.exists() else []
     lines += price_drop_section(scored, condos, today)
@@ -253,3 +326,5 @@ if __name__ == '__main__':
 
     if ms_persist:
         ms_persist()
+    if nw_persist:
+        nw_persist()

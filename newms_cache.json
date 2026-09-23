@@ -1,0 +1,771 @@
+{
+ "67736149": {
+  "area": "mihama",
+  "firstSeen": "2026-09-23",
+  "seeded": true,
+  "history": [
+   [
+    "2026-09-23",
+    null,
+    null,
+    8
+   ]
+  ],
+  "lastSeen": "2026-09-23"
+ },
+ "67732575": {
+  "area": "mihama",
+  "firstSeen": "2026-09-23",
+  "seeded": true,
+  "history": [
+   [
+    "2026-09-23",
+    7340,
+    13000,
+    null
+   ]
+  ],
+  "lastSeen": "2026-09-23"
+ },
+ "67723770": {
+  "area": "mihama",
+  "firstSeen": "2026-09-23",
+  "seeded": true,
+  "history": [
+   [
+    "2026-09-23",
+    4890,
+    5990,
+    9
+   ]
+  ],
+  "lastSeen": "2026-09-23"
+ },
+ "21358848": {
+  "area": "mihama",
+  "firstSeen": "2026-09-23",
+  "seeded": true,
+  "history": [
+   [
+    "2026-09-23",
+    6480,
+    6480,
+    1
+   ]
+  ],
+  "detail": {
+   "mgmtFee": 17160,
+   "repairFund": 9830,
+   "totalUnits": 768,
+   "floor": 19,
+   "bldgFloors": 38,
+   "structure": "RC",
+   "facing": "北",
+   "parking": "full",
+   "parkingFee": null,
+   "renovation": false,
+   "renoNote": null,
+   "landRights": "owned",
+   "builder": "(株)熊谷組",
+   "balconyM2": 15.56,
+   "access": [
+    "JR京葉線「海浜幕張」歩16分"
+   ],
+   "parkingText": "空無"
+  },
+  "lastSeen": "2026-09-23"
+ },
+ "21711203": {
+  "area": "mihama",
+  "firstSeen": "2026-09-23",
+  "seeded": true,
+  "history": [
+   [
+    "2026-09-23",
+    6530,
+    6530,
+    1
+   ]
+  ],
+  "detail": {
+   "mgmtFee": 17160,
+   "repairFund": 9830,
+   "totalUnits": 768,
+   "floor": 20,
+   "bldgFloors": 38,
+   "structure": "RC",
+   "facing": "北",
+   "parking": "full",
+   "parkingFee": null,
+   "renovation": false,
+   "renoNote": null,
+   "landRights": "owned",
+   "builder": "(株)熊谷組",
+   "balconyM2": 15.56,
+   "access": [
+    "JR京葉線「海浜幕張」歩16分"
+   ],
+   "parkingText": "空無"
+  },
+  "lastSeen": "2026-09-23"
+ },
+ "21751053": {
+  "area": "mihama",
+  "firstSeen": "2026-09-23",
+  "seeded": true,
+  "history": [
+   [
+    "2026-09-23",
+    6680,
+    6680,
+    1
+   ]
+  ],
+  "detail": {
+   "mgmtFee": 17170,
+   "repairFund": 9840,
+   "totalUnits": 768,
+   "floor": 34,
+   "bldgFloors": 38,
+   "structure": "RC",
+   "facing": "北",
+   "parking": "full",
+   "parkingFee": null,
+   "renovation": false,
+   "renoNote": null,
+   "landRights": "owned",
+   "builder": "(株)熊谷組",
+   "balconyM2": 14.63,
+   "access": [
+    "JR京葉線「海浜幕張」歩16分"
+   ],
+   "parkingText": "空無"
+  },
+  "lastSeen": "2026-09-23"
+ },
+ "20383718": {
+  "area": "mihama",
+  "firstSeen": "2026-09-23",
+  "seeded": true,
+  "history": [
+   [
+    "2026-09-23",
+    6780,
+    6780,
+    1
+   ]
+  ],
+  "detail": {
+   "mgmtFee": 17350,
+   "repairFund": 9940,
+   "totalUnits": 768,
+   "floor": 35,
+   "bldgFloors": 38,
+   "structure": "RC",
+   "facing": "北",
+   "parking": "onsite",
+   "parkingFee": 8000,
+   "renovation": false,
+   "renoNote": null,
+   "landRights": "owned",
+   "builder": "(株)熊谷組",
+   "balconyM2": 15.56,
+   "access": [
+    "JR京葉線「海浜幕張」歩14分"
+   ]
+  },
+  "lastSeen": "2026-09-23"
+ },
+ "21611576": {
+  "area": "mihama",
+  "firstSeen": "2026-09-23",
+  "seeded": true,
+  "history": [
+   [
+    "2026-09-23",
+    6950,
+    6950,
+    1
+   ]
+  ],
+  "detail": {
+   "mgmtFee": 17950,
+   "repairFund": 10290,
+   "totalUnits": 768,
+   "floor": 19,
+   "bldgFloors": 38,
+   "structure": "SRC",
+   "facing": "東",
+   "parking": "full",
+   "parkingFee": null,
+   "renovation": false,
+   "renoNote": null,
+   "landRights": "owned",
+   "builder": "(株)熊谷組",
+   "balconyM2": 13.74,
+   "access": [
+    "JR京葉線「海浜幕張」歩16分",
+    "JR京葉線「検見川浜」歩20分"
+   ],
+   "parkingText": "空無"
+  },
+  "lastSeen": "2026-09-23"
+ },
+ "20344981": {
+  "area": "mihama",
+  "firstSeen": "2026-09-23",
+  "seeded": true,
+  "history": [
+   [
+    "2026-09-23",
+    6950,
+    6950,
+    1
+   ]
+  ],
+  "detail": {
+   "mgmtFee": 17950,
+   "repairFund": 10290,
+   "totalUnits": 768,
+   "floor": 19,
+   "bldgFloors": 38,
+   "structure": "RC",
+   "facing": "東",
+   "parking": "unknown",
+   "parkingFee": null,
+   "renovation": false,
+   "renoNote": null,
+   "landRights": "owned",
+   "builder": "(株)熊谷組",
+   "balconyM2": 13.74,
+   "access": [
+    "JR京葉線「海浜幕張」歩16分"
+   ]
+  },
+  "lastSeen": "2026-09-23"
+ },
+ "21230450": {
+  "area": "mihama",
+  "firstSeen": "2026-09-23",
+  "seeded": true,
+  "history": [
+   [
+    "2026-09-23",
+    7199,
+    7199,
+    1
+   ]
+  ],
+  "detail": {
+   "mgmtFee": 18110,
+   "repairFund": 10380,
+   "totalUnits": 768,
+   "floor": 18,
+   "bldgFloors": 38,
+   "structure": "RC",
+   "facing": "南",
+   "parking": "unknown",
+   "parkingFee": null,
+   "renovation": false,
+   "renoNote": null,
+   "landRights": "owned",
+   "builder": "株式会社熊谷組",
+   "balconyM2": 13.01,
+   "access": [
+    "JR京葉線「海浜幕張」歩16分",
+    "JR京葉線「検見川浜」歩16分",
+    "京成千葉線「検見川」歩28分"
+   ]
+  },
+  "lastSeen": "2026-09-23"
+ },
+ "20496447": {
+  "area": "mihama",
+  "firstSeen": "2026-09-23",
+  "seeded": true,
+  "history": [
+   [
+    "2026-09-23",
+    7280,
+    7280,
+    1
+   ]
+  ],
+  "detail": {
+   "mgmtFee": 17160,
+   "repairFund": 9830,
+   "totalUnits": 768,
+   "floor": 33,
+   "bldgFloors": 38,
+   "structure": "RC",
+   "facing": "北",
+   "parking": "unknown",
+   "parkingFee": null,
+   "renovation": false,
+   "renoNote": null,
+   "landRights": "owned",
+   "builder": "(株)熊谷組",
+   "balconyM2": 15.21,
+   "access": [
+    "JR京葉線「海浜幕張」歩16分"
+   ]
+  },
+  "lastSeen": "2026-09-23"
+ },
+ "21401358": {
+  "area": "mihama",
+  "firstSeen": "2026-09-23",
+  "seeded": true,
+  "history": [
+   [
+    "2026-09-23",
+    7500,
+    7500,
+    1
+   ]
+  ],
+  "detail": {
+   "mgmtFee": 17170,
+   "repairFund": 9840,
+   "totalUnits": 768,
+   "floor": 38,
+   "bldgFloors": 38,
+   "structure": "RC",
+   "facing": "北",
+   "parking": "onsite",
+   "parkingFee": 8000,
+   "renovation": false,
+   "renoNote": null,
+   "landRights": "owned",
+   "builder": "(株)熊谷組",
+   "balconyM2": 14.63,
+   "access": [
+    "JR京葉線「海浜幕張」歩16分",
+    "JR京葉線「検見川浜」歩14分"
+   ]
+  },
+  "lastSeen": "2026-09-23"
+ },
+ "21112674": {
+  "area": "mihama",
+  "firstSeen": "2026-09-23",
+  "seeded": true,
+  "history": [
+   [
+    "2026-09-23",
+    7780,
+    7780,
+    1
+   ]
+  ],
+  "detail": {
+   "mgmtFee": 17580,
+   "repairFund": 10080,
+   "totalUnits": 768,
+   "floor": 31,
+   "bldgFloors": 38,
+   "structure": "RC",
+   "facing": "西",
+   "parking": "unknown",
+   "parkingFee": null,
+   "renovation": false,
+   "renoNote": null,
+   "landRights": "owned",
+   "builder": null,
+   "balconyM2": 15.43,
+   "access": [
+    "JR京葉線「海浜幕張」歩16分"
+   ]
+  },
+  "lastSeen": "2026-09-23"
+ },
+ "21671125": {
+  "area": "mihama",
+  "firstSeen": "2026-09-23",
+  "seeded": true,
+  "history": [
+   [
+    "2026-09-23",
+    8499,
+    8499,
+    1
+   ]
+  ],
+  "detail": {
+   "mgmtFee": 21080,
+   "repairFund": 12080,
+   "totalUnits": 768,
+   "floor": 9,
+   "bldgFloors": 38,
+   "structure": "RC",
+   "facing": "北",
+   "parking": "onsite",
+   "parkingFee": 8000,
+   "renovation": false,
+   "renoNote": null,
+   "landRights": "owned",
+   "builder": "(株)熊谷組",
+   "balconyM2": 17.42,
+   "access": [
+    "JR京葉線「海浜幕張」歩16分",
+    "京成千葉線「検見川」歩26分",
+    "JR総武線「幕張」歩35分"
+   ]
+  },
+  "lastSeen": "2026-09-23"
+ },
+ "21334821": {
+  "area": "mihama",
+  "firstSeen": "2026-09-23",
+  "seeded": true,
+  "history": [
+   [
+    "2026-09-23",
+    8880,
+    8880,
+    1
+   ]
+  ],
+  "detail": {
+   "mgmtFee": 19610,
+   "repairFund": 11240,
+   "totalUnits": 768,
+   "floor": 29,
+   "bldgFloors": 38,
+   "structure": "RC",
+   "facing": "西",
+   "parking": "onsite",
+   "parkingFee": 8000,
+   "renovation": false,
+   "renoNote": null,
+   "landRights": "owned",
+   "builder": "(株)熊谷組",
+   "balconyM2": 0.8,
+   "access": [
+    "JR京葉線「海浜幕張」歩14分",
+    "JR京葉線「検見川浜」歩16分",
+    "京成千葉線「検見川」歩28分"
+   ]
+  },
+  "lastSeen": "2026-09-23"
+ },
+ "21019026": {
+  "area": "mihama",
+  "firstSeen": "2026-09-23",
+  "seeded": true,
+  "history": [
+   [
+    "2026-09-23",
+    8900,
+    8900,
+    1
+   ]
+  ],
+  "detail": {
+   "mgmtFee": 17160,
+   "repairFund": 9800,
+   "totalUnits": null,
+   "floor": 30,
+   "bldgFloors": 38,
+   "structure": "RC",
+   "facing": "南",
+   "parking": "full",
+   "parkingFee": null,
+   "renovation": false,
+   "renoNote": null,
+   "landRights": "owned",
+   "builder": "(株)熊谷組",
+   "balconyM2": 11.61,
+   "access": [
+    "JR京葉線「海浜幕張」歩14分"
+   ],
+   "parkingText": "空無"
+  },
+  "lastSeen": "2026-09-23"
+ },
+ "20570187": {
+  "area": "mihama",
+  "firstSeen": "2026-09-23",
+  "seeded": true,
+  "history": [
+   [
+    "2026-09-23",
+    8980,
+    8980,
+    1
+   ]
+  ],
+  "detail": {
+   "mgmtFee": 21080,
+   "repairFund": 12080,
+   "totalUnits": 768,
+   "floor": 22,
+   "bldgFloors": 38,
+   "structure": "RC",
+   "facing": "北東",
+   "parking": "unknown",
+   "parkingFee": null,
+   "renovation": false,
+   "renoNote": null,
+   "landRights": "owned",
+   "builder": "(株)熊谷組",
+   "balconyM2": 17.42,
+   "access": [
+    "JR京葉線「海浜幕張」歩16分"
+   ]
+  },
+  "lastSeen": "2026-09-23"
+ },
+ "20490622": {
+  "area": "mihama",
+  "firstSeen": "2026-09-23",
+  "seeded": true,
+  "history": [
+   [
+    "2026-09-23",
+    9180,
+    9180,
+    1
+   ]
+  ],
+  "detail": {
+   "mgmtFee": 19300,
+   "repairFund": 11070,
+   "totalUnits": 768,
+   "floor": 38,
+   "bldgFloors": 38,
+   "structure": "RC",
+   "facing": "南",
+   "parking": "unknown",
+   "parkingFee": null,
+   "renovation": false,
+   "renoNote": null,
+   "landRights": "owned",
+   "builder": "(株)熊谷組",
+   "balconyM2": 10.67,
+   "access": [
+    "JR京葉線「海浜幕張」歩16分"
+   ]
+  },
+  "lastSeen": "2026-09-23"
+ },
+ "20520305": {
+  "area": "mihama",
+  "firstSeen": "2026-09-23",
+  "seeded": true,
+  "history": [
+   [
+    "2026-09-23",
+    9480,
+    9480,
+    1
+   ]
+  ],
+  "detail": {
+   "mgmtFee": 21020,
+   "repairFund": 12050,
+   "totalUnits": 768,
+   "floor": 31,
+   "bldgFloors": 38,
+   "structure": "RC",
+   "facing": "南",
+   "parking": "unknown",
+   "parkingFee": null,
+   "renovation": false,
+   "renoNote": null,
+   "landRights": "owned",
+   "builder": "株式会社熊谷組",
+   "balconyM2": 18.01,
+   "access": [
+    "JR京葉線「海浜幕張」歩16分",
+    "JR京葉線「検見川浜」歩16分",
+    "京成千葉線「検見川」歩28分"
+   ]
+  },
+  "lastSeen": "2026-09-23"
+ },
+ "20483208": {
+  "area": "mihama",
+  "firstSeen": "2026-09-23",
+  "seeded": true,
+  "history": [
+   [
+    "2026-09-23",
+    9480,
+    9480,
+    1
+   ]
+  ],
+  "detail": {
+   "mgmtFee": 21020,
+   "repairFund": 12050,
+   "totalUnits": 769,
+   "floor": 31,
+   "bldgFloors": 38,
+   "structure": "RC",
+   "facing": "南",
+   "parking": "unknown",
+   "parkingFee": null,
+   "renovation": false,
+   "renoNote": null,
+   "landRights": "owned",
+   "builder": null,
+   "balconyM2": 17.19,
+   "access": [
+    "JR京葉線「海浜幕張」歩16分"
+   ]
+  },
+  "lastSeen": "2026-09-23"
+ },
+ "21084392": {
+  "area": "mihama",
+  "firstSeen": "2026-09-23",
+  "seeded": true,
+  "history": [
+   [
+    "2026-09-23",
+    9950,
+    9950,
+    1
+   ]
+  ],
+  "detail": {
+   "mgmtFee": 19200,
+   "repairFund": 11010,
+   "totalUnits": 768,
+   "floor": 21,
+   "bldgFloors": 38,
+   "structure": "RC",
+   "facing": "南",
+   "parking": "full",
+   "parkingFee": null,
+   "renovation": false,
+   "renoNote": null,
+   "landRights": "owned",
+   "builder": "熊谷組",
+   "balconyM2": 14.44,
+   "access": [
+    "JR京葉線「海浜幕張」歩17分",
+    "JR京葉線「検見川浜」歩13分"
+   ],
+   "parkingText": "空無"
+  },
+  "lastSeen": "2026-09-23"
+ },
+ "20827822": {
+  "area": "mihama",
+  "firstSeen": "2026-09-23",
+  "seeded": true,
+  "history": [
+   [
+    "2026-09-23",
+    9980,
+    9980,
+    1
+   ]
+  ],
+  "detail": {
+   "mgmtFee": 12030,
+   "repairFund": 20990,
+   "totalUnits": 768,
+   "floor": 19,
+   "bldgFloors": 38,
+   "structure": "RC",
+   "facing": "北西",
+   "parking": "unknown",
+   "parkingFee": null,
+   "renovation": false,
+   "renoNote": null,
+   "landRights": "owned",
+   "builder": null,
+   "balconyM2": 18.43,
+   "access": [
+    "JR京葉線「海浜幕張」歩17分",
+    "JR京葉線「海浜幕張」歩17分"
+   ]
+  },
+  "lastSeen": "2026-09-23"
+ },
+ "20521566": {
+  "area": "mihama",
+  "firstSeen": "2026-09-23",
+  "seeded": true,
+  "history": [
+   [
+    "2026-09-23",
+    10480,
+    10480,
+    1
+   ]
+  ],
+  "detail": {
+   "mgmtFee": 21020,
+   "repairFund": 12050,
+   "totalUnits": 768,
+   "floor": 36,
+   "bldgFloors": 38,
+   "structure": "RC",
+   "facing": "南",
+   "parking": "unknown",
+   "parkingFee": null,
+   "renovation": false,
+   "renoNote": null,
+   "landRights": "owned",
+   "builder": "株式会社熊谷組",
+   "balconyM2": 18.01,
+   "access": [
+    "JR京葉線「海浜幕張」歩16分",
+    "JR京葉線「検見川浜」歩16分",
+    "京成千葉線「検見川」歩28分"
+   ]
+  },
+  "lastSeen": "2026-09-23"
+ },
+ "20483206": {
+  "area": "mihama",
+  "firstSeen": "2026-09-23",
+  "seeded": true,
+  "history": [
+   [
+    "2026-09-23",
+    10480,
+    10480,
+    1
+   ]
+  ],
+  "detail": {
+   "mgmtFee": 21020,
+   "repairFund": 12050,
+   "totalUnits": 769,
+   "floor": 36,
+   "bldgFloors": 38,
+   "structure": "RC",
+   "facing": "南",
+   "parking": "unknown",
+   "parkingFee": null,
+   "renovation": false,
+   "renoNote": null,
+   "landRights": "owned",
+   "builder": null,
+   "balconyM2": 16.94,
+   "access": [
+    "JR京葉線「海浜幕張」歩16分"
+   ]
+  },
+  "lastSeen": "2026-09-23"
+ },
+ "67729827": {
+  "area": "inzai",
+  "firstSeen": "2026-09-23",
+  "seeded": true,
+  "history": [
+   [
+    "2026-09-23",
+    4100,
+    6290,
+    25
+   ]
+  ],
+  "lastSeen": "2026-09-23"
+ }
+}

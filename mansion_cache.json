@@ -138,7 +138,7 @@
    "bldgFloors": 4,
    "structure": "RC",
    "facing": "南西",
-   "parking": "none",
+   "parking": "full",
    "parkingFee": null,
    "renovation": true,
    "renoNote": "2026年5月完了 水回り設備交換:キッチン・浴室・トイレ 内装リフォーム:壁・床・全室 その他:ハウスクリーニング他",
@@ -149,7 +149,8 @@
     "JR京葉線「検見川浜」歩3分",
     "JR京葉線「稲毛海岸」歩22分",
     "京成千葉線「検見川」歩33分"
-   ]
+   ],
+   "parkingText": "空無"
   },
   "firstSeen": "2026-09-23",
   "seeded": true,
@@ -303,7 +304,7 @@
    "bldgFloors": 12,
    "structure": "RC",
    "facing": "南西",
-   "parking": "none",
+   "parking": "full",
    "parkingFee": null,
    "renovation": false,
    "renoNote": null,
@@ -314,7 +315,8 @@
     "JR京葉線「検見川浜」歩15分",
     "JR総武線「新検見川」バス6分真砂中央公園歩4分",
     "京成千葉線「検見川」歩27分"
-   ]
+   ],
+   "parkingText": "空無"
   },
   "firstSeen": "2026-09-23",
   "seeded": true,
@@ -336,7 +338,7 @@
    "bldgFloors": 10,
    "structure": "RC",
    "facing": "南西",
-   "parking": "none",
+   "parking": "full",
    "parkingFee": null,
    "renovation": false,
    "renoNote": null,
@@ -347,7 +349,8 @@
     "JR京葉線「検見川浜」歩2分",
     "JR京葉線「海浜幕張」歩22分",
     "京成千葉線「検見川」歩26分"
-   ]
+   ],
+   "parkingText": "空無"
   },
   "firstSeen": "2026-09-23",
   "seeded": true,
@@ -694,7 +697,7 @@
    "bldgFloors": 14,
    "structure": "RC",
    "facing": "南東",
-   "parking": "none",
+   "parking": "full",
    "parkingFee": null,
    "renovation": false,
    "renoNote": null,
@@ -704,7 +707,8 @@
    "access": [
     "JR京葉線「検見川浜」歩9分",
     "JR総武線「新検見川」バス9分美浜区役所入口歩4分"
-   ]
+   ],
+   "parkingText": "空無"
   },
   "firstSeen": "2026-09-23",
   "seeded": true,
@@ -923,7 +927,7 @@
    "bldgFloors": 21,
    "structure": "RC",
    "facing": "南西",
-   "parking": "none",
+   "parking": "full",
    "parkingFee": null,
    "renovation": false,
    "renoNote": null,
@@ -932,7 +936,8 @@
    "balconyM2": 32.16,
    "access": [
     "JR京葉線「海浜幕張」歩15分"
-   ]
+   ],
+   "parkingText": "空無"
   },
   "firstSeen": "2026-09-23",
   "seeded": true,
@@ -954,7 +959,7 @@
    "bldgFloors": 14,
    "structure": "RC",
    "facing": "南東",
-   "parking": "none",
+   "parking": "full",
    "parkingFee": null,
    "renovation": true,
    "renoNote": "2026年8月完了 水回り設備交換:キッチン・浴室・トイレ 内装リフォーム:壁・床・全室 その他:建具、給湯器 等",
@@ -963,7 +968,8 @@
    "balconyM2": 21.82,
    "access": [
     "JR京葉線「海浜幕張」歩9分"
-   ]
+   ],
+   "parkingText": "空無"
   },
   "firstSeen": "2026-09-23",
   "seeded": true,
@@ -985,7 +991,7 @@
    "bldgFloors": 20,
    "structure": "SRC",
    "facing": "東",
-   "parking": "none",
+   "parking": "full",
    "parkingFee": null,
    "renovation": true,
    "renoNote": "2026年8月完了 水回り設備交換:キッチン・浴室・トイレ 内装リフォーム:壁・床 その他:クリーニング等",
@@ -996,7 +1002,8 @@
     "JR京葉線「検見川浜」歩2分",
     "JR京葉線「稲毛海岸」歩25分",
     "京成千葉線「検見川」歩33分"
-   ]
+   ],
+   "parkingText": "空無"
   },
   "firstSeen": "2026-09-23",
   "seeded": true,
@@ -1049,7 +1056,7 @@
    "bldgFloors": 48,
    "structure": "RC",
    "facing": "東",
-   "parking": "none",
+   "parking": "full",
    "parkingFee": null,
    "renovation": false,
    "renoNote": null,
@@ -1058,7 +1065,8 @@
    "balconyM2": 13.77,
    "access": [
     "JR京葉線「海浜幕張」歩13分"
-   ]
+   ],
+   "parkingText": "空無"
   },
   "firstSeen": "2026-09-23",
   "seeded": true,
@@ -1146,7 +1154,7 @@
    "bldgFloors": 38,
    "structure": "RC",
    "facing": "西",
-   "parking": "none",
+   "parking": "full",
    "parkingFee": null,
    "renovation": false,
    "renoNote": null,
@@ -1155,7 +1163,8 @@
    "balconyM2": 12.63,
    "access": [
     "JR京葉線「海浜幕張」歩16分"
-   ]
+   ],
+   "parkingText": "空無"
   },
   "firstSeen": "2026-09-23",
   "seeded": true,
@@ -1210,7 +1219,7 @@
    "bldgFloors": 48,
    "structure": "RC",
    "facing": "南",
-   "parking": "none",
+   "parking": "full",
    "parkingFee": null,
    "renovation": false,
    "renoNote": null,
@@ -1219,7 +1228,8 @@
    "balconyM2": 15.5,
    "access": [
     "JR京葉線「海浜幕張」歩13分"
-   ]
+   ],
+   "parkingText": "空無"
   },
   "firstSeen": "2026-09-23",
   "seeded": true,
@@ -1241,7 +1251,7 @@
    "bldgFloors": 33,
    "structure": "RC",
    "facing": "南東",
-   "parking": "none",
+   "parking": "full",
    "parkingFee": null,
    "renovation": true,
    "renoNote": "2026年7月完了 水回り設備交換:キッチン・浴室・トイレ 内装リフォーム:壁・床・全室 その他:建具・給湯器等",
@@ -1250,7 +1260,8 @@
    "balconyM2": 27.17,
    "access": [
     "JR京葉線「海浜幕張」歩9分"
-   ]
+   ],
+   "parkingText": "空無"
   },
   "firstSeen": "2026-09-23",
   "seeded": true,
@@ -1272,7 +1283,7 @@
    "bldgFloors": 43,
    "structure": "RC",
    "facing": "南",
-   "parking": "none",
+   "parking": "full",
    "parkingFee": null,
    "renovation": true,
    "renoNote": "2024年6月完了 内装リフォーム:壁 その他:玄関部分エコカラッ...",
@@ -1281,7 +1292,8 @@
    "balconyM2": 34.43,
    "access": [
     "JR京葉線「海浜幕張」歩15分"
-   ]
+   ],
+   "parkingText": "空無"
   },
   "firstSeen": "2026-09-23",
   "seeded": true,
@@ -1600,7 +1612,7 @@
    "bldgFloors": 5,
    "structure": "RC",
    "facing": "南東",
-   "parking": "none",
+   "parking": "full",
    "parkingFee": null,
    "renovation": true,
    "renoNote": "2026年6月完了 水回り設備交換:キッチン・浴室・トイレ 内装リフォーム:壁・床・全室 その他:洗面所",
@@ -1611,7 +1623,8 @@
     "JR京葉線「稲毛海岸」歩10分",
     "京成千葉線「京成稲毛」歩23分",
     "京成千葉線「みどり台」歩32分"
-   ]
+   ],
+   "parkingText": "空無"
   },
   "firstSeen": "2026-09-23",
   "seeded": true,
@@ -1666,7 +1679,7 @@
    "bldgFloors": 5,
    "structure": "RC",
    "facing": "南東",
-   "parking": "none",
+   "parking": "full",
    "parkingFee": null,
    "renovation": true,
    "renoNote": "2026年8月完了 水回り設備交換:キッチン・浴室・トイレ 内装リフォーム:壁・床・全室",
@@ -1677,7 +1690,8 @@
     "JR京葉線「稲毛海岸」歩10分",
     "京成千葉線「京成稲毛」歩23分",
     "京成千葉線「みどり台」歩32分"
-   ]
+   ],
+   "parkingText": "空無"
   },
   "firstSeen": "2026-09-23",
   "seeded": true,
@@ -1831,7 +1845,7 @@
    "bldgFloors": 8,
    "structure": "SRC",
    "facing": "南東",
-   "parking": "none",
+   "parking": "full",
    "parkingFee": null,
    "renovation": true,
    "renoNote": "2026年11月完了予定 水回り設備交換:キッチン・浴室・トイレ 内装リフォーム:壁・床・全室",
@@ -1842,7 +1856,8 @@
     "JR京葉線「稲毛海岸」歩7分",
     "京成千葉線「京成稲毛」歩20分",
     "JR総武線「稲毛」歩24分"
-   ]
+   ],
+   "parkingText": "空無"
   },
   "firstSeen": "2026-09-23",
   "seeded": true,
@@ -1864,7 +1879,7 @@
    "bldgFloors": 14,
    "structure": "SRC",
    "facing": "南西",
-   "parking": "none",
+   "parking": "full",
    "parkingFee": null,
    "renovation": true,
    "renoNote": "2026年6月完了 水回り設備交換:キッチン・浴室・トイレ 内装リフォーム:壁・床",
@@ -1875,7 +1890,8 @@
     "JR京葉線「稲毛海岸」歩12分",
     "京成千葉線「京成稲毛」歩13分",
     "JR総武線「稲毛」歩21分"
-   ]
+   ],
+   "parkingText": "空無"
   },
   "firstSeen": "2026-09-23",
   "seeded": true,
@@ -1897,7 +1913,7 @@
    "bldgFloors": 14,
    "structure": "SRC",
    "facing": "南西",
-   "parking": "none",
+   "parking": "full",
    "parkingFee": null,
    "renovation": true,
    "renoNote": "2026年6月完了 水回り設備交換:キッチン・浴室・トイレ 内装リフォーム:壁・床・全室",
@@ -1908,7 +1924,8 @@
     "JR京葉線「稲毛海岸」歩12分",
     "京成千葉線「京成稲毛」歩13分",
     "JR総武線「稲毛」歩21分"
-   ]
+   ],
+   "parkingText": "空無"
   },
   "firstSeen": "2026-09-23",
   "seeded": true,
@@ -2227,7 +2244,7 @@
    "bldgFloors": 14,
    "structure": "SRC",
    "facing": "南東",
-   "parking": "none",
+   "parking": "full",
    "parkingFee": null,
    "renovation": true,
    "renoNote": "2026年6月完了 水回り設備交換:キッチン・浴室・トイレ 内装リフォーム:壁・床 その他:ハウスクリーニング等",
@@ -2238,7 +2255,8 @@
     "JR京葉線「稲毛海岸」歩11分",
     "京成千葉線「京成稲毛」歩11分",
     "JR総武線「稲毛」歩22分"
-   ]
+   ],
+   "parkingText": "空無"
   },
   "firstSeen": "2026-09-23",
   "seeded": true,
@@ -2293,7 +2311,7 @@
    "bldgFloors": 14,
    "structure": "SRC",
    "facing": "南東",
-   "parking": "none",
+   "parking": "full",
    "parkingFee": null,
    "renovation": true,
    "renoNote": "2026年6月完了 水回り設備交換:キッチン・浴室・トイレ 内装リフォーム:壁・床・全室",
@@ -2304,7 +2322,8 @@
     "JR京葉線「稲毛海岸」歩11分",
     "京成千葉線「京成稲毛」歩11分",
     "JR総武線「稲毛」歩21分"
-   ]
+   ],
+   "parkingText": "空無"
   },
   "firstSeen": "2026-09-23",
   "seeded": true,
@@ -3971,7 +3990,7 @@
    "bldgFloors": 10,
    "structure": "RC",
    "facing": "南東",
-   "parking": "none",
+   "parking": "full",
    "parkingFee": null,
    "renovation": false,
    "renoNote": null,
@@ -3982,7 +4001,8 @@
     "JR京葉線「検見川浜」歩3分",
     "JR京葉線「海浜幕張」歩20分",
     "京成千葉線「検見川」歩26分"
-   ]
+   ],
+   "parkingText": "空無"
   },
   "firstSeen": "2026-09-23",
   "seeded": true,
@@ -4367,7 +4387,7 @@
    "bldgFloors": 37,
    "structure": "RC",
    "facing": "西",
-   "parking": "none",
+   "parking": "full",
    "parkingFee": null,
    "renovation": false,
    "renoNote": null,
@@ -4376,7 +4396,8 @@
    "balconyM2": 13.58,
    "access": [
     "JR京葉線「海浜幕張」歩15分"
-   ]
+   ],
+   "parkingText": "空無"
   },
   "firstSeen": "2026-09-23",
   "seeded": true,
@@ -5171,7 +5192,7 @@
    "bldgFloors": 5,
    "structure": "RC",
    "facing": "南東",
-   "parking": "none",
+   "parking": "full",
    "parkingFee": null,
    "renovation": false,
    "renoNote": null,
@@ -5180,7 +5201,8 @@
    "balconyM2": 12.41,
    "access": [
     "JR京葉線「検見川浜」歩16分"
-   ]
+   ],
+   "parkingText": "空無"
   },
   "firstSeen": "2026-09-23",
   "seeded": true,
@@ -5328,7 +5350,7 @@
    "bldgFloors": 5,
    "structure": "RC",
    "facing": "南西",
-   "parking": "none",
+   "parking": "full",
    "parkingFee": null,
    "renovation": true,
    "renoNote": "2025年5月完了 水回り設備交換:キッチン・トイレ 内装リフォーム:壁・床",
@@ -5337,7 +5359,8 @@
    "balconyM2": 8.19,
    "access": [
     "JR京葉線「検見川浜」歩17分"
-   ]
+   ],
+   "parkingText": "空無"
   },
   "firstSeen": "2026-09-23",
   "seeded": true,
@@ -5359,7 +5382,7 @@
    "bldgFloors": 5,
    "structure": "RC",
    "facing": "南東",
-   "parking": "none",
+   "parking": "full",
    "parkingFee": null,
    "renovation": false,
    "renoNote": null,
@@ -5369,7 +5392,8 @@
    "access": [
     "JR京葉線「検見川浜」歩11分",
     "JR京葉線「稲毛海岸」歩15分"
-   ]
+   ],
+   "parkingText": "空無"
   },
   "firstSeen": "2026-09-23",
   "seeded": true,
@@ -5455,7 +5479,7 @@
    "bldgFloors": 5,
    "structure": "RC",
    "facing": "南東",
-   "parking": "none",
+   "parking": "full",
    "parkingFee": null,
    "renovation": false,
    "renoNote": null,
@@ -5464,7 +5488,8 @@
    "balconyM2": 12.69,
    "access": [
     "JR京葉線「検見川浜」歩9分"
-   ]
+   ],
+   "parkingText": "空無"
   },
   "firstSeen": "2026-09-23",
   "seeded": true,
@@ -6088,7 +6113,7 @@
    "bldgFloors": 11,
    "structure": "SRC",
    "facing": "南東",
-   "parking": "none",
+   "parking": "full",
    "parkingFee": null,
    "renovation": false,
    "renoNote": null,
@@ -6098,7 +6123,8 @@
    "access": [
     "JR京葉線「検見川浜」歩13分",
     "JR総武線「新検見川」バス7分真砂中央公園歩2分"
-   ]
+   ],
+   "parkingText": "空無"
   },
   "firstSeen": "2026-09-23",
   "seeded": true,
@@ -6443,7 +6469,7 @@
    "bldgFloors": 14,
    "structure": "SRC",
    "facing": "南東",
-   "parking": "none",
+   "parking": "full",
    "parkingFee": null,
    "renovation": false,
    "renoNote": null,
@@ -6452,7 +6478,8 @@
    "balconyM2": 6.05,
    "access": [
     "JR京葉線「検見川浜」歩11分"
-   ]
+   ],
+   "parkingText": "空無"
   },
   "firstSeen": "2026-09-23",
   "seeded": true,
@@ -6760,7 +6787,7 @@
    "bldgFloors": 14,
    "structure": "SRC",
    "facing": "南西",
-   "parking": "none",
+   "parking": "full",
    "parkingFee": null,
    "renovation": true,
    "renoNote": "2026年1月完了 水回り設備交換:キッチン・浴室・トイレ 内装リフォーム:壁・床 その他:洗面所/給湯器",
@@ -6770,7 +6797,8 @@
    "access": [
     "JR京葉線「検見川浜」歩11分",
     "JR総武線「新検見川」バス7分真砂中央公園歩4分"
-   ]
+   ],
+   "parkingText": "空無"
   },
   "firstSeen": "2026-09-23",
   "seeded": true,
@@ -6854,7 +6882,7 @@
    "bldgFloors": 5,
    "structure": "RC",
    "facing": "南",
-   "parking": "none",
+   "parking": "full",
    "parkingFee": null,
    "renovation": true,
    "renoNote": "2026年8月完了 水回り設備交換:キッチン・浴室・トイレ 内装リフォーム:床 その他:全室クロス/ハウス...",
@@ -6863,7 +6891,8 @@
    "balconyM2": 12.73,
    "access": [
     "JR京葉線「稲毛海岸」歩18分"
-   ]
+   ],
+   "parkingText": "空無"
   },
   "firstSeen": "2026-09-23",
   "seeded": true,
@@ -6885,7 +6914,7 @@
    "bldgFloors": 8,
    "structure": "SRC",
    "facing": "南東",
-   "parking": "none",
+   "parking": "full",
    "parkingFee": null,
    "renovation": true,
    "renoNote": "2026年11月完了予定 水回り設備交換:キッチン・浴室・トイレ 内装リフォーム:壁・床 その他:エアコン設置",
@@ -6896,7 +6925,8 @@
     "JR京葉線「稲毛海岸」歩7分",
     "京成千葉線「京成稲毛」歩22分",
     "JR総武線快速「稲毛」歩23分"
-   ]
+   ],
+   "parkingText": "空無"
   },
   "firstSeen": "2026-09-23",
   "seeded": true,
@@ -7045,7 +7075,7 @@
    "bldgFloors": 14,
    "structure": "SRC",
    "facing": "南西",
-   "parking": "none",
+   "parking": "full",
    "parkingFee": null,
    "renovation": true,
    "renoNote": "2026年6月完了 水回り設備交換:キッチン・浴室・トイレ 内装リフォーム:壁・床・全室 その他:ハウスクリーニング...",
@@ -7056,7 +7086,8 @@
     "JR京葉線「稲毛海岸」歩12分",
     "京成千葉線「京成稲毛」歩13分",
     "JR総武線快速「稲毛」歩20分"
-   ]
+   ],
+   "parkingText": "空無"
   },
   "firstSeen": "2026-09-23",
   "seeded": true,
@@ -7078,7 +7109,7 @@
    "bldgFloors": 14,
    "structure": "SRC",
    "facing": "南西",
-   "parking": "none",
+   "parking": "full",
    "parkingFee": null,
    "renovation": true,
    "renoNote": "2026年8月完了 水回り設備交換:キッチン・浴室・トイレ 内装リフォーム:壁・床 その他:ハウスクリーニング他",
@@ -7087,7 +7118,8 @@
    "balconyM2": 7.48,
    "access": [
     "JR京葉線「稲毛海岸」歩12分"
-   ]
+   ],
+   "parkingText": "空無"
   },
   "firstSeen": "2026-09-23",
   "seeded": true,
@@ -7109,7 +7141,7 @@
    "bldgFloors": 14,
    "structure": "SRC",
    "facing": "南",
-   "parking": "none",
+   "parking": "full",
    "parkingFee": null,
    "renovation": true,
    "renoNote": "2026年6月完了 水回り設備交換:キッチン・浴室・トイレ 内装リフォーム:壁・床・全室 その他:洗面所/給排水管/給...",
@@ -7120,7 +7152,8 @@
     "JR京葉線「稲毛海岸」歩10分",
     "JR総武線「稲毛」歩19分",
     "京成千葉線「京成稲毛」歩10分"
-   ]
+   ],
+   "parkingText": "空無"
   },
   "firstSeen": "2026-09-23",
   "seeded": true,
@@ -7175,7 +7208,7 @@
    "bldgFloors": 14,
    "structure": "SRC",
    "facing": "南西",
-   "parking": "none",
+   "parking": "full",
    "parkingFee": null,
    "renovation": true,
    "renoNote": "2026年6月完了 水回り設備交換:キッチン・浴室・トイレ その他:洗面所 給湯器",
@@ -7186,7 +7219,8 @@
     "JR京葉線「稲毛海岸」歩12分",
     "京成千葉線「京成稲毛」歩11分",
     "JR京葉線「検見川浜」歩29分"
-   ]
+   ],
+   "parkingText": "空無"
   },
   "firstSeen": "2026-09-23",
   "seeded": true,
@@ -7273,7 +7307,7 @@
    "bldgFloors": 5,
    "structure": "SRC",
    "facing": "南西",
-   "parking": "none",
+   "parking": "full",
    "parkingFee": null,
    "renovation": false,
    "renoNote": null,
@@ -7283,7 +7317,8 @@
    "access": [
     "JR京葉線「検見川浜」歩14分",
     "JR総武線「新検見川」歩17分"
-   ]
+   ],
+   "parkingText": "空無"
   },
   "firstSeen": "2026-09-23",
   "seeded": true,
@@ -7338,7 +7373,7 @@
    "bldgFloors": 14,
    "structure": "SRC",
    "facing": "南西",
-   "parking": "none",
+   "parking": "full",
    "parkingFee": null,
    "renovation": false,
    "renoNote": null,
@@ -7349,7 +7384,8 @@
     "JR京葉線「稲毛海岸」歩11分",
     "京成千葉線「京成稲毛」歩11分",
     "JR総武線快速「稲毛」歩20分"
-   ]
+   ],
+   "parkingText": "空無"
   },
   "firstSeen": "2026-09-23",
   "seeded": true,
@@ -7530,7 +7566,7 @@
    "bldgFloors": 14,
    "structure": "SRC",
    "facing": "南西",
-   "parking": "none",
+   "parking": "full",
    "parkingFee": null,
    "renovation": true,
    "renoNote": "2026年5月完了 水回り設備交換:キッチン・浴室・トイレ 内装リフォーム:壁・床・全室 その他:ユニットバス・システ",
@@ -7541,7 +7577,8 @@
     "JR京葉線「稲毛海岸」歩10分",
     "京成千葉線「京成稲毛」歩11分",
     "JR総武線快速「稲毛」歩19分"
-   ]
+   ],
+   "parkingText": "空無"
   },
   "firstSeen": "2026-09-23",
   "seeded": true,
@@ -7786,7 +7823,7 @@
    "bldgFloors": 14,
    "structure": "SRC",
    "facing": "南",
-   "parking": "none",
+   "parking": "full",
    "parkingFee": null,
    "renovation": true,
    "renoNote": "2026年10月完了予定 水回り設備交換:キッチン・浴室・トイレ 内装リフォーム:壁・床・全室 その他:洗面所/給排水管/給...",
@@ -7797,7 +7834,8 @@
     "JR京葉線「稲毛海岸」歩10分",
     "JR総武線「稲毛」歩19分",
     "京成千葉線「京成稲毛」歩10分"
-   ]
+   ],
+   "parkingText": "空無"
   },
   "firstSeen": "2026-09-23",
   "seeded": true,
@@ -7852,7 +7890,7 @@
    "bldgFloors": 14,
    "structure": "SRC",
    "facing": "南東",
-   "parking": "none",
+   "parking": "full",
    "parkingFee": null,
    "renovation": true,
    "renoNote": "2026年6月完了 水回り設備交換:キッチン・浴室・トイレ 内装リフォーム:床 その他:全室クロス/建具/洗...",
@@ -7862,7 +7900,8 @@
    "access": [
     "JR京葉線「稲毛海岸」歩11分",
     "京成千葉線「京成稲毛」歩11分"
-   ]
+   ],
+   "parkingText": "空無"
   },
   "firstSeen": "2026-09-23",
   "seeded": true,
@@ -8624,7 +8663,7 @@
    "bldgFloors": 12,
    "structure": "SRC",
    "facing": "南",
-   "parking": "none",
+   "parking": "full",
    "parkingFee": null,
    "renovation": true,
    "renoNote": "2026年12月完了予定 水回り設備交換:キッチン・浴室・トイレ 内装リフォーム:壁・床",
@@ -8635,7 +8674,8 @@
     "JR京葉線「千葉みなと」歩7分",
     "京成千葉線「西登戸」歩12分",
     "JR総武線快速「千葉」歩22分"
-   ]
+   ],
+   "parkingText": "空無"
   },
   "firstSeen": "2026-09-23",
   "seeded": true,
@@ -8688,7 +8728,7 @@
    "bldgFloors": 14,
    "structure": "SRC",
    "facing": "南西",
-   "parking": "none",
+   "parking": "full",
    "parkingFee": null,
    "renovation": true,
    "renoNote": "2019年7月完了 水回り設備交換:浴室",
@@ -8699,7 +8739,8 @@
     "JR総武線「稲毛」歩13分",
     "京成千葉線「京成稲毛」歩9分",
     "JR京葉線「稲毛海岸」歩14分"
-   ]
+   ],
+   "parkingText": "空無"
   },
   "firstSeen": "2026-09-23",
   "seeded": true,
@@ -8721,7 +8762,7 @@
    "bldgFloors": 5,
    "structure": "RC",
    "facing": "南東",
-   "parking": "none",
+   "parking": "full",
    "parkingFee": null,
    "renovation": false,
    "renoNote": null,
@@ -8730,7 +8771,8 @@
    "balconyM2": 11.87,
    "access": [
     "JR京葉線「検見川浜」歩6分"
-   ]
+   ],
+   "parkingText": "空無"
   },
   "firstSeen": "2026-09-23",
   "seeded": true,
@@ -8752,7 +8794,7 @@
    "bldgFloors": 14,
    "structure": "SRC",
    "facing": "南西",
-   "parking": "none",
+   "parking": "full",
    "parkingFee": null,
    "renovation": false,
    "renoNote": null,
@@ -8763,7 +8805,8 @@
     "京成千葉線「検見川」歩14分",
     "JR総武線「新検見川」歩19分",
     "JR京葉線「検見川浜」歩17分"
-   ]
+   ],
+   "parkingText": "空無"
   },
   "firstSeen": "2026-09-23",
   "seeded": true,
@@ -8879,7 +8922,7 @@
    "bldgFloors": 14,
    "structure": "SRC",
    "facing": "南西",
-   "parking": "none",
+   "parking": "full",
    "parkingFee": null,
    "renovation": false,
    "renoNote": null,
@@ -8888,7 +8931,8 @@
    "balconyM2": 18.6,
    "access": [
     "JR京葉線「検見川浜」歩18分"
-   ]
+   ],
+   "parkingText": "空無"
   },
   "firstSeen": "2026-09-23",
   "seeded": true,
@@ -8910,7 +8954,7 @@
    "bldgFloors": 14,
    "structure": "SRC",
    "facing": "南西",
-   "parking": "none",
+   "parking": "full",
    "parkingFee": null,
    "renovation": false,
    "renoNote": null,
@@ -8921,7 +8965,8 @@
     "JR京葉線「検見川浜」歩17分",
     "JR総武線「新検見川」歩19分",
     "京成千葉線「検見川」歩14分"
-   ]
+   ],
+   "parkingText": "空無"
   },
   "firstSeen": "2026-09-23",
   "seeded": true,
@@ -9009,7 +9054,7 @@
    "bldgFloors": 14,
    "structure": "SRC",
    "facing": "南東",
-   "parking": "none",
+   "parking": "full",
    "parkingFee": null,
    "renovation": true,
    "renoNote": "2026年9月完了予定 水回り設備交換:キッチン・浴室・トイレ 内装リフォーム:壁・床・全室 その他:洗面所、給湯器等",
@@ -9020,7 +9065,8 @@
     "JR京葉線「検見川浜」歩4分",
     "京成千葉線「検見川」歩28分",
     "JR総武線「新検見川」歩34分"
-   ]
+   ],
+   "parkingText": "空無"
   },
   "firstSeen": "2026-09-23",
   "seeded": true,
@@ -9202,7 +9248,7 @@
    "bldgFloors": 11,
    "structure": "RC",
    "facing": "南東",
-   "parking": "none",
+   "parking": "full",
    "parkingFee": null,
    "renovation": true,
    "renoNote": "2026年7月内装リフォーム完了",
@@ -9212,7 +9258,8 @@
    "access": [
     "JR京葉線「検見川浜」歩9分",
     "JR総武線「新検見川」バス8分美浜区役所歩2分"
-   ]
+   ],
+   "parkingText": "空無"
   },
   "firstSeen": "2026-09-23",
   "seeded": true,
@@ -9521,7 +9568,7 @@
    "bldgFloors": 14,
    "structure": "RC",
    "facing": "南西",
-   "parking": "none",
+   "parking": "full",
    "parkingFee": null,
    "renovation": false,
    "renoNote": null,
@@ -9532,7 +9579,8 @@
     "JR京葉線「稲毛海岸」歩18分",
     "JR総武線快速「稲毛」歩13分",
     "京成千葉線「京成稲毛」歩9分"
-   ]
+   ],
+   "parkingText": "空無"
   },
   "firstSeen": "2026-09-23",
   "seeded": true,
@@ -9723,7 +9771,8 @@
    "balconyM2": 12.4,
    "access": [
     "JR京葉線「海浜幕張」歩20分"
-   ]
+   ],
+   "parkingText": "無"
   },
   "firstSeen": "2026-09-23",
   "seeded": true,
@@ -9839,7 +9888,7 @@
    "bldgFloors": 14,
    "structure": "SRC",
    "facing": "南西",
-   "parking": "none",
+   "parking": "full",
    "parkingFee": null,
    "renovation": true,
    "renoNote": "2026年3月完了 水回り設備交換:キッチン・浴室・トイレ 内装リフォーム:壁・床",
@@ -9850,7 +9899,8 @@
     "JR京葉線「稲毛海岸」歩14分",
     "京成千葉線「京成稲毛」歩8分",
     "JR京葉線「稲毛海岸」歩15分"
-   ]
+   ],
+   "parkingText": "空無"
   },
   "firstSeen": "2026-09-23",
   "seeded": true,
@@ -9938,7 +9988,7 @@
    "bldgFloors": 14,
    "structure": "SRC",
    "facing": "南西",
-   "parking": "none",
+   "parking": "full",
    "parkingFee": null,
    "renovation": true,
    "renoNote": "2026年3月完了 水回り設備交換:キッチン・浴室・トイレ 内装リフォーム:壁・床・全室 その他:ハウスクリーニング...",
@@ -9949,7 +9999,8 @@
     "京成千葉線「京成稲毛」歩8分",
     "JR京葉線「稲毛海岸」歩15分",
     "JR総武線「稲毛」歩20分"
-   ]
+   ],
+   "parkingText": "空無"
   },
   "firstSeen": "2026-09-23",
   "seeded": true,
@@ -10037,7 +10088,7 @@
    "bldgFloors": 14,
    "structure": "RC",
    "facing": "南西",
-   "parking": "none",
+   "parking": "full",
    "parkingFee": null,
    "renovation": false,
    "renoNote": null,
@@ -10047,7 +10098,8 @@
    "access": [
     "JR京葉線「検見川浜」歩10分",
     "JR総武線「新検見川」バス8分美浜区役所歩4分"
-   ]
+   ],
+   "parkingText": "空無"
   },
   "firstSeen": "2026-09-23",
   "seeded": true,
@@ -10166,7 +10218,7 @@
    "bldgFloors": 7,
    "structure": "RC",
    "facing": "南東",
-   "parking": "none",
+   "parking": "full",
    "parkingFee": null,
    "renovation": true,
    "renoNote": "2026年11月完了予定 水回り設備交換:キッチン・浴室・トイレ 内装リフォーム:壁・床",
@@ -10177,7 +10229,8 @@
     "JR京葉線「千葉みなと」歩7分",
     "京成千葉線「新千葉」歩10分",
     "JR総武線快速「千葉」歩19分"
-   ]
+   ],
+   "parkingText": "空無"
   },
   "firstSeen": "2026-09-23",
   "seeded": true,
@@ -10199,7 +10252,7 @@
    "bldgFloors": 10,
    "structure": "RC",
    "facing": "南東",
-   "parking": "none",
+   "parking": "full",
    "parkingFee": null,
    "renovation": true,
    "renoNote": "2024年6月完了 内装リフォーム:床 その他:全室クロス",
@@ -10210,7 +10263,8 @@
     "JR京葉線「海浜幕張」歩19分",
     "JR京葉線「幕張豊砂」歩21分",
     "JR総武線「幕張本郷」歩27分"
-   ]
+   ],
+   "parkingText": "空無"
   },
   "firstSeen": "2026-09-23",
   "seeded": true,
@@ -10809,7 +10863,7 @@
    "bldgFloors": 13,
    "structure": "RC",
    "facing": "南東",
-   "parking": "none",
+   "parking": "full",
    "parkingFee": null,
    "renovation": true,
    "renoNote": "2026年8月完了 水回り設備交換:キッチン・浴室・トイレ 内装リフォーム:壁・床・全室",
@@ -10820,7 +10874,8 @@
     "京成千葉線「京成幕張」歩20分",
     "JR総武線「幕張」歩21分",
     "JR京葉線「海浜幕張」歩24分"
-   ]
+   ],
+   "parkingText": "空無"
   },
   "firstSeen": "2026-09-23",
   "seeded": true,
@@ -10875,7 +10930,7 @@
    "bldgFloors": 13,
    "structure": "RC",
    "facing": "南東",
-   "parking": "none",
+   "parking": "full",
    "parkingFee": null,
    "renovation": false,
    "renoNote": null,
@@ -10884,7 +10939,8 @@
    "balconyM2": 12.91,
    "access": [
     "JR総武線「幕張」歩22分"
-   ]
+   ],
+   "parkingText": "空無"
   },
   "firstSeen": "2026-09-23",
   "seeded": true,
@@ -11160,7 +11216,7 @@
    "bldgFloors": 16,
    "structure": "SRC",
    "facing": "南東",
-   "parking": "none",
+   "parking": "full",
    "parkingFee": null,
    "renovation": false,
    "renoNote": null,
@@ -11171,7 +11227,8 @@
     "JR京葉線「検見川浜」歩1分",
     "京成千葉線「検見川」歩32分",
     "JR総武線「新検見川」歩37分"
-   ]
+   ],
+   "parkingText": "空無"
   },
   "firstSeen": "2026-09-23",
   "seeded": true,
@@ -11509,7 +11566,7 @@
    "bldgFloors": 10,
    "structure": "RC",
    "facing": "南東",
-   "parking": "none",
+   "parking": "full",
    "parkingFee": null,
    "renovation": false,
    "renoNote": null,
@@ -11518,7 +11575,8 @@
    "balconyM2": 11.4,
    "access": [
     "JR京葉線「稲毛海岸」歩6分"
-   ]
+   ],
+   "parkingText": "空無"
   },
   "firstSeen": "2026-09-23",
   "seeded": true,
@@ -11732,7 +11790,7 @@
    "bldgFloors": 14,
    "structure": "RC",
    "facing": "南東",
-   "parking": "none",
+   "parking": "full",
    "parkingFee": null,
    "renovation": false,
    "renoNote": null,
@@ -11741,7 +11799,8 @@
    "balconyM2": 36.87,
    "access": [
     "JR京葉線「海浜幕張」歩21分"
-   ]
+   ],
+   "parkingText": "空無"
   },
   "firstSeen": "2026-09-23",
   "seeded": true,
@@ -11857,7 +11916,7 @@
    "bldgFloors": 8,
    "structure": "RC",
    "facing": "南西",
-   "parking": "none",
+   "parking": "full",
    "parkingFee": null,
    "renovation": false,
    "renoNote": null,
@@ -11866,7 +11925,8 @@
    "balconyM2": 20.12,
    "access": [
     "JR京葉線「海浜幕張」歩15分"
-   ]
+   ],
+   "parkingText": "空無"
   },
   "firstSeen": "2026-09-23",
   "seeded": true,
@@ -11888,7 +11948,7 @@
    "bldgFloors": 14,
    "structure": "RC",
    "facing": "南",
-   "parking": "none",
+   "parking": "full",
    "parkingFee": null,
    "renovation": false,
    "renoNote": null,
@@ -11897,7 +11957,8 @@
    "balconyM2": 40.23,
    "access": [
     "JR京葉線「海浜幕張」歩21分"
-   ]
+   ],
+   "parkingText": "空無"
   },
   "firstSeen": "2026-09-23",
   "seeded": true,
@@ -11919,7 +11980,7 @@
    "bldgFloors": 14,
    "structure": "RC",
    "facing": "南東",
-   "parking": "none",
+   "parking": "full",
    "parkingFee": null,
    "renovation": false,
    "renoNote": null,
@@ -11928,7 +11989,8 @@
    "balconyM2": 26.87,
    "access": [
     "JR京葉線「海浜幕張」歩21分"
-   ]
+   ],
+   "parkingText": "空無"
   },
   "firstSeen": "2026-09-23",
   "seeded": true,
@@ -11981,7 +12043,7 @@
    "bldgFloors": 12,
    "structure": "RC",
    "facing": "南東",
-   "parking": "none",
+   "parking": "full",
    "parkingFee": null,
    "renovation": true,
    "renoNote": "2025年11月完了 その他:交換:【キッチン(シ",
@@ -11990,7 +12052,8 @@
    "balconyM2": 10.49,
    "access": [
     "JR京葉線「海浜幕張」歩10分"
-   ]
+   ],
+   "parkingText": "空無"
   },
   "firstSeen": "2026-09-23",
   "seeded": true,
@@ -12012,7 +12075,7 @@
    "bldgFloors": 12,
    "structure": "RC",
    "facing": "南",
-   "parking": "none",
+   "parking": "full",
    "parkingFee": null,
    "renovation": true,
    "renoNote": "2025年11月完了 水回り設備交換:キッチン・浴室・トイレ 内装リフォーム:壁・床・全室",
@@ -12022,7 +12085,8 @@
    "access": [
     "JR京葉線「海浜幕張」歩10分",
     "JR総武線「幕張」歩30分"
-   ]
+   ],
+   "parkingText": "空無"
   },
   "firstSeen": "2026-09-23",
   "seeded": true,
@@ -12271,7 +12335,7 @@
    "bldgFloors": 12,
    "structure": "RC",
    "facing": "南東",
-   "parking": "none",
+   "parking": "full",
    "parkingFee": null,
    "renovation": false,
    "renoNote": null,
@@ -12280,7 +12344,8 @@
    "balconyM2": 10.49,
    "access": [
     "JR京葉線「海浜幕張」歩10分"
-   ]
+   ],
+   "parkingText": "空無"
   },
   "firstSeen": "2026-09-23",
   "seeded": true,
@@ -12302,7 +12367,7 @@
    "bldgFloors": 12,
    "structure": "RC",
    "facing": "南東",
-   "parking": "none",
+   "parking": "full",
    "parkingFee": null,
    "renovation": true,
    "renoNote": "2025年11月完了 水回り設備交換:キッチン・浴室・トイレ 内装リフォーム:壁・床",
@@ -12311,7 +12376,8 @@
    "balconyM2": 10.49,
    "access": [
     "JR京葉線「海浜幕張」歩11分"
-   ]
+   ],
+   "parkingText": "空無"
   },
   "firstSeen": "2026-09-23",
   "seeded": true,
@@ -12373,7 +12439,8 @@
    "balconyM2": 10.49,
    "access": [
     "JR京葉線「海浜幕張」歩10分"
-   ]
+   ],
+   "parkingText": "無"
   },
   "firstSeen": "2026-09-23",
   "seeded": true,
@@ -12395,7 +12462,7 @@
    "bldgFloors": 14,
    "structure": "RC",
    "facing": "南西",
-   "parking": "none",
+   "parking": "full",
    "parkingFee": null,
    "renovation": false,
    "renoNote": null,
@@ -12404,7 +12471,8 @@
    "balconyM2": 23.25,
    "access": [
     "JR京葉線「海浜幕張」歩20分"
-   ]
+   ],
+   "parkingText": "空無"
   },
   "firstSeen": "2026-09-23",
   "seeded": true,
@@ -12426,7 +12494,7 @@
    "bldgFloors": 14,
    "structure": "SRC",
    "facing": "南西",
-   "parking": "none",
+   "parking": "full",
    "parkingFee": null,
    "renovation": false,
    "renoNote": null,
@@ -12435,7 +12503,8 @@
    "balconyM2": 23.25,
    "access": [
     "JR京葉線「海浜幕張」歩20分"
-   ]
+   ],
+   "parkingText": "空無"
   },
   "firstSeen": "2026-09-23",
   "seeded": true,
@@ -12582,7 +12651,7 @@
    "bldgFloors": 43,
    "structure": "RC",
    "facing": "西",
-   "parking": "none",
+   "parking": "full",
    "parkingFee": null,
    "renovation": false,
    "renoNote": null,
@@ -12591,7 +12660,8 @@
    "balconyM2": 11.66,
    "access": [
     "JR京葉線「海浜幕張」歩15分"
-   ]
+   ],
+   "parkingText": "空無"
   },
   "firstSeen": "2026-09-23",
   "seeded": true,
@@ -12645,7 +12715,7 @@
    "bldgFloors": 31,
    "structure": "RC",
    "facing": "南西",
-   "parking": "none",
+   "parking": "full",
    "parkingFee": null,
    "renovation": false,
    "renoNote": null,
@@ -12654,7 +12724,8 @@
    "balconyM2": 24.5,
    "access": [
     "JR京葉線「海浜幕張」歩23分"
-   ]
+   ],
+   "parkingText": "空無"
   },
   "firstSeen": "2026-09-23",
   "seeded": true,
@@ -12738,7 +12809,7 @@
    "bldgFloors": 43,
    "structure": "RC",
    "facing": "西",
-   "parking": "none",
+   "parking": "full",
    "parkingFee": null,
    "renovation": false,
    "renoNote": null,
@@ -12747,7 +12818,8 @@
    "balconyM2": 11.66,
    "access": [
     "JR京葉線「海浜幕張」歩15分"
-   ]
+   ],
+   "parkingText": "空無"
   },
   "firstSeen": "2026-09-23",
   "seeded": true,
@@ -12862,7 +12934,7 @@
    "bldgFloors": 37,
    "structure": "RC",
    "facing": "東",
-   "parking": "none",
+   "parking": "full",
    "parkingFee": null,
    "renovation": false,
    "renoNote": null,
@@ -12871,7 +12943,8 @@
    "balconyM2": 12.08,
    "access": [
     "JR京葉線「海浜幕張」歩15分"
-   ]
+   ],
+   "parkingText": "空無"
   },
   "firstSeen": "2026-09-23",
   "seeded": true,
@@ -12893,7 +12966,7 @@
    "bldgFloors": 38,
    "structure": "RC",
    "facing": "北",
-   "parking": "none",
+   "parking": "full",
    "parkingFee": null,
    "renovation": false,
    "renoNote": null,
@@ -12902,7 +12975,8 @@
    "balconyM2": 15.56,
    "access": [
     "JR京葉線「海浜幕張」歩16分"
-   ]
+   ],
+   "parkingText": "空無"
   },
   "firstSeen": "2026-09-23",
   "seeded": true,
@@ -13052,7 +13126,7 @@
    "bldgFloors": 38,
    "structure": "RC",
    "facing": "北",
-   "parking": "none",
+   "parking": "full",
    "parkingFee": null,
    "renovation": false,
    "renoNote": null,
@@ -13061,7 +13135,8 @@
    "balconyM2": 15.56,
    "access": [
     "JR京葉線「海浜幕張」歩16分"
-   ]
+   ],
+   "parkingText": "空無"
   },
   "firstSeen": "2026-09-23",
   "seeded": true,
@@ -13083,7 +13158,7 @@
    "bldgFloors": 48,
    "structure": "RC",
    "facing": "北",
-   "parking": "none",
+   "parking": "full",
    "parkingFee": null,
    "renovation": false,
    "renoNote": null,
@@ -13092,7 +13167,8 @@
    "balconyM2": 10.31,
    "access": [
     "JR京葉線「海浜幕張」歩13分"
-   ]
+   ],
+   "parkingText": "空無"
   },
   "firstSeen": "2026-09-23",
   "seeded": true,
@@ -13114,7 +13190,7 @@
    "bldgFloors": 37,
    "structure": "RC",
    "facing": "南",
-   "parking": "none",
+   "parking": "full",
    "parkingFee": null,
    "renovation": false,
    "renoNote": null,
@@ -13123,7 +13199,8 @@
    "balconyM2": 13.24,
    "access": [
     "JR京葉線「海浜幕張」歩15分"
-   ]
+   ],
+   "parkingText": "空無"
   },
   "firstSeen": "2026-09-23",
   "seeded": true,
@@ -13177,7 +13254,7 @@
    "bldgFloors": 37,
    "structure": "RC",
    "facing": "西",
-   "parking": "none",
+   "parking": "full",
    "parkingFee": null,
    "renovation": false,
    "renoNote": null,
@@ -13186,7 +13263,8 @@
    "balconyM2": 13.47,
    "access": [
     "JR京葉線「海浜幕張」歩15分"
-   ]
+   ],
+   "parkingText": "空無"
   },
   "firstSeen": "2026-09-23",
   "seeded": true,
@@ -13239,7 +13317,7 @@
    "bldgFloors": 48,
    "structure": "RC",
    "facing": "東",
-   "parking": "none",
+   "parking": "full",
    "parkingFee": null,
    "renovation": false,
    "renoNote": null,
@@ -13248,7 +13326,8 @@
    "balconyM2": 12.42,
    "access": [
     "JR京葉線「海浜幕張」歩13分"
-   ]
+   ],
+   "parkingText": "空無"
   },
   "firstSeen": "2026-09-23",
   "seeded": true,
@@ -13270,7 +13349,7 @@
    "bldgFloors": 37,
    "structure": "RC",
    "facing": "東",
-   "parking": "none",
+   "parking": "full",
    "parkingFee": null,
    "renovation": false,
    "renoNote": null,
@@ -13279,7 +13358,8 @@
    "balconyM2": 12.08,
    "access": [
     "JR京葉線「海浜幕張」歩15分"
-   ]
+   ],
+   "parkingText": "空無"
   },
   "firstSeen": "2026-09-23",
   "seeded": true,
@@ -13332,7 +13412,7 @@
    "bldgFloors": 43,
    "structure": "RC",
    "facing": "南",
-   "parking": "none",
+   "parking": "full",
    "parkingFee": null,
    "renovation": false,
    "renoNote": null,
@@ -13341,7 +13421,8 @@
    "balconyM2": 13.28,
    "access": [
     "JR京葉線「海浜幕張」歩15分"
-   ]
+   ],
+   "parkingText": "空無"
   },
   "firstSeen": "2026-09-23",
   "seeded": true,
@@ -13363,7 +13444,7 @@
    "bldgFloors": 48,
    "structure": "RC",
    "facing": "南",
-   "parking": "none",
+   "parking": "full",
    "parkingFee": null,
    "renovation": false,
    "renoNote": null,
@@ -13372,7 +13453,8 @@
    "balconyM2": 13.73,
    "access": [
     "JR京葉線「海浜幕張」歩13分"
-   ]
+   ],
+   "parkingText": "空無"
   },
   "firstSeen": "2026-09-23",
   "seeded": true,
@@ -13394,7 +13476,7 @@
    "bldgFloors": 43,
    "structure": "RC",
    "facing": "西",
-   "parking": "none",
+   "parking": "full",
    "parkingFee": null,
    "renovation": false,
    "renoNote": null,
@@ -13403,7 +13485,8 @@
    "balconyM2": 11.66,
    "access": [
     "JR京葉線「海浜幕張」歩12分"
-   ]
+   ],
+   "parkingText": "空無"
   },
   "firstSeen": "2026-09-23",
   "seeded": true,
@@ -13488,7 +13571,7 @@
    "bldgFloors": 20,
    "structure": "SRC",
    "facing": "東",
-   "parking": "none",
+   "parking": "full",
    "parkingFee": null,
    "renovation": true,
    "renoNote": "2026年8月完了 水回り設備交換:キッチン・浴室・トイレ 内装リフォーム:壁・床・全室",
@@ -13499,7 +13582,8 @@
     "JR京葉線「検見川浜」歩2分",
     "JR京葉線「稲毛海岸」歩24分",
     "京成千葉線「検見川」バス13分検見川浜駅歩3分"
-   ]
+   ],
+   "parkingText": "空無"
   },
   "firstSeen": "2026-09-23",
   "seeded": true,
@@ -13587,7 +13671,7 @@
    "bldgFloors": 38,
    "structure": "RC",
    "facing": "東",
-   "parking": "none",
+   "parking": "full",
    "parkingFee": null,
    "renovation": false,
    "renoNote": null,
@@ -13597,7 +13681,8 @@
    "access": [
     "JR京葉線「海浜幕張」歩16分",
     "JR京葉線「検見川浜」歩15分"
-   ]
+   ],
+   "parkingText": "空無"
   },
   "firstSeen": "2026-09-23",
   "seeded": true,
@@ -13619,7 +13704,7 @@
    "bldgFloors": 37,
    "structure": "RC",
    "facing": "南",
-   "parking": "none",
+   "parking": "full",
    "parkingFee": null,
    "renovation": false,
    "renoNote": null,
@@ -13628,7 +13713,8 @@
    "balconyM2": 13.21,
    "access": [
     "JR京葉線「海浜幕張」歩15分"
-   ]
+   ],
+   "parkingText": "空無"
   },
   "firstSeen": "2026-09-23",
   "seeded": true,
@@ -13746,7 +13832,7 @@
    "bldgFloors": 48,
    "structure": "RC",
    "facing": "西",
-   "parking": "none",
+   "parking": "full",
    "parkingFee": null,
    "renovation": false,
    "renoNote": null,
@@ -13755,7 +13841,8 @@
    "balconyM2": 13.82,
    "access": [
     "JR京葉線「海浜幕張」歩13分"
-   ]
+   ],
+   "parkingText": "空無"
   },
   "firstSeen": "2026-09-23",
   "seeded": true,
@@ -13777,7 +13864,7 @@
    "bldgFloors": 48,
    "structure": "RC",
    "facing": "東",
-   "parking": "none",
+   "parking": "full",
    "parkingFee": null,
    "renovation": false,
    "renoNote": null,
@@ -13786,7 +13873,8 @@
    "balconyM2": 13.87,
    "access": [
     "JR京葉線「海浜幕張」歩13分"
-   ]
+   ],
+   "parkingText": "空無"
   },
   "firstSeen": "2026-09-23",
   "seeded": true,
@@ -13808,7 +13896,7 @@
    "bldgFloors": 48,
    "structure": "RC",
    "facing": "東",
-   "parking": "none",
+   "parking": "full",
    "parkingFee": null,
    "renovation": false,
    "renoNote": null,
@@ -13817,7 +13905,8 @@
    "balconyM2": 13.01,
    "access": [
     "JR京葉線「海浜幕張」歩13分"
-   ]
+   ],
+   "parkingText": "空無"
   },
   "firstSeen": "2026-09-23",
   "seeded": true,
@@ -13839,7 +13928,7 @@
    "bldgFloors": 43,
    "structure": "RC",
    "facing": "西",
-   "parking": "none",
+   "parking": "full",
    "parkingFee": null,
    "renovation": false,
    "renoNote": null,
@@ -13848,7 +13937,8 @@
    "balconyM2": 16.44,
    "access": [
     "JR京葉線「海浜幕張」歩15分"
-   ]
+   ],
+   "parkingText": "空無"
   },
   "firstSeen": "2026-09-23",
   "seeded": true,
@@ -13901,7 +13991,7 @@
    "bldgFloors": 37,
    "structure": "RC",
    "facing": "東",
-   "parking": "none",
+   "parking": "full",
    "parkingFee": null,
    "renovation": false,
    "renoNote": null,
@@ -13912,7 +14002,8 @@
     "JR京葉線「海浜幕張」歩15分",
     "JR総武線「幕張」歩27分",
     "京成千葉線「検見川」歩26分"
-   ]
+   ],
+   "parkingText": "空無"
   },
   "firstSeen": "2026-09-23",
   "seeded": true,
@@ -13934,7 +14025,7 @@
    "bldgFloors": 38,
    "structure": "RC",
    "facing": "東",
-   "parking": "none",
+   "parking": "full",
    "parkingFee": null,
    "renovation": false,
    "renoNote": null,
@@ -13943,7 +14034,8 @@
    "balconyM2": 12.49,
    "access": [
     "JR京葉線「海浜幕張」歩16分"
-   ]
+   ],
+   "parkingText": "空無"
   },
   "firstSeen": "2026-09-23",
   "seeded": true,
@@ -13996,7 +14088,7 @@
    "bldgFloors": 43,
    "structure": "RC",
    "facing": "東",
-   "parking": "none",
+   "parking": "full",
    "parkingFee": null,
    "renovation": false,
    "renoNote": null,
@@ -14005,7 +14097,8 @@
    "balconyM2": 12.49,
    "access": [
     "JR京葉線「海浜幕張」歩15分"
-   ]
+   ],
+   "parkingText": "空無"
   },
   "firstSeen": "2026-09-23",
   "seeded": true,
@@ -14058,7 +14151,7 @@
    "bldgFloors": 48,
    "structure": "RC",
    "facing": "北",
-   "parking": "none",
+   "parking": "full",
    "parkingFee": null,
    "renovation": false,
    "renoNote": null,
@@ -14069,7 +14162,8 @@
     "JR京葉線「海浜幕張」歩13分",
     "JR京葉線「検見川浜」歩18分",
     "京成千葉線「検見川」歩30分"
-   ]
+   ],
+   "parkingText": "空無"
   },
   "firstSeen": "2026-09-23",
   "seeded": true,
@@ -14091,7 +14185,7 @@
    "bldgFloors": 38,
    "structure": "RC",
    "facing": "東",
-   "parking": "none",
+   "parking": "full",
    "parkingFee": null,
    "renovation": false,
    "renoNote": null,
@@ -14100,7 +14194,8 @@
    "balconyM2": 13.74,
    "access": [
     "JR京葉線「海浜幕張」歩16分"
-   ]
+   ],
+   "parkingText": "空無"
   },
   "firstSeen": "2026-09-23",
   "seeded": true,
@@ -14122,7 +14217,7 @@
    "bldgFloors": 38,
    "structure": "RC",
    "facing": "東",
-   "parking": "none",
+   "parking": "full",
    "parkingFee": null,
    "renovation": false,
    "renoNote": null,
@@ -14131,7 +14226,8 @@
    "balconyM2": 13.74,
    "access": [
     "JR京葉線「海浜幕張」歩16分"
-   ]
+   ],
+   "parkingText": "空無"
   },
   "firstSeen": "2026-09-23",
   "seeded": true,
@@ -14215,7 +14311,7 @@
    "bldgFloors": 38,
    "structure": "RC",
    "facing": "北",
-   "parking": "none",
+   "parking": "full",
    "parkingFee": null,
    "renovation": false,
    "renoNote": null,
@@ -14225,7 +14321,8 @@
    "access": [
     "JR京葉線「海浜幕張」歩16分",
     "JR京葉線「検見川浜」歩15分"
-   ]
+   ],
+   "parkingText": "空無"
   },
   "firstSeen": "2026-09-23",
   "seeded": true,
@@ -14247,7 +14344,7 @@
    "bldgFloors": 48,
    "structure": "RC",
    "facing": "西",
-   "parking": "none",
+   "parking": "full",
    "parkingFee": null,
    "renovation": false,
    "renoNote": null,
@@ -14256,7 +14353,8 @@
    "balconyM2": 13.23,
    "access": [
     "JR京葉線「海浜幕張」歩13分"
-   ]
+   ],
+   "parkingText": "空無"
   },
   "firstSeen": "2026-09-23",
   "seeded": true,
@@ -14309,7 +14407,7 @@
    "bldgFloors": 37,
    "structure": "RC",
    "facing": "南",
-   "parking": "none",
+   "parking": "full",
    "parkingFee": null,
    "renovation": false,
    "renoNote": null,
@@ -14318,7 +14416,8 @@
    "balconyM2": 13.21,
    "access": [
     "JR京葉線「海浜幕張」歩15分"
-   ]
+   ],
+   "parkingText": "空無"
   },
   "firstSeen": "2026-09-23",
   "seeded": true,
@@ -14340,7 +14439,7 @@
    "bldgFloors": 8,
    "structure": "RC",
    "facing": "南西",
-   "parking": "none",
+   "parking": "full",
    "parkingFee": null,
    "renovation": false,
    "renoNote": null,
@@ -14349,7 +14448,8 @@
    "balconyM2": 15.6,
    "access": [
     "JR京葉線「海浜幕張」歩15分"
-   ]
+   ],
+   "parkingText": "空無"
   },
   "firstSeen": "2026-09-23",
   "seeded": true,
@@ -14371,7 +14471,7 @@
    "bldgFloors": 43,
    "structure": "RC",
    "facing": "西",
-   "parking": "none",
+   "parking": "full",
    "parkingFee": null,
    "renovation": false,
    "renoNote": null,
@@ -14380,7 +14480,8 @@
    "balconyM2": 15.76,
    "access": [
     "JR京葉線「海浜幕張」歩15分"
-   ]
+   ],
+   "parkingText": "空無"
   },
   "firstSeen": "2026-09-23",
   "seeded": true,
@@ -14435,7 +14536,7 @@
    "bldgFloors": 43,
    "structure": "RC",
    "facing": "南",
-   "parking": "none",
+   "parking": "full",
    "parkingFee": null,
    "renovation": false,
    "renoNote": null,
@@ -14444,7 +14545,8 @@
    "balconyM2": 16.54,
    "access": [
     "JR京葉線「海浜幕張」歩15分"
-   ]
+   ],
+   "parkingText": "空無"
   },
   "firstSeen": "2026-09-23",
   "seeded": true,
@@ -14590,7 +14692,7 @@
    "bldgFloors": 37,
    "structure": "RC",
    "facing": "南",
-   "parking": "none",
+   "parking": "full",
    "parkingFee": null,
    "renovation": false,
    "renoNote": null,
@@ -14599,7 +14701,8 @@
    "balconyM2": 15.4,
    "access": [
     "JR京葉線「海浜幕張」歩15分"
-   ]
+   ],
+   "parkingText": "空無"
   },
   "firstSeen": "2026-09-23",
   "seeded": true,
@@ -14621,7 +14724,7 @@
    "bldgFloors": 48,
    "structure": "RC",
    "facing": "北東",
-   "parking": "none",
+   "parking": "full",
    "parkingFee": null,
    "renovation": false,
    "renoNote": null,
@@ -14630,7 +14733,8 @@
    "balconyM2": 17.9,
    "access": [
     "JR京葉線「海浜幕張」歩13分"
-   ]
+   ],
+   "parkingText": "空無"
   },
   "firstSeen": "2026-09-23",
   "seeded": true,
@@ -14652,7 +14756,7 @@
    "bldgFloors": 48,
    "structure": "RC",
    "facing": "北東",
-   "parking": "none",
+   "parking": "full",
    "parkingFee": null,
    "renovation": false,
    "renoNote": null,
@@ -14663,7 +14767,8 @@
     "JR京葉線「海浜幕張」歩13分",
     "JR京葉線「検見川浜」歩18分",
     "JR総武線「幕張」歩30分"
-   ]
+   ],
+   "parkingText": "空無"
   },
   "firstSeen": "2026-09-23",
   "seeded": true,
@@ -14716,7 +14821,7 @@
    "bldgFloors": 48,
    "structure": "RC",
    "facing": "東",
-   "parking": "none",
+   "parking": "full",
    "parkingFee": null,
    "renovation": false,
    "renoNote": null,
@@ -14725,7 +14830,8 @@
    "balconyM2": 17.9,
    "access": [
     "JR京葉線「海浜幕張」歩13分"
-   ]
+   ],
+   "parkingText": "空無"
   },
   "firstSeen": "2026-09-23",
   "seeded": true,
@@ -14747,7 +14853,7 @@
    "bldgFloors": 43,
    "structure": "RC",
    "facing": "西",
-   "parking": "none",
+   "parking": "full",
    "parkingFee": null,
    "renovation": false,
    "renoNote": null,
@@ -14756,7 +14862,8 @@
    "balconyM2": 16.36,
    "access": [
     "JR京葉線「海浜幕張」歩15分"
-   ]
+   ],
+   "parkingText": "空無"
   },
   "firstSeen": "2026-09-23",
   "seeded": true,
@@ -14809,7 +14916,7 @@
    "bldgFloors": 43,
    "structure": "RC",
    "facing": "西",
-   "parking": "none",
+   "parking": "full",
    "parkingFee": null,
    "renovation": false,
    "renoNote": null,
@@ -14819,7 +14926,8 @@
    "access": [
     "JR京葉線「海浜幕張」歩15分",
     "JR京葉線「検見川浜」歩15分"
-   ]
+   ],
+   "parkingText": "空無"
   },
   "firstSeen": "2026-09-23",
   "seeded": true,
@@ -14841,7 +14949,7 @@
    "bldgFloors": 43,
    "structure": "RC",
    "facing": "西",
-   "parking": "none",
+   "parking": "full",
    "parkingFee": null,
    "renovation": false,
    "renoNote": null,
@@ -14850,7 +14958,8 @@
    "balconyM2": 13.13,
    "access": [
     "JR京葉線「海浜幕張」歩15分"
-   ]
+   ],
+   "parkingText": "空無"
   },
   "firstSeen": "2026-09-23",
   "seeded": true,
@@ -14904,7 +15013,7 @@
    "bldgFloors": 30,
    "structure": "RC",
    "facing": "南東",
-   "parking": "none",
+   "parking": "full",
    "parkingFee": null,
    "renovation": true,
    "renoNote": "2026年6月完了 水回り設備交換:キッチン・浴室・トイレ 内装リフォーム:壁・床・全室",
@@ -14915,7 +15024,8 @@
     "JR京葉線「稲毛海岸」歩6分",
     "京成千葉線「京成稲毛」歩26分",
     "JR総武線「稲毛」歩35分"
-   ]
+   ],
+   "parkingText": "空無"
   },
   "firstSeen": "2026-09-23",
   "seeded": true,
@@ -14977,7 +15087,8 @@
    "balconyM2": 17.73,
    "access": [
     "JR京葉線「稲毛海岸」歩6分"
-   ]
+   ],
+   "parkingText": "無"
   },
   "firstSeen": "2026-09-23",
   "seeded": true,
@@ -15032,7 +15143,7 @@
    "bldgFloors": 37,
    "structure": "RC",
    "facing": "南",
-   "parking": "none",
+   "parking": "full",
    "parkingFee": null,
    "renovation": false,
    "renoNote": null,
@@ -15041,7 +15152,8 @@
    "balconyM2": 15.41,
    "access": [
     "JR京葉線「海浜幕張」歩15分"
-   ]
+   ],
+   "parkingText": "空無"
   },
   "firstSeen": "2026-09-23",
   "seeded": true,
@@ -15063,7 +15175,7 @@
    "bldgFloors": 37,
    "structure": "RC",
    "facing": "北西",
-   "parking": "none",
+   "parking": "full",
    "parkingFee": null,
    "renovation": false,
    "renoNote": null,
@@ -15072,7 +15184,8 @@
    "balconyM2": 14.69,
    "access": [
     "JR京葉線「海浜幕張」歩15分"
-   ]
+   ],
+   "parkingText": "空無"
   },
   "firstSeen": "2026-09-23",
   "seeded": true,
@@ -15158,7 +15271,7 @@
    "bldgFloors": 37,
    "structure": "RC",
    "facing": "南",
-   "parking": "none",
+   "parking": "full",
    "parkingFee": null,
    "renovation": false,
    "renoNote": null,
@@ -15167,7 +15280,8 @@
    "balconyM2": 15.41,
    "access": [
     "JR京葉線「海浜幕張」歩15分"
-   ]
+   ],
+   "parkingText": "空無"
   },
   "firstSeen": "2026-09-23",
   "seeded": true,
@@ -15189,7 +15303,7 @@
    "bldgFloors": 38,
    "structure": "RC",
    "facing": "北",
-   "parking": "none",
+   "parking": "full",
    "parkingFee": null,
    "renovation": false,
    "renoNote": null,
@@ -15198,7 +15312,8 @@
    "balconyM2": 17.42,
    "access": [
     "JR京葉線「海浜幕張」歩16分"
-   ]
+   ],
+   "parkingText": "空無"
   },
   "firstSeen": "2026-09-23",
   "seeded": true,
@@ -15251,7 +15366,7 @@
    "bldgFloors": 37,
    "structure": "RC",
    "facing": "南",
-   "parking": "none",
+   "parking": "full",
    "parkingFee": null,
    "renovation": false,
    "renoNote": null,
@@ -15260,7 +15375,8 @@
    "balconyM2": 16.99,
    "access": [
     "JR京葉線「海浜幕張」歩15分"
-   ]
+   ],
+   "parkingText": "空無"
   },
   "firstSeen": "2026-09-23",
   "seeded": true,
@@ -15282,7 +15398,7 @@
    "bldgFloors": 37,
    "structure": "RC",
    "facing": "北西",
-   "parking": "none",
+   "parking": "full",
    "parkingFee": null,
    "renovation": false,
    "renoNote": null,
@@ -15291,7 +15407,8 @@
    "balconyM2": 14.69,
    "access": [
     "JR京葉線「海浜幕張」歩15分"
-   ]
+   ],
+   "parkingText": "空無"
   },
   "firstSeen": "2026-09-23",
   "seeded": true,
@@ -15313,7 +15430,7 @@
    "bldgFloors": 43,
    "structure": "RC",
    "facing": "南",
-   "parking": "none",
+   "parking": "full",
    "parkingFee": null,
    "renovation": false,
    "renoNote": null,
@@ -15322,7 +15439,8 @@
    "balconyM2": 18.37,
    "access": [
     "JR京葉線「海浜幕張」歩15分"
-   ]
+   ],
+   "parkingText": "空無"
   },
   "firstSeen": "2026-09-23",
   "seeded": true,
@@ -15344,7 +15462,7 @@
    "bldgFloors": 48,
    "structure": "RC",
    "facing": "南",
-   "parking": "none",
+   "parking": "full",
    "parkingFee": null,
    "renovation": false,
    "renoNote": null,
@@ -15353,7 +15471,8 @@
    "balconyM2": 18.2,
    "access": [
     "JR京葉線「海浜幕張」歩13分"
-   ]
+   ],
+   "parkingText": "空無"
   },
   "firstSeen": "2026-09-23",
   "seeded": true,
@@ -15759,7 +15878,7 @@
    "bldgFloors": 5,
    "structure": "RC",
    "facing": "南西",
-   "parking": "none",
+   "parking": "full",
    "parkingFee": null,
    "renovation": true,
    "renoNote": "2026年9月完了予定 水回り設備交換:キッチン・浴室・トイレ 内装リフォーム:壁・床・全室",
@@ -15770,7 +15889,8 @@
     "北総線「千葉ニュータウン中央」歩13分",
     "北総線「小室」歩54分",
     "JR成田線「木下」歩77分"
-   ]
+   ],
+   "parkingText": "空無"
   },
   "area": "inzai",
   "firstSeen": "2026-09-23",
@@ -15792,7 +15912,7 @@
    "bldgFloors": 5,
    "structure": "RC",
    "facing": "南西",
-   "parking": "none",
+   "parking": "full",
    "parkingFee": null,
    "renovation": true,
    "renoNote": "2026年9月完了予定 水回り設備交換:キッチン・浴室・トイレ 内装リフォーム:壁・床 その他:全室クロス/建具/サ...",
@@ -15803,7 +15923,8 @@
     "北総線「千葉ニュータウン中央」歩14分",
     "北総線「印西牧の原」バス51分小倉台図書館前歩4分",
     "JR成田線「木下」バス24分小倉台図書館前歩4分"
-   ]
+   ],
+   "parkingText": "空無"
   },
   "area": "inzai",
   "firstSeen": "2026-09-23",
@@ -17031,7 +17152,7 @@
    "bldgFloors": 8,
    "structure": "RC",
    "facing": "南西",
-   "parking": "none",
+   "parking": "full",
    "parkingFee": null,
    "renovation": false,
    "renoNote": null,
@@ -17040,7 +17161,8 @@
    "balconyM2": 25.99,
    "access": [
     "北総線「印西牧の原」歩15分"
-   ]
+   ],
+   "parkingText": "空無"
   },
   "area": "inzai",
   "firstSeen": "2026-09-23",
@@ -17288,7 +17410,7 @@
    "bldgFloors": 14,
    "structure": "RC",
    "facing": "南東",
-   "parking": "none",
+   "parking": "full",
    "parkingFee": null,
    "renovation": false,
    "renoNote": null,
@@ -17298,7 +17420,8 @@
    "access": [
     "北総線「印旛日本医大」歩7分",
     "成田スカイアクセス「印旛日本医大」歩7分"
-   ]
+   ],
+   "parkingText": "空無"
   },
   "area": "inzai",
   "firstSeen": "2026-09-23",
@@ -17413,7 +17536,7 @@
    "bldgFloors": 5,
    "structure": "RC",
    "facing": "南西",
-   "parking": "none",
+   "parking": "full",
    "parkingFee": null,
    "renovation": true,
    "renoNote": "2026年9月完了 水回り設備交換:キッチン・浴室・トイレ 内装リフォーム:壁・床・全室 その他:ハウスクリーニング...",
@@ -17424,7 +17547,8 @@
     "北総線「千葉ニュータウン中央」歩13分",
     "北総線「小室」歩55分",
     "JR成田線「木下」歩76分"
-   ]
+   ],
+   "parkingText": "空無"
   },
   "area": "inzai",
   "firstSeen": "2026-09-23",
@@ -17446,7 +17570,7 @@
    "bldgFloors": 5,
    "structure": "RC",
    "facing": "南西",
-   "parking": "none",
+   "parking": "full",
    "parkingFee": null,
    "renovation": true,
    "renoNote": "2026年9月完了予定 水回り設備交換:キッチン・浴室・トイレ 内装リフォーム:壁・床・全室 その他:建具交換",
@@ -17457,7 +17581,8 @@
     "北総線「千葉ニュータウン中央」歩13分",
     "北総線「小室」車4.8km",
     "JR成田線「木下」車6.7km"
-   ]
+   ],
+   "parkingText": "空無"
   },
   "area": "inzai",
   "firstSeen": "2026-09-23",
@@ -17479,7 +17604,7 @@
    "bldgFloors": 5,
    "structure": "RC",
    "facing": "南西",
-   "parking": "none",
+   "parking": "full",
    "parkingFee": null,
    "renovation": true,
    "renoNote": "2026年9月完了予定 水回り設備交換:キッチン・浴室・トイレ 内装リフォーム:壁・床・全室 その他:ハウスクリーニング等",
@@ -17490,7 +17615,8 @@
     "北総線「千葉ニュータウン中央」歩15分",
     "北総線「小室」歩54分",
     "JR成田線「木下」歩77分"
-   ]
+   ],
+   "parkingText": "空無"
   },
   "area": "inzai",
   "firstSeen": "2026-09-23",
@@ -17577,7 +17703,7 @@
    "bldgFloors": 5,
    "structure": "RC",
    "facing": "南西",
-   "parking": "none",
+   "parking": "full",
    "parkingFee": null,
    "renovation": true,
    "renoNote": "2026年10月完了予定 水回り設備交換:キッチン・浴室・トイレ 内装リフォーム:壁・床 その他:LED照明器具設置",
@@ -17586,7 +17712,8 @@
    "balconyM2": 16.85,
    "access": [
     "北総線「千葉ニュータウン中央」歩13分"
-   ]
+   ],
+   "parkingText": "空無"
   },
   "area": "inzai",
   "firstSeen": "2026-09-23",
@@ -17703,7 +17830,7 @@
    "bldgFloors": 7,
    "structure": "RC",
    "facing": "南東",
-   "parking": "none",
+   "parking": "full",
    "parkingFee": null,
    "renovation": true,
    "renoNote": "2026年9月完了予定 水回り設備交換:キッチン・浴室・トイレ 内装リフォーム:壁・床 その他:ハウスクリーニング他",
@@ -17714,7 +17841,8 @@
     "北総線「印西牧の原」歩11分",
     "北総線「千葉ニュータウン中央」歩56分",
     "北総線「印旛日本医大」歩62分"
-   ]
+   ],
+   "parkingText": "空無"
   },
   "area": "inzai",
   "firstSeen": "2026-09-23",
@@ -18410,7 +18538,7 @@
    "bldgFloors": 14,
    "structure": "RC",
    "facing": "南",
-   "parking": "none",
+   "parking": "full",
    "parkingFee": null,
    "renovation": true,
    "renoNote": "2026年4月完了 水回り設備交換:キッチン・浴室・トイレ 内装リフォーム:壁・床・全室",
@@ -18420,7 +18548,8 @@
    "access": [
     "北総線「千葉ニュータウン中央」歩7分",
     "成田スカイアクセス「千葉ニュータウン中央」歩7分"
-   ]
+   ],
+   "parkingText": "空無"
   },
   "area": "inzai",
   "firstSeen": "2026-09-23",
@@ -18539,7 +18668,7 @@
    "bldgFloors": 14,
    "structure": "RC",
    "facing": "南東",
-   "parking": "none",
+   "parking": "full",
    "parkingFee": null,
    "renovation": false,
    "renoNote": null,
@@ -18548,7 +18677,8 @@
    "balconyM2": 14.46,
    "access": [
     "北総線「千葉ニュータウン中央」歩7分"
-   ]
+   ],
+   "parkingText": "空無"
   },
   "area": "inzai",
   "firstSeen": "2026-09-23",
@@ -18825,7 +18955,7 @@
    "bldgFloors": 15,
    "structure": "RC",
    "facing": "南西",
-   "parking": "none",
+   "parking": "full",
    "parkingFee": null,
    "renovation": false,
    "renoNote": null,
@@ -18835,7 +18965,8 @@
    "access": [
     "北総線「千葉ニュータウン中央」歩5分",
     "成田スカイアクセス「千葉ニュータウン中央」歩5分"
-   ]
+   ],
+   "parkingText": "空無"
   },
   "area": "inzai",
   "firstSeen": "2026-09-23",
@@ -18857,7 +18988,7 @@
    "bldgFloors": 15,
    "structure": "RC",
    "facing": "南東",
-   "parking": "none",
+   "parking": "full",
    "parkingFee": null,
    "renovation": false,
    "renoNote": null,
@@ -18866,7 +18997,8 @@
    "balconyM2": 22.7,
    "access": [
     "北総線「千葉ニュータウン中央」歩3分"
-   ]
+   ],
+   "parkingText": "空無"
   },
   "area": "inzai",
   "firstSeen": "2026-09-23",
@@ -19119,7 +19251,7 @@
    "bldgFloors": 9,
    "structure": "SRC",
    "facing": "南",
-   "parking": "none",
+   "parking": "full",
    "parkingFee": null,
    "renovation": false,
    "renoNote": null,
@@ -19130,7 +19262,8 @@
     "北総線「白井」歩7分",
     "北総線「小室」歩38分",
     "北総線「西白井」歩37分"
-   ]
+   ],
+   "parkingText": "空無"
   },
   "area": "shiroi",
   "firstSeen": "2026-09-23",
@@ -19789,7 +19922,7 @@
    "bldgFloors": 6,
    "structure": "RC",
    "facing": "南西",
-   "parking": "none",
+   "parking": "full",
    "parkingFee": null,
    "renovation": false,
    "renoNote": null,
@@ -19800,7 +19933,8 @@
     "北総線「西白井」歩21分",
     "京成松戸線「鎌ヶ谷大仏」歩23分",
     "京成松戸線「初富」歩29分"
-   ]
+   ],
+   "parkingText": "空無"
   },
   "area": "shiroi",
   "firstSeen": "2026-09-23",
@@ -20642,7 +20776,7 @@
    "bldgFloors": 9,
    "structure": "SRC",
    "facing": "南",
-   "parking": "none",
+   "parking": "full",
    "parkingFee": null,
    "renovation": true,
    "renoNote": "2024年3月完了 水回り設備交換:キッチン・浴室・トイレ",
@@ -20651,7 +20785,8 @@
    "balconyM2": 32.09,
    "access": [
     "北総線「白井」歩7分"
-   ]
+   ],
+   "parkingText": "空無"
   },
   "area": "shiroi",
   "firstSeen": "2026-09-23",
@@ -20932,7 +21067,7 @@
    "bldgFloors": 8,
    "structure": "RC",
    "facing": "南",
-   "parking": "none",
+   "parking": "full",
    "parkingFee": null,
    "renovation": true,
    "renoNote": "2026年8月完了 水回り設備交換:キッチン・浴室・トイレ 内装リフォーム:壁・床・全室 その他:配管更新",
@@ -20943,7 +21078,8 @@
     "北総線「西白井」歩7分",
     "北総線「白井」車2.4km",
     "北総線「新鎌ケ谷」車3.7km"
-   ]
+   ],
+   "parkingText": "空無"
   },
   "area": "shiroi",
   "firstSeen": "2026-09-23",
@@ -21091,7 +21227,7 @@
    "bldgFloors": 15,
    "structure": "RC",
    "facing": "南",
-   "parking": "none",
+   "parking": "full",
    "parkingFee": null,
    "renovation": false,
    "renoNote": null,
@@ -21100,7 +21236,8 @@
    "balconyM2": 12.3,
    "access": [
     "北総線「西白井」歩3分"
-   ]
+   ],
+   "parkingText": "空無"
   },
   "area": "shiroi",
   "firstSeen": "2026-09-23",
@@ -24194,7 +24331,7 @@
    "bldgFloors": 10,
    "structure": "RC",
    "facing": "南西",
-   "parking": "none",
+   "parking": "full",
    "parkingFee": null,
    "renovation": false,
    "renoNote": null,
@@ -24205,7 +24342,8 @@
     "京成千原線「学園前」歩2分",
     "JR外房線「鎌取」歩26分",
     "京成千原線「おゆみ野」歩21分"
-   ]
+   ],
+   "parkingText": "空無"
   },
   "area": "midori",
   "firstSeen": "2026-09-23",
@@ -24322,7 +24460,7 @@
    "bldgFloors": 7,
    "structure": "RC",
    "facing": "南東",
-   "parking": "none",
+   "parking": "full",
    "parkingFee": null,
    "renovation": true,
    "renoNote": "2026年7月完了 水回り設備交換:キッチン・浴室・トイレ 内装リフォーム:壁・床 その他:ハウスクリーニング等",
@@ -24333,7 +24471,8 @@
     "京成本線「谷津」歩8分",
     "京成本線「船橋競馬場」歩13分",
     "JR京葉線「南船橋」歩21分"
-   ]
+   ],
+   "parkingText": "空無"
   },
   "area": "narashino",
   "firstSeen": "2026-09-23",
@@ -24355,7 +24494,7 @@
    "bldgFloors": 11,
    "structure": "SRC",
    "facing": "南西",
-   "parking": "none",
+   "parking": "full",
    "parkingFee": null,
    "renovation": true,
    "renoNote": "2026年9月完了予定 水回り設備交換:キッチン・浴室・トイレ 内装リフォーム:壁・床 その他:ハウスクリーニング等",
@@ -24366,7 +24505,8 @@
     "京成本線「谷津」歩15分",
     "JR京葉線「新習志野」歩18分",
     "京成本線「京成津田沼」歩25分"
-   ]
+   ],
+   "parkingText": "空無"
   },
   "area": "narashino",
   "firstSeen": "2026-09-23",
@@ -24420,7 +24560,7 @@
    "bldgFloors": 7,
    "structure": "RC",
    "facing": "南東",
-   "parking": "none",
+   "parking": "full",
    "parkingFee": null,
    "renovation": true,
    "renoNote": "2026年4月完了 水回り設備交換:キッチン・浴室・トイレ 内装リフォーム:壁・床 その他:ハウスクリーニング等",
@@ -24431,7 +24571,8 @@
     "京成本線「京成大久保」歩11分",
     "京成本線「実籾」歩18分",
     "JR総武線「幕張本郷」歩33分"
-   ]
+   ],
+   "parkingText": "空無"
   },
   "area": "narashino",
   "firstSeen": "2026-09-23",
@@ -24486,7 +24627,7 @@
    "bldgFloors": 7,
    "structure": "RC",
    "facing": "南",
-   "parking": "none",
+   "parking": "full",
    "parkingFee": null,
    "renovation": true,
    "renoNote": "2027年1月完了予定 水回り設備交換:キッチン・浴室・トイレ 内装リフォーム:壁・床・全室",
@@ -24495,7 +24636,8 @@
    "balconyM2": 10.92,
    "access": [
     "京成本線「谷津」歩3分"
-   ]
+   ],
+   "parkingText": "空無"
   },
   "area": "narashino",
   "firstSeen": "2026-09-23",
@@ -24682,7 +24824,7 @@
    "bldgFloors": 6,
    "structure": "RC",
    "facing": "南西",
-   "parking": "none",
+   "parking": "full",
    "parkingFee": null,
    "renovation": true,
    "renoNote": "2026年7月完了 水回り設備交換:キッチン・浴室・トイレ 内装リフォーム:壁・床・全室 その他:ハウスクリーニング等",
@@ -24693,7 +24835,8 @@
     "京成本線「京成津田沼」歩7分",
     "JR総武線「津田沼」歩17分",
     "京成松戸線「新津田沼」歩18分"
-   ]
+   ],
+   "parkingText": "空無"
   },
   "area": "narashino",
   "firstSeen": "2026-09-23",
@@ -24878,7 +25021,7 @@
    "bldgFloors": 14,
    "structure": "RC",
    "facing": "南西",
-   "parking": "none",
+   "parking": "full",
    "parkingFee": null,
    "renovation": true,
    "renoNote": "2026年8月完了 水回り設備交換:キッチン・浴室・トイレ 内装リフォーム:壁・床 その他:ハウスクリーニング等",
@@ -24889,7 +25032,8 @@
     "京成本線「実籾」歩12分",
     "京成本線「八千代台」歩37分",
     "京成本線「京成大久保」歩36分"
-   ]
+   ],
+   "parkingText": "空無"
   },
   "area": "narashino",
   "firstSeen": "2026-09-23",
@@ -24976,7 +25120,7 @@
    "bldgFloors": 14,
    "structure": "SRC",
    "facing": "南東",
-   "parking": "none",
+   "parking": "full",
    "parkingFee": null,
    "renovation": true,
    "renoNote": "2026年3月完了 水回り設備交換:キッチン・浴室・トイレ 内装リフォーム:壁・床 その他:ハウスクリーニング等",
@@ -24987,7 +25131,8 @@
     "JR京葉線「新習志野」歩8分",
     "JR京葉線「幕張豊砂」歩30分",
     "京成本線「京成津田沼」歩32分"
-   ]
+   ],
+   "parkingText": "空無"
   },
   "area": "narashino",
   "firstSeen": "2026-09-23",
@@ -25009,7 +25154,7 @@
    "bldgFloors": 7,
    "structure": "RC",
    "facing": "南西",
-   "parking": "none",
+   "parking": "full",
    "parkingFee": null,
    "renovation": true,
    "renoNote": "2026年9月完了 水回り設備交換:キッチン・浴室・トイレ 内装リフォーム:壁・床・全室",
@@ -25020,7 +25165,8 @@
     "JR総武線「津田沼」歩11分",
     "京成本線「京成津田沼」歩8分",
     "京成松戸線「新津田沼」歩9分"
-   ]
+   ],
+   "parkingText": "空無"
   },
   "area": "narashino",
   "firstSeen": "2026-09-23",
@@ -25108,7 +25254,7 @@
    "bldgFloors": 5,
    "structure": "RC",
    "facing": "南東",
-   "parking": "none",
+   "parking": "full",
    "parkingFee": null,
    "renovation": false,
    "renoNote": null,
@@ -25118,7 +25264,8 @@
    "access": [
     "JR総武線快速「津田沼」歩13分",
     "JR総武線「津田沼」歩13分"
-   ]
+   ],
+   "parkingText": "空無"
   },
   "area": "narashino",
   "firstSeen": "2026-09-23",
@@ -25173,7 +25320,7 @@
    "bldgFloors": 44,
    "structure": "RC",
    "facing": "北東",
-   "parking": "none",
+   "parking": "full",
    "parkingFee": null,
    "renovation": false,
    "renoNote": null,
@@ -25184,7 +25331,8 @@
     "JR総武線「津田沼」歩4分",
     "JR総武線快速「津田沼」歩4分",
     "京成松戸線「新津田沼」歩9分"
-   ]
+   ],
+   "parkingText": "空無"
   },
   "area": "narashino",
   "firstSeen": "2026-09-23",
@@ -25206,7 +25354,7 @@
    "bldgFloors": 24,
    "structure": "RC",
    "facing": "南西",
-   "parking": "none",
+   "parking": "full",
    "parkingFee": null,
    "renovation": false,
    "renoNote": null,
@@ -25215,7 +25363,8 @@
    "balconyM2": 13.1,
    "access": [
     "JR総武線快速「津田沼」歩7分"
-   ]
+   ],
+   "parkingText": "空無"
   },
   "area": "narashino",
   "firstSeen": "2026-09-23",
@@ -25302,7 +25451,7 @@
    "bldgFloors": 3,
    "structure": "RC",
    "facing": "南",
-   "parking": "none",
+   "parking": "full",
    "parkingFee": null,
    "renovation": true,
    "renoNote": "2026年2月完了 内装リフォーム:床 その他:インターフォン",
@@ -25313,7 +25462,8 @@
     "京成本線「実籾」歩13分",
     "京成本線「京成大久保」歩25分",
     "京成松戸線「習志野」歩44分"
-   ]
+   ],
+   "parkingText": "空無"
   },
   "area": "narashino",
   "firstSeen": "2026-09-23",
@@ -25478,7 +25628,8 @@
     "京成本線「谷津」歩13分",
     "京成松戸線「京成津田沼」歩20分",
     "JR総武線「津田沼」歩21分"
-   ]
+   ],
+   "parkingText": "無"
   },
   "area": "narashino",
   "firstSeen": "2026-09-23",
@@ -25500,7 +25651,7 @@
    "bldgFloors": 5,
    "structure": "RC",
    "facing": "南西",
-   "parking": "none",
+   "parking": "full",
    "parkingFee": null,
    "renovation": true,
    "renoNote": "2026年7月完了 水回り設備交換:キッチン・浴室・トイレ 内装リフォーム:壁・床 その他:ハウスクリーニング等",
@@ -25511,7 +25662,8 @@
     "京成本線「実籾」歩18分",
     "京成本線「京成大久保」歩19分",
     "京成松戸線「薬園台」歩40分"
-   ]
+   ],
+   "parkingText": "空無"
   },
   "area": "narashino",
   "firstSeen": "2026-09-23",
@@ -25566,7 +25718,7 @@
    "bldgFloors": 5,
    "structure": "RC",
    "facing": "南西",
-   "parking": "none",
+   "parking": "full",
    "parkingFee": null,
    "renovation": true,
    "renoNote": "2026年7月完了 水回り設備交換:キッチン・浴室・トイレ 内装リフォーム:壁・床・全室",
@@ -25577,7 +25729,8 @@
     "京成本線「京成大久保」歩19分",
     "京成本線「実籾」歩18分",
     "京成松戸線「薬園台」歩40分"
-   ]
+   ],
+   "parkingText": "空無"
   },
   "area": "narashino",
   "firstSeen": "2026-09-23",
@@ -25599,7 +25752,7 @@
    "bldgFloors": 5,
    "structure": "RC",
    "facing": "南",
-   "parking": "none",
+   "parking": "full",
    "parkingFee": null,
    "renovation": true,
    "renoNote": "2026年9月完了 水回り設備交換:キッチン・浴室・トイレ 内装リフォーム:壁・床・全室 その他:ハウスクリーニング...",
@@ -25610,7 +25763,8 @@
     "京成本線「実籾」歩21分",
     "京成本線「八千代台」歩25分",
     "東葉高速鉄道「八千代緑が丘」歩74分"
-   ]
+   ],
+   "parkingText": "空無"
   },
   "area": "narashino",
   "firstSeen": "2026-09-23",
@@ -25632,7 +25786,7 @@
    "bldgFloors": 5,
    "structure": "RC",
    "facing": "南東",
-   "parking": "none",
+   "parking": "full",
    "parkingFee": null,
    "renovation": true,
    "renoNote": "2026年9月完了予定 水回り設備交換:キッチン・浴室・トイレ 内装リフォーム:壁・床・全室",
@@ -25643,7 +25797,8 @@
     "京成本線「実籾」歩21分",
     "京成本線「八千代台」歩25分",
     "京成本線「京成大久保」歩45分"
-   ]
+   ],
+   "parkingText": "空無"
   },
   "area": "narashino",
   "firstSeen": "2026-09-23",
@@ -25665,7 +25820,7 @@
    "bldgFloors": 5,
    "structure": "RC",
    "facing": "南",
-   "parking": "none",
+   "parking": "full",
    "parkingFee": null,
    "renovation": true,
    "renoNote": "2026年9月完了予定 水回り設備交換:キッチン・浴室・トイレ 内装リフォーム:壁・床・全室 その他:ハウスクリーニング",
@@ -25675,7 +25830,8 @@
    "access": [
     "京成本線「実籾」歩21分",
     "京成本線「八千代台」歩24分"
-   ]
+   ],
+   "parkingText": "空無"
   },
   "area": "narashino",
   "firstSeen": "2026-09-23",
@@ -25938,7 +26094,8 @@
     "京成本線「京成大久保」歩5分",
     "京成松戸線「新津田沼」歩27分",
     "JR総武線「幕張本郷」歩30分"
-   ]
+   ],
+   "parkingText": "無"
   },
   "area": "narashino",
   "firstSeen": "2026-09-23",
@@ -26059,7 +26216,7 @@
    "bldgFloors": 5,
    "structure": "RC",
    "facing": "南西",
-   "parking": "none",
+   "parking": "full",
    "parkingFee": null,
    "renovation": true,
    "renoNote": "2025年5月完了 水回り設備交換:キッチン・浴室 内装リフォーム:壁・床 その他:ハウスクリーニング等",
@@ -26070,7 +26227,8 @@
     "京成本線「京成津田沼」歩15分",
     "京成松戸線「新津田沼」歩27分",
     "JR総武線「幕張本郷」歩30分"
-   ]
+   ],
+   "parkingText": "空無"
   },
   "area": "narashino",
   "firstSeen": "2026-09-23",
@@ -26158,7 +26316,7 @@
    "bldgFloors": 5,
    "structure": "RC",
    "facing": "南東",
-   "parking": "none",
+   "parking": "full",
    "parkingFee": null,
    "renovation": true,
    "renoNote": "2026年9月完了 水回り設備交換:キッチン・浴室・トイレ 内装リフォーム:壁・床・全室",
@@ -26169,7 +26327,8 @@
     "京成本線「実籾」歩7分",
     "京成本線「京成大久保」歩21分",
     "JR総武線「幕張本郷」歩43分"
-   ]
+   ],
+   "parkingText": "空無"
   },
   "area": "narashino",
   "firstSeen": "2026-09-23",
@@ -26290,7 +26449,7 @@
    "bldgFloors": 7,
    "structure": "RC",
    "facing": "南東",
-   "parking": "none",
+   "parking": "full",
    "parkingFee": null,
    "renovation": true,
    "renoNote": "2026年4月完了 水回り設備交換:キッチン・浴室・トイレ 内装リフォーム:壁・床・全室 その他:洗面所/給排水管/給...",
@@ -26301,7 +26460,8 @@
     "京成本線「京成大久保」歩11分",
     "京成本線「実籾」歩16分",
     "JR総武線「幕張本郷」歩32分"
-   ]
+   ],
+   "parkingText": "空無"
   },
   "area": "narashino",
   "firstSeen": "2026-09-23",
@@ -26323,7 +26483,7 @@
    "bldgFloors": 7,
    "structure": "RC",
    "facing": "南",
-   "parking": "none",
+   "parking": "full",
    "parkingFee": null,
    "renovation": true,
    "renoNote": "2026年4月完了 水回り設備交換:キッチン・浴室・トイレ 内装リフォーム:壁・床・全室",
@@ -26334,7 +26494,8 @@
     "JR総武線「東船橋」歩12分",
     "京成本線「谷津」歩14分",
     "JR総武線「津田沼」歩17分"
-   ]
+   ],
+   "parkingText": "空無"
   },
   "area": "narashino",
   "firstSeen": "2026-09-23",
@@ -26389,7 +26550,7 @@
    "bldgFloors": 7,
    "structure": "RC",
    "facing": "南東",
-   "parking": "none",
+   "parking": "full",
    "parkingFee": null,
    "renovation": true,
    "renoNote": "2026年4月完了 水回り設備交換:キッチン・浴室・トイレ 内装リフォーム:壁・床・全室",
@@ -26400,7 +26561,8 @@
     "京成本線「京成大久保」歩11分",
     "京成本線「実籾」歩17分",
     "JR総武線「幕張本郷」歩31分"
-   ]
+   ],
+   "parkingText": "空無"
   },
   "area": "narashino",
   "firstSeen": "2026-09-23",
@@ -26422,7 +26584,7 @@
    "bldgFloors": 7,
    "structure": "RC",
    "facing": "南東",
-   "parking": "none",
+   "parking": "full",
    "parkingFee": null,
    "renovation": true,
    "renoNote": "2026年4月完了 水回り設備交換:キッチン・浴室・トイレ 内装リフォーム:壁・床・全室 その他:洗面所/給排水管/給...",
@@ -26433,7 +26595,8 @@
     "京成本線「京成大久保」歩11分",
     "京成本線「実籾」歩16分",
     "JR総武線「幕張本郷」歩32分"
-   ]
+   ],
+   "parkingText": "空無"
   },
   "area": "narashino",
   "firstSeen": "2026-09-23",
@@ -26455,7 +26618,7 @@
    "bldgFloors": 7,
    "structure": "RC",
    "facing": "南東",
-   "parking": "none",
+   "parking": "full",
    "parkingFee": null,
    "renovation": true,
    "renoNote": "2026年3月完了 水回り設備交換:キッチン・浴室・トイレ 内装リフォーム:壁・床・全室 その他:洗面所/給湯器",
@@ -26466,7 +26629,8 @@
     "京成本線「京成大久保」歩11分",
     "京成本線「実籾」歩16分",
     "京成千葉線「京成幕張本郷」歩32分"
-   ]
+   ],
+   "parkingText": "空無"
   },
   "area": "narashino",
   "firstSeen": "2026-09-23",
@@ -26686,7 +26850,7 @@
    "bldgFloors": 12,
    "structure": "SRC",
    "facing": "南西",
-   "parking": "none",
+   "parking": "full",
    "parkingFee": null,
    "renovation": true,
    "renoNote": "2025年9月完了 水回り設備交換:キッチン・浴室・トイレ 内装リフォーム:壁・床 その他:ハウスクリーニング等",
@@ -26697,7 +26861,8 @@
     "京成本線「京成津田沼」歩4分",
     "京成松戸線「新津田沼」歩9分",
     "JR総武線「津田沼」歩11分"
-   ]
+   ],
+   "parkingText": "空無"
   },
   "area": "narashino",
   "firstSeen": "2026-09-23",
@@ -26917,7 +27082,7 @@
    "bldgFloors": 6,
    "structure": "RC",
    "facing": "南西",
-   "parking": "none",
+   "parking": "full",
    "parkingFee": null,
    "renovation": true,
    "renoNote": "2026年7月完了 水回り設備交換:キッチン・浴室・トイレ 内装リフォーム:壁・床・全室 その他:クリーニング等",
@@ -26928,7 +27093,8 @@
     "京成本線「京成津田沼」歩7分",
     "JR総武線「津田沼」歩17分",
     "京成松戸線「新津田沼」歩18分"
-   ]
+   ],
+   "parkingText": "空無"
   },
   "area": "narashino",
   "firstSeen": "2026-09-23",
@@ -27386,7 +27552,8 @@
    "balconyM2": null,
    "access": [
     "京成本線「実籾」歩1分"
-   ]
+   ],
+   "parkingText": "無"
   },
   "area": "narashino",
   "firstSeen": "2026-09-23",
@@ -27506,7 +27673,7 @@
    "bldgFloors": 7,
    "structure": "RC",
    "facing": "南東",
-   "parking": "none",
+   "parking": "full",
    "parkingFee": null,
    "renovation": false,
    "renoNote": null,
@@ -27516,7 +27683,8 @@
    "access": [
     "京成本線「谷津」歩7分",
     "京成本線「船橋競馬場」歩14分"
-   ]
+   ],
+   "parkingText": "空無"
   },
   "area": "narashino",
   "firstSeen": "2026-09-23",
@@ -27569,7 +27737,7 @@
    "bldgFloors": 5,
    "structure": "Steel",
    "facing": "南東",
-   "parking": "none",
+   "parking": "full",
    "parkingFee": null,
    "renovation": false,
    "renoNote": null,
@@ -27579,7 +27747,8 @@
    "access": [
     "京成本線「谷津」歩13分",
     "JR総武線快速「津田沼」バス10分向山小入口歩5分"
-   ]
+   ],
+   "parkingText": "空無"
   },
   "area": "narashino",
   "firstSeen": "2026-09-23",
@@ -27665,7 +27834,7 @@
    "bldgFloors": 5,
    "structure": "RC",
    "facing": "南東",
-   "parking": "none",
+   "parking": "full",
    "parkingFee": null,
    "renovation": false,
    "renoNote": null,
@@ -27676,7 +27845,8 @@
     "京成本線「京成津田沼」歩8分",
     "JR総武線「津田沼」歩13分",
     "京成松戸線「新津田沼」歩10分"
-   ]
+   ],
+   "parkingText": "空無"
   },
   "area": "narashino",
   "firstSeen": "2026-09-23",
@@ -27698,7 +27868,7 @@
    "bldgFloors": 5,
    "structure": "Steel",
    "facing": "南東",
-   "parking": "none",
+   "parking": "full",
    "parkingFee": null,
    "renovation": true,
    "renoNote": "2025年1月完了 水回り設備交換:キッチン・浴室 内装リフォーム:壁・床",
@@ -27709,7 +27879,8 @@
     "京成本線「谷津」歩11分",
     "JR総武線「津田沼」歩18分",
     "京成本線「京成津田沼」歩16分"
-   ]
+   ],
+   "parkingText": "空無"
   },
   "area": "narashino",
   "firstSeen": "2026-09-23",
@@ -27795,7 +27966,7 @@
    "bldgFloors": 5,
    "structure": "RC",
    "facing": "南西",
-   "parking": "none",
+   "parking": "full",
    "parkingFee": null,
    "renovation": false,
    "renoNote": null,
@@ -27805,7 +27976,8 @@
    "access": [
     "京成本線「谷津」歩10分",
     "JR京葉線「南船橋」歩11分"
-   ]
+   ],
+   "parkingText": "空無"
   },
   "area": "narashino",
   "firstSeen": "2026-09-23",
@@ -27870,7 +28042,8 @@
     "京成本線「谷津」歩11分",
     "JR総武線「津田沼」歩20分",
     "京成松戸線「新津田沼」歩25分"
-   ]
+   ],
+   "parkingText": "無"
   },
   "area": "narashino",
   "firstSeen": "2026-09-23",
@@ -28019,7 +28192,7 @@
    "bldgFloors": 5,
    "structure": "RC",
    "facing": "南西",
-   "parking": "none",
+   "parking": "full",
    "parkingFee": null,
    "renovation": true,
    "renoNote": "2024年1月完了 水回り設備交換:キッチン・浴室・トイレ 内装リフォーム:壁・床・全室 2021年3月完了 共用部の大規模修繕工事",
@@ -28029,7 +28202,8 @@
    "access": [
     "京成本線「実籾」歩13分",
     "JR総武線「津田沼」バス20分日大実籾歩2分"
-   ]
+   ],
+   "parkingText": "空無"
   },
   "area": "narashino",
   "firstSeen": "2026-09-23",
@@ -28474,7 +28648,7 @@
    "bldgFloors": 5,
    "structure": "RC",
    "facing": "南",
-   "parking": "none",
+   "parking": "full",
    "parkingFee": null,
    "renovation": true,
    "renoNote": "2026年7月完了 水回り設備交換:キッチン・浴室・トイレ 内装リフォーム:壁・床・全室",
@@ -28484,7 +28658,8 @@
    "access": [
     "京成本線「京成大久保」歩19分",
     "京成本線「実籾」歩18分"
-   ]
+   ],
+   "parkingText": "空無"
   },
   "area": "narashino",
   "firstSeen": "2026-09-23",
@@ -28633,7 +28808,7 @@
    "bldgFloors": 5,
    "structure": "RC",
    "facing": "南西",
-   "parking": "none",
+   "parking": "full",
    "parkingFee": null,
    "renovation": true,
    "renoNote": "2026年6月完了 その他:〈新規設置〉システム",
@@ -28643,7 +28818,8 @@
    "access": [
     "京成本線「実籾」歩18分",
     "京成本線「京成大久保」歩21分"
-   ]
+   ],
+   "parkingText": "空無"
   },
   "area": "narashino",
   "firstSeen": "2026-09-23",
@@ -28697,7 +28873,7 @@
    "bldgFloors": 7,
    "structure": "RC",
    "facing": "北東",
-   "parking": "none",
+   "parking": "full",
    "parkingFee": null,
    "renovation": true,
    "renoNote": "2026年9月完了予定 水回り設備交換:キッチン・浴室・トイレ 内装リフォーム:壁・床",
@@ -28707,7 +28883,8 @@
    "access": [
     "京成本線「八千代台」歩18分",
     "京成本線「八千代台」バス6分東習志野八丁目中央歩3分"
-   ]
+   ],
+   "parkingText": "空無"
   },
   "area": "narashino",
   "firstSeen": "2026-09-23",
@@ -28825,7 +29002,7 @@
    "bldgFloors": 3,
    "structure": "RC",
    "facing": "南西",
-   "parking": "none",
+   "parking": "full",
    "parkingFee": null,
    "renovation": true,
    "renoNote": "2021年9月完了 水回り設備交換:トイレ その他:全室クロス/CF・襖...",
@@ -28834,7 +29011,8 @@
    "balconyM2": null,
    "access": [
     "京成本線「京成大久保」歩7分"
-   ]
+   ],
+   "parkingText": "空無"
   },
   "area": "narashino",
   "firstSeen": "2026-09-23",
@@ -29026,7 +29204,8 @@
    "balconyM2": 27.54,
    "access": [
     "JR総武線「津田沼」歩17分"
-   ]
+   ],
+   "parkingText": "無"
   },
   "area": "narashino",
   "firstSeen": "2026-09-23",
@@ -29311,7 +29490,7 @@
    "bldgFloors": 10,
    "structure": "SRC",
    "facing": "南東",
-   "parking": "none",
+   "parking": "full",
    "parkingFee": null,
    "renovation": false,
    "renoNote": null,
@@ -29320,7 +29499,8 @@
    "balconyM2": 8.55,
    "access": [
     "京成本線「京成大久保」歩8分"
-   ]
+   ],
+   "parkingText": "空無"
   },
   "area": "narashino",
   "firstSeen": "2026-09-23",
@@ -29373,7 +29553,7 @@
    "bldgFloors": 7,
    "structure": "RC",
    "facing": "東",
-   "parking": "none",
+   "parking": "full",
    "parkingFee": null,
    "renovation": true,
    "renoNote": "2026年2月完了 水回り設備交換:キッチン・浴室・トイレ 内装リフォーム:壁・床・全室 その他:洗面所/給排水管/給...",
@@ -29384,7 +29564,8 @@
     "京成本線「京成大久保」歩9分",
     "京成本線「実籾」歩16分",
     "JR総武線「幕張本郷」歩32分"
-   ]
+   ],
+   "parkingText": "空無"
   },
   "area": "narashino",
   "firstSeen": "2026-09-23",
@@ -30182,7 +30363,7 @@
    "bldgFloors": 5,
    "structure": "RC",
    "facing": "南東",
-   "parking": "none",
+   "parking": "full",
    "parkingFee": null,
    "renovation": true,
    "renoNote": "2025年5月完了 水回り設備交換:キッチン・浴室 内装リフォーム:床",
@@ -30191,7 +30372,8 @@
    "balconyM2": 8.96,
    "access": [
     "京成本線「京成津田沼」歩15分"
-   ]
+   ],
+   "parkingText": "空無"
   },
   "area": "narashino",
   "firstSeen": "2026-09-23",
@@ -30246,7 +30428,7 @@
    "bldgFloors": 5,
    "structure": "RC",
    "facing": "南",
-   "parking": "none",
+   "parking": "full",
    "parkingFee": null,
    "renovation": true,
    "renoNote": "2026年4月完了 水回り設備交換:キッチン・浴室・トイレ 内装リフォーム:壁・床・全室",
@@ -30257,7 +30439,8 @@
     "京成本線「京成津田沼」歩15分",
     "JR総武線「津田沼」歩24分",
     "京成松戸線「新津田沼」歩19分"
-   ]
+   ],
+   "parkingText": "空無"
   },
   "area": "narashino",
   "firstSeen": "2026-09-23",
@@ -30279,7 +30462,7 @@
    "bldgFloors": 5,
    "structure": "RC",
    "facing": "南東",
-   "parking": "none",
+   "parking": "full",
    "parkingFee": null,
    "renovation": true,
    "renoNote": "2026年9月完了 水回り設備交換:キッチン・浴室・トイレ 内装リフォーム:壁・床・全室 その他:防水パン・洗濯用水...",
@@ -30290,7 +30473,8 @@
     "京成本線「実籾」歩7分",
     "京成本線「京成大久保」歩22分",
     "JR総武線「幕張本郷」歩44分"
-   ]
+   ],
+   "parkingText": "空無"
   },
   "area": "narashino",
   "firstSeen": "2026-09-23",
@@ -30504,7 +30688,7 @@
    "bldgFloors": 7,
    "structure": "RC",
    "facing": "西",
-   "parking": "none",
+   "parking": "full",
    "parkingFee": null,
    "renovation": false,
    "renoNote": null,
@@ -30513,7 +30697,8 @@
    "balconyM2": 7.8,
    "access": [
     "JR総武線「津田沼」歩15分"
-   ]
+   ],
+   "parkingText": "空無"
   },
   "area": "narashino",
   "firstSeen": "2026-09-23",
@@ -30535,7 +30720,7 @@
    "bldgFloors": 7,
    "structure": "RC",
    "facing": "南東",
-   "parking": "none",
+   "parking": "full",
    "parkingFee": null,
    "renovation": true,
    "renoNote": "2026年4月完了 水回り設備交換:キッチン・浴室・トイレ 内装リフォーム:床",
@@ -30544,7 +30729,8 @@
    "balconyM2": 7.96,
    "access": [
     "京成本線「京成大久保」歩11分"
-   ]
+   ],
+   "parkingText": "空無"
   },
   "area": "narashino",
   "firstSeen": "2026-09-23",
@@ -30728,7 +30914,7 @@
    "bldgFloors": 6,
    "structure": "RC",
    "facing": "南東",
-   "parking": "none",
+   "parking": "full",
    "parkingFee": null,
    "renovation": true,
    "renoNote": "2026年2月完了 水回り設備交換:キッチン・浴室・トイレ 内装リフォーム:壁・床・全室 2026年8月完了 共用部の大規模修繕工事",
@@ -30739,7 +30925,8 @@
     "京成本線「京成大久保」歩15分",
     "JR総武線「津田沼」バス24分東邦中学・高校前歩2分",
     "京成松戸線「新津田沼」バス24分大久保四丁目歩2分"
-   ]
+   ],
+   "parkingText": "空無"
   },
   "area": "narashino",
   "firstSeen": "2026-09-23",
@@ -30999,7 +31186,8 @@
     "JR総武線「津田沼」歩7分",
     "京成本線「京成津田沼」歩7分",
     "京成松戸線「新津田沼」歩6分"
-   ]
+   ],
+   "parkingText": "無"
   },
   "area": "narashino",
   "firstSeen": "2026-09-23",
@@ -31021,7 +31209,7 @@
    "bldgFloors": 11,
    "structure": "RC",
    "facing": "南東",
-   "parking": "none",
+   "parking": "full",
    "parkingFee": null,
    "renovation": true,
    "renoNote": "2026年6月完了 水回り設備交換:キッチン・浴室・トイレ 内装リフォーム:床",
@@ -31032,7 +31220,8 @@
     "京成本線「実籾」歩14分",
     "京成本線「京成大久保」歩16分",
     "京成本線「京成大久保」バス5分実籾本郷入口歩2分"
-   ]
+   ],
+   "parkingText": "空無"
   },
   "area": "narashino",
   "firstSeen": "2026-09-23",
@@ -31120,7 +31309,7 @@
    "bldgFloors": 13,
    "structure": "SRC",
    "facing": "南東",
-   "parking": "none",
+   "parking": "full",
    "parkingFee": null,
    "renovation": true,
    "renoNote": "2016年10月完了 内装リフォーム:壁",
@@ -31130,7 +31319,8 @@
    "access": [
     "JR総武線快速「津田沼」歩5分",
     "京成松戸線「新津田沼」歩4分"
-   ]
+   ],
+   "parkingText": "空無"
   },
   "area": "narashino",
   "firstSeen": "2026-09-23",
@@ -31284,7 +31474,7 @@
    "bldgFloors": 6,
    "structure": "RC",
    "facing": "南西",
-   "parking": "none",
+   "parking": "full",
    "parkingFee": null,
    "renovation": false,
    "renoNote": null,
@@ -31293,7 +31483,8 @@
    "balconyM2": 19.06,
    "access": [
     "京成本線「京成津田沼」歩9分"
-   ]
+   ],
+   "parkingText": "空無"
   },
   "area": "narashino",
   "firstSeen": "2026-09-23",
@@ -31478,7 +31669,7 @@
    "bldgFloors": 5,
    "structure": "RC",
    "facing": "南西",
-   "parking": "none",
+   "parking": "full",
    "parkingFee": null,
    "renovation": false,
    "renoNote": null,
@@ -31487,7 +31678,8 @@
    "balconyM2": 7.4,
    "access": [
     "京成本線「京成津田沼」歩14分"
-   ]
+   ],
+   "parkingText": "空無"
   },
   "area": "narashino",
   "firstSeen": "2026-09-23",
@@ -31740,7 +31932,7 @@
    "bldgFloors": 12,
    "structure": "SRC",
    "facing": "南西",
-   "parking": "none",
+   "parking": "full",
    "parkingFee": null,
    "renovation": true,
    "renoNote": "2026年9月完了 水回り設備交換:キッチン・浴室・トイレ 内装リフォーム:壁・床・全室 その他:洗濯機パン/洗面所/...",
@@ -31751,7 +31943,8 @@
     "JR総武線快速「津田沼」歩11分",
     "京成本線「京成津田沼」歩4分",
     "京成千葉線「京成津田沼」歩4分"
-   ]
+   ],
+   "parkingText": "空無"
   },
   "area": "narashino",
   "firstSeen": "2026-09-23",
@@ -31870,7 +32063,7 @@
    "bldgFloors": 6,
    "structure": "RC",
    "facing": "南西",
-   "parking": "none",
+   "parking": "full",
    "parkingFee": null,
    "renovation": true,
    "renoNote": "2026年7月完了 水回り設備交換:キッチン・浴室・トイレ 内装リフォーム:壁・床",
@@ -31881,7 +32074,8 @@
     "京成本線「京成津田沼」歩7分",
     "JR総武線「津田沼」歩17分",
     "京成松戸線「新津田沼」歩18分"
-   ]
+   ],
+   "parkingText": "空無"
   },
   "area": "narashino",
   "firstSeen": "2026-09-23",
@@ -31903,7 +32097,7 @@
    "bldgFloors": 6,
    "structure": "RC",
    "facing": "南西",
-   "parking": "none",
+   "parking": "full",
    "parkingFee": null,
    "renovation": true,
    "renoNote": "2026年7月完了 水回り設備交換:キッチン・浴室・トイレ 内装リフォーム:壁・床 その他:全室クロス/全室ハ...",
@@ -31914,7 +32108,8 @@
     "京成本線「京成津田沼」歩7分",
     "JR総武線「津田沼」歩17分",
     "京成松戸線「京成津田沼」歩7分"
-   ]
+   ],
+   "parkingText": "空無"
   },
   "area": "narashino",
   "firstSeen": "2026-09-23",
@@ -31946,7 +32141,8 @@
    "access": [
     "京成本線「京成津田沼」歩7分",
     "JR総武線「津田沼」歩18分"
-   ]
+   ],
+   "parkingText": "無"
   },
   "area": "narashino",
   "firstSeen": "2026-09-23",
@@ -31968,7 +32164,7 @@
    "bldgFloors": 6,
    "structure": "RC",
    "facing": "南西",
-   "parking": "none",
+   "parking": "full",
    "parkingFee": null,
    "renovation": true,
    "renoNote": "2026年7月完了 水回り設備交換:キッチン・トイレ 内装リフォーム:壁・床・全室 その他:ハウスクリーニング他",
@@ -31979,7 +32175,8 @@
     "京成本線「京成津田沼」歩7分",
     "JR総武線「津田沼」歩17分",
     "京成松戸線「新津田沼」歩18分"
-   ]
+   ],
+   "parkingText": "空無"
   },
   "area": "narashino",
   "firstSeen": "2026-09-23",
@@ -32034,7 +32231,7 @@
    "bldgFloors": 6,
    "structure": "RC",
    "facing": "南西",
-   "parking": "none",
+   "parking": "full",
    "parkingFee": null,
    "renovation": false,
    "renoNote": null,
@@ -32045,7 +32242,8 @@
     "京成本線「京成津田沼」歩7分",
     "JR総武線「津田沼」歩16分",
     "JR京葉線「新習志野」バス13分まろにえ橋歩5分"
-   ]
+   ],
+   "parkingText": "空無"
   },
   "area": "narashino",
   "firstSeen": "2026-09-23",
@@ -32067,7 +32265,7 @@
    "bldgFloors": 6,
    "structure": "RC",
    "facing": "南西",
-   "parking": "none",
+   "parking": "full",
    "parkingFee": null,
    "renovation": true,
    "renoNote": "2026年7月完了 水回り設備交換:キッチン・浴室・トイレ 内装リフォーム:壁・床・全室 その他:新規交換:システムバ",
@@ -32078,7 +32276,8 @@
     "京成本線「京成津田沼」歩7分",
     "京成松戸線「新津田沼」歩14分",
     "JR総武線快速「津田沼」歩15分"
-   ]
+   ],
+   "parkingText": "空無"
   },
   "area": "narashino",
   "firstSeen": "2026-09-23",
@@ -32100,7 +32299,7 @@
    "bldgFloors": 6,
    "structure": "RC",
    "facing": "南西",
-   "parking": "none",
+   "parking": "full",
    "parkingFee": null,
    "renovation": true,
    "renoNote": "2026年7月完了 水回り設備交換:キッチン・浴室・トイレ",
@@ -32111,7 +32310,8 @@
     "京成本線「京成津田沼」歩7分",
     "JR総武線快速「津田沼」歩17分",
     "JR京葉線「新習志野」歩32分"
-   ]
+   ],
+   "parkingText": "空無"
   },
   "area": "narashino",
   "firstSeen": "2026-09-23",
@@ -32133,7 +32333,7 @@
    "bldgFloors": 6,
    "structure": "RC",
    "facing": "南東",
-   "parking": "none",
+   "parking": "full",
    "parkingFee": null,
    "renovation": false,
    "renoNote": null,
@@ -32144,7 +32344,8 @@
     "JR総武線快速「津田沼」歩13分",
     "京成松戸線「新津田沼」歩10分",
     "京成本線「京成津田沼」歩13分"
-   ]
+   ],
+   "parkingText": "空無"
   },
   "area": "narashino",
   "firstSeen": "2026-09-23",
@@ -32881,7 +33082,7 @@
    "bldgFloors": 15,
    "structure": "SRC",
    "facing": "南東",
-   "parking": "none",
+   "parking": "full",
    "parkingFee": null,
    "renovation": true,
    "renoNote": "2026年9月完了 水回り設備交換:キッチン・トイレ 内装リフォーム:壁・床 その他:給湯器・洗面化粧台",
@@ -32892,7 +33093,8 @@
     "JR総武線「津田沼」歩12分",
     "京成本線「京成津田沼」歩6分",
     "京成松戸線「新津田沼」歩8分"
-   ]
+   ],
+   "parkingText": "空無"
   },
   "area": "narashino",
   "firstSeen": "2026-09-23",
@@ -32987,7 +33189,8 @@
    "balconyM2": 18.15,
    "access": [
     "JR総武線「津田沼」歩10分"
-   ]
+   ],
+   "parkingText": "無"
   },
   "area": "narashino",
   "firstSeen": "2026-09-23",
@@ -33169,7 +33372,7 @@
    "bldgFloors": 14,
    "structure": "SRC",
    "facing": "南東",
-   "parking": "none",
+   "parking": "full",
    "parkingFee": null,
    "renovation": true,
    "renoNote": "2026年3月完了 水回り設備交換:キッチン・浴室・トイレ 内装リフォーム:壁・床・全室",
@@ -33180,7 +33383,8 @@
     "JR京葉線「新習志野」歩6分",
     "JR京葉線「幕張豊砂」バス4分新習志野駅歩7分",
     "京成本線「京成津田沼」バス26分秋津運動公園入口歩1分"
-   ]
+   ],
+   "parkingText": "空無"
   },
   "area": "narashino",
   "firstSeen": "2026-09-23",
@@ -33556,7 +33760,7 @@
    "bldgFloors": 44,
    "structure": "RC",
    "facing": "北東",
-   "parking": "none",
+   "parking": "full",
    "parkingFee": null,
    "renovation": false,
    "renoNote": null,
@@ -33567,7 +33771,8 @@
     "JR総武線快速「津田沼」歩4分",
     "京成松戸線「新津田沼」歩9分",
     "京成本線「京成津田沼」歩13分"
-   ]
+   ],
+   "parkingText": "空無"
   },
   "area": "narashino",
   "firstSeen": "2026-09-23",
@@ -33718,7 +33923,7 @@
    "bldgFloors": 44,
    "structure": "RC",
    "facing": "北東",
-   "parking": "none",
+   "parking": "full",
    "parkingFee": null,
    "renovation": false,
    "renoNote": null,
@@ -33727,7 +33932,8 @@
    "balconyM2": 12.89,
    "access": [
     "JR総武線「津田沼」歩4分"
-   ]
+   ],
+   "parkingText": "空無"
   },
   "area": "narashino",
   "firstSeen": "2026-09-23",
@@ -33749,7 +33955,7 @@
    "bldgFloors": 24,
    "structure": "RC",
    "facing": "南西",
-   "parking": "none",
+   "parking": "full",
    "parkingFee": null,
    "renovation": false,
    "renoNote": null,
@@ -33758,7 +33964,8 @@
    "balconyM2": 12.6,
    "access": [
     "JR総武線快速「津田沼」歩10分"
-   ]
+   ],
+   "parkingText": "空無"
   },
   "area": "narashino",
   "firstSeen": "2026-09-23",
@@ -33939,7 +34146,7 @@
    "bldgFloors": 44,
    "structure": "RC",
    "facing": "南東",
-   "parking": "none",
+   "parking": "full",
    "parkingFee": null,
    "renovation": false,
    "renoNote": null,
@@ -33950,7 +34157,8 @@
     "JR総武線快速「津田沼」歩4分",
     "京成松戸線「新津田沼」歩9分",
     "京成本線「京成津田沼」歩13分"
-   ]
+   ],
+   "parkingText": "空無"
   },
   "area": "narashino",
   "firstSeen": "2026-09-23",
@@ -34037,7 +34245,7 @@
    "bldgFloors": 44,
    "structure": "RC",
    "facing": "北東",
-   "parking": "none",
+   "parking": "full",
    "parkingFee": null,
    "renovation": false,
    "renoNote": null,
@@ -34048,7 +34256,8 @@
     "JR総武線快速「津田沼」歩4分",
     "京成松戸線「新津田沼」歩9分",
     "京成本線「京成津田沼」歩13分"
-   ]
+   ],
+   "parkingText": "空無"
   },
   "area": "narashino",
   "firstSeen": "2026-09-23",
@@ -34079,7 +34288,8 @@
    "balconyM2": 13.41,
    "access": [
     "JR総武線快速「津田沼」歩4分"
-   ]
+   ],
+   "parkingText": "無"
   },
   "area": "narashino",
   "firstSeen": "2026-09-23",
@@ -34134,7 +34344,7 @@
    "bldgFloors": 44,
    "structure": "RC",
    "facing": "南西",
-   "parking": "none",
+   "parking": "full",
    "parkingFee": null,
    "renovation": false,
    "renoNote": null,
@@ -34145,7 +34355,8 @@
     "JR総武線快速「津田沼」歩4分",
     "京成松戸線「新津田沼」歩9分",
     "JR総武線「津田沼」歩4分"
-   ]
+   ],
+   "parkingText": "空無"
   },
   "area": "narashino",
   "firstSeen": "2026-09-23",
@@ -34167,7 +34378,7 @@
    "bldgFloors": 44,
    "structure": "RC",
    "facing": "南西",
-   "parking": "none",
+   "parking": "full",
    "parkingFee": null,
    "renovation": false,
    "renoNote": null,
@@ -34178,7 +34389,8 @@
     "JR総武線「津田沼」歩4分",
     "京成松戸線「新津田沼」歩8分",
     "京成本線「京成津田沼」歩13分"
-   ]
+   ],
+   "parkingText": "空無"
   },
   "area": "narashino",
   "firstSeen": "2026-09-23",
