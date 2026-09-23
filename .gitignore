@@ -2,3 +2,5 @@ __pycache__/
 *.pyc
 listings.json
 listings_clean.json
+mansions.json
+mansions_clean.json

@@ -24,13 +24,22 @@ jobs:
           python-version: '3.11'
 
       - name: Install dependencies
-        run: pip install requests beautifulsoup4
+        run: pip install requests beautifulsoup4 pillow
 
       - name: Run scraper
         run: python scraper.py
 
+      - name: Run condo scraper
+        id: ms
+        continue-on-error: true   # a condo failure must not block the house update
+        timeout-minutes: 40
+        run: python scraper_mansion.py
+
       - name: Inject listings into HTML
         run: python inject.py
+
+      - name: Inject condos into HTML
+        run: python inject_mansion.py
 
       - name: Sync index.html
         run: cp suumo-compare.html index.html
@@ -41,13 +50,16 @@ jobs:
           TELEGRAM_TOKEN:   ${{ secrets.TELEGRAM_TOKEN }}
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
           JOB_STATUS:       ${{ job.status }}
+          MS_STATUS:        ${{ steps.ms.outcome }}
         run: python notify.py
 
       - name: Commit updated site & known listings
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add suumo-compare.html index.html known_nc_ids.json history.json
+          git add suumo-compare.html index.html known_nc_ids.json history.json \
+                  mansion_cache.json known_ms_units.json mansion_history.json \
+                  hazard_cache.json house_price_history.json
           git diff --staged --quiet && echo "No changes to commit" || \
             git commit -m "chore: auto-update listings $(date -u +'%Y-%m-%d')"
 

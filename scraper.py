@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
 SUUMO Property Scraper
-Target: used single-family homes in Mihama-ku, Chiba
+Target: used single-family homes (中古一戸建て) in every area listed in areas.json
 """
 
 import json
@@ -15,7 +15,8 @@ from bs4 import BeautifulSoup
 
 # ── CONFIG ────────────────────────────────────────────
 BASE_URL   = "https://suumo.jp"
-INDEX_URL  = "https://suumo.jp/jj/bukken/ichiran/JJ010FJ001/?ar=030&bs=021&ta=12&jspIdFlg=patternShikugun&sc=12106&kb=1&kt=9999999&tb=0&tt=9999999&hb=0&ht=9999999&ekTjCd=&ekTjNm=&tj=0&cnb=0&cn=9999999&srch_navi=1"
+AREAS_FILE = "areas.json"
+INDEX_TMPL = "https://suumo.jp/jj/bukken/ichiran/JJ010FJ001/?ar={ar}&bs=021&ta={ta}&jspIdFlg=patternShikugun&sc={sc}&kb=1&kt=9999999&tb=0&tt=9999999&hb=0&ht=9999999&ekTjCd=&ekTjNm=&tj=0&cnb=0&cn=9999999&srch_navi=1"
 HEADERS    = {
     "User-Agent": (
         "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
@@ -27,7 +28,7 @@ HEADERS    = {
     "Referer": "https://suumo.jp/",
 }
 DELAY      = 1.2   # seconds between requests
-MAX_PAGES  = 3     # index pages to crawl (10/page default → ~27 total listings)
+MAX_PAGES  = 5     # index pages to crawl per area (30 listings/page)
 OUT_JSON   = "listings.json"
 
 # ── FETCH ─────────────────────────────────────────────
@@ -48,10 +49,8 @@ def fetch(url, retries=3):
     return None
 
 # ── INDEX PAGE PARSING ────────────────────────────────
-# Match any Chiba ward — sc_chibashi*/nc_* — so one scraper works for all wards
-LISTING_RE = re.compile(r"/chukoikkodate/chiba/(sc_chiba[^/]+)/nc_(\d+)/")
-
-WARD_SLUG = None   # auto-detected from the most common ward on page 1
+# Match any prefecture/ward — /chukoikkodate/<pref>/sc_<ward>/nc_<id>/
+LISTING_RE = re.compile(r"/chukoikkodate/[^/]+/(sc_[^/]+)/nc_(\d+)/")
 
 def get_listing_urls(html, ward_filter=None):
     soup = BeautifulSoup(html, "html.parser")
@@ -72,21 +71,7 @@ def get_listing_urls(html, ward_filter=None):
             urls.append(clean)
     return urls
 
-
-def detect_ward(html):
-    """Return the most common ward slug on the page (= the target ward)."""
-    from collections import Counter
-    soup = BeautifulSoup(html, "html.parser")
-    wards = []
-    for a in soup.find_all("a", href=True):
-        m = LISTING_RE.search(a["href"])
-        if m:
-            wards.append(m.group(1))
-    if not wards:
-        return None
-    return Counter(wards).most_common(1)[0][0]
-
-def get_next_page_url(html, current_page):
+def get_next_page_url(html, current_page, index_url):
     soup = BeautifulSoup(html, "html.parser")
     # Try explicit next link text
     for a in soup.find_all("a", href=True):
@@ -94,9 +79,9 @@ def get_next_page_url(html, current_page):
         if text in ("次へ", "次のページ", ">", "›"):
             href = a["href"]
             return (BASE_URL + href) if href.startswith("/") else href
-    # Fallback: append &page=N (INDEX_URL already has query params)
+    # Fallback: append &page=N (index_url already has query params)
     next_page = current_page + 1
-    return f"{INDEX_URL}&page={next_page}"
+    return f"{index_url}&page={next_page}"
 
 # ── DETAIL PAGE PARSING ───────────────────────────────
 def build_data_dict(soup):
@@ -267,7 +252,7 @@ GRADS = [
 ]
 
 # ── MAIN SCRAPE ───────────────────────────────────────
-def scrape_detail(url, idx):
+def scrape_detail(url, idx, area_name):
     html = fetch(url)
     if not html:
         return None
@@ -297,8 +282,8 @@ def scrape_detail(url, idx):
     return {
         "id":          idx,
         "price":       price,
-        "area":        "Mihama-ku",
-        "address":     address or "Mihama-ku, Chiba",
+        "area":        area_name,
+        "address":     address or area_name,
         "layout":      layout,
         "areaM2":      floor_area,
         "landM2":      land_area,
@@ -318,51 +303,52 @@ def scrape_detail(url, idx):
         "grad":        GRADS[idx % len(GRADS)],
     }
 
+def collect_area_urls(area):
+    """Crawl one area's index pages; return listing URLs in that ward only."""
+    index_url = INDEX_TMPL.format(**area)
+    urls = []
+    current_url = index_url
+    for page in range(1, MAX_PAGES + 1):
+        print(f"\n[{area['key']} page {page}/{MAX_PAGES}] {current_url}")
+        html = fetch(current_url)
+        if not html:
+            break
+        before = len(urls)
+        for u in get_listing_urls(html, ward_filter=area["slug"]):
+            if u not in urls:
+                urls.append(u)
+        new_count = len(urls) - before
+        print(f"  +{new_count} new URLs  (total {len(urls)})")
+        if new_count == 0:
+            print("  [stop] No new URLs on this page — reached end of results")
+            break
+        current_url = get_next_page_url(html, page, index_url)
+        time.sleep(DELAY)
+    return urls
+
 def main():
-    print("[SUUMO] Scraper -- Mihama-ku, Chiba")
-    print(f"  Index URL : {INDEX_URL}")
-    print(f"  Max pages : {MAX_PAGES}  (~{MAX_PAGES*20} listings)")
+    with open(AREAS_FILE, encoding="utf-8") as f:
+        areas = json.load(f)
+    print(f"[SUUMO] House scraper -- {', '.join(a['name'] for a in areas)}")
+    print(f"  Max pages : {MAX_PAGES} per area")
     print(f"  Delay     : {DELAY}s between requests")
     print("-" * 54)
 
     # ── Collect all listing URLs ───────────────────
-    global WARD_SLUG
-    all_urls = []
-    current_url = INDEX_URL
-    for page in range(1, MAX_PAGES + 1):
-        print(f"\n[page {page}/{MAX_PAGES}] {current_url}")
-        html = fetch(current_url)
-        if not html:
-            break
-
-        # Auto-detect target ward from page 1
-        if page == 1:
-            WARD_SLUG = detect_ward(html)
-            print(f"  [ward] Target ward detected: {WARD_SLUG}")
-
-        urls = get_listing_urls(html, ward_filter=WARD_SLUG)
-        before = len(all_urls)
-        for u in urls:
-            if u not in all_urls:
-                all_urls.append(u)
-        new_count = len(all_urls) - before
-        print(f"  +{new_count} new URLs  (total {len(all_urls)})")
-        if new_count == 0:
-            print("  [stop] No new URLs on this page — reached end of results")
-            break
-        current_url = get_next_page_url(html, page)
-        time.sleep(DELAY)
+    all_urls = []           # (url, area name)
+    for area in areas:
+        all_urls += [(u, area["name"]) for u in collect_area_urls(area)]
 
     print(f"\n[OK] {len(all_urls)} unique listing URLs collected")
     print("-" * 54)
 
     # ── Scrape each detail page ────────────────────
     results = []
-    for i, url in enumerate(all_urls):
+    for i, (url, area_name) in enumerate(all_urls):
         nc = re.search(r"nc_(\d+)", url)
         nc_id = nc.group(1) if nc else "?"
         print(f"[{i+1:>3}/{len(all_urls)}] nc_{nc_id} ... ", end="", flush=True)
-        prop = scrape_detail(url, i + 1)
+        prop = scrape_detail(url, i + 1, area_name)
         if prop and prop["areaM2"]:
             results.append(prop)
             print(f"OK  Y{prop['price']:,}man  {prop['layout']}  {prop['areaM2']}m2  {prop['walk']}min")

@@ -1,8 +1,10 @@
 #!/usr/bin/env python3
 """
 Sends a Telegram notification after each daily scrape.
-Compares against known_nc_ids.json to detect new listings.
-Scores are computed here (mirrors the JS scoreSet() function).
+Houses:  compares against known_nc_ids.json; scores computed here
+         (mirrors the JS scoreSet() function).
+Condos:  compares unit keys against known_ms_units.json; scores come
+         pre-computed in mansions_clean.json (inject_mansion.py).
 """
 
 import json, os, re, urllib.request, urllib.parse
@@ -12,6 +14,7 @@ from pathlib import Path
 TOKEN    = os.environ['TELEGRAM_TOKEN']
 CHAT_ID  = os.environ['TELEGRAM_CHAT_ID']
 STATUS   = os.environ.get('JOB_STATUS', 'success')
+MS_STATUS = os.environ.get('MS_STATUS', 'success')   # outcome of the condo scrape step
 SITE_URL = "https://umbasimpy.github.io/japan-house-compare/"
 ACTIONS  = "https://github.com/UmbaSimpy/japan-house-compare/actions"
 
@@ -20,7 +23,7 @@ ACTIONS  = "https://github.com/UmbaSimpy/japan-house-compare/actions"
 def send(text):
     data = urllib.parse.urlencode({
         'chat_id': CHAT_ID,
-        'text':    text,
+        'text':    text[:4096],   # Telegram message limit
         'disable_web_page_preview': 'false',
     }).encode()
     urllib.request.urlopen(
@@ -30,6 +33,9 @@ def send(text):
 
 
 # ── Scoring (mirrors JS scoreSet) ─────────────────────
+# Wooden houses on shallow foundations tilt when the ground liquefies (Mihama 2011)
+HOUSE_LIQ_PENALTY = {'high': 4, 'mid': 2}
+
 def score_listings(listings):
     if not listings:
         return []
@@ -58,11 +64,12 @@ def score_listings(listings):
         s_raw = 1.0 if hi_a == lo_a else (d['areaM2'] - lo_a) / (hi_a - lo_a)
         space = round(s_raw * 20)
 
-        # 5. EXTRAS /15 — parking, land rights, city gas
+        # 5. EXTRAS /15 — parking, land rights, city gas, minus liquefaction risk
         park_sc   = 0 if d['parking'] == 0 else 5 if d['parking'] == 1 else 8
         rights_sc = 5 if d['landRights'] == 'owned' else 0
         gas_sc    = 2 if d['cityGas'] else 0
-        extras    = min(15, park_sc + rights_sc + gas_sc)
+        liq_pen   = HOUSE_LIQ_PENALTY.get((d.get('liq') or {}).get('level'), 0)
+        extras    = max(0, min(15, park_sc + rights_sc + gas_sc) - liq_pen)
 
         total = value + access + condition + space + extras
         result.append({**d, 'score': total})
@@ -81,6 +88,97 @@ def fmt_price(man):
         rem = (yen % 100_000_000) // 10000
         return f"{oku}億{rem:,}万" if rem else f"{oku}億"
     return f"{man:,}万"
+
+
+def drop_today(hist, today):
+    """(old, new) if the price went down on today's run, else None."""
+    if len(hist) >= 2 and hist[-1][0] == today and hist[-1][1] < hist[-2][1]:
+        return hist[-2][1], hist[-1][1]
+    return None
+
+
+def fmt_drop(old, new):
+    return f"¥{fmt_price(old)} → ¥{fmt_price(new)} (−{fmt_price(old - new)}, −{(old - new) / old * 100:.1f}%)"
+
+
+def price_drop_section(houses, condos, today):
+    lines = []
+    for d in sorted(houses, key=lambda x: -x['score']):
+        dr = drop_today(d.get('priceHistory', []), today)
+        if dr:
+            lines.append(f"  🏠 {d['layout']} {d['areaM2']:.0f}m²  {fmt_drop(*dr)}  |  Score: {d['score']}/100")
+            lines.append(f"    {d['suumoUrl']}")
+    condo_drops = [(d, drop_today(d.get('priceHistory', []), today)) for d in condos]
+    condo_drops = sorted([x for x in condo_drops if x[1]], key=lambda x: -x[0]['scores']['total'])
+    for d, dr in condo_drops[:MS_TOP_N]:
+        lines.append(f"  🏢 {d['layout']} {d['areaM2']:.0f}m²  {fmt_drop(*dr)}  |  Score: {d['scores']['total']}/100")
+        lines.append(f"    {d['name']} {d['floor'] or '?'}F")
+        lines.append(f"    {d['suumoUrl']}")
+    if len(condo_drops) > MS_TOP_N:
+        lines.append(f"  …+{len(condo_drops) - MS_TOP_N} more condo price cuts on the site")
+    if not lines:
+        return ["\n📉 PRICE DROPS — none today"]
+    return ["\n📉 PRICE DROPS"] + lines
+
+
+# ── Condos ────────────────────────────────────────────
+MS_TOP_N = 10
+
+def unit_key(d):
+    """Same flat relisted by another agent keeps its identity (SUUMO id changes)."""
+    return f"{d['bldgKey']}|{d['floor']}|{d['areaM2']}"
+
+
+def condo_section(today):
+    """Return (lines, persist) for the apartments part of the message."""
+    clean = Path('mansions_clean.json')
+    if MS_STATUS != 'success' or not clean.exists():
+        return [f"\n🏢 APARTMENTS — ⚠️ scrape failed, site shows the previous data\n{ACTIONS}"], None
+
+    condos = json.loads(clean.read_text(encoding='utf-8'))
+    known_file = Path('known_ms_units.json')
+    lines = [f"\n🏢 APARTMENTS — {len(condos)} tracked"]
+
+    if not known_file.exists():
+        lines.append("Tracking started today — new listings will be reported from tomorrow.")
+    else:
+        known = set(json.loads(known_file.read_text(encoding='utf-8')))
+        new = sorted((d for d in condos if unit_key(d) not in known),
+                     key=lambda d: -d['scores']['total'])
+        if not new:
+            lines.append("No new apartments since last run.")
+        else:
+            lines.append(f"🆕 {len(new)} new listing{'s' if len(new) > 1 else ''}"
+                         + (f" (top {MS_TOP_N} by score)" if len(new) > MS_TOP_N else "") + ":")
+            for d in new[:MS_TOP_N]:
+                vs = d['vsExpected']
+                deal = f"{vs:+}% vs similar" if abs(vs) >= 3 else "fair price"
+                fees = f"  |  fees ¥{d['fees']:,}/mo" if d['fees'] else ""
+                seismic = "" if d['shinTaishin'] else "  |  旧耐震"
+                lines.append(
+                    f"  • {d['layout']} {d['areaM2']:.0f}m²  ¥{fmt_price(d['price'])}"
+                    f"  ({d['ppm']}万/m², {deal})"
+                    f"  |  Score: {d['scores']['total']}/100"
+                    f"  |  {d['walk']} min{' bus' if d['bus'] else ''}{fees}{seismic}"
+                )
+                lines.append(f"    {d['name']} {d['floor'] or '?'}F")
+                lines.append(f"    {d['suumoUrl']}")
+            if len(new) > MS_TOP_N:
+                lines.append(f"  …+{len(new) - MS_TOP_N} more on the site (Apartments → Recently listed)")
+
+    def persist():
+        known_file.write_text(json.dumps(sorted({unit_key(d) for d in condos}), ensure_ascii=False, indent=1),
+                              encoding='utf-8')
+        hist_file = Path('mansion_history.json')
+        hist = json.loads(hist_file.read_text(encoding='utf-8')) if hist_file.exists() else []
+        if not hist or hist[-1]['date'] != today:
+            ppms = sorted(d['ppm'] for d in condos)
+            hist.append({'date': today, 'count': len(condos),
+                         'avgPrice': round(sum(d['price'] for d in condos) / len(condos)),
+                         'medianPpm': ppms[len(ppms) // 2]})
+            hist_file.write_text(json.dumps(hist, indent=2), encoding='utf-8')
+        print(f"Condos: saved {len(condos)} unit keys, history {len(hist)} points")
+    return lines, persist
 
 
 # ── Main ──────────────────────────────────────────────
@@ -105,11 +203,11 @@ if __name__ == '__main__':
     # Build message
     lines = [
         f"✅ SUUMO daily run — {today}",
-        f"Listings tracked: {len(scored)}",
+        f"\n🏠 HOUSES — {len(scored)} tracked",
     ]
 
     if new:
-        lines.append(f"\n\U0001f195 {len(new)} new listing{'s' if len(new) > 1 else ''}:")
+        lines.append(f"🆕 {len(new)} new listing{'s' if len(new) > 1 else ''}:")
         for d in sorted(new, key=lambda x: -x['score']):
             lines.append(
                 f"  • {d['layout']}  ¥{fmt_price(d['price'])}"
@@ -118,8 +216,13 @@ if __name__ == '__main__':
             )
             lines.append(f"    {d['suumoUrl']}")
     else:
-        lines.append("\nNo new listings since last run.")
+        lines.append("No new houses since last run.")
 
+    ms_lines, ms_persist = condo_section(today)
+    lines += ms_lines
+    clean = Path('mansions_clean.json')
+    condos = json.loads(clean.read_text(encoding='utf-8')) if MS_STATUS == 'success' and clean.exists() else []
+    lines += price_drop_section(scored, condos, today)
     lines.append(f"\n{SITE_URL}")
 
     send('\n'.join(lines))
@@ -136,3 +239,6 @@ if __name__ == '__main__':
         history.append({'date': today, 'count': len(scored), 'avgPrice': avg_price})
         history_file.write_text(json.dumps(history, indent=2))
         print(f"History: {len(history)} data points")
+
+    if ms_persist:
+        ms_persist()

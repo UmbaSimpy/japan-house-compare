@@ -2,17 +2,40 @@
 """
 Reads listings.json, deduplicates, normalises, and embeds
 the data into suumo-compare.html replacing the listings array.
+Also tracks per-listing price history (house_price_history.json) and
+attaches liquefaction risk (hazard.py).
 """
 
 import json
 import re
 import unicodedata
+from datetime import date
 
 from pathlib import Path
+
+import hazard
 
 # ── Load ─────────────────────────────────────────────
 with open("listings.json", encoding="utf-8") as f:
     raw = json.load(f)
+
+# ── Price history per SUUMO listing (nc id) ──────────
+# {nc_id: [[date, price万], ...]} — a point is added only when the price changes.
+PRICE_FILE = Path("house_price_history.json")
+price_hist = json.loads(PRICE_FILE.read_text(encoding="utf-8")) if PRICE_FILE.exists() else {}
+today = date.today().isoformat()
+
+def nc_of(url):
+    m = re.search(r"nc_(\d+)", url or "")
+    return m.group(1) if m else url
+
+for d in raw:
+    hist = price_hist.setdefault(nc_of(d["suumoUrl"]), [])
+    if not hist or hist[-1][1] != d["price"]:
+        hist.append([today, d["price"]])
+current = {nc_of(d["suumoUrl"]) for d in raw}
+price_hist = {k: v for k, v in price_hist.items() if k in current}   # drop sold/withdrawn
+PRICE_FILE.write_text(json.dumps(price_hist, indent=1), encoding="utf-8")
 
 # ── Deduplicate by (price, areaM2, landM2) ───────────
 seen = set()
@@ -57,6 +80,8 @@ WARD_DISPLAY = {
     "sc_chibashimidori":     "Midori-ku, Chiba",
     "sc_chibashiwakaba":     "Wakaba-ku, Chiba",
 }
+# Areas configured in areas.json take precedence
+WARD_DISPLAY.update({a["slug"]: a["name"] for a in json.loads(Path("areas.json").read_text(encoding="utf-8"))})
 
 def _normalize_img(url):
     """Normalize SUUMO resize API URLs to a consistent display size."""
@@ -71,7 +96,7 @@ def _normalize_img(url):
 
 def ward_from_url(url):
     """Extract the ward display name from a SUUMO listing URL."""
-    m = re.search(r"(sc_chiba[^/]+)", url or "")
+    m = re.search(r"/(sc_[^/]+)/", url or "")
     if not m:
         return "Chiba"
     return WARD_DISPLAY.get(m.group(1), m.group(1))
@@ -117,6 +142,19 @@ for i, d in enumerate(data):
         "imageUrl":   _normalize_img(d.get("imageUrl")),
         "grad":       GRAD_POOL[i % len(GRAD_POOL)],
     })
+    hist = price_hist.get(nc_of(d.get("suumoUrl")), [])
+    cleaned[-1]["priceHistory"] = hist
+    cleaned[-1]["priceChange"]  = d["price"] - hist[0][1] if hist else 0
+    cleaned[-1]["ncId"] = nc_of(d.get("suumoUrl"))
+
+# ── Liquefaction risk (areas.json → hazard source) ────
+AREAS = json.loads(Path("areas.json").read_text(encoding="utf-8"))
+key_by_slug = {a["slug"]: a["key"] for a in AREAS}
+ja_by_slug = {a["slug"]: a.get("nameJa") for a in AREAS}
+for c in cleaned:
+    c["areaJa"] = ja_by_slug.get((re.search(r"/(sc_[^/]+)/", c["suumoUrl"]) or [None, None])[1])
+hazard.annotate(cleaned, AREAS,
+                lambda d: key_by_slug.get((re.search(r"/(sc_[^/]+)/", d["suumoUrl"]) or [None, None])[1]))
 
 # Save cleaned version too
 with open("listings_clean.json", "w", encoding="utf-8") as f:
