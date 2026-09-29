@@ -1,10 +1,10 @@
 {
  "67729827": {
-  "priceMin": 4100,
-  "priceMax": 6290,
-  "units": 25,
+  "priceMin": 4890,
+  "priceMax": 5390,
+  "units": 9,
   "phase": "先着順",
-  "stock": 25
+  "stock": 9
  },
  "mihama:b:千葉県千葉市美浜区若葉3:38": {
   "priceMin": 6480,
