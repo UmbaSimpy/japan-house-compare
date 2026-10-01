@@ -13,19 +13,19 @@
   "phase": null,
   "stock": 19
  },
- "67732575": {
-  "priceMin": 7340,
-  "priceMax": 13000,
-  "units": null,
-  "phase": "第3期",
-  "stock": null
- },
  "67723770": {
   "priceMin": 4890,
   "priceMax": 5990,
   "units": 10,
   "phase": "先着順",
   "stock": 10
+ },
+ "67732575": {
+  "priceMin": 7340,
+  "priceMax": 13000,
+  "units": null,
+  "phase": "第3期",
+  "stock": null
  },
  "67736149": {
   "priceMin": 3998,
