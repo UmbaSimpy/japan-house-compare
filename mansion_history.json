@@ -362,5 +362,33 @@
         "medianPpm": 38.8
       }
     }
+  },
+  {
+    "date": "2026-10-06",
+    "count": 735,
+    "avgPrice": 3544,
+    "medianPpm": 36.3,
+    "areas": {
+      "mihama": {
+        "count": 341,
+        "avgPrice": 4322,
+        "medianPpm": 49.7
+      },
+      "chibant": {
+        "count": 147,
+        "avgPrice": 2377,
+        "medianPpm": 23.9
+      },
+      "midori": {
+        "count": 57,
+        "avgPrice": 2266,
+        "medianPpm": 30.0
+      },
+      "narashino": {
+        "count": 190,
+        "avgPrice": 3434,
+        "medianPpm": 38.5
+      }
+    }
   }
 ]
