@@ -161,8 +161,17 @@ python build_map.py
 - Crowding uses the home line's study value and ignores the office-side line.
 - Bus routes still end at the Tokyo Station area, so the bus score does not change with the office.
 
-### Full run
-_(filled when the background run finishes: counts of ok / unvalidated / failed and the largest study diffs)_
+### Full run (2026-10-12, search date Wed 2026-10-14)
+- **Coverage:** 77 homes × 38 hubs = 2,926 routes, all resolved: 0 failed, 0 unvalidated (first and last station matched the query on every route).
+- **Agreement with the study:** for Tokyo Stn and Otemachi, 0 areas differ from the study's rail minutes by more than 3 min.
+- **Spot checks:**
+  - Funabashi → Shinjuku 41 min, 2 transfers.
+  - Urayasu → Tokyo 20 min, direct.
+  - Tama → Shinjuku 47 min, direct.
+  - Kashiwa → Otemachi 45 min, 1 transfer.
+  - Yokohama-Kohoku → Shibuya 25 min, direct.
+- **Edge case:** when the hub *is* the home station (e.g. Chiba-Mihama → 海浜幕張), the value is 0 min / ¥0, so the commute score is 100. This is correct for someone working at that station. The walk inputs still add the door-to-door minutes.
+- **Runtime:** about 70 min at ~40 queries/min (1.6 s pause between requests).
 
 ## 7. Listings per area: light list for all 77 + watchlist of 12 (2026-10-12)
 

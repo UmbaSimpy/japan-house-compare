@@ -1,0 +1,15140 @@
+{
+"generated": "2026-10-12",
+"searchDate": "2026-10-14",
+"method": "Yahoo!乗換案内, weekday arrive-by 08:45, IC fare, no paid expresses; fastest route; value = [minutes, transfers, 1-month pass ¥]",
+"offices": [
+{
+"id": "tokyo",
+"query": "東京",
+"en": "Tokyo Stn",
+"ja": "東京",
+"district": "Marunouchi"
+},
+{
+"id": "otemachi",
+"query": "大手町(東京都)",
+"en": "Otemachi",
+"ja": "大手町",
+"district": "Marunouchi"
+},
+{
+"id": "nihombashi",
+"query": "日本橋(東京都)",
+"en": "Nihombashi",
+"ja": "日本橋",
+"district": "Nihombashi"
+},
+{
+"id": "kanda",
+"query": "神田(東京都)",
+"en": "Kanda",
+"ja": "神田",
+"district": "Kanda"
+},
+{
+"id": "akihabara",
+"query": "秋葉原",
+"en": "Akihabara",
+"ja": "秋葉原",
+"district": "Kanda"
+},
+{
+"id": "ginza",
+"query": "銀座",
+"en": "Ginza",
+"ja": "銀座",
+"district": "Ginza"
+},
+{
+"id": "yurakucho",
+"query": "有楽町",
+"en": "Yurakucho",
+"ja": "有楽町",
+"district": "Ginza"
+},
+{
+"id": "shimbashi",
+"query": "新橋",
+"en": "Shimbashi",
+"ja": "新橋",
+"district": "Shimbashi"
+},
+{
+"id": "shiodome",
+"query": "汐留",
+"en": "Shiodome",
+"ja": "汐留",
+"district": "Shimbashi"
+},
+{
+"id": "kasumigaseki",
+"query": "霞ケ関(東京都)",
+"en": "Kasumigaseki",
+"ja": "霞ケ関",
+"district": "Toranomon"
+},
+{
+"id": "toranomon",
+"query": "虎ノ門ヒルズ",
+"en": "Toranomon Hills",
+"ja": "虎ノ門ヒルズ",
+"district": "Toranomon"
+},
+{
+"id": "roppongi",
+"query": "六本木一丁目",
+"en": "Roppongi-itchome",
+"ja": "六本木一丁目",
+"district": "Roppongi"
+},
+{
+"id": "hamamatsucho",
+"query": "浜松町",
+"en": "Hamamatsucho",
+"ja": "浜松町",
+"district": "Shiba"
+},
+{
+"id": "tamachi",
+"query": "田町(東京都)",
+"en": "Tamachi",
+"ja": "田町",
+"district": "Shiba"
+},
+{
+"id": "shinagawa",
+"query": "品川",
+"en": "Shinagawa",
+"ja": "品川",
+"district": "Shinagawa"
+},
+{
+"id": "osaki",
+"query": "大崎",
+"en": "Osaki",
+"ja": "大崎",
+"district": "Shinagawa"
+},
+{
+"id": "gotanda",
+"query": "五反田",
+"en": "Gotanda",
+"ja": "五反田",
+"district": "Shinagawa"
+},
+{
+"id": "tennozu",
+"query": "天王洲アイル",
+"en": "Tennozu Isle",
+"ja": "天王洲アイル",
+"district": "Shinagawa"
+},
+{
+"id": "shibuya",
+"query": "渋谷",
+"en": "Shibuya",
+"ja": "渋谷",
+"district": "Shibuya"
+},
+{
+"id": "ebisu",
+"query": "恵比寿(東京都)",
+"en": "Ebisu",
+"ja": "恵比寿",
+"district": "Shibuya"
+},
+{
+"id": "shinjuku",
+"query": "新宿",
+"en": "Shinjuku",
+"ja": "新宿",
+"district": "Shinjuku"
+},
+{
+"id": "tochomae",
+"query": "都庁前",
+"en": "Nishi-Shinjuku (Tochomae)",
+"ja": "都庁前（西新宿）",
+"district": "Shinjuku"
+},
+{
+"id": "iidabashi",
+"query": "飯田橋",
+"en": "Iidabashi",
+"ja": "飯田橋",
+"district": "Iidabashi"
+},
+{
+"id": "ikebukuro",
+"query": "池袋",
+"en": "Ikebukuro",
+"ja": "池袋",
+"district": "Ikebukuro"
+},
+{
+"id": "ueno",
+"query": "上野",
+"en": "Ueno",
+"ja": "上野",
+"district": "Ueno"
+},
+{
+"id": "kitasenju",
+"query": "北千住",
+"en": "Kita-Senju",
+"ja": "北千住",
+"district": "Kita-Senju"
+},
+{
+"id": "kinshicho",
+"query": "錦糸町",
+"en": "Kinshicho",
+"ja": "錦糸町",
+"district": "Kinshicho"
+},
+{
+"id": "toyosu",
+"query": "豊洲",
+"en": "Toyosu",
+"ja": "豊洲",
+"district": "Bay area"
+},
+{
+"id": "nakano",
+"query": "中野(東京都)",
+"en": "Nakano",
+"ja": "中野",
+"district": "Nakano"
+},
+{
+"id": "tachikawa",
+"query": "立川",
+"en": "Tachikawa",
+"ja": "立川",
+"district": "Tama"
+},
+{
+"id": "kawasaki",
+"query": "川崎",
+"en": "Kawasaki",
+"ja": "川崎",
+"district": "Kanagawa"
+},
+{
+"id": "musashikosugi",
+"query": "武蔵小杉",
+"en": "Musashi-Kosugi",
+"ja": "武蔵小杉",
+"district": "Kanagawa"
+},
+{
+"id": "yokohama",
+"query": "横浜",
+"en": "Yokohama",
+"ja": "横浜",
+"district": "Kanagawa"
+},
+{
+"id": "minatomirai",
+"query": "みなとみらい",
+"en": "Minatomirai",
+"ja": "みなとみらい",
+"district": "Kanagawa"
+},
+{
+"id": "shinyokohama",
+"query": "新横浜",
+"en": "Shin-Yokohama",
+"ja": "新横浜",
+"district": "Kanagawa"
+},
+{
+"id": "omiya",
+"query": "大宮(埼玉県)",
+"en": "Omiya",
+"ja": "大宮",
+"district": "Saitama"
+},
+{
+"id": "kaihinmakuhari",
+"query": "海浜幕張",
+"en": "Kaihin-Makuhari",
+"ja": "海浜幕張",
+"district": "Chiba"
+},
+{
+"id": "chiba",
+"query": "千葉",
+"en": "Chiba",
+"ja": "千葉",
+"district": "Chiba"
+}
+],
+"homes": {
+"urayasu": "新浦安",
+"kashiwa": "柏",
+"funabashi": "船橋",
+"minato": "田町",
+"chiba-mihama": "海浜幕張",
+"narashino": "津田沼",
+"inzai": "千葉ニュータウン中央",
+"shinagawa": "大井町",
+"ichikawa": "市川",
+"toshima": "池袋",
+"chiba-inage": "稲毛",
+"tama": "多摩センター",
+"bunkyo": "茗荷谷",
+"arakawa": "日暮里",
+"matsudo": "松戸",
+"nakano": "中野",
+"inagi": "稲城",
+"chiyoda": "市ケ谷",
+"machida": "町田",
+"shinjuku": "四ツ谷",
+"katsushika": "新小岩",
+"nerima": "練馬",
+"edogawa": "西葛西",
+"shiroi": "西白井",
+"chiba-chuo": "千葉",
+"kawasaki-kawasaki": "川崎",
+"chuo": "月島",
+"koto": "門前仲町",
+"taito": "上野",
+"yokohama-aoba": "たまプラーザ",
+"mitaka": "三鷹",
+"suginami": "荻窪",
+"chiba-hanamigawa": "幕張本郷",
+"ota": "蒲田",
+"yokohama-kohoku": "日吉",
+"adachi": "北千住",
+"setagaya": "三軒茶屋",
+"shibuya": "恵比寿",
+"tachikawa": "立川",
+"misato": "三郷中央",
+"musashino": "吉祥寺",
+"tsukuba": "研究学園",
+"moriya": "守谷",
+"koganei": "武蔵小金井",
+"meguro": "中目黒",
+"kita": "赤羽",
+"yachiyo": "八千代緑が丘",
+"kawasaki-saiwai": "新川崎",
+"chiba-wakaba": "都賀",
+"toda": "戸田公園",
+"itabashi": "成増",
+"yokohama-tsuzuki": "センター南",
+"saitama-chuo": "さいたま新都心",
+"kawasaki-miyamae": "宮前平",
+"sakura": "佐倉",
+"saitama-urawa": "浦和",
+"nagareyama": "流山おおたかの森",
+"sumida": "錦糸町",
+"tsukubamirai": "みらい平",
+"kawasaki-nakahara": "武蔵小杉",
+"yashio": "八潮",
+"kawasaki-takatsu": "溝の口",
+"yokohama-kanagawa": "東神奈川",
+"saitama-midori": "東浦和",
+"kamagaya": "新鎌ヶ谷",
+"kawaguchi": "川口",
+"chiba-midori": "鎌取",
+"saitama-omiya": "大宮",
+"koshigaya": "新越谷",
+"saitama-minami": "武蔵浦和",
+"soka": "草加",
+"fuchu": "府中",
+"yokohama-nishi": "横浜",
+"chofu": "調布",
+"ichihara": "五井",
+"kisarazu": "木更津",
+"sodegaura": "袖ケ浦"
+},
+"matrix": {
+"urayasu": {
+"tokyo": [
+20,
+0,
+10480
+],
+"otemachi": [
+33,
+2,
+14640
+],
+"nihombashi": [
+31,
+2,
+14470
+],
+"kanda": [
+38,
+1,
+10480
+],
+"akihabara": [
+32,
+1,
+14820
+],
+"ginza": [
+30,
+1,
+14640
+],
+"yurakucho": [
+28,
+1,
+14070
+],
+"shimbashi": [
+36,
+2,
+19120
+],
+"shiodome": [
+36,
+2,
+18920
+],
+"kasumigaseki": [
+35,
+1,
+14980
+],
+"toranomon": [
+36,
+1,
+15160
+],
+"roppongi": [
+48,
+2,
+14570
+],
+"hamamatsucho": [
+42,
+1,
+10480
+],
+"tamachi": [
+45,
+1,
+13120
+],
+"shinagawa": [
+43,
+2,
+26650
+],
+"osaki": [
+32,
+1,
+21740
+],
+"gotanda": [
+41,
+2,
+26650
+],
+"tennozu": [
+23,
+1,
+19300
+],
+"shibuya": [
+42,
+1,
+27630
+],
+"ebisu": [
+38,
+1,
+27630
+],
+"shinjuku": [
+45,
+1,
+27980
+],
+"tochomae": [
+58,
+3,
+20080
+],
+"iidabashi": [
+39,
+1,
+14750
+],
+"ikebukuro": [
+51,
+1,
+15390
+],
+"ueno": [
+35,
+1,
+15160
+],
+"kitasenju": [
+47,
+1,
+16010
+],
+"kinshicho": [
+38,
+1,
+13120
+],
+"toyosu": [
+21,
+1,
+13380
+],
+"nakano": [
+56,
+1,
+17970
+],
+"tachikawa": [
+90,
+1,
+27510
+],
+"kawasaki": [
+49,
+2,
+27980
+],
+"musashikosugi": [
+47,
+2,
+29580
+],
+"yokohama": [
+58,
+2,
+34860
+],
+"minatomirai": [
+74,
+2,
+31910
+],
+"shinyokohama": [
+75,
+4,
+35100
+],
+"omiya": [
+71,
+1,
+24510
+],
+"kaihinmakuhari": [
+17,
+0,
+10480
+],
+"chiba": [
+37,
+1,
+20990
+]
+},
+"kashiwa": {
+"tokyo": [
+36,
+0,
+18720
+],
+"otemachi": [
+45,
+1,
+21290
+],
+"nihombashi": [
+48,
+1,
+22740
+],
+"kanda": [
+41,
+1,
+18450
+],
+"akihabara": [
+36,
+1,
+23710
+],
+"ginza": [
+50,
+1,
+25350
+],
+"yurakucho": [
+44,
+1,
+18720
+],
+"shimbashi": [
+41,
+0,
+18720
+],
+"shiodome": [
+51,
+1,
+24320
+],
+"kasumigaseki": [
+50,
+1,
+21800
+],
+"toranomon": [
+56,
+2,
+21960
+],
+"roppongi": [
+62,
+2,
+25700
+],
+"hamamatsucho": [
+48,
+1,
+20450
+],
+"tamachi": [
+50,
+1,
+21290
+],
+"shinagawa": [
+47,
+0,
+21580
+],
+"osaki": [
+59,
+1,
+22920
+],
+"gotanda": [
+64,
+1,
+23260
+],
+"tennozu": [
+59,
+2,
+27870
+],
+"shibuya": [
+61,
+2,
+22920
+],
+"ebisu": [
+64,
+1,
+23750
+],
+"shinjuku": [
+54,
+1,
+21580
+],
+"tochomae": [
+62,
+2,
+33380
+],
+"iidabashi": [
+48,
+2,
+29400
+],
+"ikebukuro": [
+44,
+1,
+18720
+],
+"ueno": [
+29,
+0,
+15600
+],
+"kitasenju": [
+17,
+0,
+13120
+],
+"kinshicho": [
+42,
+1,
+27310
+],
+"toyosu": [
+61,
+2,
+28430
+],
+"nakano": [
+62,
+2,
+23260
+],
+"tachikawa": [
+85,
+2,
+32780
+],
+"kawasaki": [
+60,
+1,
+26040
+],
+"musashikosugi": [
+66,
+1,
+25500
+],
+"yokohama": [
+69,
+1,
+31230
+],
+"minatomirai": [
+81,
+2,
+39040
+],
+"shinyokohama": [
+95,
+2,
+40570
+],
+"omiya": [
+59,
+2,
+21580
+],
+"kaihinmakuhari": [
+45,
+1,
+18450
+],
+"chiba": [
+59,
+1,
+23700
+]
+},
+"funabashi": {
+"tokyo": [
+26,
+0,
+13120
+],
+"otemachi": [
+36,
+1,
+19750
+],
+"nihombashi": [
+39,
+1,
+19950
+],
+"kanda": [
+34,
+2,
+13120
+],
+"akihabara": [
+28,
+1,
+13120
+],
+"ginza": [
+38,
+1,
+19920
+],
+"yurakucho": [
+39,
+1,
+13120
+],
+"shimbashi": [
+30,
+0,
+15330
+],
+"shiodome": [
+43,
+1,
+20930
+],
+"kasumigaseki": [
+42,
+1,
+20100
+],
+"toranomon": [
+48,
+2,
+20100
+],
+"roppongi": [
+48,
+2,
+22310
+],
+"hamamatsucho": [
+43,
+1,
+15600
+],
+"tamachi": [
+45,
+1,
+15600
+],
+"shinagawa": [
+35,
+0,
+15600
+],
+"osaki": [
+46,
+1,
+18450
+],
+"gotanda": [
+49,
+1,
+18720
+],
+"tennozu": [
+46,
+2,
+23540
+],
+"shibuya": [
+51,
+1,
+22990
+],
+"ebisu": [
+54,
+1,
+20450
+],
+"shinjuku": [
+41,
+2,
+17970
+],
+"tochomae": [
+56,
+2,
+22460
+],
+"iidabashi": [
+36,
+1,
+13120
+],
+"ikebukuro": [
+51,
+2,
+20780
+],
+"ueno": [
+37,
+2,
+13120
+],
+"kitasenju": [
+41,
+1,
+24670
+],
+"kinshicho": [
+17,
+0,
+10480
+],
+"toyosu": [
+40,
+2,
+17620
+],
+"nakano": [
+49,
+2,
+18720
+],
+"tachikawa": [
+86,
+2,
+29420
+],
+"kawasaki": [
+51,
+1,
+22920
+],
+"musashikosugi": [
+46,
+0,
+21580
+],
+"yokohama": [
+60,
+0,
+26540
+],
+"minatomirai": [
+73,
+1,
+34350
+],
+"shinyokohama": [
+79,
+1,
+32770
+],
+"omiya": [
+72,
+3,
+26040
+],
+"kaihinmakuhari": [
+23,
+1,
+7840
+],
+"chiba": [
+15,
+0,
+10480
+]
+},
+"minato": {
+"tokyo": [
+9,
+0,
+5890
+],
+"otemachi": [
+18,
+0,
+7940
+],
+"nihombashi": [
+16,
+1,
+11890
+],
+"kanda": [
+11,
+0,
+5890
+],
+"akihabara": [
+12,
+0,
+6240
+],
+"ginza": [
+12,
+1,
+11540
+],
+"yurakucho": [
+7,
+0,
+5890
+],
+"shimbashi": [
+5,
+0,
+4910
+],
+"shiodome": [
+14,
+1,
+11370
+],
+"kasumigaseki": [
+20,
+1,
+12690
+],
+"toranomon": [
+23,
+1,
+12690
+],
+"roppongi": [
+23,
+1,
+11750
+],
+"hamamatsucho": [
+2,
+0,
+4910
+],
+"tamachi": [
+0,
+0,
+0
+],
+"shinagawa": [
+4,
+0,
+4910
+],
+"osaki": [
+7,
+0,
+5890
+],
+"gotanda": [
+10,
+0,
+5890
+],
+"tennozu": [
+13,
+1,
+12330
+],
+"shibuya": [
+18,
+0,
+6240
+],
+"ebisu": [
+15,
+0,
+6240
+],
+"shinjuku": [
+25,
+0,
+7840
+],
+"tochomae": [
+32,
+1,
+14670
+],
+"iidabashi": [
+25,
+1,
+6240
+],
+"ikebukuro": [
+33,
+0,
+10480
+],
+"ueno": [
+16,
+0,
+6240
+],
+"kitasenju": [
+34,
+1,
+13730
+],
+"kinshicho": [
+25,
+1,
+6240
+],
+"toyosu": [
+25,
+1,
+13030
+],
+"nakano": [
+32,
+1,
+10480
+],
+"tachikawa": [
+68,
+1,
+21580
+],
+"kawasaki": [
+18,
+0,
+7840
+],
+"musashikosugi": [
+20,
+1,
+7840
+],
+"yokohama": [
+28,
+1,
+13120
+],
+"minatomirai": [
+44,
+1,
+20930
+],
+"shinyokohama": [
+44,
+1,
+15600
+],
+"omiya": [
+49,
+1,
+18720
+],
+"kaihinmakuhari": [
+64,
+1,
+20900
+],
+"chiba": [
+60,
+1,
+23750
+]
+},
+"chiba-mihama": {
+"tokyo": [
+34,
+0,
+18450
+],
+"otemachi": [
+55,
+1,
+17130
+],
+"nihombashi": [
+53,
+1,
+17110
+],
+"kanda": [
+57,
+2,
+17970
+],
+"akihabara": [
+51,
+1,
+17970
+],
+"ginza": [
+55,
+1,
+24770
+],
+"yurakucho": [
+51,
+1,
+20950
+],
+"shimbashi": [
+55,
+2,
+18720
+],
+"shiodome": [
+58,
+2,
+25800
+],
+"kasumigaseki": [
+59,
+1,
+25110
+],
+"toranomon": [
+56,
+1,
+25290
+],
+"roppongi": [
+63,
+2,
+21450
+],
+"hamamatsucho": [
+61,
+1,
+18720
+],
+"tamachi": [
+64,
+1,
+20900
+],
+"shinagawa": [
+60,
+2,
+21580
+],
+"osaki": [
+56,
+1,
+28620
+],
+"gotanda": [
+63,
+2,
+33530
+],
+"tennozu": [
+44,
+1,
+26180
+],
+"shibuya": [
+64,
+1,
+34510
+],
+"ebisu": [
+61,
+1,
+34510
+],
+"shinjuku": [
+63,
+2,
+21580
+],
+"tochomae": [
+76,
+2,
+28300
+],
+"iidabashi": [
+58,
+1,
+18720
+],
+"ikebukuro": [
+70,
+1,
+22270
+],
+"ueno": [
+59,
+1,
+25290
+],
+"kitasenju": [
+55,
+1,
+22590
+],
+"kinshicho": [
+43,
+1,
+15600
+],
+"toyosu": [
+36,
+1,
+20260
+],
+"nakano": [
+73,
+2,
+36460
+],
+"tachikawa": [
+103,
+1,
+35190
+],
+"kawasaki": [
+71,
+2,
+34860
+],
+"musashikosugi": [
+70,
+2,
+36460
+],
+"yokohama": [
+76,
+1,
+30780
+],
+"minatomirai": [
+88,
+2,
+38590
+],
+"shinyokohama": [
+95,
+3,
+39660
+],
+"omiya": [
+82,
+1,
+29880
+],
+"kaihinmakuhari": [
+0,
+0,
+0
+],
+"chiba": [
+19,
+1,
+14110
+]
+},
+"narashino": {
+"tokyo": [
+30,
+0,
+15600
+],
+"otemachi": [
+40,
+1,
+22230
+],
+"nihombashi": [
+42,
+1,
+21960
+],
+"kanda": [
+38,
+2,
+15330
+],
+"akihabara": [
+32,
+1,
+15330
+],
+"ginza": [
+42,
+1,
+22230
+],
+"yurakucho": [
+43,
+1,
+15600
+],
+"shimbashi": [
+34,
+0,
+15600
+],
+"shiodome": [
+46,
+1,
+21200
+],
+"kasumigaseki": [
+44,
+1,
+22580
+],
+"toranomon": [
+52,
+2,
+22580
+],
+"roppongi": [
+53,
+2,
+22580
+],
+"hamamatsucho": [
+47,
+1,
+15600
+],
+"tamachi": [
+49,
+1,
+18450
+],
+"shinagawa": [
+39,
+0,
+18720
+],
+"osaki": [
+50,
+1,
+20450
+],
+"gotanda": [
+53,
+1,
+20900
+],
+"tennozu": [
+52,
+2,
+26180
+],
+"shibuya": [
+56,
+1,
+23260
+],
+"ebisu": [
+58,
+1,
+21580
+],
+"shinjuku": [
+45,
+2,
+18720
+],
+"tochomae": [
+60,
+2,
+22460
+],
+"iidabashi": [
+40,
+1,
+15600
+],
+"ikebukuro": [
+56,
+2,
+23260
+],
+"ueno": [
+41,
+2,
+15600
+],
+"kitasenju": [
+45,
+1,
+27310
+],
+"kinshicho": [
+21,
+0,
+13120
+],
+"toyosu": [
+46,
+2,
+20260
+],
+"nakano": [
+53,
+2,
+21580
+],
+"tachikawa": [
+90,
+2,
+31230
+],
+"kawasaki": [
+56,
+1,
+24100
+],
+"musashikosugi": [
+50,
+0,
+23750
+],
+"yokohama": [
+64,
+0,
+28440
+],
+"minatomirai": [
+78,
+1,
+36250
+],
+"shinyokohama": [
+80,
+3,
+37940
+],
+"omiya": [
+77,
+3,
+27510
+],
+"kaihinmakuhari": [
+28,
+1,
+15260
+],
+"chiba": [
+11,
+0,
+7840
+]
+},
+"inzai": {
+"tokyo": [
+57,
+2,
+47160
+],
+"otemachi": [
+59,
+1,
+44600
+],
+"nihombashi": [
+50,
+0,
+44690
+],
+"kanda": [
+68,
+1,
+48810
+],
+"akihabara": [
+53,
+1,
+48890
+],
+"ginza": [
+63,
+1,
+49640
+],
+"yurakucho": [
+62,
+2,
+47510
+],
+"shimbashi": [
+56,
+0,
+45330
+],
+"shiodome": [
+66,
+1,
+45960
+],
+"kasumigaseki": [
+63,
+1,
+49950
+],
+"toranomon": [
+65,
+1,
+50110
+],
+"roppongi": [
+71,
+2,
+50370
+],
+"hamamatsucho": [
+61,
+0,
+45650
+],
+"tamachi": [
+69,
+1,
+50240
+],
+"shinagawa": [
+68,
+1,
+51220
+],
+"osaki": [
+73,
+1,
+51940
+],
+"gotanda": [
+62,
+0,
+47030
+],
+"tennozu": [
+71,
+1,
+53070
+],
+"shibuya": [
+71,
+1,
+45920
+],
+"ebisu": [
+72,
+1,
+50830
+],
+"shinjuku": [
+59,
+2,
+50220
+],
+"tochomae": [
+74,
+1,
+46770
+],
+"iidabashi": [
+54,
+1,
+49870
+],
+"ikebukuro": [
+62,
+2,
+47510
+],
+"ueno": [
+49,
+1,
+41270
+],
+"kitasenju": [
+44,
+2,
+44120
+],
+"kinshicho": [
+47,
+1,
+43570
+],
+"toyosu": [
+68,
+2,
+43360
+],
+"nakano": [
+66,
+2,
+51820
+],
+"tachikawa": [
+106,
+2,
+55880
+],
+"kawasaki": [
+74,
+1,
+55810
+],
+"musashikosugi": [
+76,
+1,
+53170
+],
+"yokohama": [
+87,
+1,
+60930
+],
+"minatomirai": [
+99,
+2,
+68740
+],
+"shinyokohama": [
+106,
+2,
+60640
+],
+"omiya": [
+83,
+2,
+45690
+],
+"kaihinmakuhari": [
+48,
+1,
+33580
+],
+"chiba": [
+60,
+2,
+39500
+]
+},
+"shinagawa": {
+"tokyo": [
+17,
+0,
+6240
+],
+"otemachi": [
+28,
+1,
+12700
+],
+"nihombashi": [
+25,
+1,
+13220
+],
+"kanda": [
+19,
+0,
+7840
+],
+"akihabara": [
+21,
+0,
+7840
+],
+"ginza": [
+21,
+1,
+12870
+],
+"yurakucho": [
+15,
+0,
+6240
+],
+"shimbashi": [
+13,
+0,
+6240
+],
+"shiodome": [
+22,
+1,
+12700
+],
+"kasumigaseki": [
+29,
+1,
+13040
+],
+"toranomon": [
+27,
+1,
+21540
+],
+"roppongi": [
+30,
+2,
+13220
+],
+"hamamatsucho": [
+10,
+0,
+6240
+],
+"tamachi": [
+8,
+0,
+5890
+],
+"shinagawa": [
+3,
+0,
+4910
+],
+"osaki": [
+3,
+0,
+8160
+],
+"gotanda": [
+10,
+1,
+5890
+],
+"tennozu": [
+4,
+0,
+8160
+],
+"shibuya": [
+11,
+0,
+14050
+],
+"ebisu": [
+8,
+0,
+14050
+],
+"shinjuku": [
+15,
+0,
+14400
+],
+"tochomae": [
+32,
+1,
+20860
+],
+"iidabashi": [
+35,
+1,
+7840
+],
+"ikebukuro": [
+21,
+0,
+16000
+],
+"ueno": [
+26,
+0,
+7840
+],
+"kitasenju": [
+44,
+1,
+15330
+],
+"kinshicho": [
+27,
+1,
+7840
+],
+"toyosu": [
+28,
+1,
+22640
+],
+"nakano": [
+26,
+1,
+16000
+],
+"tachikawa": [
+65,
+1,
+28610
+],
+"kawasaki": [
+11,
+0,
+6240
+],
+"musashikosugi": [
+17,
+1,
+16000
+],
+"yokohama": [
+25,
+0,
+10480
+],
+"minatomirai": [
+37,
+1,
+18290
+],
+"shinyokohama": [
+31,
+1,
+13360
+],
+"omiya": [
+48,
+0,
+28610
+],
+"kaihinmakuhari": [
+47,
+1,
+28620
+],
+"chiba": [
+60,
+1,
+25200
+]
+},
+"ichikawa": {
+"tokyo": [
+19,
+0,
+10480
+],
+"otemachi": [
+29,
+1,
+17110
+],
+"nihombashi": [
+31,
+1,
+14470
+],
+"kanda": [
+29,
+1,
+7840
+],
+"akihabara": [
+23,
+0,
+7840
+],
+"ginza": [
+31,
+1,
+17110
+],
+"yurakucho": [
+32,
+1,
+10480
+],
+"shimbashi": [
+23,
+0,
+10480
+],
+"shiodome": [
+36,
+1,
+16080
+],
+"kasumigaseki": [
+34,
+1,
+17460
+],
+"toranomon": [
+42,
+2,
+17460
+],
+"roppongi": [
+42,
+2,
+17460
+],
+"hamamatsucho": [
+36,
+1,
+10480
+],
+"tamachi": [
+38,
+1,
+10480
+],
+"shinagawa": [
+28,
+0,
+13120
+],
+"osaki": [
+39,
+1,
+13120
+],
+"gotanda": [
+43,
+1,
+15330
+],
+"tennozu": [
+46,
+2,
+17900
+],
+"shibuya": [
+45,
+1,
+18140
+],
+"ebisu": [
+48,
+1,
+15600
+],
+"shinjuku": [
+35,
+1,
+13120
+],
+"tochomae": [
+49,
+2,
+17180
+],
+"iidabashi": [
+30,
+0,
+10480
+],
+"ikebukuro": [
+44,
+1,
+15500
+],
+"ueno": [
+31,
+1,
+10480
+],
+"kitasenju": [
+34,
+1,
+22030
+],
+"kinshicho": [
+10,
+0,
+7840
+],
+"toyosu": [
+45,
+2,
+20260
+],
+"nakano": [
+42,
+1,
+15600
+],
+"tachikawa": [
+78,
+1,
+25500
+],
+"kawasaki": [
+45,
+1,
+18720
+],
+"musashikosugi": [
+39,
+0,
+18720
+],
+"yokohama": [
+54,
+0,
+24100
+],
+"minatomirai": [
+64,
+2,
+31910
+],
+"shinyokohama": [
+70,
+3,
+32760
+],
+"omiya": [
+67,
+1,
+24240
+],
+"kaihinmakuhari": [
+28,
+1,
+10480
+],
+"chiba": [
+21,
+0,
+13120
+]
+},
+"toshima": {
+"tokyo": [
+18,
+0,
+7990
+],
+"otemachi": [
+16,
+0,
+7990
+],
+"nihombashi": [
+24,
+1,
+7990
+],
+"kanda": [
+22,
+1,
+12570
+],
+"akihabara": [
+21,
+0,
+7840
+],
+"ginza": [
+21,
+0,
+8170
+],
+"yurakucho": [
+24,
+0,
+8170
+],
+"shimbashi": [
+27,
+2,
+8510
+],
+"shiodome": [
+35,
+1,
+15230
+],
+"kasumigaseki": [
+23,
+0,
+8330
+],
+"toranomon": [
+31,
+1,
+13730
+],
+"roppongi": [
+28,
+1,
+8330
+],
+"hamamatsucho": [
+32,
+0,
+10480
+],
+"tamachi": [
+34,
+0,
+10480
+],
+"shinagawa": [
+30,
+0,
+10480
+],
+"osaki": [
+18,
+0,
+7840
+],
+"gotanda": [
+24,
+0,
+7840
+],
+"tennozu": [
+26,
+0,
+18440
+],
+"shibuya": [
+10,
+0,
+6240
+],
+"ebisu": [
+13,
+0,
+6240
+],
+"shinjuku": [
+5,
+0,
+5890
+],
+"tochomae": [
+22,
+1,
+12350
+],
+"iidabashi": [
+11,
+0,
+7320
+],
+"ikebukuro": [
+0,
+0,
+0
+],
+"ueno": [
+17,
+0,
+6240
+],
+"kitasenju": [
+24,
+1,
+13210
+],
+"kinshicho": [
+31,
+1,
+13550
+],
+"toyosu": [
+34,
+0,
+8840
+],
+"nakano": [
+16,
+1,
+6240
+],
+"tachikawa": [
+51,
+1,
+18450
+],
+"kawasaki": [
+46,
+1,
+22240
+],
+"musashikosugi": [
+27,
+0,
+16560
+],
+"yokohama": [
+38,
+0,
+21290
+],
+"minatomirai": [
+49,
+0,
+27310
+],
+"shinyokohama": [
+42,
+1,
+21350
+],
+"omiya": [
+25,
+0,
+13120
+],
+"kaihinmakuhari": [
+70,
+1,
+22270
+],
+"chiba": [
+67,
+1,
+29570
+]
+},
+"chiba-inage": {
+"tokyo": [
+37,
+0,
+20450
+],
+"otemachi": [
+47,
+1,
+27080
+],
+"nihombashi": [
+49,
+1,
+25350
+],
+"kanda": [
+46,
+2,
+20450
+],
+"akihabara": [
+39,
+1,
+18720
+],
+"ginza": [
+49,
+1,
+27920
+],
+"yurakucho": [
+50,
+1,
+20900
+],
+"shimbashi": [
+41,
+0,
+21290
+],
+"shiodome": [
+51,
+1,
+26890
+],
+"kasumigaseki": [
+54,
+1,
+27430
+],
+"toranomon": [
+58,
+2,
+27430
+],
+"roppongi": [
+60,
+2,
+28270
+],
+"hamamatsucho": [
+55,
+1,
+21580
+],
+"tamachi": [
+57,
+1,
+22590
+],
+"shinagawa": [
+46,
+0,
+23260
+],
+"osaki": [
+58,
+1,
+24100
+],
+"gotanda": [
+61,
+1,
+24240
+],
+"tennozu": [
+63,
+3,
+31510
+],
+"shibuya": [
+63,
+1,
+28950
+],
+"ebisu": [
+67,
+1,
+25200
+],
+"shinjuku": [
+53,
+2,
+23750
+],
+"tochomae": [
+68,
+2,
+28060
+],
+"iidabashi": [
+47,
+1,
+21290
+],
+"ikebukuro": [
+63,
+2,
+28110
+],
+"ueno": [
+48,
+2,
+20900
+],
+"kitasenju": [
+53,
+1,
+32640
+],
+"kinshicho": [
+29,
+0,
+18450
+],
+"toyosu": [
+57,
+3,
+25590
+],
+"nakano": [
+61,
+2,
+24880
+],
+"tachikawa": [
+98,
+2,
+35510
+],
+"kawasaki": [
+63,
+1,
+27950
+],
+"musashikosugi": [
+58,
+0,
+26960
+],
+"yokohama": [
+73,
+0,
+32780
+],
+"minatomirai": [
+85,
+1,
+40590
+],
+"shinyokohama": [
+88,
+3,
+42160
+],
+"omiya": [
+84,
+3,
+31740
+],
+"kaihinmakuhari": [
+33,
+1,
+16590
+],
+"chiba": [
+4,
+0,
+5890
+]
+},
+"tama": {
+"tokyo": [
+68,
+2,
+21270
+],
+"otemachi": [
+62,
+1,
+21270
+],
+"nihombashi": [
+69,
+2,
+21430
+],
+"kanda": [
+66,
+1,
+20030
+],
+"akihabara": [
+68,
+2,
+20030
+],
+"ginza": [
+64,
+2,
+21090
+],
+"yurakucho": [
+66,
+1,
+21090
+],
+"shimbashi": [
+64,
+2,
+21090
+],
+"shiodome": [
+78,
+1,
+23130
+],
+"kasumigaseki": [
+55,
+1,
+20930
+],
+"toranomon": [
+63,
+2,
+20930
+],
+"roppongi": [
+63,
+2,
+20930
+],
+"hamamatsucho": [
+74,
+2,
+26000
+],
+"tamachi": [
+75,
+2,
+27920
+],
+"shinagawa": [
+73,
+2,
+26320
+],
+"osaki": [
+71,
+1,
+20030
+],
+"gotanda": [
+70,
+1,
+20030
+],
+"tennozu": [
+79,
+2,
+30630
+],
+"shibuya": [
+51,
+1,
+17880
+],
+"ebisu": [
+60,
+2,
+24990
+],
+"shinjuku": [
+47,
+0,
+13790
+],
+"tochomae": [
+59,
+1,
+20250
+],
+"iidabashi": [
+68,
+1,
+19680
+],
+"ikebukuro": [
+64,
+1,
+19680
+],
+"ueno": [
+78,
+2,
+21630
+],
+"kitasenju": [
+79,
+1,
+22370
+],
+"kinshicho": [
+75,
+2,
+21630
+],
+"toyosu": [
+77,
+2,
+21780
+],
+"nakano": [
+58,
+1,
+19680
+],
+"tachikawa": [
+28,
+0,
+16230
+],
+"kawasaki": [
+65,
+1,
+20940
+],
+"musashikosugi": [
+50,
+1,
+15660
+],
+"yokohama": [
+74,
+2,
+24150
+],
+"minatomirai": [
+82,
+2,
+32900
+],
+"shinyokohama": [
+61,
+2,
+21260
+],
+"omiya": [
+74,
+2,
+38820
+],
+"kaihinmakuhari": [
+114,
+4,
+35190
+],
+"chiba": [
+113,
+3,
+38300
+]
+},
+"bunkyo": {
+"tokyo": [
+12,
+0,
+7490
+],
+"otemachi": [
+11,
+0,
+7490
+],
+"nihombashi": [
+18,
+1,
+7490
+],
+"kanda": [
+16,
+1,
+12050
+],
+"akihabara": [
+16,
+1,
+12050
+],
+"ginza": [
+15,
+0,
+7660
+],
+"yurakucho": [
+23,
+1,
+12400
+],
+"shimbashi": [
+25,
+1,
+7830
+],
+"shiodome": [
+36,
+1,
+7830
+],
+"kasumigaseki": [
+18,
+0,
+7830
+],
+"toranomon": [
+25,
+1,
+7990
+],
+"roppongi": [
+25,
+1,
+7990
+],
+"hamamatsucho": [
+29,
+1,
+13380
+],
+"tamachi": [
+31,
+1,
+13380
+],
+"shinagawa": [
+30,
+1,
+13730
+],
+"osaki": [
+29,
+1,
+14820
+],
+"gotanda": [
+36,
+1,
+14820
+],
+"tennozu": [
+37,
+1,
+25420
+],
+"shibuya": [
+21,
+1,
+13220
+],
+"ebisu": [
+24,
+1,
+13220
+],
+"shinjuku": [
+17,
+1,
+12870
+],
+"tochomae": [
+30,
+1,
+13180
+],
+"iidabashi": [
+12,
+1,
+7140
+],
+"ikebukuro": [
+5,
+0,
+6980
+],
+"ueno": [
+25,
+2,
+12050
+],
+"kitasenju": [
+33,
+1,
+8680
+],
+"kinshicho": [
+23,
+1,
+13030
+],
+"toyosu": [
+32,
+1,
+8330
+],
+"nakano": [
+27,
+2,
+13220
+],
+"tachikawa": [
+63,
+2,
+25430
+],
+"kawasaki": [
+42,
+1,
+17970
+],
+"musashikosugi": [
+38,
+1,
+22310
+],
+"yokohama": [
+50,
+1,
+28270
+],
+"minatomirai": [
+64,
+2,
+30900
+],
+"shinyokohama": [
+55,
+2,
+21870
+],
+"omiya": [
+35,
+1,
+20100
+],
+"kaihinmakuhari": [
+63,
+2,
+17220
+],
+"chiba": [
+62,
+1,
+29070
+]
+},
+"arakawa": {
+"tokyo": [
+13,
+0,
+5890
+],
+"otemachi": [
+20,
+1,
+12400
+],
+"nihombashi": [
+20,
+1,
+12690
+],
+"kanda": [
+10,
+0,
+5890
+],
+"akihabara": [
+9,
+0,
+5890
+],
+"ginza": [
+23,
+1,
+12870
+],
+"yurakucho": [
+14,
+0,
+6240
+],
+"shimbashi": [
+17,
+0,
+6240
+],
+"shiodome": [
+25,
+1,
+11840
+],
+"kasumigaseki": [
+26,
+1,
+12870
+],
+"toranomon": [
+31,
+1,
+13040
+],
+"roppongi": [
+33,
+2,
+13220
+],
+"hamamatsucho": [
+20,
+0,
+6240
+],
+"tamachi": [
+22,
+0,
+7840
+],
+"shinagawa": [
+21,
+0,
+7840
+],
+"osaki": [
+29,
+0,
+7840
+],
+"gotanda": [
+32,
+0,
+10480
+],
+"tennozu": [
+30,
+1,
+13660
+],
+"shibuya": [
+27,
+1,
+7840
+],
+"ebisu": [
+30,
+1,
+10480
+],
+"shinjuku": [
+22,
+0,
+7840
+],
+"tochomae": [
+37,
+1,
+15240
+],
+"iidabashi": [
+21,
+1,
+6240
+],
+"ikebukuro": [
+13,
+0,
+6240
+],
+"ueno": [
+3,
+0,
+4910
+],
+"kitasenju": [
+7,
+0,
+5890
+],
+"kinshicho": [
+21,
+1,
+6240
+],
+"toyosu": [
+34,
+1,
+13380
+],
+"nakano": [
+29,
+1,
+10480
+],
+"tachikawa": [
+65,
+1,
+21580
+],
+"kawasaki": [
+33,
+1,
+13120
+],
+"musashikosugi": [
+43,
+1,
+13120
+],
+"yokohama": [
+46,
+1,
+18720
+],
+"minatomirai": [
+53,
+2,
+26530
+],
+"shinyokohama": [
+67,
+1,
+21580
+],
+"omiya": [
+34,
+1,
+13120
+],
+"kaihinmakuhari": [
+63,
+3,
+23360
+],
+"chiba": [
+57,
+2,
+22920
+]
+},
+"matsudo": {
+"tokyo": [
+27,
+0,
+13120
+],
+"otemachi": [
+35,
+0,
+16010
+],
+"nihombashi": [
+39,
+1,
+17620
+],
+"kanda": [
+32,
+1,
+13120
+],
+"akihabara": [
+26,
+1,
+18430
+],
+"ginza": [
+41,
+1,
+19750
+],
+"yurakucho": [
+35,
+1,
+13120
+],
+"shimbashi": [
+32,
+0,
+13120
+],
+"shiodome": [
+42,
+1,
+18720
+],
+"kasumigaseki": [
+41,
+0,
+16520
+],
+"toranomon": [
+47,
+1,
+16680
+],
+"roppongi": [
+52,
+2,
+20100
+],
+"hamamatsucho": [
+39,
+1,
+13120
+],
+"tamachi": [
+41,
+1,
+15600
+],
+"shinagawa": [
+38,
+0,
+15600
+],
+"osaki": [
+50,
+1,
+17970
+],
+"gotanda": [
+54,
+1,
+18450
+],
+"tennozu": [
+49,
+2,
+20540
+],
+"shibuya": [
+51,
+2,
+20440
+],
+"ebisu": [
+54,
+1,
+18450
+],
+"shinjuku": [
+45,
+1,
+15600
+],
+"tochomae": [
+52,
+2,
+28100
+],
+"iidabashi": [
+39,
+2,
+24120
+],
+"ikebukuro": [
+34,
+1,
+13120
+],
+"ueno": [
+20,
+0,
+10480
+],
+"kitasenju": [
+8,
+0,
+7840
+],
+"kinshicho": [
+33,
+1,
+22030
+],
+"toyosu": [
+52,
+3,
+31610
+],
+"nakano": [
+52,
+2,
+18450
+],
+"tachikawa": [
+84,
+2,
+32180
+],
+"kawasaki": [
+50,
+1,
+21580
+],
+"musashikosugi": [
+56,
+1,
+21580
+],
+"yokohama": [
+59,
+1,
+26040
+],
+"minatomirai": [
+71,
+2,
+33850
+],
+"shinyokohama": [
+83,
+2,
+36090
+],
+"omiya": [
+57,
+1,
+22590
+],
+"kaihinmakuhari": [
+42,
+1,
+19360
+],
+"chiba": [
+59,
+2,
+21840
+]
+},
+"nakano": {
+"tokyo": [
+20,
+0,
+7840
+],
+"otemachi": [
+22,
+0,
+8330
+],
+"nihombashi": [
+24,
+0,
+8510
+],
+"kanda": [
+18,
+0,
+7840
+],
+"akihabara": [
+19,
+1,
+7840
+],
+"ginza": [
+24,
+1,
+13380
+],
+"yurakucho": [
+26,
+1,
+10480
+],
+"shimbashi": [
+23,
+2,
+13380
+],
+"shiodome": [
+34,
+1,
+15230
+],
+"kasumigaseki": [
+22,
+1,
+13220
+],
+"toranomon": [
+28,
+2,
+13380
+],
+"roppongi": [
+25,
+1,
+13380
+],
+"hamamatsucho": [
+31,
+1,
+10480
+],
+"tamachi": [
+33,
+1,
+10480
+],
+"shinagawa": [
+29,
+1,
+7840
+],
+"osaki": [
+22,
+1,
+7840
+],
+"gotanda": [
+25,
+1,
+7840
+],
+"tennozu": [
+32,
+1,
+18440
+],
+"shibuya": [
+15,
+1,
+6240
+],
+"ebisu": [
+20,
+1,
+6240
+],
+"shinjuku": [
+4,
+0,
+5890
+],
+"tochomae": [
+19,
+1,
+12350
+],
+"iidabashi": [
+15,
+0,
+7830
+],
+"ikebukuro": [
+17,
+1,
+12050
+],
+"ueno": [
+26,
+1,
+10480
+],
+"kitasenju": [
+40,
+2,
+15500
+],
+"kinshicho": [
+25,
+1,
+10480
+],
+"toyosu": [
+42,
+1,
+14070
+],
+"nakano": [
+0,
+0,
+0
+],
+"tachikawa": [
+33,
+0,
+13120
+],
+"kawasaki": [
+46,
+1,
+18720
+],
+"musashikosugi": [
+33,
+1,
+13120
+],
+"yokohama": [
+44,
+1,
+20900
+],
+"minatomirai": [
+56,
+2,
+28710
+],
+"shinyokohama": [
+57,
+3,
+21200
+],
+"omiya": [
+43,
+1,
+18450
+],
+"kaihinmakuhari": [
+67,
+1,
+17340
+],
+"chiba": [
+62,
+2,
+26040
+]
+},
+"inagi": {
+"tokyo": [
+64,
+1,
+19600
+],
+"otemachi": [
+65,
+3,
+24450
+],
+"nihombashi": [
+68,
+2,
+24450
+],
+"kanda": [
+62,
+1,
+18000
+],
+"akihabara": [
+62,
+2,
+18000
+],
+"ginza": [
+67,
+2,
+24790
+],
+"yurakucho": [
+67,
+3,
+27670
+],
+"shimbashi": [
+72,
+2,
+19420
+],
+"shiodome": [
+71,
+1,
+21100
+],
+"kasumigaseki": [
+65,
+2,
+24630
+],
+"toranomon": [
+72,
+3,
+24790
+],
+"roppongi": [
+69,
+2,
+24790
+],
+"hamamatsucho": [
+75,
+2,
+19600
+],
+"tamachi": [
+77,
+1,
+19600
+],
+"shinagawa": [
+66,
+2,
+18360
+],
+"osaki": [
+63,
+2,
+20570
+],
+"gotanda": [
+66,
+1,
+18000
+],
+"tennozu": [
+76,
+1,
+28600
+],
+"shibuya": [
+48,
+1,
+11760
+],
+"ebisu": [
+61,
+2,
+16670
+],
+"shinjuku": [
+41,
+0,
+11760
+],
+"tochomae": [
+52,
+3,
+18220
+],
+"iidabashi": [
+61,
+1,
+23990
+],
+"ikebukuro": [
+63,
+1,
+17650
+],
+"ueno": [
+75,
+1,
+19600
+],
+"kitasenju": [
+85,
+3,
+25960
+],
+"kinshicho": [
+69,
+2,
+19600
+],
+"toyosu": [
+79,
+1,
+24870
+],
+"nakano": [
+53,
+2,
+17650
+],
+"tachikawa": [
+40,
+1,
+13080
+],
+"kawasaki": [
+51,
+1,
+18360
+],
+"musashikosugi": [
+37,
+1,
+13080
+],
+"yokohama": [
+64,
+2,
+20840
+],
+"minatomirai": [
+64,
+2,
+30320
+],
+"shinyokohama": [
+57,
+2,
+24270
+],
+"omiya": [
+65,
+2,
+34170
+],
+"kaihinmakuhari": [
+108,
+2,
+34280
+],
+"chiba": [
+109,
+1,
+42000
+]
+},
+"chiyoda": {
+"tokyo": [
+13,
+1,
+5890
+],
+"otemachi": [
+10,
+1,
+11750
+],
+"nihombashi": [
+13,
+1,
+11750
+],
+"kanda": [
+9,
+1,
+5890
+],
+"akihabara": [
+9,
+0,
+5890
+],
+"ginza": [
+16,
+1,
+7490
+],
+"yurakucho": [
+9,
+0,
+7140
+],
+"shimbashi": [
+14,
+1,
+7320
+],
+"shiodome": [
+26,
+1,
+7320
+],
+"kasumigaseki": [
+14,
+1,
+11890
+],
+"toranomon": [
+19,
+2,
+12050
+],
+"roppongi": [
+9,
+0,
+7320
+],
+"hamamatsucho": [
+22,
+2,
+6240
+],
+"tamachi": [
+24,
+2,
+7840
+],
+"shinagawa": [
+27,
+2,
+13210
+],
+"osaki": [
+24,
+1,
+7840
+],
+"gotanda": [
+23,
+1,
+7840
+],
+"tennozu": [
+34,
+2,
+19470
+],
+"shibuya": [
+17,
+1,
+6240
+],
+"ebisu": [
+19,
+1,
+6240
+],
+"shinjuku": [
+6,
+0,
+7580
+],
+"tochomae": [
+14,
+1,
+7940
+],
+"iidabashi": [
+2,
+0,
+6800
+],
+"ikebukuro": [
+12,
+0,
+7490
+],
+"ueno": [
+18,
+1,
+5890
+],
+"kitasenju": [
+30,
+1,
+12930
+],
+"kinshicho": [
+16,
+0,
+6240
+],
+"toyosu": [
+19,
+0,
+7830
+],
+"nakano": [
+17,
+1,
+6240
+],
+"tachikawa": [
+51,
+1,
+18450
+],
+"kawasaki": [
+40,
+2,
+13120
+],
+"musashikosugi": [
+34,
+1,
+20770
+],
+"yokohama": [
+47,
+2,
+18720
+],
+"minatomirai": [
+56,
+1,
+27310
+],
+"shinyokohama": [
+48,
+0,
+21350
+],
+"omiya": [
+44,
+1,
+20610
+],
+"kaihinmakuhari": [
+56,
+1,
+21450
+],
+"chiba": [
+53,
+1,
+22920
+]
+},
+"machida": {
+"tokyo": [
+58,
+2,
+21270
+],
+"otemachi": [
+53,
+1,
+21270
+],
+"nihombashi": [
+60,
+2,
+21430
+],
+"kanda": [
+58,
+1,
+20030
+],
+"akihabara": [
+59,
+2,
+20030
+],
+"ginza": [
+55,
+2,
+21090
+],
+"yurakucho": [
+57,
+1,
+21090
+],
+"shimbashi": [
+55,
+2,
+21090
+],
+"shiodome": [
+66,
+3,
+26420
+],
+"kasumigaseki": [
+47,
+1,
+20930
+],
+"toranomon": [
+55,
+2,
+20930
+],
+"roppongi": [
+56,
+2,
+20930
+],
+"hamamatsucho": [
+64,
+3,
+26000
+],
+"tamachi": [
+63,
+1,
+24240
+],
+"shinagawa": [
+60,
+1,
+23600
+],
+"osaki": [
+60,
+1,
+20030
+],
+"gotanda": [
+60,
+1,
+20030
+],
+"tennozu": [
+68,
+2,
+30750
+],
+"shibuya": [
+43,
+1,
+17880
+],
+"ebisu": [
+57,
+1,
+19680
+],
+"shinjuku": [
+38,
+0,
+13790
+],
+"tochomae": [
+50,
+1,
+20250
+],
+"iidabashi": [
+58,
+1,
+19680
+],
+"ikebukuro": [
+54,
+1,
+19680
+],
+"ueno": [
+67,
+2,
+21630
+],
+"kitasenju": [
+70,
+1,
+22370
+],
+"kinshicho": [
+69,
+2,
+21630
+],
+"toyosu": [
+69,
+3,
+21610
+],
+"nakano": [
+49,
+1,
+19680
+],
+"tachikawa": [
+44,
+1,
+15600
+],
+"kawasaki": [
+45,
+1,
+18450
+],
+"musashikosugi": [
+43,
+1,
+19050
+],
+"yokohama": [
+35,
+0,
+13120
+],
+"minatomirai": [
+43,
+1,
+25070
+],
+"shinyokohama": [
+21,
+0,
+10480
+],
+"omiya": [
+85,
+1,
+29390
+],
+"kaihinmakuhari": [
+110,
+3,
+35320
+],
+"chiba": [
+104,
+3,
+38300
+]
+},
+"shinjuku": {
+"tokyo": [
+9,
+0,
+6240
+],
+"otemachi": [
+13,
+0,
+7490
+],
+"nihombashi": [
+14,
+1,
+7490
+],
+"kanda": [
+7,
+0,
+5890
+],
+"akihabara": [
+8,
+1,
+5890
+],
+"ginza": [
+9,
+0,
+7140
+],
+"yurakucho": [
+14,
+1,
+7140
+],
+"shimbashi": [
+9,
+1,
+7140
+],
+"shiodome": [
+22,
+1,
+7140
+],
+"kasumigaseki": [
+6,
+0,
+6980
+],
+"toranomon": [
+13,
+1,
+7140
+],
+"roppongi": [
+6,
+0,
+7140
+],
+"hamamatsucho": [
+20,
+1,
+6240
+],
+"tamachi": [
+22,
+1,
+7840
+],
+"shinagawa": [
+23,
+2,
+13030
+],
+"osaki": [
+22,
+1,
+7840
+],
+"gotanda": [
+20,
+1,
+6240
+],
+"tennozu": [
+30,
+3,
+19470
+],
+"shibuya": [
+14,
+1,
+7490
+],
+"ebisu": [
+16,
+1,
+6240
+],
+"shinjuku": [
+4,
+0,
+5890
+],
+"tochomae": [
+17,
+1,
+11740
+],
+"iidabashi": [
+4,
+0,
+6980
+],
+"ikebukuro": [
+16,
+1,
+6240
+],
+"ueno": [
+16,
+1,
+6240
+],
+"kitasenju": [
+30,
+1,
+13880
+],
+"kinshicho": [
+14,
+1,
+6240
+],
+"toyosu": [
+23,
+1,
+7830
+],
+"nakano": [
+10,
+0,
+6240
+],
+"tachikawa": [
+43,
+1,
+17970
+],
+"kawasaki": [
+36,
+1,
+13120
+],
+"musashikosugi": [
+34,
+1,
+16370
+],
+"yokohama": [
+43,
+1,
+20450
+],
+"minatomirai": [
+53,
+1,
+27150
+],
+"shinyokohama": [
+45,
+0,
+21190
+],
+"omiya": [
+43,
+1,
+18450
+],
+"kaihinmakuhari": [
+65,
+1,
+21580
+],
+"chiba": [
+52,
+2,
+23260
+]
+},
+"katsushika": {
+"tokyo": [
+13,
+0,
+6240
+],
+"otemachi": [
+24,
+1,
+12870
+],
+"nihombashi": [
+26,
+1,
+12870
+],
+"kanda": [
+22,
+1,
+6240
+],
+"akihabara": [
+16,
+0,
+6240
+],
+"ginza": [
+26,
+1,
+13040
+],
+"yurakucho": [
+27,
+1,
+7840
+],
+"shimbashi": [
+18,
+0,
+7840
+],
+"shiodome": [
+30,
+1,
+13440
+],
+"kasumigaseki": [
+28,
+1,
+13220
+],
+"toranomon": [
+34,
+2,
+13220
+],
+"roppongi": [
+36,
+2,
+14820
+],
+"hamamatsucho": [
+31,
+1,
+7840
+],
+"tamachi": [
+33,
+1,
+7840
+],
+"shinagawa": [
+23,
+0,
+10480
+],
+"osaki": [
+34,
+1,
+10480
+],
+"gotanda": [
+37,
+1,
+10480
+],
+"tennozu": [
+40,
+2,
+15260
+],
+"shibuya": [
+39,
+1,
+15500
+],
+"ebisu": [
+42,
+1,
+13120
+],
+"shinjuku": [
+28,
+1,
+10480
+],
+"tochomae": [
+43,
+2,
+15580
+],
+"iidabashi": [
+23,
+0,
+7840
+],
+"ikebukuro": [
+38,
+1,
+13900
+],
+"ueno": [
+24,
+1,
+7840
+],
+"kitasenju": [
+29,
+1,
+20080
+],
+"kinshicho": [
+4,
+0,
+5890
+],
+"toyosu": [
+43,
+2,
+13560
+],
+"nakano": [
+35,
+1,
+13120
+],
+"tachikawa": [
+71,
+1,
+24100
+],
+"kawasaki": [
+39,
+1,
+15600
+],
+"musashikosugi": [
+34,
+0,
+15600
+],
+"yokohama": [
+48,
+0,
+21580
+],
+"minatomirai": [
+58,
+2,
+29390
+],
+"shinyokohama": [
+65,
+1,
+27140
+],
+"omiya": [
+61,
+2,
+20900
+],
+"kaihinmakuhari": [
+34,
+1,
+13120
+],
+"chiba": [
+26,
+0,
+15600
+]
+},
+"nerima": {
+"tokyo": [
+37,
+1,
+15050
+],
+"otemachi": [
+35,
+1,
+15050
+],
+"nihombashi": [
+45,
+2,
+15910
+],
+"kanda": [
+43,
+2,
+19520
+],
+"akihabara": [
+42,
+1,
+15760
+],
+"ginza": [
+42,
+1,
+14200
+],
+"yurakucho": [
+38,
+0,
+15220
+],
+"shimbashi": [
+42,
+1,
+15020
+],
+"shiodome": [
+39,
+0,
+11690
+],
+"kasumigaseki": [
+38,
+1,
+15380
+],
+"toranomon": [
+44,
+1,
+14960
+],
+"roppongi": [
+43,
+2,
+17660
+],
+"hamamatsucho": [
+46,
+0,
+11480
+],
+"tamachi": [
+50,
+1,
+16390
+],
+"shinagawa": [
+49,
+1,
+15910
+],
+"osaki": [
+38,
+1,
+15760
+],
+"gotanda": [
+43,
+1,
+15910
+],
+"tennozu": [
+47,
+1,
+26360
+],
+"shibuya": [
+25,
+1,
+15220
+],
+"ebisu": [
+32,
+1,
+14160
+],
+"shinjuku": [
+19,
+0,
+9670
+],
+"tochomae": [
+17,
+0,
+9340
+],
+"iidabashi": [
+25,
+0,
+14530
+],
+"ikebukuro": [
+11,
+0,
+7920
+],
+"ueno": [
+38,
+1,
+14160
+],
+"kitasenju": [
+45,
+2,
+21130
+],
+"kinshicho": [
+49,
+2,
+20420
+],
+"toyosu": [
+49,
+1,
+15690
+],
+"nakano": [
+26,
+1,
+13240
+],
+"tachikawa": [
+51,
+2,
+18560
+],
+"kawasaki": [
+64,
+1,
+30030
+],
+"musashikosugi": [
+42,
+1,
+23790
+],
+"yokohama": [
+58,
+1,
+26730
+],
+"minatomirai": [
+64,
+0,
+34540
+],
+"shinyokohama": [
+53,
+2,
+28580
+],
+"omiya": [
+45,
+1,
+21040
+],
+"kaihinmakuhari": [
+83,
+1,
+28930
+],
+"chiba": [
+82,
+2,
+37490
+]
+},
+"edogawa": {
+"tokyo": [
+28,
+1,
+8170
+],
+"otemachi": [
+20,
+0,
+7990
+],
+"nihombashi": [
+18,
+0,
+7990
+],
+"kanda": [
+25,
+1,
+8170
+],
+"akihabara": [
+26,
+1,
+8330
+],
+"ginza": [
+25,
+1,
+8170
+],
+"yurakucho": [
+32,
+2,
+12610
+],
+"shimbashi": [
+27,
+1,
+8330
+],
+"shiodome": [
+27,
+1,
+13120
+],
+"kasumigaseki": [
+31,
+1,
+8510
+],
+"toranomon": [
+33,
+1,
+8680
+],
+"roppongi": [
+38,
+2,
+8680
+],
+"hamamatsucho": [
+37,
+2,
+13240
+],
+"tamachi": [
+41,
+2,
+13240
+],
+"shinagawa": [
+41,
+1,
+19690
+],
+"osaki": [
+48,
+2,
+14570
+],
+"gotanda": [
+44,
+1,
+14740
+],
+"tennozu": [
+47,
+2,
+20880
+],
+"shibuya": [
+43,
+1,
+9150
+],
+"ebisu": [
+45,
+1,
+9190
+],
+"shinjuku": [
+41,
+1,
+13840
+],
+"tochomae": [
+47,
+2,
+14180
+],
+"iidabashi": [
+27,
+0,
+8510
+],
+"ikebukuro": [
+43,
+1,
+9190
+],
+"ueno": [
+28,
+1,
+8510
+],
+"kitasenju": [
+38,
+1,
+9150
+],
+"kinshicho": [
+33,
+2,
+12610
+],
+"toyosu": [
+27,
+2,
+12470
+],
+"nakano": [
+43,
+0,
+9270
+],
+"tachikawa": [
+79,
+1,
+22390
+],
+"kawasaki": [
+50,
+2,
+18810
+],
+"musashikosugi": [
+50,
+2,
+16170
+],
+"yokohama": [
+59,
+2,
+23930
+],
+"minatomirai": [
+68,
+3,
+31740
+],
+"shinyokohama": [
+74,
+2,
+28100
+],
+"omiya": [
+68,
+2,
+24110
+],
+"kaihinmakuhari": [
+35,
+2,
+16350
+],
+"chiba": [
+43,
+1,
+18990
+]
+},
+"shiroi": {
+"tokyo": [
+49,
+2,
+40020
+],
+"otemachi": [
+51,
+1,
+37820
+],
+"nihombashi": [
+42,
+0,
+37910
+],
+"kanda": [
+60,
+1,
+42030
+],
+"akihabara": [
+45,
+1,
+42110
+],
+"ginza": [
+55,
+1,
+42860
+],
+"yurakucho": [
+54,
+2,
+40370
+],
+"shimbashi": [
+48,
+0,
+38550
+],
+"shiodome": [
+58,
+1,
+39180
+],
+"kasumigaseki": [
+55,
+1,
+43170
+],
+"toranomon": [
+57,
+1,
+43330
+],
+"roppongi": [
+69,
+3,
+43590
+],
+"hamamatsucho": [
+58,
+2,
+40370
+],
+"tamachi": [
+61,
+1,
+43460
+],
+"shinagawa": [
+60,
+1,
+44440
+],
+"osaki": [
+71,
+2,
+45160
+],
+"gotanda": [
+60,
+0,
+40250
+],
+"tennozu": [
+67,
+2,
+42140
+],
+"shibuya": [
+69,
+2,
+39140
+],
+"ebisu": [
+70,
+2,
+44050
+],
+"shinjuku": [
+59,
+2,
+43440
+],
+"tochomae": [
+72,
+2,
+39990
+],
+"iidabashi": [
+53,
+1,
+43090
+],
+"ikebukuro": [
+54,
+2,
+40370
+],
+"ueno": [
+41,
+1,
+34130
+],
+"kitasenju": [
+36,
+2,
+36980
+],
+"kinshicho": [
+39,
+1,
+36790
+],
+"toyosu": [
+62,
+3,
+42490
+],
+"nakano": [
+64,
+2,
+45040
+],
+"tachikawa": [
+97,
+2,
+48740
+],
+"kawasaki": [
+71,
+1,
+49030
+],
+"musashikosugi": [
+74,
+2,
+46390
+],
+"yokohama": [
+79,
+1,
+54150
+],
+"minatomirai": [
+91,
+2,
+61960
+],
+"shinyokohama": [
+98,
+2,
+53860
+],
+"omiya": [
+75,
+2,
+38550
+],
+"kaihinmakuhari": [
+44,
+1,
+26440
+],
+"chiba": [
+52,
+2,
+31100
+]
+},
+"chiba-chuo": {
+"tokyo": [
+42,
+0,
+21580
+],
+"otemachi": [
+51,
+1,
+28210
+],
+"nihombashi": [
+53,
+1,
+27920
+],
+"kanda": [
+50,
+2,
+21580
+],
+"akihabara": [
+43,
+1,
+21290
+],
+"ginza": [
+53,
+1,
+28380
+],
+"yurakucho": [
+54,
+1,
+21580
+],
+"shimbashi": [
+45,
+0,
+22920
+],
+"shiodome": [
+59,
+1,
+28520
+],
+"kasumigaseki": [
+59,
+1,
+28560
+],
+"toranomon": [
+62,
+2,
+28560
+],
+"roppongi": [
+64,
+2,
+29900
+],
+"hamamatsucho": [
+59,
+1,
+23260
+],
+"tamachi": [
+61,
+1,
+23750
+],
+"shinagawa": [
+50,
+0,
+24240
+],
+"osaki": [
+62,
+1,
+24880
+],
+"gotanda": [
+65,
+1,
+25200
+],
+"tennozu": [
+66,
+2,
+39380
+],
+"shibuya": [
+67,
+1,
+30580
+],
+"ebisu": [
+72,
+1,
+26540
+],
+"shinjuku": [
+58,
+2,
+24510
+],
+"tochomae": [
+73,
+2,
+30240
+],
+"iidabashi": [
+51,
+1,
+22590
+],
+"ikebukuro": [
+67,
+2,
+29240
+],
+"ueno": [
+52,
+2,
+21580
+],
+"kitasenju": [
+57,
+1,
+32910
+],
+"kinshicho": [
+33,
+0,
+18720
+],
+"toyosu": [
+55,
+2,
+33460
+],
+"nakano": [
+65,
+2,
+26040
+],
+"tachikawa": [
+102,
+2,
+37050
+],
+"kawasaki": [
+67,
+1,
+29420
+],
+"musashikosugi": [
+62,
+0,
+28440
+],
+"yokohama": [
+78,
+0,
+34170
+],
+"minatomirai": [
+86,
+2,
+41980
+],
+"shinyokohama": [
+92,
+3,
+43710
+],
+"omiya": [
+88,
+3,
+33640
+],
+"kaihinmakuhari": [
+21,
+1,
+14110
+],
+"chiba": [
+0,
+0,
+0
+]
+},
+"kawasaki-kawasaki": {
+"tokyo": [
+20,
+0,
+10480
+],
+"otemachi": [
+31,
+1,
+17110
+],
+"nihombashi": [
+28,
+1,
+17460
+],
+"kanda": [
+27,
+1,
+10480
+],
+"akihabara": [
+29,
+1,
+13120
+],
+"ginza": [
+25,
+1,
+17110
+],
+"yurakucho": [
+23,
+1,
+10480
+],
+"shimbashi": [
+16,
+0,
+10480
+],
+"shiodome": [
+26,
+1,
+16080
+],
+"kasumigaseki": [
+35,
+1,
+17460
+],
+"toranomon": [
+36,
+1,
+17110
+],
+"roppongi": [
+36,
+2,
+17460
+],
+"hamamatsucho": [
+22,
+0,
+10480
+],
+"tamachi": [
+20,
+0,
+7840
+],
+"shinagawa": [
+10,
+0,
+7840
+],
+"osaki": [
+19,
+1,
+7840
+],
+"gotanda": [
+22,
+1,
+7840
+],
+"tennozu": [
+25,
+1,
+14400
+],
+"shibuya": [
+29,
+1,
+10480
+],
+"ebisu": [
+27,
+1,
+10480
+],
+"shinjuku": [
+36,
+1,
+20640
+],
+"tochomae": [
+44,
+2,
+19950
+],
+"iidabashi": [
+38,
+2,
+13120
+],
+"ikebukuro": [
+42,
+1,
+22240
+],
+"ueno": [
+26,
+0,
+13120
+],
+"kitasenju": [
+45,
+1,
+20610
+],
+"kinshicho": [
+36,
+1,
+13120
+],
+"toyosu": [
+42,
+2,
+17620
+],
+"nakano": [
+46,
+1,
+18720
+],
+"tachikawa": [
+61,
+0,
+20450
+],
+"kawasaki": [
+0,
+0,
+0
+],
+"musashikosugi": [
+13,
+0,
+6240
+],
+"yokohama": [
+8,
+0,
+7840
+],
+"minatomirai": [
+19,
+1,
+15650
+],
+"shinyokohama": [
+25,
+1,
+7840
+],
+"omiya": [
+57,
+0,
+25200
+],
+"kaihinmakuhari": [
+68,
+2,
+34860
+],
+"chiba": [
+67,
+1,
+29420
+]
+},
+"chuo": {
+"tokyo": [
+15,
+1,
+7140
+],
+"otemachi": [
+13,
+1,
+11880
+],
+"nihombashi": [
+12,
+1,
+11750
+],
+"kanda": [
+18,
+1,
+11890
+],
+"akihabara": [
+20,
+1,
+11890
+],
+"ginza": [
+11,
+0,
+6800
+],
+"yurakucho": [
+5,
+0,
+6980
+],
+"shimbashi": [
+15,
+1,
+6980
+],
+"shiodome": [
+6,
+0,
+7580
+],
+"kasumigaseki": [
+16,
+1,
+7140
+],
+"toranomon": [
+18,
+1,
+7320
+],
+"roppongi": [
+21,
+1,
+7660
+],
+"hamamatsucho": [
+17,
+0,
+7940
+],
+"tamachi": [
+21,
+1,
+12870
+],
+"shinagawa": [
+22,
+1,
+14190
+],
+"osaki": [
+29,
+1,
+13220
+],
+"gotanda": [
+24,
+1,
+9340
+],
+"tennozu": [
+25,
+1,
+15360
+],
+"shibuya": [
+22,
+1,
+7990
+],
+"ebisu": [
+31,
+1,
+8170
+],
+"shinjuku": [
+26,
+0,
+10250
+],
+"tochomae": [
+28,
+0,
+10520
+],
+"iidabashi": [
+15,
+0,
+7830
+],
+"ikebukuro": [
+25,
+0,
+8680
+],
+"ueno": [
+22,
+2,
+12180
+],
+"kitasenju": [
+27,
+1,
+19290
+],
+"kinshicho": [
+16,
+1,
+12070
+],
+"toyosu": [
+2,
+0,
+6800
+],
+"nakano": [
+37,
+1,
+13330
+],
+"tachikawa": [
+71,
+2,
+26110
+],
+"kawasaki": [
+39,
+2,
+17460
+],
+"musashikosugi": [
+37,
+2,
+14820
+],
+"yokohama": [
+47,
+1,
+23180
+],
+"minatomirai": [
+59,
+3,
+30390
+],
+"shinyokohama": [
+60,
+3,
+23030
+],
+"omiya": [
+57,
+1,
+21800
+],
+"kaihinmakuhari": [
+41,
+1,
+20440
+],
+"chiba": [
+56,
+2,
+30790
+]
+},
+"koto": {
+"tokyo": [
+15,
+1,
+7140
+],
+"otemachi": [
+7,
+0,
+7140
+],
+"nihombashi": [
+5,
+0,
+6980
+],
+"kanda": [
+13,
+1,
+7140
+],
+"akihabara": [
+13,
+1,
+7320
+],
+"ginza": [
+12,
+1,
+7140
+],
+"yurakucho": [
+15,
+1,
+11750
+],
+"shimbashi": [
+14,
+1,
+7320
+],
+"shiodome": [
+9,
+0,
+7940
+],
+"kasumigaseki": [
+18,
+1,
+7490
+],
+"toranomon": [
+20,
+1,
+7660
+],
+"roppongi": [
+25,
+2,
+7660
+],
+"hamamatsucho": [
+20,
+0,
+8330
+],
+"tamachi": [
+24,
+1,
+13240
+],
+"shinagawa": [
+25,
+1,
+14830
+],
+"osaki": [
+32,
+1,
+14220
+],
+"gotanda": [
+28,
+1,
+9990
+],
+"tennozu": [
+28,
+1,
+15750
+],
+"shibuya": [
+29,
+2,
+12610
+],
+"ebisu": [
+32,
+1,
+8510
+],
+"shinjuku": [
+28,
+1,
+13120
+],
+"tochomae": [
+31,
+0,
+11060
+],
+"iidabashi": [
+14,
+0,
+7490
+],
+"ikebukuro": [
+30,
+1,
+8510
+],
+"ueno": [
+16,
+1,
+7490
+],
+"kitasenju": [
+25,
+1,
+18530
+],
+"kinshicho": [
+13,
+1,
+11750
+],
+"toyosu": [
+9,
+1,
+11590
+],
+"nakano": [
+30,
+0,
+8840
+],
+"tachikawa": [
+67,
+1,
+21960
+],
+"kawasaki": [
+37,
+2,
+17800
+],
+"musashikosugi": [
+37,
+2,
+15160
+],
+"yokohama": [
+46,
+2,
+22920
+],
+"minatomirai": [
+56,
+3,
+30730
+],
+"shinyokohama": [
+62,
+2,
+27370
+],
+"omiya": [
+55,
+2,
+23090
+],
+"kaihinmakuhari": [
+39,
+1,
+16990
+],
+"chiba": [
+49,
+2,
+19630
+]
+},
+"taito": {
+"tokyo": [
+5,
+0,
+5890
+],
+"otemachi": [
+15,
+1,
+7320
+],
+"nihombashi": [
+9,
+0,
+7140
+],
+"kanda": [
+5,
+0,
+6980
+],
+"akihabara": [
+4,
+0,
+4910
+],
+"ginza": [
+13,
+0,
+7320
+],
+"yurakucho": [
+10,
+0,
+5890
+],
+"shimbashi": [
+10,
+0,
+5890
+],
+"shiodome": [
+20,
+1,
+11490
+],
+"kasumigaseki": [
+23,
+1,
+12870
+],
+"toranomon": [
+24,
+1,
+7830
+],
+"roppongi": [
+26,
+1,
+7990
+],
+"hamamatsucho": [
+15,
+0,
+6240
+],
+"tamachi": [
+17,
+0,
+6240
+],
+"shinagawa": [
+15,
+0,
+7840
+],
+"osaki": [
+24,
+0,
+7840
+],
+"gotanda": [
+27,
+0,
+7840
+],
+"tennozu": [
+25,
+1,
+13660
+],
+"shibuya": [
+31,
+0,
+8680
+],
+"ebisu": [
+33,
+0,
+10480
+],
+"shinjuku": [
+20,
+2,
+7840
+],
+"tochomae": [
+29,
+1,
+13580
+],
+"iidabashi": [
+16,
+1,
+5890
+],
+"ikebukuro": [
+17,
+0,
+6240
+],
+"ueno": [
+0,
+0,
+0
+],
+"kitasenju": [
+9,
+0,
+7490
+],
+"kinshicho": [
+16,
+1,
+5890
+],
+"toyosu": [
+29,
+1,
+13030
+],
+"nakano": [
+27,
+1,
+10480
+],
+"tachikawa": [
+63,
+2,
+21290
+],
+"kawasaki": [
+25,
+0,
+13120
+],
+"musashikosugi": [
+33,
+1,
+13120
+],
+"yokohama": [
+34,
+0,
+18720
+],
+"minatomirai": [
+45,
+1,
+26530
+],
+"shinyokohama": [
+55,
+1,
+28060
+],
+"omiya": [
+28,
+0,
+15600
+],
+"kaihinmakuhari": [
+58,
+1,
+25290
+],
+"chiba": [
+52,
+2,
+21580
+]
+},
+"yokohama-aoba": {
+"tokyo": [
+53,
+2,
+18570
+],
+"otemachi": [
+49,
+0,
+18730
+],
+"nihombashi": [
+53,
+1,
+18730
+],
+"kanda": [
+57,
+1,
+18910
+],
+"akihabara": [
+63,
+1,
+23390
+],
+"ginza": [
+48,
+2,
+18400
+],
+"yurakucho": [
+49,
+1,
+18230
+],
+"shimbashi": [
+48,
+1,
+18400
+],
+"shiodome": [
+54,
+1,
+23770
+],
+"kasumigaseki": [
+45,
+2,
+18230
+],
+"toranomon": [
+52,
+3,
+18400
+],
+"roppongi": [
+45,
+2,
+18060
+],
+"hamamatsucho": [
+53,
+2,
+16980
+],
+"tamachi": [
+51,
+2,
+16630
+],
+"shinagawa": [
+44,
+2,
+15650
+],
+"osaki": [
+45,
+3,
+15650
+],
+"gotanda": [
+39,
+2,
+10740
+],
+"tennozu": [
+47,
+2,
+18900
+],
+"shibuya": [
+32,
+0,
+10740
+],
+"ebisu": [
+41,
+3,
+17370
+],
+"shinjuku": [
+45,
+1,
+16630
+],
+"tochomae": [
+52,
+1,
+23430
+],
+"iidabashi": [
+51,
+1,
+18400
+],
+"ikebukuro": [
+52,
+1,
+16980
+],
+"ueno": [
+61,
+1,
+19420
+],
+"kitasenju": [
+69,
+1,
+19930
+],
+"kinshicho": [
+62,
+0,
+19840
+],
+"toyosu": [
+59,
+1,
+18910
+],
+"nakano": [
+53,
+2,
+16980
+],
+"tachikawa": [
+56,
+1,
+19900
+],
+"kawasaki": [
+40,
+1,
+14620
+],
+"musashikosugi": [
+27,
+1,
+12670
+],
+"yokohama": [
+40,
+1,
+18010
+],
+"minatomirai": [
+52,
+2,
+25820
+],
+"shinyokohama": [
+25,
+1,
+15550
+],
+"omiya": [
+71,
+1,
+28710
+],
+"kaihinmakuhari": [
+91,
+3,
+39360
+],
+"chiba": [
+95,
+2,
+41320
+]
+},
+"mitaka": {
+"tokyo": [
+35,
+0,
+13120
+],
+"otemachi": [
+39,
+0,
+14570
+],
+"nihombashi": [
+41,
+0,
+14750
+],
+"kanda": [
+33,
+0,
+13120
+],
+"akihabara": [
+35,
+1,
+13120
+],
+"ginza": [
+39,
+1,
+17620
+],
+"yurakucho": [
+41,
+1,
+13120
+],
+"shimbashi": [
+44,
+1,
+15330
+],
+"shiodome": [
+51,
+1,
+17180
+],
+"kasumigaseki": [
+37,
+1,
+17460
+],
+"toranomon": [
+43,
+2,
+17620
+],
+"roppongi": [
+41,
+1,
+17620
+],
+"hamamatsucho": [
+46,
+1,
+15600
+],
+"tamachi": [
+48,
+1,
+15600
+],
+"shinagawa": [
+48,
+1,
+13120
+],
+"osaki": [
+38,
+1,
+13120
+],
+"gotanda": [
+42,
+1,
+13120
+],
+"tennozu": [
+47,
+1,
+23720
+],
+"shibuya": [
+31,
+1,
+10480
+],
+"ebisu": [
+35,
+1,
+10480
+],
+"shinjuku": [
+20,
+0,
+7840
+],
+"tochomae": [
+35,
+1,
+14300
+],
+"iidabashi": [
+32,
+0,
+14070
+],
+"ikebukuro": [
+33,
+1,
+10480
+],
+"ueno": [
+42,
+1,
+15330
+],
+"kitasenju": [
+56,
+1,
+21110
+],
+"kinshicho": [
+40,
+1,
+15330
+],
+"toyosu": [
+57,
+2,
+18310
+],
+"nakano": [
+15,
+0,
+6240
+],
+"tachikawa": [
+18,
+0,
+7840
+],
+"kawasaki": [
+62,
+1,
+23260
+],
+"musashikosugi": [
+49,
+1,
+18720
+],
+"yokohama": [
+60,
+1,
+24510
+],
+"minatomirai": [
+72,
+2,
+32320
+],
+"shinyokohama": [
+73,
+3,
+26480
+],
+"omiya": [
+51,
+1,
+24100
+],
+"kaihinmakuhari": [
+83,
+1,
+22620
+],
+"chiba": [
+78,
+2,
+30780
+]
+},
+"suginami": {
+"tokyo": [
+27,
+0,
+10480
+],
+"otemachi": [
+30,
+0,
+14220
+],
+"nihombashi": [
+32,
+0,
+14400
+],
+"kanda": [
+25,
+0,
+10480
+],
+"akihabara": [
+26,
+1,
+10480
+],
+"ginza": [
+31,
+1,
+14980
+],
+"yurakucho": [
+34,
+1,
+10480
+],
+"shimbashi": [
+33,
+1,
+8970
+],
+"shiodome": [
+43,
+1,
+15580
+],
+"kasumigaseki": [
+29,
+1,
+14820
+],
+"toranomon": [
+37,
+1,
+8970
+],
+"roppongi": [
+32,
+1,
+14980
+],
+"hamamatsucho": [
+38,
+1,
+13120
+],
+"tamachi": [
+40,
+1,
+13120
+],
+"shinagawa": [
+40,
+1,
+10480
+],
+"osaki": [
+30,
+1,
+10480
+],
+"gotanda": [
+33,
+1,
+10480
+],
+"tennozu": [
+39,
+1,
+21080
+],
+"shibuya": [
+23,
+1,
+7840
+],
+"ebisu": [
+27,
+1,
+7840
+],
+"shinjuku": [
+12,
+0,
+6240
+],
+"tochomae": [
+22,
+1,
+12180
+],
+"iidabashi": [
+23,
+0,
+13720
+],
+"ikebukuro": [
+25,
+1,
+7840
+],
+"ueno": [
+34,
+1,
+10480
+],
+"kitasenju": [
+48,
+1,
+18470
+],
+"kinshicho": [
+32,
+1,
+13120
+],
+"toyosu": [
+49,
+2,
+15670
+],
+"nakano": [
+7,
+0,
+5890
+],
+"tachikawa": [
+26,
+0,
+10480
+],
+"kawasaki": [
+54,
+1,
+20900
+],
+"musashikosugi": [
+40,
+1,
+15600
+],
+"yokohama": [
+52,
+1,
+22590
+],
+"minatomirai": [
+64,
+2,
+30400
+],
+"shinyokohama": [
+58,
+2,
+21870
+],
+"omiya": [
+50,
+1,
+20450
+],
+"kaihinmakuhari": [
+75,
+1,
+19980
+],
+"chiba": [
+70,
+2,
+27950
+]
+},
+"chiba-hanamigawa": {
+"tokyo": [
+38,
+1,
+15600
+],
+"otemachi": [
+51,
+2,
+22230
+],
+"nihombashi": [
+52,
+1,
+15510
+],
+"kanda": [
+51,
+1,
+15600
+],
+"akihabara": [
+45,
+0,
+15600
+],
+"ginza": [
+52,
+2,
+22400
+],
+"yurakucho": [
+57,
+1,
+17970
+],
+"shimbashi": [
+44,
+1,
+18450
+],
+"shiodome": [
+54,
+2,
+24050
+],
+"kasumigaseki": [
+57,
+2,
+22580
+],
+"toranomon": [
+60,
+3,
+22580
+],
+"roppongi": [
+64,
+3,
+25430
+],
+"hamamatsucho": [
+55,
+2,
+18720
+],
+"tamachi": [
+58,
+2,
+18720
+],
+"shinagawa": [
+49,
+1,
+20900
+],
+"osaki": [
+58,
+2,
+21580
+],
+"gotanda": [
+61,
+2,
+21580
+],
+"tennozu": [
+59,
+2,
+28390
+],
+"shibuya": [
+67,
+2,
+26110
+],
+"ebisu": [
+67,
+2,
+22920
+],
+"shinjuku": [
+56,
+3,
+20900
+],
+"tochomae": [
+72,
+3,
+27730
+],
+"iidabashi": [
+53,
+0,
+17970
+],
+"ikebukuro": [
+65,
+2,
+23590
+],
+"ueno": [
+49,
+3,
+15600
+],
+"kitasenju": [
+48,
+3,
+20940
+],
+"kinshicho": [
+29,
+1,
+13120
+],
+"toyosu": [
+53,
+2,
+22470
+],
+"nakano": [
+61,
+3,
+22920
+],
+"tachikawa": [
+98,
+2,
+32180
+],
+"kawasaki": [
+67,
+2,
+24880
+],
+"musashikosugi": [
+61,
+1,
+24510
+],
+"yokohama": [
+73,
+1,
+29880
+],
+"minatomirai": [
+86,
+2,
+37690
+],
+"shinyokohama": [
+92,
+2,
+35700
+],
+"omiya": [
+86,
+2,
+28870
+],
+"kaihinmakuhari": [
+23,
+0,
+10350
+],
+"chiba": [
+12,
+0,
+6240
+]
+},
+"ota": {
+"tokyo": [
+24,
+0,
+7840
+],
+"otemachi": [
+35,
+1,
+14180
+],
+"nihombashi": [
+32,
+1,
+14820
+],
+"kanda": [
+26,
+0,
+10480
+],
+"akihabara": [
+28,
+0,
+10480
+],
+"ginza": [
+28,
+1,
+14470
+],
+"yurakucho": [
+22,
+0,
+7840
+],
+"shimbashi": [
+19,
+0,
+7840
+],
+"shiodome": [
+29,
+1,
+14300
+],
+"kasumigaseki": [
+36,
+1,
+14640
+],
+"toranomon": [
+37,
+1,
+14640
+],
+"roppongi": [
+37,
+2,
+14820
+],
+"hamamatsucho": [
+17,
+0,
+7840
+],
+"tamachi": [
+14,
+0,
+6240
+],
+"shinagawa": [
+10,
+0,
+6240
+],
+"osaki": [
+14,
+1,
+6240
+],
+"gotanda": [
+17,
+1,
+7840
+],
+"tennozu": [
+20,
+1,
+14050
+],
+"shibuya": [
+24,
+1,
+7840
+],
+"ebisu": [
+22,
+1,
+7840
+],
+"shinjuku": [
+31,
+1,
+20290
+],
+"tochomae": [
+39,
+2,
+17310
+],
+"iidabashi": [
+41,
+1,
+10480
+],
+"ikebukuro": [
+37,
+1,
+21890
+],
+"ueno": [
+33,
+0,
+10480
+],
+"kitasenju": [
+51,
+1,
+17970
+],
+"kinshicho": [
+34,
+1,
+10480
+],
+"toyosu": [
+40,
+1,
+14980
+],
+"nakano": [
+42,
+2,
+13120
+],
+"tachikawa": [
+69,
+1,
+21580
+],
+"kawasaki": [
+4,
+0,
+5890
+],
+"musashikosugi": [
+21,
+1,
+8570
+],
+"yokohama": [
+18,
+0,
+7840
+],
+"minatomirai": [
+29,
+1,
+15650
+],
+"shinyokohama": [
+27,
+1,
+10480
+],
+"omiya": [
+61,
+1,
+24100
+],
+"kaihinmakuhari": [
+63,
+2,
+34510
+],
+"chiba": [
+67,
+1,
+27510
+]
+},
+"yokohama-kohoku": {
+"tokyo": [
+38,
+1,
+15470
+],
+"otemachi": [
+40,
+1,
+18770
+],
+"nihombashi": [
+46,
+2,
+17600
+],
+"kanda": [
+49,
+2,
+17270
+],
+"akihabara": [
+51,
+2,
+17270
+],
+"ginza": [
+44,
+1,
+17420
+],
+"yurakucho": [
+46,
+0,
+18440
+],
+"shimbashi": [
+35,
+1,
+12830
+],
+"shiodome": [
+47,
+2,
+18430
+],
+"kasumigaseki": [
+40,
+1,
+17090
+],
+"toranomon": [
+37,
+1,
+17090
+],
+"roppongi": [
+32,
+0,
+16750
+],
+"hamamatsucho": [
+43,
+1,
+15670
+],
+"tamachi": [
+38,
+2,
+15320
+],
+"shinagawa": [
+31,
+1,
+11230
+],
+"osaki": [
+29,
+1,
+12830
+],
+"gotanda": [
+29,
+1,
+14340
+],
+"tennozu": [
+38,
+2,
+17590
+],
+"shibuya": [
+25,
+0,
+9430
+],
+"ebisu": [
+26,
+1,
+16060
+],
+"shinjuku": [
+40,
+1,
+15670
+],
+"tochomae": [
+49,
+2,
+22150
+],
+"iidabashi": [
+42,
+1,
+17600
+],
+"ikebukuro": [
+38,
+0,
+17420
+],
+"ueno": [
+54,
+2,
+18110
+],
+"kitasenju": [
+60,
+1,
+24320
+],
+"kinshicho": [
+49,
+1,
+18110
+],
+"toyosu": [
+57,
+2,
+23160
+],
+"nakano": [
+49,
+2,
+17270
+],
+"tachikawa": [
+58,
+1,
+20590
+],
+"kawasaki": [
+24,
+1,
+11230
+],
+"musashikosugi": [
+4,
+0,
+4990
+],
+"yokohama": [
+13,
+0,
+8570
+],
+"minatomirai": [
+16,
+0,
+16380
+],
+"shinyokohama": [
+7,
+0,
+9400
+],
+"omiya": [
+71,
+2,
+28150
+],
+"kaihinmakuhari": [
+82,
+3,
+38050
+],
+"chiba": [
+81,
+1,
+33430
+]
+},
+"adachi": {
+"tokyo": [
+24,
+1,
+7840
+],
+"otemachi": [
+20,
+0,
+8170
+],
+"nihombashi": [
+25,
+1,
+7990
+],
+"kanda": [
+22,
+1,
+7830
+],
+"akihabara": [
+10,
+0,
+12100
+],
+"ginza": [
+30,
+0,
+8510
+],
+"yurakucho": [
+28,
+1,
+13380
+],
+"shimbashi": [
+26,
+0,
+7840
+],
+"shiodome": [
+33,
+1,
+13440
+],
+"kasumigaseki": [
+27,
+0,
+8680
+],
+"toranomon": [
+32,
+1,
+8840
+],
+"roppongi": [
+37,
+1,
+8970
+],
+"hamamatsucho": [
+30,
+1,
+7840
+],
+"tamachi": [
+32,
+1,
+10480
+],
+"shinagawa": [
+29,
+0,
+10480
+],
+"osaki": [
+40,
+1,
+10480
+],
+"gotanda": [
+42,
+1,
+14740
+],
+"tennozu": [
+39,
+2,
+15260
+],
+"shibuya": [
+37,
+2,
+15160
+],
+"ebisu": [
+40,
+2,
+17800
+],
+"shinjuku": [
+34,
+1,
+15160
+],
+"tochomae": [
+36,
+1,
+20260
+],
+"iidabashi": [
+21,
+1,
+18170
+],
+"ikebukuro": [
+25,
+1,
+13210
+],
+"ueno": [
+10,
+0,
+7490
+],
+"kitasenju": [
+0,
+0,
+0
+],
+"kinshicho": [
+16,
+0,
+14190
+],
+"toyosu": [
+36,
+2,
+23770
+],
+"nakano": [
+40,
+2,
+17800
+],
+"tachikawa": [
+75,
+2,
+26710
+],
+"kawasaki": [
+41,
+1,
+15600
+],
+"musashikosugi": [
+53,
+1,
+15600
+],
+"yokohama": [
+50,
+1,
+21580
+],
+"minatomirai": [
+62,
+2,
+29390
+],
+"shinyokohama": [
+69,
+2,
+28250
+],
+"omiya": [
+44,
+2,
+20440
+],
+"kaihinmakuhari": [
+59,
+1,
+32990
+],
+"chiba": [
+54,
+1,
+32910
+]
+},
+"setagaya": {
+"tokyo": [
+27,
+2,
+14610
+],
+"otemachi": [
+24,
+0,
+14770
+],
+"nihombashi": [
+27,
+1,
+14770
+],
+"kanda": [
+32,
+1,
+14950
+],
+"akihabara": [
+38,
+2,
+20330
+],
+"ginza": [
+23,
+2,
+14440
+],
+"yurakucho": [
+25,
+1,
+14270
+],
+"shimbashi": [
+22,
+1,
+14440
+],
+"shiodome": [
+29,
+1,
+19810
+],
+"kasumigaseki": [
+20,
+2,
+14270
+],
+"toranomon": [
+28,
+2,
+14440
+],
+"roppongi": [
+24,
+2,
+14270
+],
+"hamamatsucho": [
+33,
+2,
+19350
+],
+"tamachi": [
+34,
+1,
+13020
+],
+"shinagawa": [
+27,
+1,
+13020
+],
+"osaki": [
+23,
+1,
+12670
+],
+"gotanda": [
+23,
+1,
+12670
+],
+"tennozu": [
+31,
+1,
+23270
+],
+"shibuya": [
+5,
+0,
+6780
+],
+"ebisu": [
+17,
+1,
+11690
+],
+"shinjuku": [
+20,
+1,
+12670
+],
+"tochomae": [
+26,
+1,
+19470
+],
+"iidabashi": [
+26,
+1,
+14440
+],
+"ikebukuro": [
+25,
+1,
+13020
+],
+"ueno": [
+36,
+1,
+15460
+],
+"kitasenju": [
+43,
+1,
+15970
+],
+"kinshicho": [
+37,
+0,
+15880
+],
+"toyosu": [
+34,
+1,
+14950
+],
+"nakano": [
+29,
+2,
+13020
+],
+"tachikawa": [
+62,
+1,
+21690
+],
+"kawasaki": [
+43,
+2,
+24920
+],
+"musashikosugi": [
+27,
+1,
+9430
+],
+"yokohama": [
+41,
+1,
+22110
+],
+"minatomirai": [
+51,
+1,
+20640
+],
+"shinyokohama": [
+42,
+3,
+14130
+],
+"omiya": [
+49,
+1,
+24750
+],
+"kaihinmakuhari": [
+72,
+2,
+28580
+],
+"chiba": [
+73,
+2,
+37360
+]
+},
+"shibuya": {
+"tokyo": [
+23,
+1,
+7990
+],
+"otemachi": [
+23,
+1,
+7990
+],
+"nihombashi": [
+26,
+1,
+7990
+],
+"kanda": [
+25,
+1,
+12130
+],
+"akihabara": [
+27,
+0,
+7840
+],
+"ginza": [
+17,
+0,
+7830
+],
+"yurakucho": [
+22,
+0,
+7840
+],
+"shimbashi": [
+20,
+0,
+7840
+],
+"shiodome": [
+26,
+1,
+12820
+],
+"kasumigaseki": [
+13,
+0,
+7490
+],
+"toranomon": [
+11,
+0,
+7490
+],
+"roppongi": [
+21,
+1,
+16590
+],
+"hamamatsucho": [
+17,
+0,
+6240
+],
+"tamachi": [
+15,
+0,
+6240
+],
+"shinagawa": [
+11,
+0,
+5890
+],
+"osaki": [
+4,
+0,
+5890
+],
+"gotanda": [
+5,
+0,
+4910
+],
+"tennozu": [
+13,
+0,
+16490
+],
+"shibuya": [
+2,
+0,
+4910
+],
+"ebisu": [
+0,
+0,
+0
+],
+"shinjuku": [
+7,
+0,
+5890
+],
+"tochomae": [
+17,
+1,
+12720
+],
+"iidabashi": [
+22,
+1,
+6240
+],
+"ikebukuro": [
+13,
+0,
+6240
+],
+"ueno": [
+31,
+0,
+10480
+],
+"kitasenju": [
+39,
+1,
+9230
+],
+"kinshicho": [
+34,
+1,
+10480
+],
+"toyosu": [
+34,
+1,
+8510
+],
+"nakano": [
+18,
+1,
+6240
+],
+"tachikawa": [
+51,
+1,
+18720
+],
+"kawasaki": [
+28,
+1,
+10480
+],
+"musashikosugi": [
+14,
+0,
+10480
+],
+"yokohama": [
+24,
+0,
+15330
+],
+"minatomirai": [
+37,
+1,
+23140
+],
+"shinyokohama": [
+32,
+1,
+19990
+],
+"omiya": [
+38,
+0,
+18720
+],
+"kaihinmakuhari": [
+55,
+2,
+34510
+],
+"chiba": [
+69,
+1,
+26540
+]
+},
+"tachikawa": {
+"tokyo": [
+57,
+0,
+21290
+],
+"otemachi": [
+64,
+1,
+21450
+],
+"nihombashi": [
+65,
+1,
+27700
+],
+"kanda": [
+55,
+0,
+20900
+],
+"akihabara": [
+56,
+1,
+20450
+],
+"ginza": [
+61,
+1,
+25110
+],
+"yurakucho": [
+63,
+1,
+21580
+],
+"shimbashi": [
+66,
+1,
+21580
+],
+"shiodome": [
+75,
+1,
+24940
+],
+"kasumigaseki": [
+58,
+1,
+24950
+],
+"toranomon": [
+65,
+2,
+25110
+],
+"roppongi": [
+62,
+1,
+25110
+],
+"hamamatsucho": [
+68,
+1,
+22590
+],
+"tamachi": [
+70,
+1,
+23260
+],
+"shinagawa": [
+70,
+1,
+21290
+],
+"osaki": [
+59,
+1,
+20450
+],
+"gotanda": [
+64,
+1,
+18720
+],
+"tennozu": [
+69,
+1,
+31050
+],
+"shibuya": [
+52,
+1,
+17970
+],
+"ebisu": [
+57,
+1,
+18720
+],
+"shinjuku": [
+41,
+0,
+15600
+],
+"tochomae": [
+58,
+1,
+22060
+],
+"iidabashi": [
+55,
+1,
+18720
+],
+"ikebukuro": [
+55,
+1,
+18450
+],
+"ueno": [
+64,
+1,
+21580
+],
+"kitasenju": [
+79,
+1,
+26710
+],
+"kinshicho": [
+62,
+1,
+21580
+],
+"toyosu": [
+80,
+2,
+26280
+],
+"nakano": [
+36,
+0,
+13120
+],
+"tachikawa": [
+0,
+0,
+0
+],
+"kawasaki": [
+61,
+0,
+20450
+],
+"musashikosugi": [
+47,
+0,
+15600
+],
+"yokohama": [
+72,
+1,
+23260
+],
+"minatomirai": [
+77,
+1,
+32840
+],
+"shinyokohama": [
+67,
+1,
+26790
+],
+"omiya": [
+44,
+1,
+22590
+],
+"kaihinmakuhari": [
+109,
+1,
+42160
+],
+"chiba": [
+95,
+2,
+37050
+]
+},
+"misato": {
+"tokyo": [
+41,
+1,
+26850
+],
+"otemachi": [
+42,
+1,
+24050
+],
+"nihombashi": [
+44,
+2,
+28180
+],
+"kanda": [
+38,
+1,
+26850
+],
+"akihabara": [
+24,
+0,
+21940
+],
+"ginza": [
+49,
+1,
+24390
+],
+"yurakucho": [
+43,
+1,
+26850
+],
+"shimbashi": [
+46,
+1,
+27830
+],
+"shiodome": [
+49,
+1,
+29330
+],
+"kasumigaseki": [
+48,
+1,
+24560
+],
+"toranomon": [
+54,
+2,
+24720
+],
+"roppongi": [
+58,
+2,
+24850
+],
+"hamamatsucho": [
+47,
+1,
+27830
+],
+"tamachi": [
+49,
+1,
+28180
+],
+"shinagawa": [
+49,
+1,
+26360
+],
+"osaki": [
+56,
+1,
+29780
+],
+"gotanda": [
+59,
+1,
+29780
+],
+"tennozu": [
+60,
+2,
+35250
+],
+"shibuya": [
+60,
+2,
+34590
+],
+"ebisu": [
+63,
+3,
+27870
+],
+"shinjuku": [
+49,
+2,
+28180
+],
+"tochomae": [
+50,
+1,
+29330
+],
+"iidabashi": [
+35,
+1,
+27240
+],
+"ikebukuro": [
+45,
+2,
+23630
+],
+"ueno": [
+31,
+1,
+23370
+],
+"kitasenju": [
+12,
+0,
+15880
+],
+"kinshicho": [
+37,
+1,
+30070
+],
+"toyosu": [
+50,
+2,
+32840
+],
+"nakano": [
+57,
+2,
+29780
+],
+"tachikawa": [
+80,
+2,
+35680
+],
+"kawasaki": [
+61,
+2,
+31480
+],
+"musashikosugi": [
+71,
+2,
+32420
+],
+"yokohama": [
+71,
+2,
+37460
+],
+"minatomirai": [
+85,
+3,
+45270
+],
+"shinyokohama": [
+91,
+3,
+44130
+],
+"omiya": [
+55,
+2,
+25260
+],
+"kaihinmakuhari": [
+47,
+1,
+22410
+],
+"chiba": [
+63,
+3,
+25530
+]
+},
+"musashino": {
+"tokyo": [
+33,
+0,
+13120
+],
+"otemachi": [
+36,
+0,
+14570
+],
+"nihombashi": [
+38,
+0,
+14750
+],
+"kanda": [
+31,
+0,
+13120
+],
+"akihabara": [
+32,
+1,
+13120
+],
+"ginza": [
+37,
+1,
+17620
+],
+"yurakucho": [
+38,
+1,
+13120
+],
+"shimbashi": [
+41,
+1,
+13120
+],
+"shiodome": [
+49,
+1,
+17180
+],
+"kasumigaseki": [
+35,
+1,
+17460
+],
+"toranomon": [
+41,
+2,
+17620
+],
+"roppongi": [
+39,
+1,
+17620
+],
+"hamamatsucho": [
+44,
+1,
+15330
+],
+"tamachi": [
+46,
+1,
+15600
+],
+"shinagawa": [
+45,
+1,
+13120
+],
+"osaki": [
+35,
+1,
+13120
+],
+"gotanda": [
+39,
+1,
+10480
+],
+"tennozu": [
+45,
+1,
+23720
+],
+"shibuya": [
+28,
+1,
+7840
+],
+"ebisu": [
+33,
+1,
+10480
+],
+"shinjuku": [
+17,
+0,
+7840
+],
+"tochomae": [
+33,
+2,
+18070
+],
+"iidabashi": [
+29,
+0,
+14070
+],
+"ikebukuro": [
+31,
+1,
+10480
+],
+"ueno": [
+39,
+1,
+13120
+],
+"kitasenju": [
+53,
+2,
+20780
+],
+"kinshicho": [
+38,
+1,
+13120
+],
+"toyosu": [
+55,
+2,
+18310
+],
+"nakano": [
+12,
+0,
+6240
+],
+"tachikawa": [
+21,
+0,
+7840
+],
+"kawasaki": [
+59,
+1,
+22590
+],
+"musashikosugi": [
+46,
+1,
+18720
+],
+"yokohama": [
+57,
+1,
+24100
+],
+"minatomirai": [
+69,
+2,
+31910
+],
+"shinyokohama": [
+70,
+3,
+23840
+],
+"omiya": [
+55,
+1,
+24240
+],
+"kaihinmakuhari": [
+81,
+1,
+19980
+],
+"chiba": [
+75,
+2,
+29880
+]
+},
+"tsukuba": {
+"tokyo": [
+71,
+1,
+50530
+],
+"otemachi": [
+72,
+1,
+50030
+],
+"nihombashi": [
+75,
+2,
+54160
+],
+"kanda": [
+69,
+1,
+50530
+],
+"akihabara": [
+55,
+0,
+45620
+],
+"ginza": [
+80,
+1,
+50370
+],
+"yurakucho": [
+73,
+1,
+50530
+],
+"shimbashi": [
+75,
+1,
+51510
+],
+"shiodome": [
+79,
+1,
+53410
+],
+"kasumigaseki": [
+79,
+1,
+50540
+],
+"toranomon": [
+87,
+1,
+50370
+],
+"roppongi": [
+91,
+2,
+50830
+],
+"hamamatsucho": [
+78,
+1,
+51510
+],
+"tamachi": [
+80,
+1,
+51860
+],
+"shinagawa": [
+84,
+1,
+52340
+],
+"osaki": [
+88,
+1,
+53460
+],
+"gotanda": [
+92,
+1,
+53460
+],
+"tennozu": [
+90,
+2,
+58930
+],
+"shibuya": [
+93,
+2,
+52340
+],
+"ebisu": [
+95,
+2,
+52340
+],
+"shinjuku": [
+85,
+2,
+51860
+],
+"tochomae": [
+82,
+1,
+53410
+],
+"iidabashi": [
+69,
+1,
+51320
+],
+"ikebukuro": [
+76,
+2,
+48100
+],
+"ueno": [
+62,
+1,
+49350
+],
+"kitasenju": [
+43,
+0,
+41860
+],
+"kinshicho": [
+71,
+1,
+56050
+],
+"toyosu": [
+84,
+2,
+56920
+],
+"nakano": [
+90,
+2,
+53460
+],
+"tachikawa": [
+105,
+2,
+61320
+],
+"kawasaki": [
+97,
+2,
+57460
+],
+"musashikosugi": [
+107,
+2,
+56100
+],
+"yokohama": [
+103,
+2,
+68070
+],
+"minatomirai": [
+116,
+3,
+71400
+],
+"shinyokohama": [
+123,
+3,
+67890
+],
+"omiya": [
+74,
+1,
+51170
+],
+"kaihinmakuhari": [
+71,
+1,
+48050
+],
+"chiba": [
+90,
+2,
+51170
+]
+},
+"moriya": {
+"tokyo": [
+56,
+1,
+39230
+],
+"otemachi": [
+57,
+1,
+38410
+],
+"nihombashi": [
+60,
+2,
+42540
+],
+"kanda": [
+57,
+1,
+39230
+],
+"akihabara": [
+40,
+0,
+34320
+],
+"ginza": [
+65,
+1,
+38750
+],
+"yurakucho": [
+58,
+1,
+39230
+],
+"shimbashi": [
+60,
+1,
+40210
+],
+"shiodome": [
+67,
+1,
+43990
+],
+"kasumigaseki": [
+64,
+1,
+38920
+],
+"toranomon": [
+73,
+2,
+39080
+],
+"roppongi": [
+77,
+2,
+47140
+],
+"hamamatsucho": [
+63,
+1,
+40210
+],
+"tamachi": [
+65,
+1,
+40560
+],
+"shinagawa": [
+69,
+1,
+40720
+],
+"osaki": [
+75,
+1,
+42160
+],
+"gotanda": [
+77,
+1,
+42160
+],
+"tennozu": [
+78,
+2,
+47630
+],
+"shibuya": [
+82,
+2,
+39430
+],
+"ebisu": [
+80,
+2,
+40720
+],
+"shinjuku": [
+68,
+2,
+40560
+],
+"tochomae": [
+68,
+1,
+43990
+],
+"iidabashi": [
+54,
+1,
+41900
+],
+"ikebukuro": [
+61,
+2,
+36480
+],
+"ueno": [
+47,
+1,
+37730
+],
+"kitasenju": [
+29,
+0,
+30240
+],
+"kinshicho": [
+56,
+1,
+44430
+],
+"toyosu": [
+69,
+2,
+47500
+],
+"nakano": [
+76,
+2,
+42160
+],
+"tachikawa": [
+92,
+2,
+48530
+],
+"kawasaki": [
+80,
+2,
+45840
+],
+"musashikosugi": [
+90,
+2,
+44800
+],
+"yokohama": [
+91,
+2,
+51820
+],
+"minatomirai": [
+101,
+3,
+64260
+],
+"shinyokohama": [
+108,
+3,
+58470
+],
+"omiya": [
+67,
+2,
+38110
+],
+"kaihinmakuhari": [
+56,
+1,
+35260
+],
+"chiba": [
+75,
+2,
+38380
+]
+},
+"koganei": {
+"tokyo": [
+44,
+0,
+15600
+],
+"otemachi": [
+51,
+1,
+16170
+],
+"nihombashi": [
+52,
+1,
+22400
+],
+"kanda": [
+42,
+0,
+15600
+],
+"akihabara": [
+43,
+1,
+15600
+],
+"ginza": [
+48,
+1,
+20260
+],
+"yurakucho": [
+50,
+1,
+15600
+],
+"shimbashi": [
+53,
+1,
+17970
+],
+"shiodome": [
+61,
+1,
+19820
+],
+"kasumigaseki": [
+45,
+1,
+20100
+],
+"toranomon": [
+52,
+2,
+20260
+],
+"roppongi": [
+50,
+1,
+20260
+],
+"hamamatsucho": [
+56,
+1,
+18720
+],
+"tamachi": [
+58,
+1,
+18720
+],
+"shinagawa": [
+57,
+1,
+15600
+],
+"osaki": [
+46,
+1,
+15600
+],
+"gotanda": [
+51,
+1,
+15600
+],
+"tennozu": [
+57,
+1,
+26200
+],
+"shibuya": [
+39,
+1,
+13120
+],
+"ebisu": [
+41,
+1,
+13120
+],
+"shinjuku": [
+29,
+0,
+10480
+],
+"tochomae": [
+43,
+1,
+16940
+],
+"iidabashi": [
+42,
+1,
+13120
+],
+"ikebukuro": [
+41,
+1,
+13120
+],
+"ueno": [
+51,
+1,
+17970
+],
+"kitasenju": [
+65,
+2,
+23260
+],
+"kinshicho": [
+50,
+1,
+17970
+],
+"toyosu": [
+67,
+2,
+20950
+],
+"nakano": [
+23,
+0,
+7840
+],
+"tachikawa": [
+11,
+0,
+6240
+],
+"kawasaki": [
+70,
+1,
+24880
+],
+"musashikosugi": [
+58,
+1,
+21580
+],
+"yokohama": [
+68,
+1,
+26540
+],
+"minatomirai": [
+82,
+2,
+34350
+],
+"shinyokohama": [
+77,
+3,
+26790
+],
+"omiya": [
+43,
+1,
+21580
+],
+"kaihinmakuhari": [
+96,
+2,
+25180
+],
+"chiba": [
+88,
+2,
+33200
+]
+},
+"meguro": {
+"tokyo": [
+26,
+1,
+8170
+],
+"otemachi": [
+26,
+1,
+8170
+],
+"nihombashi": [
+29,
+1,
+8170
+],
+"kanda": [
+33,
+1,
+8510
+],
+"akihabara": [
+34,
+0,
+8840
+],
+"ginza": [
+20,
+0,
+7990
+],
+"yurakucho": [
+25,
+0,
+7990
+],
+"shimbashi": [
+27,
+2,
+12650
+],
+"shiodome": [
+28,
+1,
+12980
+],
+"kasumigaseki": [
+16,
+0,
+7660
+],
+"toranomon": [
+14,
+0,
+7660
+],
+"roppongi": [
+24,
+1,
+16770
+],
+"hamamatsucho": [
+27,
+1,
+12870
+],
+"tamachi": [
+26,
+1,
+12870
+],
+"shinagawa": [
+21,
+1,
+12520
+],
+"osaki": [
+13,
+1,
+12520
+],
+"gotanda": [
+16,
+1,
+11540
+],
+"tennozu": [
+22,
+1,
+23120
+],
+"shibuya": [
+3,
+0,
+4990
+],
+"ebisu": [
+2,
+0,
+6630
+],
+"shinjuku": [
+18,
+1,
+12520
+],
+"tochomae": [
+26,
+2,
+19350
+],
+"iidabashi": [
+31,
+2,
+12870
+],
+"ikebukuro": [
+18,
+0,
+12980
+],
+"ueno": [
+37,
+0,
+8970
+],
+"kitasenju": [
+42,
+1,
+9270
+],
+"kinshicho": [
+42,
+1,
+14090
+],
+"toyosu": [
+37,
+1,
+8680
+],
+"nakano": [
+25,
+2,
+12870
+],
+"tachikawa": [
+61,
+2,
+25350
+],
+"kawasaki": [
+34,
+1,
+14810
+],
+"musashikosugi": [
+10,
+0,
+8570
+],
+"yokohama": [
+29,
+0,
+11510
+],
+"minatomirai": [
+32,
+0,
+19320
+],
+"shinyokohama": [
+24,
+1,
+13360
+],
+"omiya": [
+47,
+1,
+25350
+],
+"kaihinmakuhari": [
+70,
+1,
+26300
+],
+"chiba": [
+76,
+2,
+29750
+]
+},
+"kita": {
+"tokyo": [
+17,
+0,
+7840
+],
+"otemachi": [
+30,
+1,
+14470
+],
+"nihombashi": [
+30,
+1,
+13380
+],
+"kanda": [
+24,
+1,
+13220
+],
+"akihabara": [
+23,
+0,
+7840
+],
+"ginza": [
+31,
+1,
+13560
+],
+"yurakucho": [
+27,
+1,
+7840
+],
+"shimbashi": [
+21,
+0,
+10480
+],
+"shiodome": [
+35,
+1,
+16080
+],
+"kasumigaseki": [
+35,
+1,
+14820
+],
+"toranomon": [
+40,
+1,
+17110
+],
+"roppongi": [
+41,
+1,
+14570
+],
+"hamamatsucho": [
+29,
+1,
+10480
+],
+"tamachi": [
+31,
+1,
+10480
+],
+"shinagawa": [
+27,
+0,
+10480
+],
+"osaki": [
+27,
+0,
+10480
+],
+"gotanda": [
+31,
+1,
+10480
+],
+"tennozu": [
+35,
+0,
+21080
+],
+"shibuya": [
+20,
+0,
+7840
+],
+"ebisu": [
+23,
+0,
+10480
+],
+"shinjuku": [
+15,
+0,
+7840
+],
+"tochomae": [
+30,
+1,
+14300
+],
+"iidabashi": [
+27,
+1,
+13720
+],
+"ikebukuro": [
+9,
+0,
+5890
+],
+"ueno": [
+12,
+0,
+6240
+],
+"kitasenju": [
+25,
+1,
+7840
+],
+"kinshicho": [
+35,
+1,
+7840
+],
+"toyosu": [
+45,
+2,
+14980
+],
+"nakano": [
+25,
+1,
+7840
+],
+"tachikawa": [
+58,
+2,
+22920
+],
+"kawasaki": [
+38,
+0,
+18450
+],
+"musashikosugi": [
+38,
+0,
+17970
+],
+"yokohama": [
+47,
+0,
+22920
+],
+"minatomirai": [
+58,
+1,
+30730
+],
+"shinyokohama": [
+64,
+1,
+21200
+],
+"omiya": [
+16,
+0,
+10480
+],
+"kaihinmakuhari": [
+74,
+1,
+24100
+],
+"chiba": [
+68,
+1,
+26960
+]
+},
+"yachiyo": {
+"tokyo": [
+51,
+1,
+34640
+],
+"otemachi": [
+52,
+0,
+30810
+],
+"nihombashi": [
+50,
+0,
+30790
+],
+"kanda": [
+57,
+1,
+30810
+],
+"akihabara": [
+49,
+1,
+32000
+],
+"ginza": [
+57,
+1,
+30810
+],
+"yurakucho": [
+61,
+2,
+34640
+],
+"shimbashi": [
+56,
+2,
+34640
+],
+"shiodome": [
+59,
+1,
+36050
+],
+"kasumigaseki": [
+66,
+1,
+30840
+],
+"toranomon": [
+64,
+1,
+30860
+],
+"roppongi": [
+68,
+2,
+30860
+],
+"hamamatsucho": [
+66,
+2,
+34640
+],
+"tamachi": [
+66,
+2,
+36850
+],
+"shinagawa": [
+63,
+2,
+37120
+],
+"osaki": [
+68,
+2,
+47500
+],
+"gotanda": [
+73,
+3,
+39490
+],
+"tennozu": [
+59,
+2,
+45060
+],
+"shibuya": [
+73,
+1,
+30940
+],
+"ebisu": [
+70,
+2,
+53390
+],
+"shinjuku": [
+64,
+2,
+37120
+],
+"tochomae": [
+78,
+2,
+36540
+],
+"iidabashi": [
+59,
+0,
+30840
+],
+"ikebukuro": [
+71,
+2,
+42300
+],
+"ueno": [
+59,
+2,
+34640
+],
+"kitasenju": [
+59,
+2,
+26470
+],
+"kinshicho": [
+44,
+1,
+32000
+],
+"toyosu": [
+53,
+2,
+39140
+],
+"nakano": [
+69,
+2,
+40240
+],
+"tachikawa": [
+103,
+3,
+49470
+],
+"kawasaki": [
+81,
+2,
+41310
+],
+"musashikosugi": [
+73,
+2,
+42810
+],
+"yokohama": [
+88,
+2,
+47020
+],
+"minatomirai": [
+103,
+3,
+54240
+],
+"shinyokohama": [
+103,
+2,
+50720
+],
+"omiya": [
+87,
+2,
+46400
+],
+"kaihinmakuhari": [
+35,
+1,
+29360
+],
+"chiba": [
+42,
+1,
+32000
+]
+},
+"kawasaki-saiwai": {
+"tokyo": [
+21,
+0,
+10480
+],
+"otemachi": [
+32,
+1,
+17110
+],
+"nihombashi": [
+30,
+1,
+17460
+],
+"kanda": [
+31,
+1,
+13120
+],
+"akihabara": [
+36,
+1,
+13120
+],
+"ginza": [
+27,
+1,
+17110
+],
+"yurakucho": [
+30,
+1,
+10480
+],
+"shimbashi": [
+18,
+0,
+10480
+],
+"shiodome": [
+30,
+1,
+16080
+],
+"kasumigaseki": [
+35,
+1,
+17460
+],
+"toranomon": [
+36,
+1,
+17110
+],
+"roppongi": [
+37,
+2,
+17460
+],
+"hamamatsucho": [
+26,
+1,
+10480
+],
+"tamachi": [
+24,
+1,
+7840
+],
+"shinagawa": [
+13,
+0,
+7840
+],
+"osaki": [
+13,
+0,
+7840
+],
+"gotanda": [
+21,
+1,
+10480
+],
+"tennozu": [
+27,
+1,
+18440
+],
+"shibuya": [
+19,
+0,
+10480
+],
+"ebisu": [
+17,
+0,
+10480
+],
+"shinjuku": [
+24,
+0,
+13120
+],
+"tochomae": [
+41,
+2,
+19580
+],
+"iidabashi": [
+39,
+2,
+13120
+],
+"ikebukuro": [
+30,
+0,
+15600
+],
+"ueno": [
+36,
+1,
+13120
+],
+"kitasenju": [
+54,
+1,
+27310
+],
+"kinshicho": [
+30,
+0,
+13120
+],
+"toyosu": [
+46,
+2,
+17800
+],
+"nakano": [
+36,
+2,
+15600
+],
+"tachikawa": [
+62,
+0,
+18450
+],
+"kawasaki": [
+16,
+0,
+5890
+],
+"musashikosugi": [
+2,
+0,
+4910
+],
+"yokohama": [
+9,
+0,
+7840
+],
+"minatomirai": [
+21,
+1,
+15650
+],
+"shinyokohama": [
+31,
+1,
+17180
+],
+"omiya": [
+55,
+0,
+26040
+],
+"kaihinmakuhari": [
+70,
+2,
+36460
+],
+"chiba": [
+63,
+0,
+29880
+]
+},
+"chiba-wakaba": {
+"tokyo": [
+49,
+0,
+23750
+],
+"otemachi": [
+61,
+1,
+30380
+],
+"nihombashi": [
+61,
+1,
+29750
+],
+"kanda": [
+57,
+2,
+23260
+],
+"akihabara": [
+51,
+1,
+22920
+],
+"ginza": [
+59,
+1,
+30550
+],
+"yurakucho": [
+61,
+2,
+24100
+],
+"shimbashi": [
+51,
+0,
+24240
+],
+"shiodome": [
+61,
+1,
+29840
+],
+"kasumigaseki": [
+61,
+1,
+30730
+],
+"toranomon": [
+68,
+2,
+30730
+],
+"roppongi": [
+70,
+2,
+31220
+],
+"hamamatsucho": [
+62,
+1,
+24510
+],
+"tamachi": [
+67,
+1,
+24880
+],
+"shinagawa": [
+57,
+0,
+26040
+],
+"osaki": [
+68,
+1,
+26960
+],
+"gotanda": [
+71,
+1,
+27510
+],
+"tennozu": [
+73,
+3,
+34640
+],
+"shibuya": [
+73,
+1,
+31900
+],
+"ebisu": [
+80,
+1,
+28440
+],
+"shinjuku": [
+65,
+2,
+26040
+],
+"tochomae": [
+76,
+2,
+32260
+],
+"iidabashi": [
+59,
+1,
+24100
+],
+"ikebukuro": [
+73,
+2,
+30920
+],
+"ueno": [
+60,
+2,
+23750
+],
+"kitasenju": [
+63,
+1,
+35770
+],
+"kinshicho": [
+41,
+0,
+21580
+],
+"toyosu": [
+67,
+3,
+28720
+],
+"nakano": [
+71,
+2,
+27950
+],
+"tachikawa": [
+106,
+2,
+38970
+],
+"kawasaki": [
+73,
+1,
+31230
+],
+"musashikosugi": [
+68,
+0,
+30780
+],
+"yokohama": [
+83,
+0,
+36540
+],
+"minatomirai": [
+91,
+2,
+44350
+],
+"shinyokohama": [
+100,
+2,
+45880
+],
+"omiya": [
+95,
+1,
+37050
+],
+"kaihinmakuhari": [
+38,
+2,
+20000
+],
+"chiba": [
+5,
+0,
+5890
+]
+},
+"toda": {
+"tokyo": [
+32,
+1,
+10480
+],
+"otemachi": [
+41,
+1,
+15830
+],
+"nihombashi": [
+44,
+2,
+17620
+],
+"kanda": [
+39,
+2,
+17460
+],
+"akihabara": [
+37,
+1,
+10480
+],
+"ginza": [
+44,
+1,
+16010
+],
+"yurakucho": [
+44,
+1,
+10480
+],
+"shimbashi": [
+36,
+1,
+13120
+],
+"shiodome": [
+49,
+2,
+18720
+],
+"kasumigaseki": [
+49,
+1,
+16170
+],
+"toranomon": [
+51,
+1,
+20610
+],
+"roppongi": [
+50,
+2,
+17620
+],
+"hamamatsucho": [
+48,
+1,
+13120
+],
+"tamachi": [
+52,
+1,
+15600
+],
+"shinagawa": [
+42,
+1,
+15330
+],
+"osaki": [
+35,
+0,
+13120
+],
+"gotanda": [
+40,
+1,
+13120
+],
+"tennozu": [
+44,
+0,
+23720
+],
+"shibuya": [
+28,
+0,
+10480
+],
+"ebisu": [
+31,
+0,
+13120
+],
+"shinjuku": [
+24,
+0,
+10480
+],
+"tochomae": [
+40,
+1,
+16940
+],
+"iidabashi": [
+38,
+1,
+15160
+],
+"ikebukuro": [
+18,
+0,
+7840
+],
+"ueno": [
+26,
+1,
+10480
+],
+"kitasenju": [
+39,
+2,
+10480
+],
+"kinshicho": [
+49,
+2,
+13120
+],
+"toyosu": [
+59,
+1,
+16680
+],
+"nakano": [
+34,
+1,
+13120
+],
+"tachikawa": [
+54,
+2,
+20450
+],
+"kawasaki": [
+53,
+1,
+20900
+],
+"musashikosugi": [
+47,
+0,
+20900
+],
+"yokohama": [
+58,
+1,
+25200
+],
+"minatomirai": [
+72,
+2,
+32690
+],
+"shinyokohama": [
+73,
+1,
+23840
+],
+"omiya": [
+16,
+0,
+7840
+],
+"kaihinmakuhari": [
+84,
+1,
+29880
+],
+"chiba": [
+85,
+2,
+29420
+]
+},
+"itabashi": {
+"tokyo": [
+37,
+1,
+17840
+],
+"otemachi": [
+35,
+1,
+17840
+],
+"nihombashi": [
+47,
+2,
+17840
+],
+"kanda": [
+45,
+2,
+22420
+],
+"akihabara": [
+44,
+1,
+17690
+],
+"ginza": [
+44,
+1,
+18020
+],
+"yurakucho": [
+46,
+1,
+18020
+],
+"shimbashi": [
+52,
+3,
+14690
+],
+"shiodome": [
+58,
+2,
+25080
+],
+"kasumigaseki": [
+45,
+1,
+18180
+],
+"toranomon": [
+51,
+2,
+18360
+],
+"roppongi": [
+50,
+2,
+18180
+],
+"hamamatsucho": [
+56,
+1,
+20330
+],
+"tamachi": [
+54,
+2,
+20330
+],
+"shinagawa": [
+50,
+2,
+20330
+],
+"osaki": [
+36,
+1,
+17690
+],
+"gotanda": [
+45,
+1,
+17690
+],
+"tennozu": [
+48,
+1,
+28290
+],
+"shibuya": [
+33,
+1,
+16090
+],
+"ebisu": [
+31,
+1,
+16090
+],
+"shinjuku": [
+23,
+1,
+15740
+],
+"tochomae": [
+45,
+2,
+22200
+],
+"iidabashi": [
+29,
+1,
+17170
+],
+"ikebukuro": [
+11,
+0,
+9850
+],
+"ueno": [
+36,
+1,
+16090
+],
+"kitasenju": [
+47,
+2,
+23060
+],
+"kinshicho": [
+54,
+2,
+23400
+],
+"toyosu": [
+56,
+1,
+18690
+],
+"nakano": [
+34,
+2,
+16090
+],
+"tachikawa": [
+45,
+2,
+20510
+],
+"kawasaki": [
+62,
+2,
+32090
+],
+"musashikosugi": [
+50,
+1,
+25180
+],
+"yokohama": [
+63,
+1,
+31140
+],
+"minatomirai": [
+70,
+1,
+37160
+],
+"shinyokohama": [
+67,
+2,
+31200
+],
+"omiya": [
+27,
+1,
+17870
+],
+"kaihinmakuhari": [
+91,
+3,
+27140
+],
+"chiba": [
+92,
+2,
+39420
+]
+},
+"yokohama-tsuzuki": {
+"tokyo": [
+58,
+2,
+26030
+],
+"otemachi": [
+64,
+1,
+29330
+],
+"nihombashi": [
+65,
+3,
+28160
+],
+"kanda": [
+67,
+2,
+29750
+],
+"akihabara": [
+69,
+2,
+29750
+],
+"ginza": [
+63,
+2,
+27980
+],
+"yurakucho": [
+64,
+2,
+27380
+],
+"shimbashi": [
+55,
+1,
+27380
+],
+"shiodome": [
+66,
+2,
+32980
+],
+"kasumigaseki": [
+61,
+2,
+27650
+],
+"toranomon": [
+58,
+2,
+27650
+],
+"roppongi": [
+52,
+1,
+27310
+],
+"hamamatsucho": [
+62,
+3,
+23390
+],
+"tamachi": [
+60,
+3,
+23390
+],
+"shinagawa": [
+50,
+2,
+21790
+],
+"osaki": [
+52,
+1,
+24900
+],
+"gotanda": [
+51,
+2,
+24900
+],
+"tennozu": [
+58,
+3,
+28150
+],
+"shibuya": [
+46,
+1,
+19990
+],
+"ebisu": [
+48,
+2,
+26620
+],
+"shinjuku": [
+62,
+2,
+27130
+],
+"tochomae": [
+68,
+3,
+32710
+],
+"iidabashi": [
+66,
+1,
+28160
+],
+"ikebukuro": [
+59,
+1,
+27980
+],
+"ueno": [
+66,
+1,
+30500
+],
+"kitasenju": [
+82,
+2,
+34880
+],
+"kinshicho": [
+68,
+2,
+28670
+],
+"toyosu": [
+78,
+2,
+28250
+],
+"nakano": [
+70,
+3,
+27830
+],
+"tachikawa": [
+73,
+2,
+30920
+],
+"kawasaki": [
+41,
+1,
+19620
+],
+"musashikosugi": [
+23,
+1,
+15550
+],
+"yokohama": [
+21,
+0,
+11780
+],
+"minatomirai": [
+37,
+1,
+19590
+],
+"shinyokohama": [
+9,
+0,
+9340
+],
+"omiya": [
+91,
+3,
+38710
+],
+"kaihinmakuhari": [
+99,
+5,
+48610
+],
+"chiba": [
+102,
+2,
+43990
+]
+},
+"saitama-chuo": {
+"tokyo": [
+31,
+0,
+15600
+],
+"otemachi": [
+43,
+1,
+22230
+],
+"nihombashi": [
+44,
+1,
+22470
+],
+"kanda": [
+38,
+1,
+15600
+],
+"akihabara": [
+37,
+1,
+15600
+],
+"ginza": [
+45,
+1,
+22650
+],
+"yurakucho": [
+39,
+1,
+15600
+],
+"shimbashi": [
+35,
+0,
+17970
+],
+"shiodome": [
+49,
+1,
+23570
+],
+"kasumigaseki": [
+49,
+1,
+22580
+],
+"toranomon": [
+53,
+1,
+24600
+],
+"roppongi": [
+56,
+2,
+24950
+],
+"hamamatsucho": [
+41,
+1,
+18450
+],
+"tamachi": [
+44,
+1,
+18720
+],
+"shinagawa": [
+41,
+0,
+20450
+],
+"osaki": [
+45,
+1,
+18720
+],
+"gotanda": [
+51,
+2,
+18720
+],
+"tennozu": [
+52,
+2,
+25870
+],
+"shibuya": [
+38,
+1,
+15600
+],
+"ebisu": [
+41,
+1,
+17970
+],
+"shinjuku": [
+32,
+1,
+15330
+],
+"tochomae": [
+48,
+2,
+21790
+],
+"iidabashi": [
+45,
+2,
+20440
+],
+"ikebukuro": [
+28,
+1,
+13120
+],
+"ueno": [
+27,
+0,
+15330
+],
+"kitasenju": [
+43,
+1,
+15600
+],
+"kinshicho": [
+49,
+2,
+17970
+],
+"toyosu": [
+60,
+2,
+22740
+],
+"nakano": [
+43,
+2,
+17970
+],
+"tachikawa": [
+57,
+2,
+21580
+],
+"kawasaki": [
+51,
+0,
+24510
+],
+"musashikosugi": [
+57,
+1,
+24510
+],
+"yokohama": [
+60,
+0,
+29420
+],
+"minatomirai": [
+71,
+1,
+37230
+],
+"shinyokohama": [
+80,
+1,
+38760
+],
+"omiya": [
+2,
+0,
+4910
+],
+"kaihinmakuhari": [
+82,
+1,
+29420
+],
+"chiba": [
+81,
+1,
+34170
+]
+},
+"kawasaki-miyamae": {
+"tokyo": [
+53,
+2,
+17260
+],
+"otemachi": [
+50,
+0,
+17420
+],
+"nihombashi": [
+53,
+1,
+17420
+],
+"kanda": [
+58,
+1,
+17600
+],
+"akihabara": [
+61,
+2,
+18580
+],
+"ginza": [
+50,
+1,
+17260
+],
+"yurakucho": [
+50,
+1,
+16920
+],
+"shimbashi": [
+48,
+1,
+17090
+],
+"shiodome": [
+55,
+1,
+22460
+],
+"kasumigaseki": [
+47,
+2,
+16920
+],
+"toranomon": [
+51,
+3,
+17090
+],
+"roppongi": [
+43,
+2,
+18060
+],
+"hamamatsucho": [
+51,
+2,
+16980
+],
+"tamachi": [
+49,
+2,
+16630
+],
+"shinagawa": [
+43,
+2,
+15650
+],
+"osaki": [
+44,
+3,
+15650
+],
+"gotanda": [
+37,
+2,
+10740
+],
+"tennozu": [
+46,
+2,
+18900
+],
+"shibuya": [
+32,
+0,
+9430
+],
+"ebisu": [
+40,
+3,
+16060
+],
+"shinjuku": [
+47,
+1,
+15320
+],
+"tochomae": [
+52,
+1,
+22120
+],
+"iidabashi": [
+53,
+1,
+17090
+],
+"ikebukuro": [
+51,
+1,
+15670
+],
+"ueno": [
+61,
+1,
+18110
+],
+"kitasenju": [
+68,
+1,
+18620
+],
+"kinshicho": [
+63,
+0,
+18530
+],
+"toyosu": [
+60,
+1,
+17600
+],
+"nakano": [
+55,
+2,
+15670
+],
+"tachikawa": [
+54,
+1,
+19900
+],
+"kawasaki": [
+39,
+1,
+14620
+],
+"musashikosugi": [
+26,
+1,
+12670
+],
+"yokohama": [
+44,
+1,
+19800
+],
+"minatomirai": [
+52,
+2,
+20640
+],
+"shinyokohama": [
+30,
+1,
+17340
+],
+"omiya": [
+74,
+1,
+27400
+],
+"kaihinmakuhari": [
+89,
+3,
+39360
+],
+"chiba": [
+98,
+3,
+37250
+]
+},
+"sakura": {
+"tokyo": [
+61,
+0,
+28440
+],
+"otemachi": [
+72,
+1,
+35070
+],
+"nihombashi": [
+74,
+1,
+33790
+],
+"kanda": [
+70,
+2,
+27950
+],
+"akihabara": [
+64,
+1,
+27510
+],
+"ginza": [
+74,
+1,
+35240
+],
+"yurakucho": [
+74,
+2,
+28870
+],
+"shimbashi": [
+64,
+0,
+29420
+],
+"shiodome": [
+74,
+1,
+35020
+],
+"kasumigaseki": [
+74,
+1,
+35420
+],
+"toranomon": [
+81,
+2,
+35420
+],
+"roppongi": [
+83,
+2,
+36400
+],
+"hamamatsucho": [
+75,
+1,
+29880
+],
+"tamachi": [
+78,
+1,
+30360
+],
+"shinagawa": [
+70,
+0,
+31740
+],
+"osaki": [
+81,
+1,
+32780
+],
+"gotanda": [
+84,
+1,
+32780
+],
+"tennozu": [
+86,
+3,
+39600
+],
+"shibuya": [
+86,
+1,
+37080
+],
+"ebisu": [
+93,
+1,
+34170
+],
+"shinjuku": [
+78,
+2,
+31740
+],
+"tochomae": [
+94,
+2,
+36300
+],
+"iidabashi": [
+72,
+1,
+28870
+],
+"ikebukuro": [
+86,
+2,
+35610
+],
+"ueno": [
+73,
+2,
+28440
+],
+"kitasenju": [
+76,
+1,
+40230
+],
+"kinshicho": [
+54,
+0,
+26040
+],
+"toyosu": [
+80,
+3,
+33680
+],
+"nakano": [
+84,
+2,
+33640
+],
+"tachikawa": [
+119,
+2,
+45130
+],
+"kawasaki": [
+86,
+1,
+37050
+],
+"musashikosugi": [
+81,
+0,
+36540
+],
+"yokohama": [
+99,
+0,
+42740
+],
+"minatomirai": [
+104,
+2,
+50550
+],
+"shinyokohama": [
+113,
+2,
+52080
+],
+"omiya": [
+107,
+1,
+43210
+],
+"kaihinmakuhari": [
+51,
+2,
+24590
+],
+"chiba": [
+17,
+0,
+10480
+]
+},
+"saitama-urawa": {
+"tokyo": [
+26,
+0,
+13120
+],
+"otemachi": [
+39,
+1,
+19750
+],
+"nihombashi": [
+39,
+1,
+20260
+],
+"kanda": [
+33,
+1,
+13120
+],
+"akihabara": [
+32,
+1,
+13120
+],
+"ginza": [
+38,
+1,
+19920
+],
+"yurakucho": [
+36,
+1,
+13120
+],
+"shimbashi": [
+30,
+0,
+15600
+],
+"shiodome": [
+41,
+1,
+21200
+],
+"kasumigaseki": [
+44,
+1,
+20100
+],
+"toranomon": [
+48,
+1,
+22230
+],
+"roppongi": [
+51,
+2,
+22580
+],
+"hamamatsucho": [
+36,
+1,
+15600
+],
+"tamachi": [
+39,
+1,
+15600
+],
+"shinagawa": [
+36,
+0,
+17970
+],
+"osaki": [
+39,
+0,
+15600
+],
+"gotanda": [
+44,
+1,
+15600
+],
+"tennozu": [
+47,
+2,
+23020
+],
+"shibuya": [
+32,
+0,
+13120
+],
+"ebisu": [
+34,
+0,
+15600
+],
+"shinjuku": [
+27,
+0,
+13120
+],
+"tochomae": [
+41,
+1,
+19580
+],
+"iidabashi": [
+40,
+1,
+17800
+],
+"ikebukuro": [
+20,
+0,
+10480
+],
+"ueno": [
+22,
+0,
+13120
+],
+"kitasenju": [
+38,
+1,
+13120
+],
+"kinshicho": [
+44,
+2,
+15330
+],
+"toyosu": [
+53,
+2,
+20260
+],
+"nakano": [
+38,
+1,
+15330
+],
+"tachikawa": [
+49,
+2,
+18720
+],
+"kawasaki": [
+46,
+0,
+23260
+],
+"musashikosugi": [
+49,
+0,
+22920
+],
+"yokohama": [
+57,
+0,
+27510
+],
+"minatomirai": [
+67,
+1,
+34770
+],
+"shinyokohama": [
+74,
+2,
+26480
+],
+"omiya": [
+8,
+0,
+6240
+],
+"kaihinmakuhari": [
+75,
+1,
+26960
+],
+"chiba": [
+77,
+1,
+32180
+]
+},
+"nagareyama": {
+"tokyo": [
+49,
+1,
+28180
+],
+"otemachi": [
+51,
+1,
+30110
+],
+"nihombashi": [
+51,
+2,
+34240
+],
+"kanda": [
+47,
+1,
+31000
+],
+"akihabara": [
+32,
+0,
+26090
+],
+"ginza": [
+56,
+1,
+30450
+],
+"yurakucho": [
+52,
+1,
+31000
+],
+"shimbashi": [
+51,
+1,
+31980
+],
+"shiodome": [
+57,
+1,
+35760
+],
+"kasumigaseki": [
+55,
+1,
+30620
+],
+"toranomon": [
+63,
+2,
+30780
+],
+"roppongi": [
+67,
+2,
+38740
+],
+"hamamatsucho": [
+54,
+1,
+31980
+],
+"tamachi": [
+56,
+1,
+32330
+],
+"shinagawa": [
+59,
+1,
+32420
+],
+"osaki": [
+66,
+1,
+33930
+],
+"gotanda": [
+69,
+1,
+33930
+],
+"tennozu": [
+68,
+2,
+39400
+],
+"shibuya": [
+69,
+3,
+32420
+],
+"ebisu": [
+72,
+3,
+32420
+],
+"shinjuku": [
+58,
+2,
+32330
+],
+"tochomae": [
+59,
+1,
+35760
+],
+"iidabashi": [
+44,
+1,
+33670
+],
+"ikebukuro": [
+52,
+2,
+28180
+],
+"ueno": [
+38,
+1,
+29430
+],
+"kitasenju": [
+20,
+0,
+21940
+],
+"kinshicho": [
+46,
+1,
+36130
+],
+"toyosu": [
+59,
+2,
+39270
+],
+"nakano": [
+66,
+2,
+33930
+],
+"tachikawa": [
+84,
+2,
+37570
+],
+"kawasaki": [
+70,
+2,
+37540
+],
+"musashikosugi": [
+79,
+2,
+36570
+],
+"yokohama": [
+80,
+2,
+43520
+],
+"minatomirai": [
+93,
+3,
+55960
+],
+"shinyokohama": [
+100,
+3,
+50190
+],
+"omiya": [
+57,
+2,
+27150
+],
+"kaihinmakuhari": [
+47,
+1,
+24300
+],
+"chiba": [
+65,
+2,
+27420
+]
+},
+"sumida": {
+"tokyo": [
+8,
+0,
+5890
+],
+"otemachi": [
+13,
+0,
+7660
+],
+"nihombashi": [
+18,
+1,
+12120
+],
+"kanda": [
+13,
+1,
+5890
+],
+"akihabara": [
+7,
+0,
+5890
+],
+"ginza": [
+20,
+1,
+12690
+],
+"yurakucho": [
+18,
+1,
+6240
+],
+"shimbashi": [
+12,
+0,
+6240
+],
+"shiodome": [
+24,
+1,
+13030
+],
+"kasumigaseki": [
+24,
+1,
+12870
+],
+"toranomon": [
+30,
+2,
+12870
+],
+"roppongi": [
+31,
+2,
+13220
+],
+"hamamatsucho": [
+22,
+1,
+6240
+],
+"tamachi": [
+25,
+1,
+6240
+],
+"shinagawa": [
+17,
+0,
+7840
+],
+"osaki": [
+28,
+1,
+7840
+],
+"gotanda": [
+31,
+1,
+7840
+],
+"tennozu": [
+33,
+2,
+13660
+],
+"shibuya": [
+31,
+0,
+9100
+],
+"ebisu": [
+36,
+1,
+10480
+],
+"shinjuku": [
+20,
+1,
+7840
+],
+"tochomae": [
+36,
+2,
+14300
+],
+"iidabashi": [
+15,
+0,
+5890
+],
+"ikebukuro": [
+29,
+1,
+13550
+],
+"ueno": [
+16,
+1,
+5890
+],
+"kitasenju": [
+14,
+0,
+14190
+],
+"kinshicho": [
+0,
+0,
+0
+],
+"toyosu": [
+24,
+2,
+12360
+],
+"nakano": [
+26,
+1,
+10480
+],
+"tachikawa": [
+62,
+1,
+21580
+],
+"kawasaki": [
+34,
+1,
+13120
+],
+"musashikosugi": [
+28,
+0,
+13120
+],
+"yokohama": [
+42,
+0,
+18720
+],
+"minatomirai": [
+53,
+1,
+26530
+],
+"shinyokohama": [
+59,
+1,
+24690
+],
+"omiya": [
+52,
+2,
+18450
+],
+"kaihinmakuhari": [
+41,
+1,
+15600
+],
+"chiba": [
+30,
+0,
+18720
+]
+},
+"tsukubamirai": {
+"tokyo": [
+61,
+1,
+43000
+],
+"otemachi": [
+62,
+1,
+42490
+],
+"nihombashi": [
+65,
+2,
+46620
+],
+"kanda": [
+59,
+1,
+43000
+],
+"akihabara": [
+45,
+0,
+38090
+],
+"ginza": [
+70,
+1,
+42830
+],
+"yurakucho": [
+63,
+1,
+43000
+],
+"shimbashi": [
+65,
+1,
+43980
+],
+"shiodome": [
+69,
+1,
+47760
+],
+"kasumigaseki": [
+69,
+1,
+43000
+],
+"toranomon": [
+77,
+1,
+42830
+],
+"roppongi": [
+81,
+2,
+43290
+],
+"hamamatsucho": [
+68,
+1,
+43980
+],
+"tamachi": [
+70,
+1,
+44330
+],
+"shinagawa": [
+74,
+1,
+44800
+],
+"osaki": [
+78,
+1,
+45930
+],
+"gotanda": [
+82,
+1,
+45930
+],
+"tennozu": [
+80,
+2,
+51400
+],
+"shibuya": [
+83,
+2,
+44800
+],
+"ebisu": [
+85,
+2,
+44800
+],
+"shinjuku": [
+75,
+2,
+44330
+],
+"tochomae": [
+72,
+1,
+47760
+],
+"iidabashi": [
+59,
+1,
+45670
+],
+"ikebukuro": [
+66,
+2,
+40560
+],
+"ueno": [
+52,
+1,
+41810
+],
+"kitasenju": [
+33,
+0,
+34320
+],
+"kinshicho": [
+61,
+1,
+48510
+],
+"toyosu": [
+74,
+2,
+51270
+],
+"nakano": [
+80,
+2,
+45930
+],
+"tachikawa": [
+95,
+2,
+52690
+],
+"kawasaki": [
+87,
+2,
+49920
+],
+"musashikosugi": [
+97,
+2,
+48570
+],
+"yokohama": [
+93,
+2,
+60530
+],
+"minatomirai": [
+106,
+3,
+63870
+],
+"shinyokohama": [
+113,
+3,
+62570
+],
+"omiya": [
+64,
+1,
+42540
+],
+"kaihinmakuhari": [
+61,
+1,
+39420
+],
+"chiba": [
+80,
+2,
+42540
+]
+},
+"kawasaki-nakahara": {
+"tokyo": [
+18,
+0,
+10480
+],
+"otemachi": [
+31,
+1,
+17110
+],
+"nihombashi": [
+27,
+1,
+14820
+],
+"kanda": [
+31,
+1,
+10480
+],
+"akihabara": [
+33,
+1,
+10480
+],
+"ginza": [
+24,
+1,
+14470
+],
+"yurakucho": [
+27,
+1,
+10480
+],
+"shimbashi": [
+15,
+0,
+7840
+],
+"shiodome": [
+27,
+1,
+13440
+],
+"kasumigaseki": [
+34,
+1,
+17460
+],
+"toranomon": [
+32,
+1,
+16230
+],
+"roppongi": [
+28,
+0,
+15890
+],
+"hamamatsucho": [
+23,
+1,
+7840
+],
+"tamachi": [
+21,
+1,
+7840
+],
+"shinagawa": [
+10,
+0,
+6240
+],
+"osaki": [
+9,
+0,
+7840
+],
+"gotanda": [
+17,
+1,
+7840
+],
+"tennozu": [
+23,
+1,
+18440
+],
+"shibuya": [
+15,
+0,
+10480
+],
+"ebisu": [
+13,
+0,
+10480
+],
+"shinjuku": [
+21,
+0,
+13120
+],
+"tochomae": [
+35,
+1,
+19580
+],
+"iidabashi": [
+36,
+2,
+13120
+],
+"ikebukuro": [
+27,
+0,
+15330
+],
+"ueno": [
+34,
+1,
+13120
+],
+"kitasenju": [
+50,
+1,
+27310
+],
+"kinshicho": [
+27,
+0,
+13120
+],
+"toyosu": [
+43,
+2,
+15160
+],
+"nakano": [
+30,
+1,
+13120
+],
+"tachikawa": [
+47,
+0,
+15600
+],
+"kawasaki": [
+13,
+0,
+6240
+],
+"musashikosugi": [
+0,
+0,
+0
+],
+"yokohama": [
+11,
+0,
+7840
+],
+"minatomirai": [
+19,
+0,
+17240
+],
+"shinyokohama": [
+11,
+0,
+11190
+],
+"omiya": [
+55,
+1,
+24880
+],
+"kaihinmakuhari": [
+66,
+2,
+36460
+],
+"chiba": [
+60,
+0,
+28440
+]
+},
+"yashio": {
+"tokyo": [
+37,
+1,
+24570
+],
+"otemachi": [
+38,
+1,
+20270
+],
+"nihombashi": [
+42,
+2,
+20090
+],
+"kanda": [
+34,
+1,
+24570
+],
+"akihabara": [
+20,
+0,
+19660
+],
+"ginza": [
+46,
+1,
+20610
+],
+"yurakucho": [
+38,
+1,
+24570
+],
+"shimbashi": [
+41,
+1,
+25550
+],
+"shiodome": [
+46,
+1,
+27060
+],
+"kasumigaseki": [
+44,
+1,
+20780
+],
+"toranomon": [
+50,
+2,
+20940
+],
+"roppongi": [
+55,
+2,
+30040
+],
+"hamamatsucho": [
+44,
+1,
+25550
+],
+"tamachi": [
+46,
+1,
+25900
+],
+"shinagawa": [
+47,
+1,
+22580
+],
+"osaki": [
+53,
+1,
+27500
+],
+"gotanda": [
+57,
+1,
+27500
+],
+"tennozu": [
+54,
+2,
+32970
+],
+"shibuya": [
+57,
+3,
+22580
+],
+"ebisu": [
+60,
+3,
+24470
+],
+"shinjuku": [
+45,
+2,
+25900
+],
+"tochomae": [
+46,
+1,
+27060
+],
+"iidabashi": [
+31,
+1,
+24970
+],
+"ikebukuro": [
+42,
+2,
+19940
+],
+"ueno": [
+27,
+1,
+19590
+],
+"kitasenju": [
+8,
+0,
+12100
+],
+"kinshicho": [
+32,
+1,
+26290
+],
+"toyosu": [
+46,
+2,
+30570
+],
+"nakano": [
+53,
+2,
+27500
+],
+"tachikawa": [
+83,
+2,
+39460
+],
+"kawasaki": [
+58,
+2,
+27700
+],
+"musashikosugi": [
+67,
+2,
+30140
+],
+"yokohama": [
+67,
+2,
+33680
+],
+"minatomirai": [
+79,
+3,
+41490
+],
+"shinyokohama": [
+88,
+3,
+40350
+],
+"omiya": [
+58,
+2,
+29040
+],
+"kaihinmakuhari": [
+50,
+1,
+26190
+],
+"chiba": [
+67,
+3,
+29310
+]
+},
+"kawasaki-takatsu": {
+"tokyo": [
+44,
+1,
+13120
+],
+"otemachi": [
+41,
+0,
+17420
+],
+"nihombashi": [
+44,
+1,
+17420
+],
+"kanda": [
+48,
+1,
+17600
+],
+"akihabara": [
+51,
+1,
+17270
+],
+"ginza": [
+39,
+2,
+17090
+],
+"yurakucho": [
+42,
+1,
+16920
+],
+"shimbashi": [
+39,
+1,
+17090
+],
+"shiodome": [
+46,
+1,
+22460
+],
+"kasumigaseki": [
+36,
+2,
+16920
+],
+"toranomon": [
+42,
+2,
+16230
+],
+"roppongi": [
+33,
+1,
+16750
+],
+"hamamatsucho": [
+40,
+1,
+15670
+],
+"tamachi": [
+37,
+1,
+15320
+],
+"shinagawa": [
+33,
+1,
+14340
+],
+"osaki": [
+34,
+2,
+14340
+],
+"gotanda": [
+27,
+1,
+9430
+],
+"tennozu": [
+36,
+1,
+17590
+],
+"shibuya": [
+23,
+0,
+9430
+],
+"ebisu": [
+33,
+2,
+15200
+],
+"shinjuku": [
+38,
+1,
+15320
+],
+"tochomae": [
+43,
+1,
+22120
+],
+"iidabashi": [
+44,
+1,
+17090
+],
+"ikebukuro": [
+41,
+1,
+17420
+],
+"ueno": [
+54,
+1,
+18110
+],
+"kitasenju": [
+61,
+1,
+18620
+],
+"kinshicho": [
+54,
+0,
+18530
+],
+"toyosu": [
+50,
+1,
+17600
+],
+"nakano": [
+46,
+2,
+15670
+],
+"tachikawa": [
+43,
+0,
+13120
+],
+"kawasaki": [
+28,
+0,
+7840
+],
+"musashikosugi": [
+14,
+0,
+5890
+],
+"yokohama": [
+36,
+1,
+11510
+],
+"minatomirai": [
+40,
+1,
+23130
+],
+"shinyokohama": [
+31,
+2,
+13360
+],
+"omiya": [
+65,
+1,
+27400
+],
+"kaihinmakuhari": [
+79,
+2,
+38050
+],
+"chiba": [
+86,
+2,
+40010
+]
+},
+"yokohama-kanagawa": {
+"tokyo": [
+38,
+1,
+15600
+],
+"otemachi": [
+47,
+2,
+22230
+],
+"nihombashi": [
+44,
+2,
+22310
+],
+"kanda": [
+43,
+0,
+15600
+],
+"akihabara": [
+45,
+0,
+15600
+],
+"ginza": [
+41,
+2,
+21960
+],
+"yurakucho": [
+38,
+0,
+15600
+],
+"shimbashi": [
+31,
+1,
+15330
+],
+"shiodome": [
+44,
+2,
+21200
+],
+"kasumigaseki": [
+52,
+1,
+22400
+],
+"toranomon": [
+51,
+2,
+21960
+],
+"roppongi": [
+51,
+3,
+22310
+],
+"hamamatsucho": [
+33,
+0,
+13120
+],
+"tamachi": [
+31,
+0,
+13120
+],
+"shinagawa": [
+26,
+0,
+10480
+],
+"osaki": [
+30,
+1,
+13120
+],
+"gotanda": [
+33,
+1,
+13120
+],
+"tennozu": [
+36,
+1,
+18640
+],
+"shibuya": [
+36,
+1,
+15330
+],
+"ebisu": [
+36,
+1,
+15330
+],
+"shinjuku": [
+41,
+1,
+18720
+],
+"tochomae": [
+55,
+2,
+24800
+],
+"iidabashi": [
+57,
+2,
+18450
+],
+"ikebukuro": [
+50,
+1,
+21290
+],
+"ueno": [
+42,
+1,
+17970
+],
+"kitasenju": [
+61,
+2,
+26210
+],
+"kinshicho": [
+49,
+1,
+18720
+],
+"toyosu": [
+58,
+1,
+22740
+],
+"nakano": [
+52,
+2,
+20900
+],
+"tachikawa": [
+76,
+1,
+24100
+],
+"kawasaki": [
+11,
+0,
+6240
+],
+"musashikosugi": [
+22,
+1,
+7840
+],
+"yokohama": [
+3,
+0,
+4910
+],
+"minatomirai": [
+14,
+1,
+12720
+],
+"shinyokohama": [
+8,
+0,
+6240
+],
+"omiya": [
+75,
+1,
+29420
+],
+"kaihinmakuhari": [
+79,
+2,
+39100
+],
+"chiba": [
+81,
+2,
+33640
+]
+},
+"saitama-midori": {
+"tokyo": [
+49,
+1,
+15600
+],
+"otemachi": [
+53,
+2,
+17970
+],
+"nihombashi": [
+57,
+2,
+19920
+],
+"kanda": [
+47,
+1,
+13120
+],
+"akihabara": [
+43,
+1,
+13120
+],
+"ginza": [
+60,
+2,
+21290
+],
+"yurakucho": [
+51,
+1,
+15600
+],
+"shimbashi": [
+48,
+2,
+15600
+],
+"shiodome": [
+63,
+3,
+21200
+],
+"kasumigaseki": [
+62,
+2,
+18470
+],
+"toranomon": [
+64,
+3,
+18470
+],
+"roppongi": [
+62,
+2,
+19160
+],
+"hamamatsucho": [
+55,
+1,
+15600
+],
+"tamachi": [
+60,
+1,
+17970
+],
+"shinagawa": [
+54,
+2,
+18720
+],
+"osaki": [
+52,
+1,
+20450
+],
+"gotanda": [
+56,
+2,
+18720
+],
+"tennozu": [
+62,
+1,
+31050
+],
+"shibuya": [
+45,
+1,
+15600
+],
+"ebisu": [
+47,
+1,
+18450
+],
+"shinjuku": [
+43,
+2,
+13120
+],
+"tochomae": [
+62,
+2,
+22060
+],
+"iidabashi": [
+52,
+2,
+18310
+],
+"ikebukuro": [
+36,
+1,
+13120
+],
+"ueno": [
+39,
+1,
+13120
+],
+"kitasenju": [
+34,
+1,
+17970
+],
+"kinshicho": [
+52,
+1,
+27060
+],
+"toyosu": [
+73,
+2,
+22740
+],
+"nakano": [
+50,
+2,
+17970
+],
+"tachikawa": [
+47,
+1,
+20900
+],
+"kawasaki": [
+65,
+2,
+24100
+],
+"musashikosugi": [
+63,
+2,
+24880
+],
+"yokohama": [
+74,
+2,
+27950
+],
+"minatomirai": [
+84,
+3,
+35760
+],
+"shinyokohama": [
+94,
+2,
+36800
+],
+"omiya": [
+21,
+1,
+7840
+],
+"kaihinmakuhari": [
+61,
+0,
+24880
+],
+"chiba": [
+78,
+1,
+27950
+]
+},
+"kamagaya": {
+"tokyo": [
+45,
+2,
+37080
+],
+"otemachi": [
+47,
+1,
+35030
+],
+"nihombashi": [
+38,
+0,
+35120
+],
+"kanda": [
+57,
+1,
+39240
+],
+"akihabara": [
+52,
+1,
+39730
+],
+"ginza": [
+51,
+1,
+40070
+],
+"yurakucho": [
+50,
+2,
+37430
+],
+"shimbashi": [
+44,
+0,
+35760
+],
+"shiodome": [
+54,
+1,
+36390
+],
+"kasumigaseki": [
+51,
+1,
+40380
+],
+"toranomon": [
+53,
+1,
+40540
+],
+"roppongi": [
+64,
+2,
+40800
+],
+"hamamatsucho": [
+54,
+2,
+37430
+],
+"tamachi": [
+57,
+1,
+40670
+],
+"shinagawa": [
+56,
+1,
+41650
+],
+"osaki": [
+66,
+1,
+42370
+],
+"gotanda": [
+56,
+0,
+37460
+],
+"tennozu": [
+64,
+1,
+43500
+],
+"shibuya": [
+64,
+1,
+36350
+],
+"ebisu": [
+65,
+1,
+41260
+],
+"shinjuku": [
+55,
+2,
+40650
+],
+"tochomae": [
+67,
+1,
+37200
+],
+"iidabashi": [
+49,
+1,
+40300
+],
+"ikebukuro": [
+50,
+2,
+37430
+],
+"ueno": [
+37,
+1,
+31190
+],
+"kitasenju": [
+32,
+2,
+34040
+],
+"kinshicho": [
+35,
+1,
+34000
+],
+"toyosu": [
+58,
+3,
+39700
+],
+"nakano": [
+60,
+2,
+42250
+],
+"tachikawa": [
+94,
+2,
+46640
+],
+"kawasaki": [
+67,
+1,
+46240
+],
+"musashikosugi": [
+69,
+1,
+30440
+],
+"yokohama": [
+75,
+1,
+51360
+],
+"minatomirai": [
+87,
+2,
+59170
+],
+"shinyokohama": [
+94,
+2,
+51070
+],
+"omiya": [
+71,
+2,
+28360
+],
+"kaihinmakuhari": [
+39,
+1,
+24340
+],
+"chiba": [
+41,
+1,
+19340
+]
+},
+"kawaguchi": {
+"tokyo": [
+30,
+1,
+10480
+],
+"otemachi": [
+35,
+1,
+13730
+],
+"nihombashi": [
+38,
+1,
+14640
+],
+"kanda": [
+29,
+0,
+7840
+],
+"akihabara": [
+27,
+0,
+7840
+],
+"ginza": [
+42,
+1,
+14820
+],
+"yurakucho": [
+33,
+0,
+10480
+],
+"shimbashi": [
+30,
+1,
+10480
+],
+"shiodome": [
+44,
+2,
+16080
+],
+"kasumigaseki": [
+43,
+1,
+14230
+],
+"toranomon": [
+47,
+2,
+14230
+],
+"roppongi": [
+45,
+1,
+14570
+],
+"hamamatsucho": [
+38,
+0,
+10480
+],
+"tamachi": [
+40,
+0,
+13120
+],
+"shinagawa": [
+36,
+1,
+13120
+],
+"osaki": [
+37,
+1,
+13120
+],
+"gotanda": [
+42,
+2,
+13120
+],
+"tennozu": [
+46,
+1,
+23720
+],
+"shibuya": [
+30,
+1,
+10480
+],
+"ebisu": [
+32,
+1,
+10480
+],
+"shinjuku": [
+26,
+1,
+7840
+],
+"tochomae": [
+42,
+2,
+14300
+],
+"iidabashi": [
+31,
+1,
+13720
+],
+"ikebukuro": [
+19,
+1,
+6240
+],
+"ueno": [
+21,
+1,
+7840
+],
+"kitasenju": [
+29,
+1,
+10480
+],
+"kinshicho": [
+39,
+1,
+10480
+],
+"toyosu": [
+51,
+1,
+17620
+],
+"nakano": [
+35,
+2,
+10480
+],
+"tachikawa": [
+55,
+2,
+21580
+],
+"kawasaki": [
+48,
+1,
+18720
+],
+"musashikosugi": [
+48,
+1,
+18720
+],
+"yokohama": [
+56,
+1,
+24100
+],
+"minatomirai": [
+66,
+2,
+31910
+],
+"shinyokohama": [
+75,
+2,
+23840
+],
+"omiya": [
+21,
+0,
+7840
+],
+"kaihinmakuhari": [
+78,
+1,
+29420
+],
+"chiba": [
+75,
+2,
+26540
+]
+},
+"chiba-midori": {
+"tokyo": [
+53,
+1,
+24880
+],
+"otemachi": [
+63,
+2,
+31510
+],
+"nihombashi": [
+65,
+2,
+31140
+],
+"kanda": [
+62,
+3,
+24880
+],
+"akihabara": [
+59,
+1,
+24510
+],
+"ginza": [
+65,
+2,
+32130
+],
+"yurakucho": [
+66,
+2,
+25200
+],
+"shimbashi": [
+57,
+1,
+25500
+],
+"shiodome": [
+82,
+1,
+25500
+],
+"kasumigaseki": [
+74,
+1,
+31860
+],
+"toranomon": [
+83,
+2,
+31860
+],
+"roppongi": [
+85,
+3,
+32480
+],
+"hamamatsucho": [
+77,
+1,
+26540
+],
+"tamachi": [
+80,
+1,
+26960
+],
+"shinagawa": [
+62,
+1,
+27950
+],
+"osaki": [
+81,
+2,
+38090
+],
+"gotanda": [
+86,
+2,
+29420
+],
+"tennozu": [
+64,
+1,
+35650
+],
+"shibuya": [
+86,
+2,
+43980
+],
+"ebisu": [
+84,
+2,
+43980
+],
+"shinjuku": [
+77,
+3,
+28440
+],
+"tochomae": [
+89,
+2,
+33580
+],
+"iidabashi": [
+63,
+2,
+25500
+],
+"ikebukuro": [
+86,
+1,
+32870
+],
+"ueno": [
+64,
+3,
+25200
+],
+"kitasenju": [
+72,
+1,
+37940
+],
+"kinshicho": [
+44,
+1,
+23750
+],
+"toyosu": [
+61,
+2,
+29730
+],
+"nakano": [
+84,
+2,
+30360
+],
+"tachikawa": [
+116,
+3,
+41670
+],
+"kawasaki": [
+88,
+1,
+33640
+],
+"musashikosugi": [
+83,
+1,
+32780
+],
+"yokohama": [
+96,
+1,
+38500
+],
+"minatomirai": [
+103,
+2,
+46310
+],
+"shinyokohama": [
+111,
+2,
+43970
+],
+"omiya": [
+98,
+2,
+38500
+],
+"kaihinmakuhari": [
+26,
+1,
+10480
+],
+"chiba": [
+12,
+0,
+6240
+]
+},
+"saitama-omiya": {
+"tokyo": [
+34,
+0,
+17970
+],
+"otemachi": [
+48,
+1,
+24600
+],
+"nihombashi": [
+48,
+1,
+22740
+],
+"kanda": [
+41,
+1,
+22580
+],
+"akihabara": [
+40,
+1,
+15600
+],
+"ginza": [
+49,
+1,
+22920
+],
+"yurakucho": [
+44,
+1,
+18450
+],
+"shimbashi": [
+38,
+0,
+18720
+],
+"shiodome": [
+53,
+1,
+24320
+],
+"kasumigaseki": [
+53,
+1,
+24950
+],
+"toranomon": [
+57,
+1,
+25350
+],
+"roppongi": [
+59,
+2,
+25700
+],
+"hamamatsucho": [
+45,
+1,
+18720
+],
+"tamachi": [
+48,
+1,
+18720
+],
+"shinagawa": [
+44,
+0,
+21290
+],
+"osaki": [
+44,
+0,
+20450
+],
+"gotanda": [
+51,
+1,
+20450
+],
+"tennozu": [
+54,
+1,
+31050
+],
+"shibuya": [
+37,
+0,
+17970
+],
+"ebisu": [
+39,
+0,
+18720
+],
+"shinjuku": [
+31,
+0,
+15600
+],
+"tochomae": [
+47,
+1,
+22060
+],
+"iidabashi": [
+46,
+1,
+20440
+],
+"ikebukuro": [
+28,
+0,
+13120
+],
+"ueno": [
+30,
+0,
+15600
+],
+"kitasenju": [
+50,
+1,
+23090
+],
+"kinshicho": [
+53,
+2,
+18450
+],
+"toyosu": [
+66,
+1,
+21960
+],
+"nakano": [
+42,
+1,
+18450
+],
+"tachikawa": [
+58,
+2,
+21290
+],
+"kawasaki": [
+55,
+0,
+25200
+],
+"musashikosugi": [
+55,
+0,
+24880
+],
+"yokohama": [
+64,
+0,
+30360
+],
+"minatomirai": [
+75,
+1,
+38170
+],
+"shinyokohama": [
+81,
+2,
+32080
+],
+"omiya": [
+0,
+0,
+0
+],
+"kaihinmakuhari": [
+85,
+1,
+29880
+],
+"chiba": [
+84,
+1,
+35190
+]
+},
+"koshigaya": {
+"tokyo": [
+46,
+2,
+25110
+],
+"otemachi": [
+46,
+1,
+19900
+],
+"nihombashi": [
+46,
+2,
+19720
+],
+"kanda": [
+42,
+2,
+19560
+],
+"akihabara": [
+34,
+1,
+23830
+],
+"ginza": [
+50,
+2,
+20060
+],
+"yurakucho": [
+50,
+2,
+25110
+],
+"shimbashi": [
+51,
+1,
+19570
+],
+"shiodome": [
+59,
+2,
+25170
+],
+"kasumigaseki": [
+53,
+1,
+20410
+],
+"toranomon": [
+57,
+1,
+20700
+],
+"roppongi": [
+63,
+2,
+20700
+],
+"hamamatsucho": [
+56,
+2,
+19570
+],
+"tamachi": [
+58,
+2,
+22210
+],
+"shinagawa": [
+55,
+1,
+22210
+],
+"osaki": [
+65,
+2,
+22210
+],
+"gotanda": [
+64,
+2,
+26470
+],
+"tennozu": [
+63,
+3,
+26990
+],
+"shibuya": [
+59,
+1,
+21290
+],
+"ebisu": [
+61,
+1,
+21580
+],
+"shinjuku": [
+58,
+2,
+18450
+],
+"tochomae": [
+60,
+2,
+31990
+],
+"iidabashi": [
+47,
+2,
+29900
+],
+"ikebukuro": [
+50,
+1,
+15600
+],
+"ueno": [
+31,
+1,
+19220
+],
+"kitasenju": [
+17,
+0,
+11730
+],
+"kinshicho": [
+33,
+0,
+20820
+],
+"toyosu": [
+60,
+2,
+26520
+],
+"nakano": [
+62,
+3,
+27230
+],
+"tachikawa": [
+61,
+1,
+24100
+],
+"kawasaki": [
+66,
+2,
+27330
+],
+"musashikosugi": [
+71,
+1,
+33940
+],
+"yokohama": [
+76,
+2,
+37940
+],
+"minatomirai": [
+91,
+3,
+41120
+],
+"shinyokohama": [
+97,
+3,
+39980
+],
+"omiya": [
+35,
+1,
+10480
+],
+"kaihinmakuhari": [
+58,
+0,
+21580
+],
+"chiba": [
+71,
+1,
+39540
+]
+},
+"saitama-minami": {
+"tokyo": [
+38,
+1,
+13120
+],
+"otemachi": [
+48,
+1,
+18470
+],
+"nihombashi": [
+51,
+2,
+18470
+],
+"kanda": [
+45,
+1,
+13120
+],
+"akihabara": [
+38,
+1,
+13120
+],
+"ginza": [
+50,
+2,
+20440
+],
+"yurakucho": [
+46,
+1,
+13120
+],
+"shimbashi": [
+43,
+1,
+15330
+],
+"shiodome": [
+54,
+2,
+20930
+],
+"kasumigaseki": [
+47,
+2,
+20100
+],
+"toranomon": [
+53,
+1,
+22820
+],
+"roppongi": [
+52,
+2,
+20260
+],
+"hamamatsucho": [
+51,
+1,
+15600
+],
+"tamachi": [
+51,
+1,
+18720
+],
+"shinagawa": [
+46,
+1,
+18450
+],
+"osaki": [
+37,
+0,
+15600
+],
+"gotanda": [
+43,
+1,
+15600
+],
+"tennozu": [
+49,
+0,
+26200
+],
+"shibuya": [
+30,
+0,
+13120
+],
+"ebisu": [
+32,
+0,
+15330
+],
+"shinjuku": [
+24,
+0,
+13120
+],
+"tochomae": [
+42,
+1,
+19580
+],
+"iidabashi": [
+39,
+1,
+17800
+],
+"ikebukuro": [
+20,
+0,
+10480
+],
+"ueno": [
+30,
+1,
+13120
+],
+"kitasenju": [
+41,
+1,
+19570
+],
+"kinshicho": [
+54,
+2,
+18720
+],
+"toyosu": [
+68,
+1,
+19320
+],
+"nakano": [
+35,
+1,
+15330
+],
+"tachikawa": [
+39,
+1,
+17970
+],
+"kawasaki": [
+58,
+1,
+22920
+],
+"musashikosugi": [
+50,
+1,
+22920
+],
+"yokohama": [
+66,
+1,
+27510
+],
+"minatomirai": [
+73,
+2,
+35320
+],
+"shinyokohama": [
+76,
+2,
+28960
+],
+"omiya": [
+7,
+0,
+6240
+],
+"kaihinmakuhari": [
+68,
+0,
+27510
+],
+"chiba": [
+86,
+1,
+30780
+]
+},
+"soka": {
+"tokyo": [
+40,
+2,
+23230
+],
+"otemachi": [
+40,
+1,
+18020
+],
+"nihombashi": [
+40,
+2,
+17840
+],
+"kanda": [
+36,
+2,
+17680
+],
+"akihabara": [
+29,
+1,
+21950
+],
+"ginza": [
+45,
+1,
+18360
+],
+"yurakucho": [
+44,
+2,
+23230
+],
+"shimbashi": [
+45,
+1,
+17690
+],
+"shiodome": [
+52,
+2,
+23290
+],
+"kasumigaseki": [
+46,
+1,
+18530
+],
+"toranomon": [
+51,
+1,
+18820
+],
+"roppongi": [
+58,
+2,
+18820
+],
+"hamamatsucho": [
+49,
+2,
+17690
+],
+"tamachi": [
+51,
+2,
+20330
+],
+"shinagawa": [
+48,
+1,
+20330
+],
+"osaki": [
+60,
+2,
+20330
+],
+"gotanda": [
+59,
+2,
+24590
+],
+"tennozu": [
+58,
+3,
+25110
+],
+"shibuya": [
+60,
+2,
+25010
+],
+"ebisu": [
+63,
+1,
+19120
+],
+"shinjuku": [
+51,
+3,
+23750
+],
+"tochomae": [
+55,
+2,
+30110
+],
+"iidabashi": [
+41,
+2,
+28020
+],
+"ikebukuro": [
+44,
+2,
+17690
+],
+"ueno": [
+25,
+1,
+17340
+],
+"kitasenju": [
+11,
+0,
+9850
+],
+"kinshicho": [
+27,
+0,
+19060
+],
+"toyosu": [
+55,
+2,
+24760
+],
+"nakano": [
+57,
+3,
+25350
+],
+"tachikawa": [
+68,
+2,
+31490
+],
+"kawasaki": [
+61,
+2,
+25450
+],
+"musashikosugi": [
+66,
+1,
+32180
+],
+"yokohama": [
+70,
+2,
+36060
+],
+"minatomirai": [
+83,
+2,
+43870
+],
+"shinyokohama": [
+90,
+3,
+38100
+],
+"omiya": [
+42,
+2,
+17870
+],
+"kaihinmakuhari": [
+65,
+1,
+28970
+],
+"chiba": [
+66,
+1,
+37780
+]
+},
+"fuchu": {
+"tokyo": [
+62,
+1,
+19600
+],
+"otemachi": [
+61,
+2,
+24450
+],
+"nihombashi": [
+65,
+2,
+24450
+],
+"kanda": [
+55,
+1,
+18000
+],
+"akihabara": [
+61,
+2,
+18000
+],
+"ginza": [
+64,
+2,
+24790
+],
+"yurakucho": [
+66,
+2,
+24280
+],
+"shimbashi": [
+67,
+3,
+23780
+],
+"shiodome": [
+67,
+2,
+21100
+],
+"kasumigaseki": [
+63,
+3,
+29460
+],
+"toranomon": [
+69,
+3,
+24790
+],
+"roppongi": [
+68,
+2,
+24440
+],
+"hamamatsucho": [
+73,
+2,
+19600
+],
+"tamachi": [
+73,
+1,
+19600
+],
+"shinagawa": [
+64,
+2,
+23690
+],
+"osaki": [
+64,
+1,
+18000
+],
+"gotanda": [
+63,
+1,
+18000
+],
+"tennozu": [
+71,
+3,
+28250
+],
+"shibuya": [
+42,
+1,
+11760
+],
+"ebisu": [
+54,
+1,
+17650
+],
+"shinjuku": [
+34,
+0,
+11760
+],
+"tochomae": [
+46,
+2,
+18220
+],
+"iidabashi": [
+58,
+2,
+23990
+],
+"ikebukuro": [
+55,
+1,
+17650
+],
+"ueno": [
+70,
+2,
+19600
+],
+"kitasenju": [
+80,
+2,
+25960
+],
+"kinshicho": [
+68,
+2,
+19600
+],
+"toyosu": [
+74,
+2,
+24870
+],
+"nakano": [
+47,
+1,
+17650
+],
+"tachikawa": [
+17,
+1,
+11480
+],
+"kawasaki": [
+55,
+1,
+20840
+],
+"musashikosugi": [
+40,
+1,
+18360
+],
+"yokohama": [
+66,
+2,
+26140
+],
+"minatomirai": [
+69,
+2,
+35600
+],
+"shinyokohama": [
+63,
+2,
+29550
+],
+"omiya": [
+52,
+1,
+30230
+],
+"kaihinmakuhari": [
+102,
+2,
+34680
+],
+"chiba": [
+98,
+2,
+42000
+]
+},
+"yokohama-nishi": {
+"tokyo": [
+30,
+0,
+15600
+],
+"otemachi": [
+40,
+1,
+22230
+],
+"nihombashi": [
+37,
+1,
+22580
+],
+"kanda": [
+36,
+1,
+17970
+],
+"akihabara": [
+38,
+1,
+17970
+],
+"ginza": [
+34,
+1,
+22230
+],
+"yurakucho": [
+33,
+1,
+15600
+],
+"shimbashi": [
+25,
+0,
+15600
+],
+"shiodome": [
+35,
+1,
+21200
+],
+"kasumigaseki": [
+44,
+1,
+22580
+],
+"toranomon": [
+45,
+1,
+22230
+],
+"roppongi": [
+45,
+2,
+22580
+],
+"hamamatsucho": [
+34,
+1,
+15330
+],
+"tamachi": [
+32,
+1,
+13120
+],
+"shinagawa": [
+19,
+0,
+10480
+],
+"osaki": [
+21,
+0,
+13120
+],
+"gotanda": [
+29,
+1,
+13120
+],
+"tennozu": [
+35,
+1,
+23720
+],
+"shibuya": [
+28,
+0,
+15330
+],
+"ebisu": [
+26,
+0,
+15330
+],
+"shinjuku": [
+33,
+0,
+18720
+],
+"tochomae": [
+50,
+1,
+25180
+],
+"iidabashi": [
+47,
+2,
+18720
+],
+"ikebukuro": [
+40,
+0,
+21290
+],
+"ueno": [
+35,
+0,
+18720
+],
+"kitasenju": [
+54,
+1,
+26210
+],
+"kinshicho": [
+40,
+0,
+18720
+],
+"toyosu": [
+51,
+2,
+22740
+],
+"nakano": [
+45,
+1,
+20900
+],
+"tachikawa": [
+72,
+1,
+25030
+],
+"kawasaki": [
+9,
+0,
+7840
+],
+"musashikosugi": [
+12,
+0,
+7840
+],
+"yokohama": [
+0,
+0,
+0
+],
+"minatomirai": [
+3,
+0,
+7810
+],
+"shinyokohama": [
+11,
+0,
+9340
+],
+"omiya": [
+66,
+0,
+30360
+],
+"kaihinmakuhari": [
+79,
+2,
+41740
+],
+"chiba": [
+72,
+0,
+34170
+]
+},
+"chofu": {
+"tokyo": [
+53,
+1,
+18060
+],
+"otemachi": [
+52,
+2,
+22910
+],
+"nihombashi": [
+57,
+1,
+22910
+],
+"kanda": [
+47,
+1,
+16460
+],
+"akihabara": [
+52,
+2,
+16460
+],
+"ginza": [
+59,
+1,
+22240
+],
+"yurakucho": [
+58,
+1,
+22740
+],
+"shimbashi": [
+59,
+2,
+17880
+],
+"shiodome": [
+59,
+1,
+19560
+],
+"kasumigaseki": [
+55,
+2,
+23090
+],
+"toranomon": [
+61,
+3,
+23250
+],
+"roppongi": [
+57,
+3,
+23250
+],
+"hamamatsucho": [
+64,
+2,
+18060
+],
+"tamachi": [
+66,
+1,
+18060
+],
+"shinagawa": [
+60,
+2,
+16460
+],
+"osaki": [
+55,
+1,
+16460
+],
+"gotanda": [
+54,
+2,
+16110
+],
+"tennozu": [
+61,
+2,
+26710
+],
+"shibuya": [
+33,
+1,
+10220
+],
+"ebisu": [
+46,
+1,
+16110
+],
+"shinjuku": [
+28,
+0,
+10220
+],
+"tochomae": [
+37,
+2,
+16680
+],
+"iidabashi": [
+51,
+1,
+22450
+],
+"ikebukuro": [
+47,
+1,
+16110
+],
+"ueno": [
+61,
+2,
+18060
+],
+"kitasenju": [
+72,
+2,
+24420
+],
+"kinshicho": [
+58,
+2,
+18060
+],
+"toyosu": [
+66,
+2,
+23330
+],
+"nakano": [
+38,
+1,
+16110
+],
+"tachikawa": [
+24,
+1,
+13280
+],
+"kawasaki": [
+51,
+1,
+18360
+],
+"musashikosugi": [
+37,
+1,
+13080
+],
+"yokohama": [
+64,
+2,
+20840
+],
+"minatomirai": [
+65,
+2,
+30320
+],
+"shinyokohama": [
+60,
+2,
+24270
+],
+"omiya": [
+59,
+2,
+29630
+],
+"kaihinmakuhari": [
+94,
+3,
+32740
+],
+"chiba": [
+91,
+2,
+40460
+]
+},
+"ichihara": {
+"tokyo": [
+60,
+0,
+26960
+],
+"otemachi": [
+70,
+1,
+33590
+],
+"nihombashi": [
+72,
+1,
+33170
+],
+"kanda": [
+69,
+2,
+26540
+],
+"akihabara": [
+62,
+1,
+26040
+],
+"ginza": [
+72,
+1,
+34580
+],
+"yurakucho": [
+73,
+1,
+27510
+],
+"shimbashi": [
+64,
+0,
+27950
+],
+"shiodome": [
+82,
+2,
+36780
+],
+"kasumigaseki": [
+78,
+1,
+33940
+],
+"toranomon": [
+80,
+1,
+33860
+],
+"roppongi": [
+90,
+2,
+32430
+],
+"hamamatsucho": [
+82,
+1,
+28440
+],
+"tamachi": [
+84,
+1,
+28870
+],
+"shinagawa": [
+69,
+0,
+30360
+],
+"osaki": [
+80,
+1,
+39600
+],
+"gotanda": [
+91,
+2,
+44510
+],
+"tennozu": [
+71,
+1,
+37160
+],
+"shibuya": [
+87,
+1,
+45490
+],
+"ebisu": [
+85,
+1,
+45490
+],
+"shinjuku": [
+77,
+2,
+30360
+],
+"tochomae": [
+92,
+2,
+34840
+],
+"iidabashi": [
+70,
+1,
+27510
+],
+"ikebukuro": [
+94,
+1,
+33250
+],
+"ueno": [
+71,
+2,
+26960
+],
+"kitasenju": [
+83,
+4,
+34290
+],
+"kinshicho": [
+51,
+0,
+24880
+],
+"toyosu": [
+62,
+1,
+31240
+],
+"nakano": [
+92,
+3,
+32180
+],
+"tachikawa": [
+124,
+2,
+43670
+],
+"kawasaki": [
+96,
+2,
+45840
+],
+"musashikosugi": [
+91,
+1,
+35190
+],
+"yokohama": [
+96,
+1,
+0
+],
+"minatomirai": [
+106,
+1,
+0
+],
+"shinyokohama": [
+102,
+1,
+0
+],
+"omiya": [
+100,
+1,
+41190
+],
+"kaihinmakuhari": [
+28,
+1,
+13120
+],
+"chiba": [
+18,
+0,
+7840
+]
+},
+"kisarazu": {
+"tokyo": [
+80,
+0,
+37460
+],
+"otemachi": [
+90,
+1,
+44090
+],
+"nihombashi": [
+92,
+1,
+43680
+],
+"kanda": [
+89,
+2,
+37050
+],
+"akihabara": [
+82,
+1,
+36540
+],
+"ginza": [
+92,
+1,
+45130
+],
+"yurakucho": [
+93,
+1,
+38070
+],
+"shimbashi": [
+84,
+0,
+38500
+],
+"shiodome": [
+102,
+2,
+0
+],
+"kasumigaseki": [
+98,
+1,
+44440
+],
+"toranomon": [
+101,
+1,
+44370
+],
+"roppongi": [
+110,
+3,
+0
+],
+"hamamatsucho": [
+87,
+1,
+0
+],
+"tamachi": [
+93,
+1,
+0
+],
+"shinagawa": [
+86,
+0,
+0
+],
+"osaki": [
+92,
+1,
+0
+],
+"gotanda": [
+96,
+1,
+0
+],
+"tennozu": [
+82,
+1,
+0
+],
+"shibuya": [
+104,
+1,
+0
+],
+"ebisu": [
+101,
+1,
+0
+],
+"shinjuku": [
+97,
+2,
+41190
+],
+"tochomae": [
+114,
+2,
+0
+],
+"iidabashi": [
+90,
+1,
+38070
+],
+"ikebukuro": [
+115,
+1,
+0
+],
+"ueno": [
+91,
+2,
+37460
+],
+"kitasenju": [
+108,
+2,
+49380
+],
+"kinshicho": [
+71,
+0,
+35190
+],
+"toyosu": [
+83,
+1,
+40780
+],
+"nakano": [
+113,
+3,
+43210
+],
+"tachikawa": [
+141,
+2,
+0
+],
+"kawasaki": [
+84,
+0,
+0
+],
+"musashikosugi": [
+87,
+1,
+0
+],
+"yokohama": [
+70,
+0,
+0
+],
+"minatomirai": [
+83,
+1,
+0
+],
+"shinyokohama": [
+92,
+1,
+0
+],
+"omiya": [
+121,
+1,
+56210
+],
+"kaihinmakuhari": [
+50,
+1,
+23260
+],
+"chiba": [
+40,
+0,
+20450
+]
+},
+"sodegaura": {
+"tokyo": [
+74,
+0,
+34170
+],
+"otemachi": [
+84,
+1,
+40800
+],
+"nihombashi": [
+86,
+1,
+40270
+],
+"kanda": [
+83,
+2,
+33640
+],
+"akihabara": [
+76,
+1,
+33200
+],
+"ginza": [
+86,
+1,
+41820
+],
+"yurakucho": [
+87,
+1,
+34680
+],
+"shimbashi": [
+78,
+0,
+35190
+],
+"shiodome": [
+96,
+2,
+43040
+],
+"kasumigaseki": [
+92,
+1,
+41150
+],
+"toranomon": [
+94,
+1,
+40960
+],
+"roppongi": [
+104,
+2,
+38690
+],
+"hamamatsucho": [
+99,
+1,
+35510
+],
+"tamachi": [
+98,
+1,
+36120
+],
+"shinagawa": [
+83,
+0,
+37460
+],
+"osaki": [
+100,
+2,
+45860
+],
+"gotanda": [
+105,
+2,
+50770
+],
+"tennozu": [
+85,
+2,
+43420
+],
+"shibuya": [
+101,
+1,
+51750
+],
+"ebisu": [
+99,
+1,
+51750
+],
+"shinjuku": [
+91,
+2,
+37460
+],
+"tochomae": [
+106,
+2,
+42540
+],
+"iidabashi": [
+84,
+1,
+34680
+],
+"ikebukuro": [
+108,
+1,
+39510
+],
+"ueno": [
+85,
+2,
+34170
+],
+"kitasenju": [
+97,
+4,
+42790
+],
+"kinshicho": [
+65,
+0,
+31740
+],
+"toyosu": [
+76,
+1,
+37500
+],
+"nakano": [
+106,
+3,
+39470
+],
+"tachikawa": [
+138,
+2,
+55230
+],
+"kawasaki": [
+89,
+1,
+0
+],
+"musashikosugi": [
+102,
+0,
+42740
+],
+"yokohama": [
+70,
+1,
+0
+],
+"minatomirai": [
+93,
+2,
+0
+],
+"shinyokohama": [
+102,
+2,
+0
+],
+"omiya": [
+114,
+1,
+48830
+],
+"kaihinmakuhari": [
+43,
+1,
+20450
+],
+"chiba": [
+33,
+0,
+15600
+]
+}
+},
+"studyDiffs": [],
+"failed": []
+}
