@@ -389,3 +389,35 @@ I chose 2000 because it is the "modern" definition already used across the site 
 - ¥80M is the writer's affordability line for a household earning about ¥10M a year.
 - Areas with 1–2 qualifying listings get a price from a thin sample (flagged).
 - The watchlist (areas.json) still contains 柏 and 多摩, which were added when they were top-10 under v1.
+
+## 10. Watchlist follows space v2 + new-condo scraper fix + model review (2026-10-13)
+
+**User decisions (2026-10-13):**
+- Keep the 2000 build-year cutoff.
+- Remove the watchlist areas no longer in the top 10 and add the new ones.
+- Push.
+
+**Watchlist (`areas.json`):**
+- The original four (美浜, 印西+白井, 緑, 習志野) are kept, because they were the user's own picks, not top-10 additions.
+- The study-driven part = the top-10 *shortlisted* areas under space v2: 浦安, 松戸, 船橋, 美浜, 荒川, 市川, 習志野, 川崎区, 千葉中央, 足立.
+- **Removed:** 柏, 稲毛, 多摩.
+- **Added** (`minM2: 80`, `"watchlist": "2026-10-13"`): 松戸 `sc_matsudo` (12207), 千葉市中央区 `sc_chibashichuo` (12101, liquefaction source `chiba_city`), 足立区 `sc_adachi` (13121), 川崎市川崎区 `sc_kawasakishikawasaki` (14131, key `kawasaki`).
+- The slugs were taken from SUUMO URLs in `area-listings.js`. The new areas were seeded locally before the push.
+
+**Bug found and fixed (`scraper_newms.py`):**
+- The new-condo index URL was hard-coded to `/ms/shinchiku/chiba/`. For 多摩 and 荒川 (Tokyo) the fetch failed and raised `RuntimeError`. Because one area failing aborted the run, **every area after the first five was lost**.
+- Since 2026-10-12, no watchlist new condos were saved, for example 船橋's 12 projects. The Action log of 2026-10-12 shows `index fetch failed: sc_tama`.
+- Fix:
+  - The prefecture now comes from `ta` (08 ibaraki, 11 saitama, 12 chiba, 13 tokyo, 14 kanagawa).
+  - A failing area is skipped, and yesterday's cache entries and output rows for it are kept.
+- Tested: 荒川 6 and 川崎区 5 project cards.
+
+**Model review:** `reports/Model review and area potential.md`. It covered:
+- Weight robustness: 3,000 draws, each weight ×lognormal(0, 0.4).
+- Door-to-door access of qualifying flats, parsed from SUUMO 徒歩/バス strings, bus = ride + stop walk + 5 min.
+- Budget ¥70/90/100M and walk ≤10/≤15 variants of Choice.
+- Fees of watchlist modern 90 m²+ flats.
+- A potential screen: land 1-yr/5-yr, population, live projects, and web-checked projects with dates.
+
+Scripts: the session scratchpad `review.py` and `access.py`, read-only on `locations.json`, `raw.json`, `area-stats.js` and `mansions.json`. **No score was changed.** Proposals are listed in the report §4, awaiting the user's choice.
+- Note: the raw.json key for 多摩 is `Tama-shi`; ward keys use hyphens (`Chiba-Mihama`). A review script that looks up by `nameEn` must map these.

@@ -29,7 +29,8 @@ from scraper import BASE_URL, DELAY, fetch, build_data_dict, first_match, extrac
 AREAS_FILE = Path("areas.json")
 CACHE_FILE = Path("newms_cache.json")
 OUT_JSON   = Path("newms.json")
-INDEX_TMPL = "https://suumo.jp/ms/shinchiku/chiba/{slug}/"
+INDEX_TMPL = "https://suumo.jp/ms/shinchiku/{pref}/{slug}/"
+PREF       = {"08": "ibaraki", "11": "saitama", "12": "chiba", "13": "tokyo", "14": "kanagawa"}   # areas.json "ta"
 NC_RE      = re.compile(r"/ms/shinchiku/[^/]+/(sc_[^/]+)/nc_(\d+)/")
 MAX_PAGES  = 10
 
@@ -88,10 +89,10 @@ def parse_cards(html, slug):
         }
 
 
-def crawl_index(slug):
+def crawl_index(slug, pref):
     found = {}
     for page in range(1, MAX_PAGES + 1):
-        html = fetch(INDEX_TMPL.format(slug=slug) + (f"?page={page}" if page > 1 else ""))
+        html = fetch(INDEX_TMPL.format(pref=pref, slug=slug) + (f"?page={page}" if page > 1 else ""))
         if not html:
             raise RuntimeError(f"index fetch failed: {slug} page {page}")
         cards = dict(parse_cards(html, slug))
@@ -206,9 +207,18 @@ def main():
     known_areas = {e.get("area") for e in cache.values()}
     today = date.today().isoformat()
     out, seen = [], set()
+    prev_out = json.loads(OUT_JSON.read_text(encoding="utf-8")) if OUT_JSON.exists() else []
 
     for area in areas:
-        cards = crawl_index(area["slug"])
+        try:
+            cards = crawl_index(area["slug"], PREF[area["ta"]])
+        except RuntimeError as e:        # one bad area must not lose every other area's data
+            print(f"[SUUMO new condos] {area['name']}: SKIPPED ({e}) — keeping yesterday's entries")
+            for nc, entry in cache.items():
+                if entry.get("area") == area["key"]:
+                    seen.add(nc)
+            out += [x for x in prev_out if x.get("areaKey") == area["key"]]
+            continue
         seeding = area["key"] not in known_areas
         print(f"[SUUMO new condos] {area['name']}: {sum(c['kind'] == 'project' for c in cards.values())} projects, "
               f"{sum(c['kind'] == 'unit' for c in cards.values())} never-occupied units")

@@ -23,7 +23,7 @@
     null
    ]
   ],
-  "lastSeen": "2026-10-11"
+  "lastSeen": "2026-10-13"
  },
  "67732575": {
   "area": "mihama",
@@ -43,7 +43,7 @@
     19
    ]
   ],
-  "lastSeen": "2026-10-11"
+  "lastSeen": "2026-10-13"
  },
  "67723770": {
   "area": "mihama",
@@ -69,7 +69,7 @@
     13
    ]
   ],
-  "lastSeen": "2026-10-11"
+  "lastSeen": "2026-10-13"
  },
  "21711203": {
   "area": "mihama",
@@ -103,7 +103,7 @@
    ],
    "parkingText": "空無"
   },
-  "lastSeen": "2026-10-11"
+  "lastSeen": "2026-10-13"
  },
  "20383718": {
   "area": "mihama",
@@ -136,7 +136,7 @@
     "JR京葉線「海浜幕張」歩14分"
    ]
   },
-  "lastSeen": "2026-10-11"
+  "lastSeen": "2026-10-13"
  },
  "21611576": {
   "area": "mihama",
@@ -171,7 +171,7 @@
    ],
    "parkingText": "空無"
   },
-  "lastSeen": "2026-10-11"
+  "lastSeen": "2026-10-13"
  },
  "20496447": {
   "area": "mihama",
@@ -204,7 +204,7 @@
     "JR京葉線「海浜幕張」歩16分"
    ]
   },
-  "lastSeen": "2026-10-11"
+  "lastSeen": "2026-10-13"
  },
  "21401358": {
   "area": "mihama",
@@ -238,7 +238,7 @@
     "JR京葉線「検見川浜」歩14分"
    ]
   },
-  "lastSeen": "2026-10-11"
+  "lastSeen": "2026-10-13"
  },
  "21671125": {
   "area": "mihama",
@@ -273,7 +273,7 @@
     "JR総武線「幕張」歩35分"
    ]
   },
-  "lastSeen": "2026-10-11"
+  "lastSeen": "2026-10-13"
  },
  "20570187": {
   "area": "mihama",
@@ -306,7 +306,7 @@
     "JR京葉線「海浜幕張」歩16分"
    ]
   },
-  "lastSeen": "2026-10-11"
+  "lastSeen": "2026-10-13"
  },
  "20490622": {
   "area": "mihama",
@@ -345,7 +345,7 @@
     "JR京葉線「海浜幕張」歩16分"
    ]
   },
-  "lastSeen": "2026-10-11"
+  "lastSeen": "2026-10-13"
  },
  "20520305": {
   "area": "mihama",
@@ -380,7 +380,7 @@
     "京成千葉線「検見川」歩28分"
    ]
   },
-  "lastSeen": "2026-10-11"
+  "lastSeen": "2026-10-13"
  },
  "21084392": {
   "area": "mihama",
@@ -415,7 +415,7 @@
    ],
    "parkingText": "空無"
   },
-  "lastSeen": "2026-10-11"
+  "lastSeen": "2026-10-13"
  },
  "20521566": {
   "area": "mihama",
@@ -450,7 +450,7 @@
     "京成千葉線「検見川」歩28分"
    ]
   },
-  "lastSeen": "2026-10-11"
+  "lastSeen": "2026-10-13"
  },
  "67729827": {
   "area": "inzai",
@@ -476,7 +476,7 @@
     30
    ]
   ],
-  "lastSeen": "2026-10-11"
+  "lastSeen": "2026-10-13"
  },
  "20827822": {
   "area": "mihama",
@@ -511,7 +511,7 @@
     "JR京葉線「海浜幕張」歩17分"
    ]
   },
-  "lastSeen": "2026-10-11"
+  "lastSeen": "2026-10-13"
  },
  "21852257": {
   "area": "mihama",
@@ -547,6 +547,987 @@
     "京成千葉線「検見川」歩28分"
    ]
   },
-  "lastSeen": "2026-10-11"
+  "lastSeen": "2026-10-13"
+ },
+ "21334821": {
+  "area": "mihama",
+  "firstSeen": "2026-10-13",
+  "seeded": false,
+  "history": [
+   [
+    "2026-10-13",
+    8880,
+    8880,
+    1
+   ]
+  ],
+  "detail": {
+   "mgmtFee": 19610,
+   "repairFund": 11240,
+   "totalUnits": 768,
+   "floor": 29,
+   "bldgFloors": 38,
+   "structure": "RC",
+   "facing": "西",
+   "parking": "onsite",
+   "parkingFee": 8000,
+   "parkingText": "敷地内(8000円~2万7000円/月)",
+   "renovation": false,
+   "renoNote": null,
+   "landRights": "owned",
+   "builder": "(株)熊谷組",
+   "balconyM2": 0.8,
+   "access": [
+    "JR京葉線「海浜幕張」歩14分",
+    "JR京葉線「検見川浜」歩16分",
+    "京成千葉線「検見川」歩28分"
+   ]
+  },
+  "lastSeen": "2026-10-13"
+ },
+ "67733751": {
+  "area": "funabashi",
+  "firstSeen": "2026-10-13",
+  "seeded": true,
+  "history": [
+   [
+    "2026-10-13",
+    4578,
+    7398,
+    10
+   ]
+  ],
+  "lastSeen": "2026-10-13"
+ },
+ "67732379": {
+  "area": "funabashi",
+  "firstSeen": "2026-10-13",
+  "seeded": true,
+  "history": [
+   [
+    "2026-10-13",
+    5858,
+    11980,
+    13
+   ]
+  ],
+  "lastSeen": "2026-10-13"
+ },
+ "67733512": {
+  "area": "funabashi",
+  "firstSeen": "2026-10-13",
+  "seeded": true,
+  "history": [
+   [
+    "2026-10-13",
+    5988,
+    9938,
+    12
+   ]
+  ],
+  "lastSeen": "2026-10-13"
+ },
+ "67731156": {
+  "area": "funabashi",
+  "firstSeen": "2026-10-13",
+  "seeded": true,
+  "history": [
+   [
+    "2026-10-13",
+    null,
+    null,
+    null
+   ]
+  ],
+  "lastSeen": "2026-10-13"
+ },
+ "67734369": {
+  "area": "funabashi",
+  "firstSeen": "2026-10-13",
+  "seeded": true,
+  "history": [
+   [
+    "2026-10-13",
+    null,
+    null,
+    null
+   ]
+  ],
+  "lastSeen": "2026-10-13"
+ },
+ "67729219": {
+  "area": "funabashi",
+  "firstSeen": "2026-10-13",
+  "seeded": true,
+  "history": [
+   [
+    "2026-10-13",
+    4498,
+    8998,
+    14
+   ]
+  ],
+  "lastSeen": "2026-10-13"
+ },
+ "67733483": {
+  "area": "funabashi",
+  "firstSeen": "2026-10-13",
+  "seeded": true,
+  "history": [
+   [
+    "2026-10-13",
+    3580,
+    8280,
+    9
+   ]
+  ],
+  "lastSeen": "2026-10-13"
+ },
+ "67733309": {
+  "area": "funabashi",
+  "firstSeen": "2026-10-13",
+  "seeded": true,
+  "history": [
+   [
+    "2026-10-13",
+    7498,
+    7498,
+    null
+   ]
+  ],
+  "lastSeen": "2026-10-13"
+ },
+ "67727525": {
+  "area": "funabashi",
+  "firstSeen": "2026-10-13",
+  "seeded": true,
+  "history": [
+   [
+    "2026-10-13",
+    null,
+    null,
+    5
+   ]
+  ],
+  "lastSeen": "2026-10-13"
+ },
+ "67734208": {
+  "area": "funabashi",
+  "firstSeen": "2026-10-13",
+  "seeded": true,
+  "history": [
+   [
+    "2026-10-13",
+    4398,
+    7098,
+    null
+   ]
+  ],
+  "lastSeen": "2026-10-13"
+ },
+ "67735724": {
+  "area": "funabashi",
+  "firstSeen": "2026-10-13",
+  "seeded": true,
+  "history": [
+   [
+    "2026-10-13",
+    4698,
+    6898,
+    null
+   ]
+  ],
+  "lastSeen": "2026-10-13"
+ },
+ "67734368": {
+  "area": "funabashi",
+  "firstSeen": "2026-10-13",
+  "seeded": true,
+  "history": [
+   [
+    "2026-10-13",
+    null,
+    null,
+    null
+   ]
+  ],
+  "lastSeen": "2026-10-13"
+ },
+ "67737750": {
+  "area": "ichikawa",
+  "firstSeen": "2026-10-13",
+  "seeded": true,
+  "history": [
+   [
+    "2026-10-13",
+    null,
+    null,
+    null
+   ]
+  ],
+  "lastSeen": "2026-10-13"
+ },
+ "67728905": {
+  "area": "ichikawa",
+  "firstSeen": "2026-10-13",
+  "seeded": true,
+  "history": [
+   [
+    "2026-10-13",
+    3990,
+    19620,
+    7
+   ]
+  ],
+  "lastSeen": "2026-10-13"
+ },
+ "67736146": {
+  "area": "ichikawa",
+  "firstSeen": "2026-10-13",
+  "seeded": true,
+  "history": [
+   [
+    "2026-10-13",
+    null,
+    null,
+    null
+   ]
+  ],
+  "lastSeen": "2026-10-13"
+ },
+ "67735723": {
+  "area": "ichikawa",
+  "firstSeen": "2026-10-13",
+  "seeded": true,
+  "history": [
+   [
+    "2026-10-13",
+    null,
+    null,
+    null
+   ]
+  ],
+  "lastSeen": "2026-10-13"
+ },
+ "67734870": {
+  "area": "ichikawa",
+  "firstSeen": "2026-10-13",
+  "seeded": true,
+  "history": [
+   [
+    "2026-10-13",
+    9298,
+    11798,
+    14
+   ]
+  ],
+  "lastSeen": "2026-10-13"
+ },
+ "67732475": {
+  "area": "arakawa",
+  "firstSeen": "2026-10-13",
+  "seeded": true,
+  "history": [
+   [
+    "2026-10-13",
+    null,
+    null,
+    null
+   ]
+  ],
+  "lastSeen": "2026-10-13"
+ },
+ "67733316": {
+  "area": "arakawa",
+  "firstSeen": "2026-10-13",
+  "seeded": true,
+  "history": [
+   [
+    "2026-10-13",
+    null,
+    null,
+    null
+   ]
+  ],
+  "lastSeen": "2026-10-13"
+ },
+ "67731312": {
+  "area": "arakawa",
+  "firstSeen": "2026-10-13",
+  "seeded": true,
+  "history": [
+   [
+    "2026-10-13",
+    null,
+    null,
+    null
+   ]
+  ],
+  "lastSeen": "2026-10-13"
+ },
+ "67733045": {
+  "area": "arakawa",
+  "firstSeen": "2026-10-13",
+  "seeded": true,
+  "history": [
+   [
+    "2026-10-13",
+    4990,
+    7180,
+    6
+   ]
+  ],
+  "lastSeen": "2026-10-13"
+ },
+ "67733049": {
+  "area": "arakawa",
+  "firstSeen": "2026-10-13",
+  "seeded": true,
+  "history": [
+   [
+    "2026-10-13",
+    8490,
+    8490,
+    1
+   ]
+  ],
+  "detail": {
+   "mgmtFee": 18600,
+   "repairFund": 8700,
+   "totalUnits": 53,
+   "floor": null,
+   "bldgFloors": 9,
+   "structure": "RC",
+   "facing": null,
+   "parking": "onsite",
+   "parkingFee": 25000,
+   "parkingText": "敷地内16台(料金2万5000円~2万7000円/月、機械式7台、平置8台、身障者用平置1台※一部住戸駐車場優先権付き)",
+   "renovation": false,
+   "renoNote": null,
+   "landRights": "owned",
+   "builder": "第一建設工業(株)",
+   "balconyM2": 3.0,
+   "access": [
+    "(1)東京メトロ千代田線・京成本線「町屋」駅徒歩10分(徒歩8分※) (2)JR常磐線「三河島」駅徒歩6分 (3)JR山手線・京浜東北線・東京メトロ千代田線・日暮里・舎人ライナー「西日暮里」駅徒歩17分 (4)京成本線「新三河島」駅徒歩8分 (5)東京さくらトラム「町屋駅前」停留所徒歩10分 ※東京メトロ千代田線「町屋」駅徒歩8分(3出入口)には出入口の時間制限あり(6:00AM~終電まで)・「町屋」駅徒歩10分(2出入口※始発~終電まで)"
+   ]
+  },
+  "lastSeen": "2026-10-13"
+ },
+ "67732995": {
+  "area": "arakawa",
+  "firstSeen": "2026-10-13",
+  "seeded": true,
+  "history": [
+   [
+    "2026-10-13",
+    12300,
+    12300,
+    1
+   ]
+  ],
+  "detail": {
+   "mgmtFee": 15500,
+   "repairFund": 6670,
+   "totalUnits": 35,
+   "floor": 6,
+   "bldgFloors": 7,
+   "structure": "RC",
+   "facing": "北",
+   "parking": "onsite",
+   "parkingFee": 45000,
+   "parkingText": "敷地内4台(料金4万5000円~4万8000円/月、※平置式、福祉対応1台含む。※車種には制限があります。)",
+   "renovation": false,
+   "renoNote": null,
+   "landRights": "owned",
+   "builder": "(株)オープンハウス・アーキテクト",
+   "balconyM2": 10.9,
+   "access": [
+    "(1)JR山手線・京浜東北線・常磐線、京成本線、日暮里・舎人ライナー「日暮里」駅徒歩4分 (2)東京メトロ千代田線「千駄木」駅徒歩7分"
+   ]
+  },
+  "lastSeen": "2026-10-13"
+ },
+ "67728023": {
+  "area": "matsudo",
+  "firstSeen": "2026-10-13",
+  "seeded": true,
+  "history": [
+   [
+    "2026-10-13",
+    4478,
+    6908,
+    null
+   ]
+  ],
+  "lastSeen": "2026-10-13"
+ },
+ "67729867": {
+  "area": "matsudo",
+  "firstSeen": "2026-10-13",
+  "seeded": true,
+  "history": [
+   [
+    "2026-10-13",
+    3748,
+    6098,
+    24
+   ]
+  ],
+  "lastSeen": "2026-10-13"
+ },
+ "67731663": {
+  "area": "matsudo",
+  "firstSeen": "2026-10-13",
+  "seeded": true,
+  "history": [
+   [
+    "2026-10-13",
+    5278,
+    6408,
+    10
+   ]
+  ],
+  "lastSeen": "2026-10-13"
+ },
+ "67731552": {
+  "area": "chibachuo",
+  "firstSeen": "2026-10-13",
+  "seeded": true,
+  "history": [
+   [
+    "2026-10-13",
+    null,
+    null,
+    null
+   ]
+  ],
+  "lastSeen": "2026-10-13"
+ },
+ "67730383": {
+  "area": "chibachuo",
+  "firstSeen": "2026-10-13",
+  "seeded": true,
+  "history": [
+   [
+    "2026-10-13",
+    4498,
+    5728,
+    9
+   ]
+  ],
+  "lastSeen": "2026-10-13"
+ },
+ "67734543": {
+  "area": "chibachuo",
+  "firstSeen": "2026-10-13",
+  "seeded": true,
+  "history": [
+   [
+    "2026-10-13",
+    3998,
+    6898,
+    9
+   ]
+  ],
+  "lastSeen": "2026-10-13"
+ },
+ "67733545": {
+  "area": "chibachuo",
+  "firstSeen": "2026-10-13",
+  "seeded": true,
+  "history": [
+   [
+    "2026-10-13",
+    2950,
+    2950,
+    1
+   ]
+  ],
+  "lastSeen": "2026-10-13"
+ },
+ "67729238": {
+  "area": "chibachuo",
+  "firstSeen": "2026-10-13",
+  "seeded": true,
+  "history": [
+   [
+    "2026-10-13",
+    3498,
+    5188,
+    3
+   ]
+  ],
+  "lastSeen": "2026-10-13"
+ },
+ "67732364": {
+  "area": "chibachuo",
+  "firstSeen": "2026-10-13",
+  "seeded": true,
+  "history": [
+   [
+    "2026-10-13",
+    null,
+    null,
+    4
+   ]
+  ],
+  "lastSeen": "2026-10-13"
+ },
+ "67728162": {
+  "area": "chibachuo",
+  "firstSeen": "2026-10-13",
+  "seeded": true,
+  "history": [
+   [
+    "2026-10-13",
+    4348,
+    6448,
+    39
+   ]
+  ],
+  "lastSeen": "2026-10-13"
+ },
+ "67730697": {
+  "area": "chibachuo",
+  "firstSeen": "2026-10-13",
+  "seeded": true,
+  "history": [
+   [
+    "2026-10-13",
+    4499,
+    6750,
+    6
+   ]
+  ],
+  "lastSeen": "2026-10-13"
+ },
+ "67725486": {
+  "area": "chibachuo",
+  "firstSeen": "2026-10-13",
+  "seeded": true,
+  "history": [
+   [
+    "2026-10-13",
+    4998,
+    13998,
+    24
+   ]
+  ],
+  "lastSeen": "2026-10-13"
+ },
+ "67732363": {
+  "area": "chibachuo",
+  "firstSeen": "2026-10-13",
+  "seeded": true,
+  "history": [
+   [
+    "2026-10-13",
+    5390,
+    5390,
+    null
+   ]
+  ],
+  "lastSeen": "2026-10-13"
+ },
+ "21657775": {
+  "area": "chibachuo",
+  "firstSeen": "2026-10-13",
+  "seeded": true,
+  "history": [
+   [
+    "2026-10-13",
+    6880,
+    6880,
+    1
+   ]
+  ],
+  "detail": {
+   "mgmtFee": 23320,
+   "repairFund": 11610,
+   "totalUnits": 491,
+   "floor": 10,
+   "bldgFloors": 23,
+   "structure": "RC",
+   "facing": "北西",
+   "parking": "unknown",
+   "parkingFee": null,
+   "parkingText": "-",
+   "renovation": false,
+   "renoNote": null,
+   "landRights": "owned",
+   "builder": null,
+   "balconyM2": 10.62,
+   "access": [
+    "JR総武線快速「千葉」歩4分",
+    "京成千葉線「京成千葉」歩4分"
+   ]
+  },
+  "lastSeen": "2026-10-13"
+ },
+ "67736689": {
+  "area": "chibachuo",
+  "firstSeen": "2026-10-13",
+  "seeded": true,
+  "history": [
+   [
+    "2026-10-13",
+    null,
+    null,
+    null
+   ]
+  ],
+  "lastSeen": "2026-10-13"
+ },
+ "67734877": {
+  "area": "adachi",
+  "firstSeen": "2026-10-13",
+  "seeded": true,
+  "history": [
+   [
+    "2026-10-13",
+    null,
+    null,
+    null
+   ]
+  ],
+  "lastSeen": "2026-10-13"
+ },
+ "67735763": {
+  "area": "adachi",
+  "firstSeen": "2026-10-13",
+  "seeded": true,
+  "history": [
+   [
+    "2026-10-13",
+    null,
+    null,
+    3
+   ]
+  ],
+  "lastSeen": "2026-10-13"
+ },
+ "67734372": {
+  "area": "adachi",
+  "firstSeen": "2026-10-13",
+  "seeded": true,
+  "history": [
+   [
+    "2026-10-13",
+    null,
+    null,
+    null
+   ]
+  ],
+  "lastSeen": "2026-10-13"
+ },
+ "67732826": {
+  "area": "adachi",
+  "firstSeen": "2026-10-13",
+  "seeded": true,
+  "history": [
+   [
+    "2026-10-13",
+    null,
+    null,
+    null
+   ]
+  ],
+  "lastSeen": "2026-10-13"
+ },
+ "67735389": {
+  "area": "adachi",
+  "firstSeen": "2026-10-13",
+  "seeded": true,
+  "history": [
+   [
+    "2026-10-13",
+    4890,
+    5990,
+    2
+   ]
+  ],
+  "lastSeen": "2026-10-13"
+ },
+ "67734602": {
+  "area": "adachi",
+  "firstSeen": "2026-10-13",
+  "seeded": true,
+  "history": [
+   [
+    "2026-10-13",
+    null,
+    null,
+    null
+   ]
+  ],
+  "lastSeen": "2026-10-13"
+ },
+ "67725752": {
+  "area": "adachi",
+  "firstSeen": "2026-10-13",
+  "seeded": true,
+  "history": [
+   [
+    "2026-10-13",
+    7400,
+    29300,
+    23
+   ]
+  ],
+  "lastSeen": "2026-10-13"
+ },
+ "67725532": {
+  "area": "adachi",
+  "firstSeen": "2026-10-13",
+  "seeded": true,
+  "history": [
+   [
+    "2026-10-13",
+    8900,
+    13200,
+    15
+   ]
+  ],
+  "lastSeen": "2026-10-13"
+ },
+ "67733954": {
+  "area": "adachi",
+  "firstSeen": "2026-10-13",
+  "seeded": true,
+  "history": [
+   [
+    "2026-10-13",
+    8548,
+    11548,
+    null
+   ]
+  ],
+  "lastSeen": "2026-10-13"
+ },
+ "20063683": {
+  "area": "adachi",
+  "firstSeen": "2026-10-13",
+  "seeded": true,
+  "history": [
+   [
+    "2026-10-13",
+    6060,
+    6060,
+    1
+   ]
+  ],
+  "detail": {
+   "mgmtFee": 18460,
+   "repairFund": 2800,
+   "totalUnits": null,
+   "floor": 8,
+   "bldgFloors": 8,
+   "structure": "RC",
+   "facing": "西",
+   "parking": "unknown",
+   "parkingFee": null,
+   "parkingText": "-",
+   "renovation": false,
+   "renoNote": null,
+   "landRights": "owned",
+   "builder": "(株)アセット建設",
+   "balconyM2": 5.72,
+   "access": [
+    "東武伊勢崎線「五反野」歩10分",
+    "東武伊勢崎線「梅島」歩10分",
+    "東武伊勢崎線「小菅」歩20分"
+   ]
+  },
+  "lastSeen": "2026-10-13"
+ },
+ "21842658": {
+  "area": "adachi",
+  "firstSeen": "2026-10-13",
+  "seeded": true,
+  "history": [
+   [
+    "2026-10-13",
+    6180,
+    6180,
+    1
+   ]
+  ],
+  "detail": {
+   "mgmtFee": 9200,
+   "repairFund": 4600,
+   "totalUnits": 78,
+   "floor": 3,
+   "bldgFloors": 8,
+   "structure": "RC",
+   "facing": "南東",
+   "parking": "unknown",
+   "parkingFee": null,
+   "parkingText": "-",
+   "renovation": false,
+   "renoNote": null,
+   "landRights": "owned",
+   "builder": null,
+   "balconyM2": 9.69,
+   "access": [
+    "東武伊勢崎線「梅島」歩5分"
+   ]
+  },
+  "lastSeen": "2026-10-13"
+ },
+ "21877663": {
+  "area": "adachi",
+  "firstSeen": "2026-10-13",
+  "seeded": true,
+  "history": [
+   [
+    "2026-10-13",
+    7480,
+    7480,
+    1
+   ]
+  ],
+  "detail": {
+   "mgmtFee": 18900,
+   "repairFund": 8000,
+   "totalUnits": 24,
+   "floor": 3,
+   "bldgFloors": 9,
+   "structure": "RC",
+   "facing": "北",
+   "parking": "full",
+   "parkingFee": null,
+   "parkingText": "空無",
+   "renovation": false,
+   "renoNote": null,
+   "landRights": "owned",
+   "builder": "古久根建設(株)",
+   "balconyM2": 7.77,
+   "access": [
+    "東京メトロ千代田線「綾瀬」歩8分",
+    "JR常磐線「綾瀬」歩8分",
+    "つくばエクスプレス「青井」歩18分"
+   ]
+  },
+  "lastSeen": "2026-10-13"
+ },
+ "67733320": {
+  "area": "adachi",
+  "firstSeen": "2026-10-13",
+  "seeded": true,
+  "history": [
+   [
+    "2026-10-13",
+    null,
+    null,
+    null
+   ]
+  ],
+  "lastSeen": "2026-10-13"
+ },
+ "67737352": {
+  "area": "adachi",
+  "firstSeen": "2026-10-13",
+  "seeded": true,
+  "history": [
+   [
+    "2026-10-13",
+    null,
+    null,
+    null
+   ]
+  ],
+  "lastSeen": "2026-10-13"
+ },
+ "67730183": {
+  "area": "kawasaki",
+  "firstSeen": "2026-10-13",
+  "seeded": true,
+  "history": [
+   [
+    "2026-10-13",
+    6148,
+    7808,
+    null
+   ]
+  ],
+  "lastSeen": "2026-10-13"
+ },
+ "67731943": {
+  "area": "kawasaki",
+  "firstSeen": "2026-10-13",
+  "seeded": true,
+  "history": [
+   [
+    "2026-10-13",
+    5898,
+    7298,
+    16
+   ]
+  ],
+  "lastSeen": "2026-10-13"
+ },
+ "67730758": {
+  "area": "kawasaki",
+  "firstSeen": "2026-10-13",
+  "seeded": true,
+  "history": [
+   [
+    "2026-10-13",
+    4578,
+    6158,
+    null
+   ]
+  ],
+  "lastSeen": "2026-10-13"
+ },
+ "67730678": {
+  "area": "kawasaki",
+  "firstSeen": "2026-10-13",
+  "seeded": true,
+  "history": [
+   [
+    "2026-10-13",
+    7428,
+    9198,
+    5
+   ]
+  ],
+  "lastSeen": "2026-10-13"
+ },
+ "21236950": {
+  "area": "kawasaki",
+  "firstSeen": "2026-10-13",
+  "seeded": true,
+  "history": [
+   [
+    "2026-10-13",
+    4200,
+    4200,
+    1
+   ]
+  ],
+  "detail": {
+   "mgmtFee": 7100,
+   "repairFund": 5000,
+   "totalUnits": 266,
+   "floor": 1,
+   "bldgFloors": 7,
+   "structure": "RC",
+   "facing": "西",
+   "parking": "other",
+   "parkingFee": 13000,
+   "parkingText": "専用使用権付駐車場(1万3000円/月)",
+   "renovation": false,
+   "renoNote": null,
+   "landRights": "owned",
+   "builder": "積水化学工業(株)",
+   "balconyM2": null,
+   "access": [
+    "京急大師線「小島新田」歩13分",
+    "京急大師線「大師橋」歩17分",
+    "JR京浜東北線「川崎」バス17分塩浜営業所歩3分"
+   ]
+  },
+  "lastSeen": "2026-10-13"
  }
 }
