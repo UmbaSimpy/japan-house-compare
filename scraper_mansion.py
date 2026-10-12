@@ -2,6 +2,8 @@
 """
 SUUMO used-condo (中古マンション) scraper.
 Areas come from areas.json — add an entry there to track another ward/city.
+An area may set "minM2" (SUUMO mb= filter) to track only larger units — the 2026-10-12
+watchlist areas use 80 m² to keep page weight and SUUMO load down (decision in project memory).
 
 Daily flow (cheap on SUUMO):
   1. Crawl the index pages (100 listings/page) → current price, size, layout,
@@ -31,7 +33,7 @@ OUT_JSON   = Path("mansions.json")
 MAX_PAGES  = 20    # safety cap per area (100 listings/page)
 
 INDEX_TMPL = ("https://suumo.jp/jj/bukken/ichiran/JJ010FJ001/?ar={ar}&bs=011&ta={ta}"
-              "&jspIdFlg=patternShikugun&sc={sc}&kb=1&kt=9999999&mb=0&mt=9999999"
+              "&jspIdFlg=patternShikugun&sc={sc}&kb=1&kt=9999999&mb={mb}&mt=9999999"
               "&ekTjCd=&ekTjNm=&tj=0&cnb=0&cn=9999999&srch_navi=1&pc=100")
 FLAG_QUERIES = {"pet": "&st=292", "elevator": "&cp=251"}   # SUUMO checkbox filters
 
@@ -195,7 +197,7 @@ def main():
     seen_ids = set()
 
     for area in areas:
-        base = INDEX_TMPL.format(**area)
+        base = INDEX_TMPL.format(**area, mb=area.get("minM2", 0))   # minM2: watchlist areas track 80 m²+ only
         print(f"[SUUMO condos] {area['name']}")
         cards = crawl_index(base, area["slug"])
         flags = {}

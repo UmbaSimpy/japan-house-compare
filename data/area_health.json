@@ -1,0 +1,777 @@
+{
+ "generated": "2026-10-12",
+ "source": "国土数値情報 医療機関データ P04 (2020), CC BY 4.0; 2020 census 500 m mesh (0–14)",
+ "method": "Paediatric care access per study area  →  data/area_health.json\n\nTrack B (manual refresh — run only when the user asks). Method + checks: data/DATA_LOG.md (item 6a).\n\nSource: 国土数値情報 医療機関データ P04 (2020, latest edition; CC BY 4.0), prefectures 08/11/12/13/14:\n  P04_001 = 1 病院 / 2 診療所 / 3 歯科診療所; P04_004–006 = 診療科目 (free text).\n  The 診療科目 field is space-separated and abbreviated (内 = 内科, 小 = 小児科, 小外 = 小児外科 …).\n  A facility \"offers paediatrics\" when a token is in GENERAL_PEDS (小児科 / 小 / 小児 / 小児内科 / 漢方小児科)\n  or starts with 「小児科」 (e.g. 小児科（新生児）); surgical/dental/eye/skin/ENT tokens\n  (小外, 小児外科, 小歯, 小児眼科, 小児皮膚科 …) alone do not count. Separators: full-width space, 、, ．\n  \"Dedicated\" (proxy for a 小児科 clinic, as opposed to an internal-medicine GP that also sees children)\n  = offers paediatrics AND (the facility name contains 小児/こども/子ども/子供/キッズ/チャイルド and not 内科,\n  OR the first listed department is paediatrics). Department order alone is not enough: Chiba lists\n  departments in a fixed order (内 first), e.g. 「くやま小児科医院 | ア 小」.\nChildren: 2020 census 500 m mesh, ages 0–14 (same cells / assignment as area_hazard.py).\n\nPer area:\n  peds          facilities offering 小児科 inside the municipality (hospitals + clinics)\n  pedsDedicated of which dedicated paediatric clinics (see above)\n  per10k        peds per 10,000 children aged 0–14 living in the area\n  kidsNear1km   % of children (mesh-weighted) whose cell centre is ≤1 km from any 小児科 facility\n                (facilities in neighbouring municipalities count — people cross borders)\n  kidsNearDedicated1km  same, for dedicated paediatric facilities\nRun: python area_health.py",
+ "areas": {
+  "urayasu": {
+   "peds": 29,
+   "pedsDedicated": 12,
+   "pedsHospitals": 3,
+   "kids2020": 21644,
+   "per10k": 13.4,
+   "dedicatedPer10k": 5.5,
+   "kidsNear1km": 99.1,
+   "kidsNearDedicated1km": 98.6
+  },
+  "kashiwa": {
+   "peds": 75,
+   "pedsDedicated": 13,
+   "pedsHospitals": 8,
+   "kids2020": 54065,
+   "per10k": 13.9,
+   "dedicatedPer10k": 2.4,
+   "kidsNear1km": 96.8,
+   "kidsNearDedicated1km": 49.6
+  },
+  "funabashi": {
+   "peds": 80,
+   "pedsDedicated": 21,
+   "pedsHospitals": 11,
+   "kids2020": 79949,
+   "per10k": 10.0,
+   "dedicatedPer10k": 2.6,
+   "kidsNear1km": 96.7,
+   "kidsNearDedicated1km": 64.5
+  },
+  "minato": {
+   "peds": 80,
+   "pedsDedicated": 16,
+   "pedsHospitals": 8,
+   "kids2020": 31575,
+   "per10k": 25.3,
+   "dedicatedPer10k": 5.1,
+   "kidsNear1km": 100.0,
+   "kidsNearDedicated1km": 86.3
+  },
+  "chiba-mihama": {
+   "peds": 25,
+   "pedsDedicated": 10,
+   "pedsHospitals": 1,
+   "kids2020": 18457,
+   "per10k": 13.5,
+   "dedicatedPer10k": 5.4,
+   "kidsNear1km": 100.0,
+   "kidsNearDedicated1km": 97.6
+  },
+  "narashino": {
+   "peds": 23,
+   "pedsDedicated": 5,
+   "pedsHospitals": 2,
+   "kids2020": 22182,
+   "per10k": 10.4,
+   "dedicatedPer10k": 2.3,
+   "kidsNear1km": 100.0,
+   "kidsNearDedicated1km": 64.7
+  },
+  "inzai": {
+   "peds": 14,
+   "pedsDedicated": 1,
+   "pedsHospitals": 2,
+   "kids2020": 16814,
+   "per10k": 8.3,
+   "dedicatedPer10k": 0.6,
+   "kidsNear1km": 86.4,
+   "kidsNearDedicated1km": 9.4
+  },
+  "shinagawa": {
+   "peds": 111,
+   "pedsDedicated": 24,
+   "pedsHospitals": 3,
+   "kids2020": 47281,
+   "per10k": 23.5,
+   "dedicatedPer10k": 5.1,
+   "kidsNear1km": 100.0,
+   "kidsNearDedicated1km": 96.2
+  },
+  "ichikawa": {
+   "peds": 78,
+   "pedsDedicated": 16,
+   "pedsHospitals": 5,
+   "kids2020": 57620,
+   "per10k": 13.5,
+   "dedicatedPer10k": 2.8,
+   "kidsNear1km": 95.3,
+   "kidsNearDedicated1km": 67.5
+  },
+  "toshima": {
+   "peds": 91,
+   "pedsDedicated": 8,
+   "pedsHospitals": 4,
+   "kids2020": 27267,
+   "per10k": 33.4,
+   "dedicatedPer10k": 2.9,
+   "kidsNear1km": 100.0,
+   "kidsNearDedicated1km": 92.3
+  },
+  "chiba-inage": {
+   "peds": 22,
+   "pedsDedicated": 6,
+   "pedsHospitals": 1,
+   "kids2020": 18901,
+   "per10k": 11.6,
+   "dedicatedPer10k": 3.2,
+   "kidsNear1km": 92.4,
+   "kidsNearDedicated1km": 63.8
+  },
+  "tama": {
+   "peds": 25,
+   "pedsDedicated": 9,
+   "pedsHospitals": 3,
+   "kids2020": 16684,
+   "per10k": 15.0,
+   "dedicatedPer10k": 5.4,
+   "kidsNear1km": 97.5,
+   "kidsNearDedicated1km": 78.6
+  },
+  "bunkyo": {
+   "peds": 53,
+   "pedsDedicated": 17,
+   "pedsHospitals": 7,
+   "kids2020": 27154,
+   "per10k": 19.5,
+   "dedicatedPer10k": 6.3,
+   "kidsNear1km": 100.0,
+   "kidsNearDedicated1km": 100.0
+  },
+  "arakawa": {
+   "peds": 49,
+   "pedsDedicated": 11,
+   "pedsHospitals": 3,
+   "kids2020": 23251,
+   "per10k": 21.1,
+   "dedicatedPer10k": 4.7,
+   "kidsNear1km": 100.0,
+   "kidsNearDedicated1km": 100.0
+  },
+  "matsudo": {
+   "peds": 68,
+   "pedsDedicated": 20,
+   "pedsHospitals": 3,
+   "kids2020": 56535,
+   "per10k": 12.0,
+   "dedicatedPer10k": 3.5,
+   "kidsNear1km": 93.3,
+   "kidsNearDedicated1km": 71.1
+  },
+  "nakano": {
+   "peds": 88,
+   "pedsDedicated": 14,
+   "pedsHospitals": 3,
+   "kids2020": 28544,
+   "per10k": 30.8,
+   "dedicatedPer10k": 4.9,
+   "kidsNear1km": 100.0,
+   "kidsNearDedicated1km": 88.5
+  },
+  "inagi": {
+   "peds": 21,
+   "pedsDedicated": 5,
+   "pedsHospitals": 1,
+   "kids2020": 12964,
+   "per10k": 16.2,
+   "dedicatedPer10k": 3.9,
+   "kidsNear1km": 100.0,
+   "kidsNearDedicated1km": 87.4
+  },
+  "chiyoda": {
+   "peds": 42,
+   "pedsDedicated": 4,
+   "pedsHospitals": 5,
+   "kids2020": 8521,
+   "per10k": 49.3,
+   "dedicatedPer10k": 4.7,
+   "kidsNear1km": 100.0,
+   "kidsNearDedicated1km": 93.1
+  },
+  "machida": {
+   "peds": 63,
+   "pedsDedicated": 24,
+   "pedsHospitals": 3,
+   "kids2020": 52509,
+   "per10k": 12.0,
+   "dedicatedPer10k": 4.6,
+   "kidsNear1km": 94.4,
+   "kidsNearDedicated1km": 72.2
+  },
+  "shinjuku": {
+   "peds": 91,
+   "pedsDedicated": 14,
+   "pedsHospitals": 8,
+   "kids2020": 28059,
+   "per10k": 32.4,
+   "dedicatedPer10k": 5.0,
+   "kidsNear1km": 100.0,
+   "kidsNearDedicated1km": 94.4
+  },
+  "katsushika": {
+   "peds": 105,
+   "pedsDedicated": 18,
+   "pedsHospitals": 5,
+   "kids2020": 51941,
+   "per10k": 20.2,
+   "dedicatedPer10k": 3.5,
+   "kidsNear1km": 100.0,
+   "kidsNearDedicated1km": 83.8
+  },
+  "nerima": {
+   "peds": 173,
+   "pedsDedicated": 31,
+   "pedsHospitals": 6,
+   "kids2020": 90445,
+   "per10k": 19.1,
+   "dedicatedPer10k": 3.4,
+   "kidsNear1km": 100.0,
+   "kidsNearDedicated1km": 93.0
+  },
+  "edogawa": {
+   "peds": 160,
+   "pedsDedicated": 44,
+   "pedsHospitals": 4,
+   "kids2020": 87895,
+   "per10k": 18.2,
+   "dedicatedPer10k": 5.0,
+   "kidsNear1km": 99.9,
+   "kidsNearDedicated1km": 97.0
+  },
+  "shiroi": {
+   "peds": 14,
+   "pedsDedicated": 2,
+   "pedsHospitals": 4,
+   "kids2020": 7970,
+   "per10k": 17.6,
+   "dedicatedPer10k": 2.5,
+   "kidsNear1km": 94.1,
+   "kidsNearDedicated1km": 33.7
+  },
+  "chiba-chuo": {
+   "peds": 35,
+   "pedsDedicated": 6,
+   "pedsHospitals": 5,
+   "kids2020": 22195,
+   "per10k": 15.8,
+   "dedicatedPer10k": 2.7,
+   "kidsNear1km": 93.9,
+   "kidsNearDedicated1km": 55.9
+  },
+  "kawasaki-kawasaki": {
+   "peds": 35,
+   "pedsDedicated": 5,
+   "pedsHospitals": 6,
+   "kids2020": 25114,
+   "per10k": 13.9,
+   "dedicatedPer10k": 2.0,
+   "kidsNear1km": 99.1,
+   "kidsNearDedicated1km": 51.8
+  },
+  "chuo": {
+   "peds": 56,
+   "pedsDedicated": 10,
+   "pedsHospitals": 3,
+   "kids2020": 22940,
+   "per10k": 24.4,
+   "dedicatedPer10k": 4.4,
+   "kidsNear1km": 100.0,
+   "kidsNearDedicated1km": 95.8
+  },
+  "koto": {
+   "peds": 104,
+   "pedsDedicated": 28,
+   "pedsHospitals": 6,
+   "kids2020": 65357,
+   "per10k": 15.9,
+   "dedicatedPer10k": 4.3,
+   "kidsNear1km": 100.0,
+   "kidsNearDedicated1km": 98.7
+  },
+  "taito": {
+   "peds": 40,
+   "pedsDedicated": 8,
+   "pedsHospitals": 3,
+   "kids2020": 19171,
+   "per10k": 20.9,
+   "dedicatedPer10k": 4.2,
+   "kidsNear1km": 100.0,
+   "kidsNearDedicated1km": 100.0
+  },
+  "yokohama-aoba": {
+   "peds": 64,
+   "pedsDedicated": 20,
+   "pedsHospitals": 4,
+   "kids2020": 39402,
+   "per10k": 16.2,
+   "dedicatedPer10k": 5.1,
+   "kidsNear1km": 100.0,
+   "kidsNearDedicated1km": 88.3
+  },
+  "mitaka": {
+   "peds": 40,
+   "pedsDedicated": 10,
+   "pedsHospitals": 1,
+   "kids2020": 24529,
+   "per10k": 16.3,
+   "dedicatedPer10k": 4.1,
+   "kidsNear1km": 99.4,
+   "kidsNearDedicated1km": 85.8
+  },
+  "suginami": {
+   "peds": 130,
+   "pedsDedicated": 26,
+   "pedsHospitals": 4,
+   "kids2020": 59063,
+   "per10k": 22.0,
+   "dedicatedPer10k": 4.4,
+   "kidsNear1km": 100.0,
+   "kidsNearDedicated1km": 95.6
+  },
+  "chiba-hanamigawa": {
+   "peds": 22,
+   "pedsDedicated": 5,
+   "pedsHospitals": 1,
+   "kids2020": 19258,
+   "per10k": 11.4,
+   "dedicatedPer10k": 2.6,
+   "kidsNear1km": 88.1,
+   "kidsNearDedicated1km": 63.6
+  },
+  "ota": {
+   "peds": 169,
+   "pedsDedicated": 36,
+   "pedsHospitals": 7,
+   "kids2020": 76669,
+   "per10k": 22.0,
+   "dedicatedPer10k": 4.7,
+   "kidsNear1km": 100.0,
+   "kidsNearDedicated1km": 97.5
+  },
+  "yokohama-kohoku": {
+   "peds": 69,
+   "pedsDedicated": 23,
+   "pedsHospitals": 2,
+   "kids2020": 43161,
+   "per10k": 16.0,
+   "dedicatedPer10k": 5.3,
+   "kidsNear1km": 99.4,
+   "kidsNearDedicated1km": 92.2
+  },
+  "adachi": {
+   "peds": 178,
+   "pedsDedicated": 26,
+   "pedsHospitals": 9,
+   "kids2020": 74216,
+   "per10k": 24.0,
+   "dedicatedPer10k": 3.5,
+   "kidsNear1km": 100.0,
+   "kidsNearDedicated1km": 78.0
+  },
+  "setagaya": {
+   "peds": 217,
+   "pedsDedicated": 64,
+   "pedsHospitals": 10,
+   "kids2020": 108438,
+   "per10k": 20.0,
+   "dedicatedPer10k": 5.9,
+   "kidsNear1km": 100.0,
+   "kidsNearDedicated1km": 94.0
+  },
+  "shibuya": {
+   "peds": 60,
+   "pedsDedicated": 8,
+   "pedsHospitals": 3,
+   "kids2020": 22706,
+   "per10k": 26.4,
+   "dedicatedPer10k": 3.5,
+   "kidsNear1km": 100.0,
+   "kidsNearDedicated1km": 94.2
+  },
+  "tachikawa": {
+   "peds": 28,
+   "pedsDedicated": 8,
+   "pedsHospitals": 3,
+   "kids2020": 21171,
+   "per10k": 13.2,
+   "dedicatedPer10k": 3.8,
+   "kidsNear1km": 97.0,
+   "kidsNearDedicated1km": 64.7
+  },
+  "misato": {
+   "peds": 27,
+   "pedsDedicated": 4,
+   "pedsHospitals": 3,
+   "kids2020": 18013,
+   "per10k": 15.0,
+   "dedicatedPer10k": 2.2,
+   "kidsNear1km": 90.9,
+   "kidsNearDedicated1km": 55.0
+  },
+  "musashino": {
+   "peds": 40,
+   "pedsDedicated": 10,
+   "pedsHospitals": 2,
+   "kids2020": 17865,
+   "per10k": 22.4,
+   "dedicatedPer10k": 5.6,
+   "kidsNear1km": 100.0,
+   "kidsNearDedicated1km": 87.7
+  },
+  "tsukuba": {
+   "peds": 54,
+   "pedsDedicated": 12,
+   "pedsHospitals": 5,
+   "kids2020": 34370,
+   "per10k": 15.7,
+   "dedicatedPer10k": 3.5,
+   "kidsNear1km": 74.1,
+   "kidsNearDedicated1km": 39.1
+  },
+  "moriya": {
+   "peds": 11,
+   "pedsDedicated": 5,
+   "pedsHospitals": 1,
+   "kids2020": 10225,
+   "per10k": 10.8,
+   "dedicatedPer10k": 4.9,
+   "kidsNear1km": 87.3,
+   "kidsNearDedicated1km": 51.9
+  },
+  "koganei": {
+   "peds": 18,
+   "pedsDedicated": 6,
+   "pedsHospitals": 1,
+   "kids2020": 14254,
+   "per10k": 12.6,
+   "dedicatedPer10k": 4.2,
+   "kidsNear1km": 97.3,
+   "kidsNearDedicated1km": 74.5
+  },
+  "meguro": {
+   "peds": 73,
+   "pedsDedicated": 15,
+   "pedsHospitals": 3,
+   "kids2020": 31856,
+   "per10k": 22.9,
+   "dedicatedPer10k": 4.7,
+   "kidsNear1km": 100.0,
+   "kidsNearDedicated1km": 98.8
+  },
+  "kita": {
+   "peds": 83,
+   "pedsDedicated": 17,
+   "pedsHospitals": 5,
+   "kids2020": 35736,
+   "per10k": 23.2,
+   "dedicatedPer10k": 4.8,
+   "kidsNear1km": 100.0,
+   "kidsNearDedicated1km": 94.8
+  },
+  "yachiyo": {
+   "peds": 26,
+   "pedsDedicated": 11,
+   "pedsHospitals": 1,
+   "kids2020": 24623,
+   "per10k": 10.6,
+   "dedicatedPer10k": 4.5,
+   "kidsNear1km": 88.1,
+   "kidsNearDedicated1km": 73.3
+  },
+  "kawasaki-saiwai": {
+   "peds": 28,
+   "pedsDedicated": 11,
+   "pedsHospitals": 0,
+   "kids2020": 21333,
+   "per10k": 13.1,
+   "dedicatedPer10k": 5.2,
+   "kidsNear1km": 100.0,
+   "kidsNearDedicated1km": 94.5
+  },
+  "chiba-wakaba": {
+   "peds": 24,
+   "pedsDedicated": 5,
+   "pedsHospitals": 2,
+   "kids2020": 16075,
+   "per10k": 14.9,
+   "dedicatedPer10k": 3.1,
+   "kidsNear1km": 93.1,
+   "kidsNearDedicated1km": 57.4
+  },
+  "toda": {
+   "peds": 28,
+   "pedsDedicated": 6,
+   "pedsHospitals": 3,
+   "kids2020": 21025,
+   "per10k": 13.3,
+   "dedicatedPer10k": 2.9,
+   "kidsNear1km": 97.4,
+   "kidsNearDedicated1km": 77.6
+  },
+  "itabashi": {
+   "peds": 134,
+   "pedsDedicated": 28,
+   "pedsHospitals": 13,
+   "kids2020": 59279,
+   "per10k": 22.6,
+   "dedicatedPer10k": 4.7,
+   "kidsNear1km": 99.9,
+   "kidsNearDedicated1km": 92.4
+  },
+  "yokohama-tsuzuki": {
+   "peds": 48,
+   "pedsDedicated": 20,
+   "pedsHospitals": 1,
+   "kids2020": 32158,
+   "per10k": 14.9,
+   "dedicatedPer10k": 6.2,
+   "kidsNear1km": 97.1,
+   "kidsNearDedicated1km": 88.4
+  },
+  "saitama-chuo": {
+   "peds": 21,
+   "pedsDedicated": 3,
+   "pedsHospitals": 0,
+   "kids2020": 10035,
+   "per10k": 20.9,
+   "dedicatedPer10k": 3.0,
+   "kidsNear1km": 100.0,
+   "kidsNearDedicated1km": 84.3
+  },
+  "kawasaki-miyamae": {
+   "peds": 31,
+   "pedsDedicated": 9,
+   "pedsHospitals": 1,
+   "kids2020": 31672,
+   "per10k": 9.8,
+   "dedicatedPer10k": 2.8,
+   "kidsNear1km": 100.0,
+   "kidsNearDedicated1km": 88.5
+  },
+  "sakura": {
+   "peds": 30,
+   "pedsDedicated": 8,
+   "pedsHospitals": 2,
+   "kids2020": 18958,
+   "per10k": 15.8,
+   "dedicatedPer10k": 4.2,
+   "kidsNear1km": 84.3,
+   "kidsNearDedicated1km": 56.6
+  },
+  "saitama-urawa": {
+   "peds": 42,
+   "pedsDedicated": 11,
+   "pedsHospitals": 1,
+   "kids2020": 24777,
+   "per10k": 17.0,
+   "dedicatedPer10k": 4.4,
+   "kidsNear1km": 100.0,
+   "kidsNearDedicated1km": 93.1
+  },
+  "nagareyama": {
+   "peds": 29,
+   "pedsDedicated": 8,
+   "pedsHospitals": 3,
+   "kids2020": 31021,
+   "per10k": 9.3,
+   "dedicatedPer10k": 2.6,
+   "kidsNear1km": 94.6,
+   "kidsNearDedicated1km": 63.5
+  },
+  "sumida": {
+   "peds": 66,
+   "pedsDedicated": 13,
+   "pedsHospitals": 4,
+   "kids2020": 28110,
+   "per10k": 23.5,
+   "dedicatedPer10k": 4.6,
+   "kidsNear1km": 100.0,
+   "kidsNearDedicated1km": 99.8
+  },
+  "tsukubamirai": {
+   "peds": 5,
+   "pedsDedicated": 1,
+   "pedsHospitals": 0,
+   "kids2020": 7670,
+   "per10k": 6.5,
+   "dedicatedPer10k": 1.3,
+   "kidsNear1km": 54.4,
+   "kidsNearDedicated1km": 40.2
+  },
+  "kawasaki-nakahara": {
+   "peds": 44,
+   "pedsDedicated": 18,
+   "pedsHospitals": 3,
+   "kids2020": 34035,
+   "per10k": 12.9,
+   "dedicatedPer10k": 5.3,
+   "kidsNear1km": 100.0,
+   "kidsNearDedicated1km": 94.1
+  },
+  "yashio": {
+   "peds": 12,
+   "pedsDedicated": 3,
+   "pedsHospitals": 1,
+   "kids2020": 11665,
+   "per10k": 10.3,
+   "dedicatedPer10k": 2.6,
+   "kidsNear1km": 94.9,
+   "kidsNearDedicated1km": 64.1
+  },
+  "kawasaki-takatsu": {
+   "peds": 38,
+   "pedsDedicated": 10,
+   "pedsHospitals": 3,
+   "kids2020": 29003,
+   "per10k": 13.1,
+   "dedicatedPer10k": 3.4,
+   "kidsNear1km": 100.0,
+   "kidsNearDedicated1km": 97.5
+  },
+  "yokohama-kanagawa": {
+   "peds": 43,
+   "pedsDedicated": 10,
+   "pedsHospitals": 4,
+   "kids2020": 26271,
+   "per10k": 16.4,
+   "dedicatedPer10k": 3.8,
+   "kidsNear1km": 99.7,
+   "kidsNearDedicated1km": 75.4
+  },
+  "saitama-midori": {
+   "peds": 24,
+   "pedsDedicated": 9,
+   "pedsHospitals": 1,
+   "kids2020": 18711,
+   "per10k": 12.8,
+   "dedicatedPer10k": 4.8,
+   "kidsNear1km": 97.0,
+   "kidsNearDedicated1km": 84.4
+  },
+  "kamagaya": {
+   "peds": 14,
+   "pedsDedicated": 5,
+   "pedsHospitals": 1,
+   "kids2020": 12116,
+   "per10k": 11.6,
+   "dedicatedPer10k": 4.1,
+   "kidsNear1km": 96.9,
+   "kidsNearDedicated1km": 79.5
+  },
+  "kawaguchi": {
+   "peds": 84,
+   "pedsDedicated": 18,
+   "pedsHospitals": 7,
+   "kids2020": 72850,
+   "per10k": 11.5,
+   "dedicatedPer10k": 2.5,
+   "kidsNear1km": 93.1,
+   "kidsNearDedicated1km": 68.6
+  },
+  "chiba-midori": {
+   "peds": 24,
+   "pedsDedicated": 8,
+   "pedsHospitals": 2,
+   "kids2020": 17662,
+   "per10k": 13.6,
+   "dedicatedPer10k": 4.5,
+   "kidsNear1km": 84.3,
+   "kidsNearDedicated1km": 69.6
+  },
+  "saitama-omiya": {
+   "peds": 32,
+   "pedsDedicated": 9,
+   "pedsHospitals": 6,
+   "kids2020": 16602,
+   "per10k": 19.3,
+   "dedicatedPer10k": 5.4,
+   "kidsNear1km": 100.0,
+   "kidsNearDedicated1km": 88.3
+  },
+  "koshigaya": {
+   "peds": 50,
+   "pedsDedicated": 7,
+   "pedsHospitals": 3,
+   "kids2020": 43554,
+   "per10k": 11.5,
+   "dedicatedPer10k": 1.6,
+   "kidsNear1km": 93.9,
+   "kidsNearDedicated1km": 44.5
+  },
+  "saitama-minami": {
+   "peds": 34,
+   "pedsDedicated": 10,
+   "pedsHospitals": 1,
+   "kids2020": 23330,
+   "per10k": 14.6,
+   "dedicatedPer10k": 4.3,
+   "kidsNear1km": 100.0,
+   "kidsNearDedicated1km": 94.8
+  },
+  "soka": {
+   "peds": 35,
+   "pedsDedicated": 9,
+   "pedsHospitals": 2,
+   "kids2020": 30548,
+   "per10k": 11.5,
+   "dedicatedPer10k": 2.9,
+   "kidsNear1km": 94.1,
+   "kidsNearDedicated1km": 68.6
+  },
+  "fuchu": {
+   "peds": 54,
+   "pedsDedicated": 15,
+   "pedsHospitals": 6,
+   "kids2020": 32337,
+   "per10k": 16.7,
+   "dedicatedPer10k": 4.6,
+   "kidsNear1km": 98.7,
+   "kidsNearDedicated1km": 82.7
+  },
+  "yokohama-nishi": {
+   "peds": 17,
+   "pedsDedicated": 8,
+   "pedsHospitals": 1,
+   "kids2020": 10430,
+   "per10k": 16.3,
+   "dedicatedPer10k": 7.7,
+   "kidsNear1km": 100.0,
+   "kidsNearDedicated1km": 100.0
+  },
+  "chofu": {
+   "peds": 43,
+   "pedsDedicated": 13,
+   "pedsHospitals": 2,
+   "kids2020": 28451,
+   "per10k": 15.1,
+   "dedicatedPer10k": 4.6,
+   "kidsNear1km": 97.7,
+   "kidsNearDedicated1km": 88.8
+  },
+  "ichihara": {
+   "peds": 36,
+   "pedsDedicated": 2,
+   "pedsHospitals": 6,
+   "kids2020": 29556,
+   "per10k": 12.2,
+   "dedicatedPer10k": 0.7,
+   "kidsNear1km": 77.1,
+   "kidsNearDedicated1km": 15.4
+  },
+  "kisarazu": {
+   "peds": 25,
+   "pedsDedicated": 4,
+   "pedsHospitals": 4,
+   "kids2020": 16993,
+   "per10k": 14.7,
+   "dedicatedPer10k": 2.4,
+   "kidsNear1km": 76.4,
+   "kidsNearDedicated1km": 25.5
+  },
+  "sodegaura": {
+   "peds": 9,
+   "pedsDedicated": 0,
+   "pedsHospitals": 0,
+   "kids2020": 8633,
+   "per10k": 10.4,
+   "dedicatedPer10k": 0.0,
+   "kidsNear1km": 54.8,
+   "kidsNearDedicated1km": 0.0
+  }
+ }
+}

@@ -13,8 +13,13 @@ import json, os, re, urllib.request, urllib.parse
 from datetime import date
 from pathlib import Path
 
-TOKEN    = os.environ['TELEGRAM_TOKEN']
-CHAT_ID  = os.environ['TELEGRAM_CHAT_ID']
+TOKEN    = os.environ.get('TELEGRAM_TOKEN', '')
+CHAT_ID  = os.environ.get('TELEGRAM_CHAT_ID', '')
+# Daily summary paused 2026-10-12 (user: "we don't need a daily message for now" — it will be simplified
+# and re-enabled later). The message is still built and printed to the Actions log, and the known-listing
+# state below is still persisted every day, so re-enabling (TELEGRAM_DAILY: 'on' in the workflow) won't flood.
+# Failure alerts (❌ scrape FAILED) are still sent — they are rare and mean something is broken.
+DAILY    = os.environ.get('TELEGRAM_DAILY', 'off') == 'on'
 STATUS   = os.environ.get('JOB_STATUS', 'success')
 MS_STATUS = os.environ.get('MS_STATUS', 'success')   # outcome of the condo scrape step
 SITE_URL = "https://umbasimpy.github.io/japan-house-compare/"
@@ -22,7 +27,10 @@ ACTIONS  = "https://github.com/UmbaSimpy/japan-house-compare/actions"
 
 
 # ── Telegram ──────────────────────────────────────────
-def send(text):
+def send(text, alert=False):
+    if not (alert or DAILY) or not TOKEN:
+        print("Telegram: daily message paused — not sent. It would have been:\n" + text)
+        return
     data = urllib.parse.urlencode({
         'chat_id': CHAT_ID,
         'text':    text[:4096],   # Telegram message limit
@@ -268,7 +276,7 @@ if __name__ == '__main__':
     today = date.today().isoformat()
 
     if STATUS != 'success':
-        send(f"❌ SUUMO scrape FAILED — {today}\n\n{ACTIONS}")
+        send(f"❌ SUUMO scrape FAILED — {today}\n\n{ACTIONS}", alert=True)
         raise SystemExit(0)
 
     # Load and score current listings

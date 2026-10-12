@@ -1,0 +1,248 @@
+#!/usr/bin/env python3
+"""Live listing snapshot for every study area (track A — runs daily in GitHub Actions).
+
+For each of the 77 municipalities in data/locations.json:
+  • used condos (SUUMO 中古マンション, bs=011): total listings, and every listing ≥ 90 m²
+    (de-duplicated: the same unit posted by several agents counts once — key = name + m² + price)
+    → count, median price, median ¥/m², count under ¥80M, count under ¥80M built ≥ 2000
+  • new condos (SUUMO 新築マンション, bs=010): developer projects on sale (cards with
+    「間取りタイプ別価格」) vs. never-occupied units resold by agents (新築未入居)
+
+Writes  area-stats.js                 const AREA_STATS = {generated, areas:{id:{…}}}
+        area-listings.js              const AREA_LISTINGS — every de-duplicated ≥90 m² unit per area (light list in
+                                      the map panel; all prices, flagged against UNDER), lazy-loaded by the map
+        data/area_listings_state.json first-seen date + first price per SUUMO id → "new" / "price cut" badges
+        data/area_stats_history.json  {id: {date: [n90, median90, u80, projects]}} (last 180 days)
+
+The study scores in data/locations.json are NOT changed by this (they are track B, frozen at the
+study date) — the map shows these numbers as "live now" next to the study values.
+Method notes: data/DATA_LOG.md (item 4).
+"""
+import json
+from collections import Counter
+import re
+import statistics
+import sys
+import time
+import unicodedata
+from datetime import date, timedelta
+from pathlib import Path
+
+import requests
+from bs4 import BeautifulSoup
+
+URL = ("https://suumo.jp/jj/bukken/ichiran/JJ010FJ001/?ar=030&bs={bs}&ta={ta}&sc={sc}"
+       "&kb=1&kt=9999999&mb={mb}&mt=9999999&tj=0&cnb=0&cn=9999999&srch_navi=1&pc=100&page={page}")
+OUT_JS = Path("area-stats.js")
+OUT_LIST = Path("area-listings.js")                 # light 90 m²+ lists for every area (map panel)
+STATE = Path("data/area_listings_state.json")       # {ncId: [firstSeen, firstPrice万, lastSeen]}, "_seeded": {area: date}
+NC_RE = re.compile(r"(/ms/chuko/.*?/)nc_(\d+)/")    # SUUMO needs the full path (short /nc_ URLs 404)
+HIST = Path("data/area_stats_history.json")
+DELAY = 1.0
+MAX_PAGES = 12
+UNDER = 8000            # 万円 — the study's affordability line for a ~¥10M household
+
+S = requests.Session()
+S.headers.update({"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0 Safari/537.36",
+                  "Accept-Language": "ja", "Referer": "https://suumo.jp/"})
+
+
+def nfkc(t):
+    return unicodedata.normalize("NFKC", t or "")
+
+
+def get(url):
+    for i in range(3):
+        try:
+            r = S.get(url, timeout=30)
+            r.raise_for_status(); r.encoding = "utf-8"
+            time.sleep(DELAY)
+            return r.text
+        except requests.RequestException as e:
+            print("  warn", e, file=sys.stderr); time.sleep(4 * (i + 1))
+    return None
+
+
+def price(t):          # → 万円
+    t = nfkc(t).split("～")[0].split("~")[0]
+    m = re.search(r"(?:(\d+)億)?\s*(\d+)?万", t)
+    if m and (m.group(1) or m.group(2)):
+        return int(m.group(1) or 0) * 10000 + int(m.group(2) or 0)
+    m = re.search(r"(\d+)億", t)
+    return int(m.group(1)) * 10000 if m else None
+
+
+def m2(t):
+    m = re.search(r"([\d.]+)\s*m", nfkc(t)); return float(m.group(1)) if m else None
+
+
+def year(t):
+    m = re.search(r"(\d{4})年", t or ""); return int(m.group(1)) if m else None
+
+
+def hits(soup):
+    e = soup.select_one(".pagination_set-hit")
+    return int(re.sub(r"\D", "", e.get_text())) if e else 0
+
+
+def used(ta, sc, name):
+    h = get(URL.format(bs="011", ta=ta, sc=sc, mb=0, page=1))
+    if h is None:
+        raise RuntimeError("total fetch failed")
+    total = hits(BeautifulSoup(h, "html.parser"))
+    units, raw = {}, 0
+    for p in range(1, MAX_PAGES + 1):
+        h = get(URL.format(bs="011", ta=ta, sc=sc, mb=90, page=p))
+        if h is None:
+            raise RuntimeError(f"90m2 page {p} failed")
+        cards = BeautifulSoup(h, "html.parser").select("div.property_unit")
+        for u in cards:
+            d = {dt.get_text(strip=True): dt.find_next_sibling("dd").get_text(" ", strip=True)
+                 for dt in u.find_all("dt") if dt.find_next_sibling("dd")}
+            if d.get("所在地") and name not in nfkc(d["所在地"]):
+                continue
+            pr, a = price(d.get("販売価格", "")), m2(d.get("専有面積", ""))
+            if not pr or not a or a < 90:
+                continue
+            raw += 1
+            bname = re.sub(r"\s+", "", nfkc(d.get("物件名", "")))
+            link = u.find("a", href=NC_RE)
+            m = NC_RE.search(link["href"]) if link else None
+            nc = (m.group(2), m.group(1)) if m else None      # (id, path prefix)
+            k = (bname, round(a, 1), pr)
+            if k in units:                      # same unit from another agent → remember its id too
+                if nc: units[k][3].append(nc)
+                continue
+            st = re.search(r"「(.+?)」", nfkc(d.get("沿線・駅", "")))
+            wk = re.search(r"歩\s*(\d+)\s*分", nfkc(d.get("沿線・駅", "")))
+            lay = re.search(r"\d+[SLDK]+|ワンルーム", nfkc(d.get("間取り", "")))
+            units[k] = (pr, a, year(d.get("築年月", "")), [nc] if nc else [],
+                        nfkc(d.get("物件名", "")).strip()[:40], lay.group(0) if lay else "",
+                        st.group(1) if st else "", int(wk.group(1)) if wk else None, "バス" in nfkc(d.get("沿線・駅", "")))
+        if len(cards) < 100:
+            break
+    v = list(units.values())
+    return {
+        "total": total, "raw90": raw, "n90": len(v),
+        "median90": int(statistics.median(x[0] for x in v) * 10000) if v else None,
+        "median90to105": int(statistics.median(x[0] for x in v if x[1] <= 105) * 10000) if any(x[1] <= 105 for x in v) else None,
+        "n90to105": sum(x[1] <= 105 for x in v),
+        "m2price90": int(statistics.median(x[0] / x[1] for x in v) * 10000) if v else None,
+        "u80": sum(x[0] < UNDER for x in v),
+        "u80modern": sum(x[0] < UNDER and (x[2] or 0) >= 2000 for x in v),
+        "_units": v,                          # popped by main() → area-listings.js
+    }
+
+
+def new(ta, sc, name):
+    projects, units = {}, 0
+    for p in range(1, 4):
+        h = get(URL.format(bs="010", ta=ta, sc=sc, mb=0, page=p))
+        if h is None:
+            raise RuntimeError(f"new page {p} failed")
+        cards = BeautifulSoup(h, "html.parser").select("div.property_unit")
+        for u in cards:
+            a = u.find("a", href=re.compile(r"/nc_\d+/"))
+            t = nfkc(u.get_text(" ", strip=True))
+            if "所在地" in t and name not in t:      # guard: empty areas can show neighbouring cities
+                continue
+            if "間取りタイプ別価格" in t:
+                nm = u.select_one(".property_unit-title, h2")
+                projects[a["href"] if a else len(projects)] = nfkc(nm.get_text(" ", strip=True))[:60] if nm else ""
+            else:
+                units += 1
+        if len(cards) < 100:
+            break
+    return {"projects": len(projects), "projectNames": sorted(set(v for v in projects.values() if v))[:12], "newUnits": units}
+
+
+def area_codes():
+    loc = json.load(open("data/locations.json", encoding="utf-8"))
+    bnd = {f["name"]: f["code"] for f in json.load(open("data/boundaries.json", encoding="utf-8"))["features"]}
+    return [(a["id"], bnd[a["nameJa"]], a["nameJa"]) for a in loc["areas"]]
+
+
+def read_js(path):
+    if not path.exists():
+        return {}
+    txt = path.read_text(encoding="utf-8")
+    start = txt.index("{", txt.index(" = "))           # skip the header comment
+    return json.loads(txt[start:txt.rstrip().rstrip(";").rindex("}") + 1])
+
+
+def light_list(units, state, aid, today):
+    """{base, rows} for area-listings.js; row = [ncId, name, price万, m², layout, year, station, walk, bus, firstSeen, was万|null].
+    firstSeen = earliest sighting of any of the unit's agent ids; was = highest first price seen if the unit is now cheaper."""
+    seeded = state["_seeded"].setdefault(aid, today)          # first run for an area: nothing is "new"
+    rows = []
+    base = Counter(pre for u in units for _, pre in u[3]).most_common(1)
+    base = base[0][0] if base else ""
+    for pr, a, yr, ncs, nm, lay, st, wk, bus in sorted(units, key=lambda x: x[0]):
+        link = (ncs[0][0] if ncs[0][1] == base else ncs[0][1] + ncs[0][0]) if ncs else None
+        ncs = [n for n, _ in ncs]
+        for nc in ncs:
+            s = state["ids"].setdefault(nc, [today, pr, today])
+            s[2] = today
+        seen = [state["ids"][nc] for nc in ncs]
+        first = min((s[0] for s in seen), default=today)
+        was = max((s[1] for s in seen), default=pr)
+        rows.append([link, nm, pr, round(a, 1), lay, yr, st, wk, bus,
+                     None if first <= seeded else first, was if was > pr else None])
+    return {"base": base, "rows": rows}
+
+
+def main():
+    prev = read_js(OUT_JS).get("areas", {})
+    prev_list = read_js(OUT_LIST).get("areas", {})
+    state = json.loads(STATE.read_text(encoding="utf-8")) if STATE.exists() else {}
+    state.setdefault("ids", {}); state.setdefault("_seeded", {})
+    hist = json.loads(HIST.read_text(encoding="utf-8")) if HIST.exists() else {}
+    today = date.today().isoformat()
+    only = sys.argv[1].split(",") if len(sys.argv) > 1 else None
+    out, lists, failed = {}, {}, []
+    for aid, code, name in area_codes():
+        if only and aid not in only:
+            if aid in prev: out[aid] = prev[aid]
+            if aid in prev_list: lists[aid] = prev_list[aid]
+            continue
+        ta, sc = code[:2], code
+        try:
+            rec = {**used(ta, sc, name), **new(ta, sc, name), "date": today}
+            lists[aid] = light_list(rec.pop("_units"), state, aid, today)
+            print(f"{aid:22} total {rec['total']:5}  ≥90m² {rec['n90']:4} (raw {rec['raw90']})  "
+                  f"median {rec['median90'] and rec['median90'] // 10**6}M  <80M {rec['u80']:3}  new projects {rec['projects']}", flush=True)
+        except Exception as e:
+            failed.append(aid); print(f"{aid:22} FAILED {e}", flush=True)
+            if aid in prev:
+                out[aid] = {**prev[aid], "stale": True}
+            if aid in prev_list:
+                lists[aid] = prev_list[aid]
+            continue
+        h = hist.setdefault(aid, {})
+        h[today] = [rec["n90"], rec["median90"], rec["u80"], rec["projects"]]
+        for d in sorted(h)[:-180]:
+            del h[d]
+        # change vs the latest snapshot at least 7 / 30 days old: [Δ n90, Δ u80, Δ projects]
+        for key, days in (("d7", 7), ("d30", 30)):
+            ref = [d for d in sorted(h) if (date.fromisoformat(today) - date.fromisoformat(d)).days >= days]
+            r = h[ref[-1]] if ref else None
+            rec[key] = [rec["n90"] - r[0], rec["u80"] - r[2], rec["projects"] - r[3]] if r else None
+        out[aid] = rec
+    if len(failed) > len(out) / 2:
+        raise SystemExit(f"too many failures ({len(failed)}) — keeping the previous file")
+    OUT_JS.write_text("/* generated daily by area_stats.py — do not edit */\nconst AREA_STATS = " +
+                      json.dumps({"generated": today, "areas": out, "failed": failed}, ensure_ascii=False, separators=(",", ":")) + ";\n",
+                      encoding="utf-8")
+    HIST.write_text(json.dumps(hist, ensure_ascii=False, separators=(",", ":")), encoding="utf-8")
+    OUT_LIST.write_text("/* generated daily by area_stats.py — do not edit. Per area {base: SUUMO path, rows}; row: [ncId (or path+ncId when not under base), name, price万, m², layout, year, station, "
+                        "walk, bus, firstSeen|null, was万|null] */\nconst AREA_LISTINGS = " +
+                        json.dumps({"generated": today, "under": UNDER, "areas": lists}, ensure_ascii=False, separators=(",", ":")) + ";\n",
+                        encoding="utf-8")
+    cutoff = (date.fromisoformat(today) - timedelta(days=30)).isoformat()   # forget ids unseen for 30 days
+    state["ids"] = {k: v for k, v in state["ids"].items() if v[2] >= cutoff}
+    STATE.write_text(json.dumps(state, ensure_ascii=False, separators=(",", ":")), encoding="utf-8")
+    print(f"wrote {OUT_JS}: {len(out)} areas, {len(failed)} failed; {OUT_LIST}: {sum(len(v['rows']) for v in lists.values())} units")
+
+
+if __name__ == "__main__":
+    main()

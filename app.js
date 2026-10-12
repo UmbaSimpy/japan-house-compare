@@ -1319,6 +1319,11 @@ function renderApartments() {
 ═══════════════════════════════════════════════ */
 function refreshHeader() {
   const tab = document.querySelector('.tab-btn.active').dataset.tab;
+  if (tab === 'map' && typeof MAP_DATA !== 'undefined') {
+    document.getElementById('hdr-count').innerHTML =
+      t('map.analysed', MAP_DATA.areas.length, MAP_DATA.areas.filter(a => a.shortlisted).length);
+    return;
+  }
   document.getElementById('hdr-count').innerHTML = tab === 'apartments'
     ? t('hdrCount', tabCounts.apartments, 'ms') : t('hdrCount', tabCounts.listings, 'house');
 }
@@ -1346,6 +1351,8 @@ function setLang(lang) {
   renderTray();
   if (!document.getElementById('cmp-modal').hidden) renderCompare();
   resetCharts();
+  if (typeof mapSetLang === 'function') mapSetLang();
+  refreshHeader();
 }
 
 function initChrome() {
@@ -1355,6 +1362,7 @@ function initChrome() {
     btn.classList.add('active');
     document.getElementById('panel-' + btn.dataset.tab).classList.add('active');
     if (btn.dataset.tab === 'trends') initCharts();
+    if (btn.dataset.tab === 'map' && typeof mapShown === 'function') mapShown();
     refreshHeader();
   }));
 
@@ -1384,3 +1392,5 @@ initNew();
 initCompare();
 render();
 renderApartments();
+if (typeof initMap === 'function') initMap();
+refreshHeader();

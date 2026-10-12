@@ -1,0 +1,26 @@
+{
+  "tokyoStation": { "name": "東京駅", "nameEn": "Tokyo Station", "lat": 35.6812, "lng": 139.7671 },
+  "costco": [
+    { "name": "幕張倉庫店", "nameEn": "Makuhari", "lat": 35.6551, "lng": 140.0279, "opened": "2000-12" },
+    { "name": "多摩境倉庫店", "nameEn": "Tamasakai", "lat": 35.6012, "lng": 139.3767, "opened": "2002-09" },
+    { "name": "金沢シーサイド倉庫店", "nameEn": "Kanazawa Seaside", "lat": 35.3627, "lng": 139.6470, "opened": "2004-10" },
+    { "name": "川崎倉庫店", "nameEn": "Kawasaki", "lat": 35.5218, "lng": 139.7330, "opened": "2007-07" },
+    { "name": "入間倉庫店", "nameEn": "Iruma", "lat": 35.8113, "lng": 139.3793, "opened": "2008-04" },
+    { "name": "新三郷倉庫店", "nameEn": "Shin-Misato", "lat": 35.8611, "lng": 139.8642, "opened": "2009-07" },
+    { "name": "座間倉庫店", "nameEn": "Zama", "lat": 35.4824, "lng": 139.4270, "opened": "2011-12" },
+    { "name": "つくば倉庫店", "nameEn": "Tsukuba", "lat": 36.0966, "lng": 140.0803, "opened": "2013-07" },
+    { "name": "千葉ニュータウン倉庫店", "nameEn": "Chiba New Town", "lat": 35.8063, "lng": 140.1290, "opened": "2013-07" },
+    { "name": "木更津倉庫店", "nameEn": "Kisarazu", "lat": 35.4277, "lng": 139.9164, "opened": "2020-07" }
+  ],
+  "busOrigins": [
+    { "area": "kisarazu", "name": "木更津駅西口", "lat": 35.3818, "lng": 139.9246 },
+    { "area": "kisarazu", "name": "木更津金田BT", "lat": 35.4357, "lng": 139.9118 },
+    { "area": "sodegaura", "name": "袖ケ浦BT", "lat": 35.4310, "lng": 139.9560 },
+    { "area": "tsukuba", "name": "つくばセンター", "lat": 36.0827, "lng": 140.1113 },
+    { "area": "sakura", "name": "ユーカリが丘", "lat": 35.7231, "lng": 140.1856 },
+    { "area": "chiba-wakaba", "name": "千城台", "lat": 35.6255, "lng": 140.1914 },
+    { "area": "chiba-hanamigawa", "name": "草野車庫", "lat": 35.6680, "lng": 140.0880 },
+    { "area": "chiba-inage", "name": "長沼", "lat": 35.6530, "lng": 140.1270 },
+    { "area": "ichihara", "name": "市原鶴舞BT", "lat": 35.3830, "lng": 140.1830 }
+  ]
+}
