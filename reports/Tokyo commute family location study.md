@@ -1,5 +1,12 @@
 # Bayside Chiba wins the family space race
 
+> **Correction 2026-10-12 (buses).** This report says highway buses are "mostly unattainable" and lists 幕張 as having no Tokyo Station bus. That is wrong. Three Chiba commuter routes were missed:
+> - **京成 新浦安 → 東京駅**: 10 morning arrivals by 9:30, ¥730.
+> - **マイタウンライナー ベイエリア線** (平和交通 + あすか交通), serving 幕張ベイタウン, 検見川浜, 稲毛海岸 and 稲毛: 4 morning buses, 6 evening buses (3 of them 17:30–21:30).
+> - **マイタウンライナー おゆみ野・ちはら台線**: 4 morning, 4 evening.
+>
+> So the two top-ranked bay areas, Urayasu and Mihama, do have a seated bus alternative to the Keiyo line. The map data has the corrected bus scores: Urayasu total 67.5, Mihama rank 5 → 4. The scores and figures in the body below are the original ones. Details are in `data/DATA_LOG.md` item 8 and in `research_notes/…/commuter_buses.md`.
+
 **Urayasu (浦安市, Shin-Urayasu) is the best single answer for this family. It scores 69.4/100, five points clear of the field.** It is the only municipality that combines all three of the family's main needs. The commute is 20 minutes to Tokyo Station with no transfer, on the least-crowded trunk line in the study (JR Keiyo, 123%). Daycare for 0–2-year-olds has been free since April 2026 with no waitlist. And a quarter of all used-condo listings are 90 m² or larger. The catch is price: a modern (built 2000 or later) 90–110 m² unit asks about **¥80M**, and the city has no equivalent of Tokyo's ¥5,000/month 018 child payment. The next tier splits by priority. **Chiba-shi Mihama-ku (Makuhari Bay Town)** gives cheaper modern large units (about ¥68M) and a Costco 10–15 minutes away, but charges about ¥54k/month for daycare. **Ichikawa** is 19 minutes from Tokyo with free 0–2 daycare from September 2026, but has Chiba's worst after-school (学童) waitlist. **Funabashi** has the largest pool of modern ≥90 m² units under ¥80M in the whole region. The 23 wards win on childcare: fees are ¥0 everywhere, there is cash on top, and many wards have zero waitlists. But only the outer-east wards (Edogawa, Arakawa, Katsushika, Adachi) and Nerima have any 90 m² stock under ¥80M; the central wards ask ¥120M–¥420M. The ideal of a highway bus is mostly unattainable. Only Kisarazu runs frequent buses to Tokyo Station in both directions, and its market had zero ≥90 m² condo listings, so wanting a bus commute and wanting a large condo point to different places. These conclusions survive reweighting: Urayasu stays first in five of six alternative weightings tested.
 
 ## 1. A 100-point rubric weights space 30, commute and childcare 25 each

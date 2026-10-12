@@ -268,3 +268,40 @@ Covered by item 4: `projects` and `projectNames` are live and refresh daily.
 ### 6d. Gaps — documented, not filled
 - **School quality:** Japan publishes no per-school results. 全国学力・学習状況調査 results are released at prefecture level; municipal release is optional and uneven, so there is no comparable source for 77 areas. Not added, to avoid a misleading proxy.
 - **Nursery entry difficulty beyond 待機児童:** the counts of applicants put on hold (入所保留/不承諾) are the better signal. Each municipality publishes them in its own format, and many don't publish them at all. The study's `waitlist2025`/`waitlist2026` (official 待機児童) remains the only comparable measure. Candidate for a later manual pass on the shortlist only.
+
+## 8. Bus coverage correction: 3 missed Chiba routes (2026-10-12, user report)
+
+**Trigger:** the user lives in Makuhari and takes the マイタウンライナー ベイエリア線 (https://heiwakotsu.com/timefare_mtl_bayarea.htm). The study had marked 幕張 as "no Tokyo Station bus".
+
+**Root cause:** the first sweep read only the big groups' route lists (京成, 小湊, 日東, JRバス関東). It never checked the independents 平和交通 and あすか交通. It also skipped Keisei's 新浦安 commuter route because Keisei files it under "東京ディズニーリゾート".
+
+**Method (re-sweep):**
+1. Read Jorudan 乗換案内 高速バス情報 per-prefecture indexes, updated 2026-09-03: 千葉～東京 (43 routes), 埼玉～東京 (2), 神奈川～東京 (6), 茨城～東京 (19), 東京都内 (6). Every route with a weekday Tokyo Station terminal was checked on the operator's own timetable.
+2. Also checked all Keisei 904xx route pages and the Tobu highway list.
+3. Read the 平和交通 timetables, which are images: `timefare_mtl_bayarea/20261001_bayarea.png` and `timefare_mtl_chihara/20260301_chihara.png`. Read Keisei 90401 (HTML timetable, 2024-05-27).
+4. Counted with the rubric unchanged: A = arrivals at Tokyo Station by ~9:30; P = departures 17:30–21:30. The ×0.6 slower-than-rail rule is applied with a representative mid-route ride time.
+
+**Changes (`build_locations.py` BUS table → `data/locations.json`, stops in `data/map_extras.json`):**
+
+| Area | Route | A / P | ride used | bus score | total | rank |
+|---|---|---|---|---|---|---|
+| 浦安 | 京成 東京駅～TDR・新浦安地区 | 10(→9) / 5 | 45 (rail 20) | 0 → 46.7 | 65.2 → 67.5 | 1 → 1 |
+| 美浜 | マイタウンライナー ベイエリア線 | 4 / 3 | 65 (rail 34) | 0 → 23.3 | 61.3 → 62.5 | 5 → 4 |
+| 稲毛 | same, 稲毛ルート (was ちばきたライナー 1/1) | 2 / 3 | 75 (rail 37) | 6.7 → 16.7 | 59.0 → 59.5 | 11 → 10 |
+| 若葉 | おゆみ野・ちはら台線 from 大宮町 (was 千城台 1/1) | 4 / 4 | 70 (rail 49) | 6.7 → 26.7 | 51.0 → 52.0 | 49 → 45 |
+| 緑 | おゆみ野・ちはら台線 | 4 / 4 | 85 (rail 58) | 0 → 26.7 | 45.6 → 46.9 | 67 → 66 |
+| 市原 | おゆみ野・ちはら台線 from ちはら台 (was 鶴舞 1/2) | 4 / 4 | 100 (rail 60) | 16.7 → 26.7 | 41.6 → 42.1 | 75 → 75 |
+
+The shortlist is unchanged. Only neighbours shifted by one place (港区 4 → 5, 豊島区 10 → 11, and four areas around rank 45–49). When an area has two routes, the **better** one is scored and the other is named in `route`. Counts are not summed, because the stops are far apart.
+
+**Checks:** diffed `locations.json` before and after; only these 6 bus records and the dependent totals and ranks changed. The Mihama timetable was read directly from the operator image: 4 inbound (5:12/5:47/6:02/6:27 starts) and 6 outbound (Tokyo 18:50 … 0:00).
+
+**Limitations:**
+- The 平和交通 sheet is headed 2025-02-01, although its file name says 2026-10-01; the operator page links it as the current timetable.
+- No commuter pass is listed for any of the three routes. Keisei 90401 says 回数券・定期券は販売しておりません.
+- The 17:30–21:30 evening window is the study rubric. Late buses (Mihama 21:50/22:50/0:00, Urayasu 21:40/22:10/23:10) are recorded in the notes but not counted.
+- Ride times are the morning peak and vary 2× along each route.
+- **Not scored** (destination rule = Tokyo Station): 小湊 学園前・海浜幕張・南船橋 → 新宿, and 幕張メッセ → 東京/秋葉原 (event-only).
+- The 柏の葉・おおたかの森 → 東京駅 line (2021) is no longer listed anywhere and is treated as discontinued.
+
+**Next refresh:** re-run the Jorudan index sweep, not just the operator pages, every 6 months, or when the user asks. Details and per-route stop lists are in `research_notes/…/commuter_buses.md` → "Correction 2026-10-12".

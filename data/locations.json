@@ -10,7 +10,7 @@
     "costco": 5,
     "hazard": 10
   },
-  "rubric": "Total = Σ weight × sub-score / 100, each sub-score 0–100. Weights: space 25, commute 25, childcare 20, hazard 10, growth 10, bus 5, costco 5 (users can re-weight on the map).\nCOMMUTE: effective minutes E = station-to-station minutes (best of Tokyo Stn / Otemachi, Yahoo!乗換案内 arrive 08:45 on 2026-10-14) + 5 per transfer. Base = 100×(80−E)/65 clamped 0–100 (E≤15 → 100, E≥80 → 0). Crowding adj. (MLIT FY2025 peak of main line): ≥158% −5; 150–157% −2; ≤125% +5; unmeasured 0. Pass adj.: 1-month pass >¥30k −5, >¥45k −10.\nBUS (bonus): weekday buses arriving Tokyo Stn ≤~9:30 (A) and leaving 17:30–21:30 (P): 50×min(A,9)/9 + 50×min(P,9)/9; ×0.6 if scheduled ride > rail effective minutes + 15. No route found = 0 (evidence of absence from operator lists). Tsukuba counts unknown → imputed A=P=5 (flagged). Aoba (東名江田) timetable unknown → 0 (flagged).\nCHILDCARE (100): fee 35×(1 − 1st-child 0–2 認可 monthly fee/¥65,000) for a ¥10M dual-income household (所得割 ≈¥285k); unknown fee → prefecture median of confirmed paying cities (Chiba ¥54,900, Saitama ¥60,000, Ibaraki ¥50,500), flagged. Tokyo cash 10: 018サポート + 赤ちゃんファースト = 8, +2 verified ward cash ≥¥100k (+1 if conflicting). Waitlist 30 (2026-04 待機児童; 2025 if 2026 missing): 0→30, 1–9→24, 10–29→18, 30–59→12, 60–99→6, ≥100→0. 学童 waitlist 15: 0→15, 1–49 or '<50'→10, 50–149→5, ≥150→0. Medical 5: to 18 & ¥0→5, ¥200→4, ¥300→3.5, to 15/¥500→2.5, ¥600/day→2, unknown→3.5 (flagged). Lunch 5: all free→5, JH free→5, partial→3, JH 3rd child only→2, paid→1, unknown→2 (flagged).\nSPACE (100): 0.4×Price + 0.3×Count + 0.3×AffordableShare. Price = 100 × (ln ¥150M − ln P)/(ln ¥150M − ln ¥40M), clamped (P≤¥40M → 100, ≥¥150M → 0); P = geometric mean of SUUMO all-age 90–105 m² median and built≥2000 90–110 m² median (each n≥3); if one sample has n<3 it is replaced by the 70–80 m² ¥/m² × 95 estimate; if both n<3, the estimate alone (flagged). Count = 100 × min(1, de-duplicated ≥90 m² listings under ¥80M / 40). AffordableShare = 100 × min(1, (≥90 m² listings under ¥80M ÷ all used-condo listings) / 15%). All asking prices, SUUMO crawl 2026-10-12; ¥80M is the writer's affordability line for a ~¥10M household.\nGROWTH (100): population change 2020→25 (census) −4%→0 … +8%→35; IPSS 2050 vs 2020 −15%→0 … +15%→30; residential land price 5-yr change 5%→0 … 45%→20; 0–14 share 2020 9%→0 … 15%→10; pipeline adjustment −3…+5 (confirmed near-term projects +, stalled flagships −). Clamped 0–100.\nHAZARD (100, higher = safer; all shares = % of residents, 2020 census 500 m mesh, 4×4 sample points per cell, data/area_hazard.json from area_hazard.py): WATER 40 × (1 − (0.25·shallow<0.5 m + 0.6·0.5–3 m + 1.0·≥3 m)/100) using the deepest of flood (洪水 想定最大規模), storm surge (高潮 想定最大規模) and tsunami (津波 想定最大規模) — all ハザードマップポータル open data; GROUND 25 × (1 − (liquefaction high + 0.4·mid + 0.4·upland fill)/100) from 国土地理院 地形分類 (landform-based tendency, not a site survey; fill over hills/plateaus = collapse risk per GSI, counted as upland fill, not liquefaction; prefectural 液状化 maps are not open data); LANDSLIDE 10 × (1 − min(1, (土砂災害警戒区域 + 特別警戒区域 share)/10%)); EARTHQUAKE 25 × linear from J-SHIS 2024 30-yr P(震度6弱+) 40% → 25 … 85% → 0 (population-weighted at the 5 most-populated cells). Max-scenario maps describe rare (≈1/1000-yr) events; condo upper floors are not flooded but building services and access are.\nCOSTCO: estimated drive minutes (midpoint of range) to nearest Kanto warehouse: ≤15 → 100, ≥75 → 0, linear.\nSHORTLIST: top 28 by total among areas whose space sub-score is >= 10; higher-ranked areas below the space gate (central wards where 90–100 m² asks ¥120M–¥430M) stay ranked but are not shortlisted.\nMISSING DATA: never silently zero. Each imputation is listed in the area's dataFlags. Evidence-based absences (no bus route found, zero ≥90 m² listings) score 0 and are labelled as such.\nannualBenefitYen = Tokyo-only cash (018 × 2 children = ¥120,000) minus 12 × (1st-child + 2nd-child 0–2 認可 monthly fees) for a year in which both children are aged 0–2 in 認可; null where the fee is unknown. Prices in yen; landPrice = 2026 公示地価 residential average ¥/m².",
+  "rubric": "Total = Σ weight × sub-score / 100, each sub-score 0–100. Weights: space 25, commute 25, childcare 20, hazard 10, growth 10, bus 5, costco 5 (users can re-weight on the map).\nCOMMUTE: effective minutes E = station-to-station minutes (best of Tokyo Stn / Otemachi, Yahoo!乗換案内 arrive 08:45 on 2026-10-14) + 5 per transfer. Base = 100×(80−E)/65 clamped 0–100 (E≤15 → 100, E≥80 → 0). Crowding adj. (MLIT FY2025 peak of main line): ≥158% −5; 150–157% −2; ≤125% +5; unmeasured 0. Pass adj.: 1-month pass >¥30k −5, >¥45k −10.\nBUS (bonus): weekday buses arriving Tokyo Stn ≤~9:30 (A) and leaving 17:30–21:30 (P): 50×min(A,9)/9 + 50×min(P,9)/9; ×0.6 if scheduled ride > rail effective minutes + 15. No route found = 0 (evidence of absence from operator lists; re-swept 2026-10-12 against the Jorudan per-prefecture route index after the user reported the missed 幕張 line). Tsukuba counts unknown → imputed A=P=5 (flagged). Aoba (東名江田) timetable unknown → 0 (flagged).\nCHILDCARE (100): fee 35×(1 − 1st-child 0–2 認可 monthly fee/¥65,000) for a ¥10M dual-income household (所得割 ≈¥285k); unknown fee → prefecture median of confirmed paying cities (Chiba ¥54,900, Saitama ¥60,000, Ibaraki ¥50,500), flagged. Tokyo cash 10: 018サポート + 赤ちゃんファースト = 8, +2 verified ward cash ≥¥100k (+1 if conflicting). Waitlist 30 (2026-04 待機児童; 2025 if 2026 missing): 0→30, 1–9→24, 10–29→18, 30–59→12, 60–99→6, ≥100→0. 学童 waitlist 15: 0→15, 1–49 or '<50'→10, 50–149→5, ≥150→0. Medical 5: to 18 & ¥0→5, ¥200→4, ¥300→3.5, to 15/¥500→2.5, ¥600/day→2, unknown→3.5 (flagged). Lunch 5: all free→5, JH free→5, partial→3, JH 3rd child only→2, paid→1, unknown→2 (flagged).\nSPACE (100): 0.4×Price + 0.3×Count + 0.3×AffordableShare. Price = 100 × (ln ¥150M − ln P)/(ln ¥150M − ln ¥40M), clamped (P≤¥40M → 100, ≥¥150M → 0); P = geometric mean of SUUMO all-age 90–105 m² median and built≥2000 90–110 m² median (each n≥3); if one sample has n<3 it is replaced by the 70–80 m² ¥/m² × 95 estimate; if both n<3, the estimate alone (flagged). Count = 100 × min(1, de-duplicated ≥90 m² listings under ¥80M / 40). AffordableShare = 100 × min(1, (≥90 m² listings under ¥80M ÷ all used-condo listings) / 15%). All asking prices, SUUMO crawl 2026-10-12; ¥80M is the writer's affordability line for a ~¥10M household.\nGROWTH (100): population change 2020→25 (census) −4%→0 … +8%→35; IPSS 2050 vs 2020 −15%→0 … +15%→30; residential land price 5-yr change 5%→0 … 45%→20; 0–14 share 2020 9%→0 … 15%→10; pipeline adjustment −3…+5 (confirmed near-term projects +, stalled flagships −). Clamped 0–100.\nHAZARD (100, higher = safer; all shares = % of residents, 2020 census 500 m mesh, 4×4 sample points per cell, data/area_hazard.json from area_hazard.py): WATER 40 × (1 − (0.25·shallow<0.5 m + 0.6·0.5–3 m + 1.0·≥3 m)/100) using the deepest of flood (洪水 想定最大規模), storm surge (高潮 想定最大規模) and tsunami (津波 想定最大規模) — all ハザードマップポータル open data; GROUND 25 × (1 − (liquefaction high + 0.4·mid + 0.4·upland fill)/100) from 国土地理院 地形分類 (landform-based tendency, not a site survey; fill over hills/plateaus = collapse risk per GSI, counted as upland fill, not liquefaction; prefectural 液状化 maps are not open data); LANDSLIDE 10 × (1 − min(1, (土砂災害警戒区域 + 特別警戒区域 share)/10%)); EARTHQUAKE 25 × linear from J-SHIS 2024 30-yr P(震度6弱+) 40% → 25 … 85% → 0 (population-weighted at the 5 most-populated cells). Max-scenario maps describe rare (≈1/1000-yr) events; condo upper floors are not flooded but building services and access are.\nCOSTCO: estimated drive minutes (midpoint of range) to nearest Kanto warehouse: ≤15 → 100, ≥75 → 0, linear.\nSHORTLIST: top 28 by total among areas whose space sub-score is >= 10; higher-ranked areas below the space gate (central wards where 90–100 m² asks ¥120M–¥430M) stay ranked but are not shortlisted.\nMISSING DATA: never silently zero. Each imputation is listed in the area's dataFlags. Evidence-based absences (no bus route found, zero ≥90 m² listings) score 0 and are labelled as such.\nannualBenefitYen = Tokyo-only cash (018 × 2 children = ¥120,000) minus 12 × (1st-child + 2nd-child 0–2 認可 monthly fees) for a year in which both children are aged 0–2 in 認可; null where the fee is unknown. Prices in yen; landPrice = 2026 公示地価 residential average ¥/m².",
   "referenceFamily": "Dual income ~¥10M; children aged 0–2 (one in 認可, one newborn); target condo 90–100 m²; commute to Tokyo Station / Otemachi",
   "shortlistSize": 28,
   "spaceGate": 10,
@@ -25,11 +25,11 @@
       "lat": 35.6492,
       "lng": 139.9136,
       "rank": 1,
-      "totalScore": 65.2,
+      "totalScore": 67.5,
       "shortlisted": true,
       "scores": {
         "commute": 97.3,
-        "bus": 0.0,
+        "bus": 46.7,
         "childcare": 85,
         "space": 52.9,
         "costco": 66.7,
@@ -69,7 +69,15 @@
         "crowding": "123%",
         "crowdingLine": "JR京葉 123%"
       },
-      "bus": null,
+      "bus": {
+        "available": true,
+        "route": "東京駅～TDR・新浦安地区 (京成バス; 新浦安 bay districts 日の出・明海・高洲・富岡) → 東京駅日本橋口",
+        "morningCount": 10,
+        "eveningCount": 5,
+        "rideMin": "23–33 (富岡三丁目) to 44–54 (日の出七丁目)",
+        "fare": 730,
+        "passMonthly": null
+      },
       "childcare": {
         "daycare0to2Monthly": 0,
         "daycare0to2MonthlyImputed": null,
@@ -113,6 +121,7 @@
       },
       "highlights": [
         "20 min to Tokyo from 新浦安 with 0 transfers",
+        "Weekday commuter bus to Tokyo Station",
         "0–2 認可 daycare free (matches Tokyo)",
         "Zero daycare waitlist",
         "26% of used listings ≥90 m²"
@@ -134,6 +143,7 @@
         "https://www.cfa.go.jp/assets/contents/node/basic_page/field_ref_resources/69799c33-85cb-44f6-8c70-08ed3a292ab5/c253a682/20251222_policies_kosodateshien_houkago-jidou_80.pdf",
         "https://www.city.urayasu.lg.jp/kodomo/hoiku/hoikuen/1047820.html",
         "https://www.pref.chiba.lg.jp/jika/boshi/kodomo-iryo/documents/joseinaiyou.pdf",
+        "https://www.keiseibus.co.jp/express-bus/90401-2/",
         "https://disaportal.gsi.go.jp/hazardmapportal/hazardmap/copyright/opendata.html",
         "https://www.j-shis.bosai.go.jp/api-pshm-meshinfo",
         "https://maps.gsi.go.jp/development/ichiran.html#landformclassification",
@@ -385,6 +395,139 @@
       ]
     },
     {
+      "id": "chiba-mihama",
+      "nameEn": "Chiba Mihama",
+      "nameJa": "千葉市美浜区",
+      "pref": "Chiba",
+      "type": "ku",
+      "lat": 35.6485,
+      "lng": 140.042,
+      "rank": 4,
+      "totalScore": 62.5,
+      "shortlisted": true,
+      "scores": {
+        "commute": 75.8,
+        "bus": 23.3,
+        "childcare": 56.2,
+        "space": 73.4,
+        "costco": 100.0,
+        "growth": 42.0,
+        "hazard": 35.8
+      },
+      "hazard": {
+        "pop2020mesh": 152673,
+        "waterAny": 94.7,
+        "waterMid": 80.8,
+        "waterDeep": 9.3,
+        "flood": 45.0,
+        "floodDeep": 0.0,
+        "surge": 94.4,
+        "tsunami": 3.2,
+        "landslide": 0.5,
+        "landslideRed": 0.1,
+        "liqHigh": 97.3,
+        "liqMid": 1.2,
+        "liqRated": 98.8,
+        "fillUpland": 0.0,
+        "quake30": 68.0,
+        "parts": {
+          "water": 16.4,
+          "liquefaction": 0.6,
+          "landslide": 9.4,
+          "earthquake": 9.4
+        }
+      },
+      "commute": {
+        "station": "海浜幕張",
+        "destination": "Tokyo",
+        "minToTokyo": 34,
+        "transfers": 0,
+        "effectiveMin": 34,
+        "passMonthly": 18450,
+        "crowding": "123%",
+        "crowdingLine": "JR京葉 123%"
+      },
+      "bus": {
+        "available": true,
+        "route": "マイタウンライナー ベイエリア線 (平和交通+あすか交通; 幕張ベイタウン・ベイパーク・検見川浜・稲毛海岸・高洲) → 東京駅日本橋口/銀座",
+        "morningCount": 4,
+        "eveningCount": 3,
+        "rideMin": "38–81 (若葉公園 / 9番街)",
+        "fare": 800,
+        "passMonthly": null
+      },
+      "childcare": {
+        "daycare0to2Monthly": 54330,
+        "daycare0to2MonthlyImputed": null,
+        "waitlist2025": 0,
+        "waitlist2026": 0,
+        "gakudoWaitlist": 0,
+        "gakudoWaitlistNote": "2025-05-01",
+        "medicalAge": 18,
+        "medicalCopay": 300,
+        "lunchFree": "Elementary free FY2026; junior high free only for 3rd child+",
+        "cashExtras": null,
+        "annualBenefitYen": -977880,
+        "feeNote": "Chiba-shi FY2026 table D9; 2nd child half since 2025-09"
+      },
+      "housing": {
+        "median90to105": 57800000,
+        "n90to105": 49,
+        "median90to110new": 67800000,
+        "nNew": 35,
+        "share90plus": 17.4,
+        "count90under80M": 41,
+        "shareAffordableLarge": 8.5,
+        "count90under80MBuilt2000": 26,
+        "priceUsedForScore": 62600638,
+        "priceBasis": "geometric mean of all-age 90–105 m² and built≥2000 90–110 m² medians",
+        "landPrice": 194000,
+        "landChange5y": 19.4,
+        "landYoY2026": 5.8,
+        "usedListingsTotal": 483
+      },
+      "costco": {
+        "nearest": "幕張",
+        "km": 5,
+        "driveMin": 12.5
+      },
+      "demographics": {
+        "pop2025": 156222,
+        "change2020to2025": 4.9,
+        "ipss2050": -14.4,
+        "childShare": 12.15
+      },
+      "highlights": [
+        "Weekday commuter bus to Tokyo Station",
+        "Zero daycare waitlist",
+        "41 ≥90 m² listings under ¥80M",
+        "Costco 幕張 ~12.5 min",
+        "幕張ベイパーク new town"
+      ],
+      "dataFlags": [
+        "municipal cash extras not systematically surveyed (Tokyo-only 018/gift = 0 by rule)"
+      ],
+      "sources": [
+        "https://transit.yahoo.co.jp/search/result?from=%E6%B5%B7%E6%B5%9C%E5%B9%95%E5%BC%B5&to=%E6%9D%B1%E4%BA%AC&y=2026&m=10&d=14&hh=08&m1=4&m2=5&type=4&ticket=ic",
+        "https://www.mlit.go.jp/report/press/content/002015142.pdf",
+        "https://suumo.jp/jj/bukken/ichiran/JJ010FJ001/?ar=030&bs=011&ta=12&sc=12106&mb=90&mt=9999999&pc=100",
+        "https://totinokati.com/kakaku/place/12106/kouji/",
+        "https://uub.jp/cdr/j/zogen.html",
+        "https://uub.jp/cdr/j/f.html",
+        "https://uub.jp/cdr/j/child.html",
+        "https://hubmedia.co.jp/costco/costco-store/japan-all-costco-stores/",
+        "https://www.pref.chiba.lg.jp/jika/hoikusho/jouhou/documents/r080401itiran.pdf",
+        "https://www.cfa.go.jp/assets/contents/node/basic_page/field_ref_resources/69799c33-85cb-44f6-8c70-08ed3a292ab5/c253a682/20251222_policies_kosodateshien_houkago-jidou_80.pdf",
+        "https://www.city.chiba.jp/kodomomirai/yojikyoiku/unei/documents/r8_riyousyafutanngaku.pdf",
+        "https://www.pref.chiba.lg.jp/jika/boshi/kodomo-iryo/documents/joseinaiyou.pdf",
+        "https://heiwakotsu.com/timefare_mtl_bayarea.htm",
+        "https://disaportal.gsi.go.jp/hazardmapportal/hazardmap/copyright/opendata.html",
+        "https://www.j-shis.bosai.go.jp/api-pshm-meshinfo",
+        "https://maps.gsi.go.jp/development/ichiran.html#landformclassification",
+        "https://www.e-stat.go.jp/gis/statmap-search?type=1&toukeiCode=00200521"
+      ]
+    },
+    {
       "id": "minato",
       "nameEn": "Minato",
       "nameJa": "港区",
@@ -392,7 +535,7 @@
       "type": "ku",
       "lat": 35.6457,
       "lng": 139.7476,
-      "rank": 4,
+      "rank": 5,
       "totalScore": 61.3,
       "shortlisted": false,
       "scores": {
@@ -499,129 +642,6 @@
         "https://www.fukushi.metro.tokyo.lg.jp/documents/d/fukushi/080501sokuhou",
         "https://www.spt.metro.tokyo.lg.jp/kodomoseisaku/book/2025-02_tokyo_syoshika2025/pageindices/index30.html",
         "https://www.fukushi.metro.tokyo.lg.jp/documents/d/fukushi/2026-07-02-093829-831",
-        "https://disaportal.gsi.go.jp/hazardmapportal/hazardmap/copyright/opendata.html",
-        "https://www.j-shis.bosai.go.jp/api-pshm-meshinfo",
-        "https://maps.gsi.go.jp/development/ichiran.html#landformclassification",
-        "https://www.e-stat.go.jp/gis/statmap-search?type=1&toukeiCode=00200521"
-      ]
-    },
-    {
-      "id": "chiba-mihama",
-      "nameEn": "Chiba Mihama",
-      "nameJa": "千葉市美浜区",
-      "pref": "Chiba",
-      "type": "ku",
-      "lat": 35.6485,
-      "lng": 140.042,
-      "rank": 5,
-      "totalScore": 61.3,
-      "shortlisted": true,
-      "scores": {
-        "commute": 75.8,
-        "bus": 0.0,
-        "childcare": 56.2,
-        "space": 73.4,
-        "costco": 100.0,
-        "growth": 42.0,
-        "hazard": 35.8
-      },
-      "hazard": {
-        "pop2020mesh": 152673,
-        "waterAny": 94.7,
-        "waterMid": 80.8,
-        "waterDeep": 9.3,
-        "flood": 45.0,
-        "floodDeep": 0.0,
-        "surge": 94.4,
-        "tsunami": 3.2,
-        "landslide": 0.5,
-        "landslideRed": 0.1,
-        "liqHigh": 97.3,
-        "liqMid": 1.2,
-        "liqRated": 98.8,
-        "fillUpland": 0.0,
-        "quake30": 68.0,
-        "parts": {
-          "water": 16.4,
-          "liquefaction": 0.6,
-          "landslide": 9.4,
-          "earthquake": 9.4
-        }
-      },
-      "commute": {
-        "station": "海浜幕張",
-        "destination": "Tokyo",
-        "minToTokyo": 34,
-        "transfers": 0,
-        "effectiveMin": 34,
-        "passMonthly": 18450,
-        "crowding": "123%",
-        "crowdingLine": "JR京葉 123%"
-      },
-      "bus": null,
-      "childcare": {
-        "daycare0to2Monthly": 54330,
-        "daycare0to2MonthlyImputed": null,
-        "waitlist2025": 0,
-        "waitlist2026": 0,
-        "gakudoWaitlist": 0,
-        "gakudoWaitlistNote": "2025-05-01",
-        "medicalAge": 18,
-        "medicalCopay": 300,
-        "lunchFree": "Elementary free FY2026; junior high free only for 3rd child+",
-        "cashExtras": null,
-        "annualBenefitYen": -977880,
-        "feeNote": "Chiba-shi FY2026 table D9; 2nd child half since 2025-09"
-      },
-      "housing": {
-        "median90to105": 57800000,
-        "n90to105": 49,
-        "median90to110new": 67800000,
-        "nNew": 35,
-        "share90plus": 17.4,
-        "count90under80M": 41,
-        "shareAffordableLarge": 8.5,
-        "count90under80MBuilt2000": 26,
-        "priceUsedForScore": 62600638,
-        "priceBasis": "geometric mean of all-age 90–105 m² and built≥2000 90–110 m² medians",
-        "landPrice": 194000,
-        "landChange5y": 19.4,
-        "landYoY2026": 5.8,
-        "usedListingsTotal": 483
-      },
-      "costco": {
-        "nearest": "幕張",
-        "km": 5,
-        "driveMin": 12.5
-      },
-      "demographics": {
-        "pop2025": 156222,
-        "change2020to2025": 4.9,
-        "ipss2050": -14.4,
-        "childShare": 12.15
-      },
-      "highlights": [
-        "Zero daycare waitlist",
-        "41 ≥90 m² listings under ¥80M",
-        "Costco 幕張 ~12.5 min",
-        "幕張ベイパーク new town"
-      ],
-      "dataFlags": [
-        "municipal cash extras not systematically surveyed (Tokyo-only 018/gift = 0 by rule)"
-      ],
-      "sources": [
-        "https://transit.yahoo.co.jp/search/result?from=%E6%B5%B7%E6%B5%9C%E5%B9%95%E5%BC%B5&to=%E6%9D%B1%E4%BA%AC&y=2026&m=10&d=14&hh=08&m1=4&m2=5&type=4&ticket=ic",
-        "https://www.mlit.go.jp/report/press/content/002015142.pdf",
-        "https://suumo.jp/jj/bukken/ichiran/JJ010FJ001/?ar=030&bs=011&ta=12&sc=12106&mb=90&mt=9999999&pc=100",
-        "https://totinokati.com/kakaku/place/12106/kouji/",
-        "https://uub.jp/cdr/j/zogen.html",
-        "https://uub.jp/cdr/j/f.html",
-        "https://uub.jp/cdr/j/child.html",
-        "https://hubmedia.co.jp/costco/costco-store/japan-all-costco-stores/",
-        "https://www.pref.chiba.lg.jp/jika/hoikusho/jouhou/documents/r080401itiran.pdf",
-        "https://www.cfa.go.jp/assets/contents/node/basic_page/field_ref_resources/69799c33-85cb-44f6-8c70-08ed3a292ab5/c253a682/20251222_policies_kosodateshien_houkago-jidou_80.pdf",
-        "https://www.city.chiba.jp/kodomomirai/yojikyoiku/unei/documents/r8_riyousyafutanngaku.pdf",
-        "https://www.pref.chiba.lg.jp/jika/boshi/kodomo-iryo/documents/joseinaiyou.pdf",
         "https://disaportal.gsi.go.jp/hazardmapportal/hazardmap/copyright/opendata.html",
         "https://www.j-shis.bosai.go.jp/api-pshm-meshinfo",
         "https://maps.gsi.go.jp/development/ichiran.html#landformclassification",
@@ -1122,6 +1142,137 @@
       ]
     },
     {
+      "id": "chiba-inage",
+      "nameEn": "Chiba Inage",
+      "nameJa": "千葉市稲毛区",
+      "pref": "Chiba",
+      "type": "ku",
+      "lat": 35.6371,
+      "lng": 140.0924,
+      "rank": 10,
+      "totalScore": 59.5,
+      "shortlisted": true,
+      "scores": {
+        "commute": 61.2,
+        "bus": 16.7,
+        "childcare": 56.2,
+        "space": 64.6,
+        "costco": 91.7,
+        "growth": 33.5,
+        "hazard": 80.3
+      },
+      "hazard": {
+        "pop2020mesh": 162675,
+        "waterAny": 3.6,
+        "waterMid": 2.7,
+        "waterDeep": 0.7,
+        "flood": 0.7,
+        "floodDeep": 0.0,
+        "surge": 3.6,
+        "tsunami": 0.0,
+        "landslide": 1.4,
+        "landslideRed": 0.3,
+        "liqHigh": 13.9,
+        "liqMid": 10.2,
+        "liqRated": 100.0,
+        "fillUpland": 2.2,
+        "quake30": 62.2,
+        "parts": {
+          "water": 39.1,
+          "liquefaction": 20.3,
+          "landslide": 8.3,
+          "earthquake": 12.7
+        }
+      },
+      "commute": {
+        "station": "稲毛",
+        "destination": "Tokyo",
+        "minToTokyo": 37,
+        "transfers": 0,
+        "effectiveMin": 37,
+        "passMonthly": 20450,
+        "crowding": "160%",
+        "crowdingLine": "JR総武快速 160%"
+      },
+      "bus": {
+        "available": true,
+        "route": "マイタウンライナー ベイエリア線, 稲毛ルート (平和交通: 平和交通本社・スカイタウン・稲毛5丁目…) → 東京駅日本橋口/銀座; also ちばきたライナー (長沼, 1 AM / 1 PM)",
+        "morningCount": 2,
+        "eveningCount": 3,
+        "rideMin": "59–94 (スカイタウン)",
+        "fare": 1000,
+        "passMonthly": null
+      },
+      "childcare": {
+        "daycare0to2Monthly": 54330,
+        "daycare0to2MonthlyImputed": null,
+        "waitlist2025": 0,
+        "waitlist2026": 0,
+        "gakudoWaitlist": 0,
+        "gakudoWaitlistNote": "2025-05-01",
+        "medicalAge": 18,
+        "medicalCopay": 300,
+        "lunchFree": "Elementary free FY2026; junior high free only for 3rd child+",
+        "cashExtras": null,
+        "annualBenefitYen": -977880,
+        "feeNote": "Chiba-shi FY2026 table D9; 2nd child half since 2025-09"
+      },
+      "housing": {
+        "median90to105": 24900000,
+        "n90to105": 13,
+        "median90to110new": 59800000,
+        "nNew": 7,
+        "share90plus": 10.4,
+        "count90under80M": 17,
+        "shareAffordableLarge": 5.9,
+        "count90under80MBuilt2000": 7,
+        "priceUsedForScore": 38587821,
+        "priceBasis": "geometric mean of all-age 90–105 m² and built≥2000 90–110 m² medians",
+        "landPrice": 176000,
+        "landChange5y": 20.7,
+        "landYoY2026": 5.9,
+        "usedListingsTotal": 288
+      },
+      "costco": {
+        "nearest": "幕張",
+        "km": 8,
+        "driveMin": 20
+      },
+      "demographics": {
+        "pop2025": 160432,
+        "change2020to2025": -0.1,
+        "ipss2050": -5.0,
+        "childShare": 11.57
+      },
+      "highlights": [
+        "Weekday commuter bus to Tokyo Station",
+        "Zero daycare waitlist",
+        "Crowded line (JR総武快速 160%)"
+      ],
+      "dataFlags": [
+        "municipal cash extras not systematically surveyed (Tokyo-only 018/gift = 0 by rule)"
+      ],
+      "sources": [
+        "https://transit.yahoo.co.jp/search/result?from=%E7%A8%B2%E6%AF%9B&to=%E6%9D%B1%E4%BA%AC&y=2026&m=10&d=14&hh=08&m1=4&m2=5&type=4&ticket=ic",
+        "https://www.mlit.go.jp/report/press/content/002015142.pdf",
+        "https://suumo.jp/jj/bukken/ichiran/JJ010FJ001/?ar=030&bs=011&ta=12&sc=12103&mb=90&mt=9999999&pc=100",
+        "https://totinokati.com/kakaku/place/12103/kouji/",
+        "https://uub.jp/cdr/j/zogen.html",
+        "https://uub.jp/cdr/j/f.html",
+        "https://uub.jp/cdr/j/child.html",
+        "https://hubmedia.co.jp/costco/costco-store/japan-all-costco-stores/",
+        "https://www.pref.chiba.lg.jp/jika/hoikusho/jouhou/documents/r080401itiran.pdf",
+        "https://www.cfa.go.jp/assets/contents/node/basic_page/field_ref_resources/69799c33-85cb-44f6-8c70-08ed3a292ab5/c253a682/20251222_policies_kosodateshien_houkago-jidou_80.pdf",
+        "https://www.city.chiba.jp/kodomomirai/yojikyoiku/unei/documents/r8_riyousyafutanngaku.pdf",
+        "https://www.pref.chiba.lg.jp/jika/boshi/kodomo-iryo/documents/joseinaiyou.pdf",
+        "https://heiwakotsu.com/timefare_mtl_bayarea.htm",
+        "https://disaportal.gsi.go.jp/hazardmapportal/hazardmap/copyright/opendata.html",
+        "https://www.j-shis.bosai.go.jp/api-pshm-meshinfo",
+        "https://maps.gsi.go.jp/development/ichiran.html#landformclassification",
+        "https://www.e-stat.go.jp/gis/statmap-search?type=1&toukeiCode=00200521"
+      ]
+    },
+    {
       "id": "toshima",
       "nameEn": "Toshima",
       "nameJa": "豊島区",
@@ -1129,7 +1280,7 @@
       "type": "ku",
       "lat": 35.7295,
       "lng": 139.7109,
-      "rank": 10,
+      "rank": 11,
       "totalScore": 59.1,
       "shortlisted": false,
       "scores": {
@@ -1235,137 +1386,6 @@
         "https://www.fukushi.metro.tokyo.lg.jp/documents/d/fukushi/080501sokuhou",
         "https://www.spt.metro.tokyo.lg.jp/kodomoseisaku/book/2025-02_tokyo_syoshika2025/pageindices/index30.html",
         "https://www.fukushi.metro.tokyo.lg.jp/documents/d/fukushi/2026-07-02-093829-831",
-        "https://disaportal.gsi.go.jp/hazardmapportal/hazardmap/copyright/opendata.html",
-        "https://www.j-shis.bosai.go.jp/api-pshm-meshinfo",
-        "https://maps.gsi.go.jp/development/ichiran.html#landformclassification",
-        "https://www.e-stat.go.jp/gis/statmap-search?type=1&toukeiCode=00200521"
-      ]
-    },
-    {
-      "id": "chiba-inage",
-      "nameEn": "Chiba Inage",
-      "nameJa": "千葉市稲毛区",
-      "pref": "Chiba",
-      "type": "ku",
-      "lat": 35.6371,
-      "lng": 140.0924,
-      "rank": 11,
-      "totalScore": 59.0,
-      "shortlisted": true,
-      "scores": {
-        "commute": 61.2,
-        "bus": 6.7,
-        "childcare": 56.2,
-        "space": 64.6,
-        "costco": 91.7,
-        "growth": 33.5,
-        "hazard": 80.3
-      },
-      "hazard": {
-        "pop2020mesh": 162675,
-        "waterAny": 3.6,
-        "waterMid": 2.7,
-        "waterDeep": 0.7,
-        "flood": 0.7,
-        "floodDeep": 0.0,
-        "surge": 3.6,
-        "tsunami": 0.0,
-        "landslide": 1.4,
-        "landslideRed": 0.3,
-        "liqHigh": 13.9,
-        "liqMid": 10.2,
-        "liqRated": 100.0,
-        "fillUpland": 2.2,
-        "quake30": 62.2,
-        "parts": {
-          "water": 39.1,
-          "liquefaction": 20.3,
-          "landslide": 8.3,
-          "earthquake": 12.7
-        }
-      },
-      "commute": {
-        "station": "稲毛",
-        "destination": "Tokyo",
-        "minToTokyo": 37,
-        "transfers": 0,
-        "effectiveMin": 37,
-        "passMonthly": 20450,
-        "crowding": "160%",
-        "crowdingLine": "JR総武快速 160%"
-      },
-      "bus": {
-        "available": true,
-        "route": "ちばきたライナー (長沼, ワンズモール stops; mapping inferred)",
-        "morningCount": 1,
-        "eveningCount": 1,
-        "rideMin": "~60–67",
-        "fare": 1100,
-        "passMonthly": null
-      },
-      "childcare": {
-        "daycare0to2Monthly": 54330,
-        "daycare0to2MonthlyImputed": null,
-        "waitlist2025": 0,
-        "waitlist2026": 0,
-        "gakudoWaitlist": 0,
-        "gakudoWaitlistNote": "2025-05-01",
-        "medicalAge": 18,
-        "medicalCopay": 300,
-        "lunchFree": "Elementary free FY2026; junior high free only for 3rd child+",
-        "cashExtras": null,
-        "annualBenefitYen": -977880,
-        "feeNote": "Chiba-shi FY2026 table D9; 2nd child half since 2025-09"
-      },
-      "housing": {
-        "median90to105": 24900000,
-        "n90to105": 13,
-        "median90to110new": 59800000,
-        "nNew": 7,
-        "share90plus": 10.4,
-        "count90under80M": 17,
-        "shareAffordableLarge": 5.9,
-        "count90under80MBuilt2000": 7,
-        "priceUsedForScore": 38587821,
-        "priceBasis": "geometric mean of all-age 90–105 m² and built≥2000 90–110 m² medians",
-        "landPrice": 176000,
-        "landChange5y": 20.7,
-        "landYoY2026": 5.9,
-        "usedListingsTotal": 288
-      },
-      "costco": {
-        "nearest": "幕張",
-        "km": 8,
-        "driveMin": 20
-      },
-      "demographics": {
-        "pop2025": 160432,
-        "change2020to2025": -0.1,
-        "ipss2050": -5.0,
-        "childShare": 11.57
-      },
-      "highlights": [
-        "Weekday commuter bus to Tokyo Station",
-        "Zero daycare waitlist",
-        "Crowded line (JR総武快速 160%)"
-      ],
-      "dataFlags": [
-        "municipal cash extras not systematically surveyed (Tokyo-only 018/gift = 0 by rule)"
-      ],
-      "sources": [
-        "https://transit.yahoo.co.jp/search/result?from=%E7%A8%B2%E6%AF%9B&to=%E6%9D%B1%E4%BA%AC&y=2026&m=10&d=14&hh=08&m1=4&m2=5&type=4&ticket=ic",
-        "https://www.mlit.go.jp/report/press/content/002015142.pdf",
-        "https://suumo.jp/jj/bukken/ichiran/JJ010FJ001/?ar=030&bs=011&ta=12&sc=12103&mb=90&mt=9999999&pc=100",
-        "https://totinokati.com/kakaku/place/12103/kouji/",
-        "https://uub.jp/cdr/j/zogen.html",
-        "https://uub.jp/cdr/j/f.html",
-        "https://uub.jp/cdr/j/child.html",
-        "https://hubmedia.co.jp/costco/costco-store/japan-all-costco-stores/",
-        "https://www.pref.chiba.lg.jp/jika/hoikusho/jouhou/documents/r080401itiran.pdf",
-        "https://www.cfa.go.jp/assets/contents/node/basic_page/field_ref_resources/69799c33-85cb-44f6-8c70-08ed3a292ab5/c253a682/20251222_policies_kosodateshien_houkago-jidou_80.pdf",
-        "https://www.city.chiba.jp/kodomomirai/yojikyoiku/unei/documents/r8_riyousyafutanngaku.pdf",
-        "https://www.pref.chiba.lg.jp/jika/boshi/kodomo-iryo/documents/joseinaiyou.pdf",
-        "https://www.keiseibus.co.jp/express-bus/90420-2/",
         "https://disaportal.gsi.go.jp/hazardmapportal/hazardmap/copyright/opendata.html",
         "https://www.j-shis.bosai.go.jp/api-pshm-meshinfo",
         "https://maps.gsi.go.jp/development/ichiran.html#landformclassification",
@@ -5389,6 +5409,138 @@
       ]
     },
     {
+      "id": "chiba-wakaba",
+      "nameEn": "Chiba Wakaba",
+      "nameJa": "千葉市若葉区",
+      "pref": "Chiba",
+      "type": "ku",
+      "lat": 35.6462,
+      "lng": 140.15,
+      "rank": 45,
+      "totalScore": 52.0,
+      "shortlisted": false,
+      "scores": {
+        "commute": 42.7,
+        "bus": 26.7,
+        "childcare": 56.2,
+        "space": 60.8,
+        "costco": 62.5,
+        "growth": 19.8,
+        "hazard": 84.1
+      },
+      "hazard": {
+        "pop2020mesh": 149165,
+        "waterAny": 2.2,
+        "waterMid": 1.5,
+        "waterDeep": 0.0,
+        "flood": 1.2,
+        "floodDeep": 0.0,
+        "surge": 1.1,
+        "tsunami": 0.0,
+        "landslide": 1.0,
+        "landslideRed": 0.2,
+        "liqHigh": 8.5,
+        "liqMid": 5.8,
+        "liqRated": 99.9,
+        "fillUpland": 2.7,
+        "quake30": 60.3,
+        "parts": {
+          "water": 39.6,
+          "liquefaction": 22.0,
+          "landslide": 8.8,
+          "earthquake": 13.7
+        }
+      },
+      "commute": {
+        "station": "都賀",
+        "destination": "Tokyo",
+        "minToTokyo": 49,
+        "transfers": 0,
+        "effectiveMin": 49,
+        "passMonthly": 23750,
+        "crowding": "160%",
+        "crowdingLine": "JR総武快速 160%"
+      },
+      "bus": {
+        "available": true,
+        "route": "マイタウンライナー おゆみ野・ちはら台線 from 大宮町ターミナル (あすか交通+平和交通) → 東京駅日本橋口/銀座; also 東京駅～千城台・御成台車庫 (京成, 1 AM / 1 PM)",
+        "morningCount": 4,
+        "eveningCount": 4,
+        "rideMin": "55–95 (大宮町ターミナル)",
+        "fare": 1200,
+        "passMonthly": null
+      },
+      "childcare": {
+        "daycare0to2Monthly": 54330,
+        "daycare0to2MonthlyImputed": null,
+        "waitlist2025": 0,
+        "waitlist2026": 0,
+        "gakudoWaitlist": 0,
+        "gakudoWaitlistNote": "2025-05-01",
+        "medicalAge": 18,
+        "medicalCopay": 300,
+        "lunchFree": "Elementary free FY2026; junior high free only for 3rd child+",
+        "cashExtras": null,
+        "annualBenefitYen": -977880,
+        "feeNote": "Chiba-shi FY2026 table D9; 2nd child half since 2025-09"
+      },
+      "housing": {
+        "median90to105": 16800000,
+        "n90to105": 6,
+        "median90to110new": 24800000,
+        "nNew": 1,
+        "share90plus": 10.0,
+        "count90under80M": 7,
+        "shareAffordableLarge": 7.8,
+        "count90under80MBuilt2000": 1,
+        "priceUsedForScore": 19525273,
+        "priceBasis": "geometric mean of all-age 90–105 m² median and 70–80 m² ¥/m² × 95 (built≥2000 sample <3)",
+        "landPrice": 95000,
+        "landChange5y": 21.7,
+        "landYoY2026": 7.2,
+        "usedListingsTotal": 90
+      },
+      "costco": {
+        "nearest": "幕張",
+        "km": 16,
+        "driveMin": 37.5
+      },
+      "demographics": {
+        "pop2025": 145508,
+        "change2020to2025": -1.0,
+        "ipss2050": -15.6,
+        "childShare": 10.63
+      },
+      "highlights": [
+        "Weekday commuter bus to Tokyo Station",
+        "Zero daycare waitlist",
+        "Crowded line (JR総武快速 160%)"
+      ],
+      "dataFlags": [
+        "municipal cash extras not systematically surveyed (Tokyo-only 018/gift = 0 by rule)",
+        "built≥2000 90–110 m² sample <3: price blends all-age median with 70–80 m² unit price × 95"
+      ],
+      "sources": [
+        "https://transit.yahoo.co.jp/search/result?from=%E9%83%BD%E8%B3%80&to=%E6%9D%B1%E4%BA%AC&y=2026&m=10&d=14&hh=08&m1=4&m2=5&type=4&ticket=ic",
+        "https://www.mlit.go.jp/report/press/content/002015142.pdf",
+        "https://suumo.jp/jj/bukken/ichiran/JJ010FJ001/?ar=030&bs=011&ta=12&sc=12104&mb=90&mt=9999999&pc=100",
+        "https://totinokati.com/kakaku/place/12104/kouji/",
+        "https://uub.jp/cdr/j/zogen.html",
+        "https://uub.jp/cdr/j/f.html",
+        "https://uub.jp/cdr/j/child.html",
+        "https://hubmedia.co.jp/costco/costco-store/japan-all-costco-stores/",
+        "https://www.pref.chiba.lg.jp/jika/hoikusho/jouhou/documents/r080401itiran.pdf",
+        "https://www.cfa.go.jp/assets/contents/node/basic_page/field_ref_resources/69799c33-85cb-44f6-8c70-08ed3a292ab5/c253a682/20251222_policies_kosodateshien_houkago-jidou_80.pdf",
+        "https://www.city.chiba.jp/kodomomirai/yojikyoiku/unei/documents/r8_riyousyafutanngaku.pdf",
+        "https://www.pref.chiba.lg.jp/jika/boshi/kodomo-iryo/documents/joseinaiyou.pdf",
+        "https://heiwakotsu.com/timefare_mtl_chihara.htm",
+        "https://disaportal.gsi.go.jp/hazardmapportal/hazardmap/copyright/opendata.html",
+        "https://www.j-shis.bosai.go.jp/api-pshm-meshinfo",
+        "https://maps.gsi.go.jp/development/ichiran.html#landformclassification",
+        "https://www.e-stat.go.jp/gis/statmap-search?type=1&toukeiCode=00200521"
+      ]
+    },
+    {
       "id": "meguro",
       "nameEn": "Meguro",
       "nameJa": "目黒区",
@@ -5396,7 +5548,7 @@
       "type": "ku",
       "lat": 35.644,
       "lng": 139.699,
-      "rank": 45,
+      "rank": 46,
       "totalScore": 51.5,
       "shortlisted": false,
       "scores": {
@@ -5516,7 +5668,7 @@
       "type": "ku",
       "lat": 35.7777,
       "lng": 139.721,
-      "rank": 46,
+      "rank": 47,
       "totalScore": 51.2,
       "shortlisted": false,
       "scores": {
@@ -5636,7 +5788,7 @@
       "type": "shi",
       "lat": 35.731,
       "lng": 140.071,
-      "rank": 47,
+      "rank": 48,
       "totalScore": 51.1,
       "shortlisted": false,
       "scores": {
@@ -5757,7 +5909,7 @@
       "type": "ku",
       "lat": 35.5531,
       "lng": 139.6693,
-      "rank": 48,
+      "rank": 49,
       "totalScore": 51.1,
       "shortlisted": false,
       "scores": {
@@ -5864,138 +6016,6 @@
         "https://www.pref.kanagawa.jp/documents/136348/taikijidoubessi.pdf",
         "https://www.cfa.go.jp/assets/contents/node/basic_page/field_ref_resources/69799c33-85cb-44f6-8c70-08ed3a292ab5/c253a682/20251222_policies_kosodateshien_houkago-jidou_80.pdf",
         "https://www.city.kawasaki.jp/450/cmsfiles/contents/0000030/30711/hoikuryoukingakuhyou.pdf",
-        "https://disaportal.gsi.go.jp/hazardmapportal/hazardmap/copyright/opendata.html",
-        "https://www.j-shis.bosai.go.jp/api-pshm-meshinfo",
-        "https://maps.gsi.go.jp/development/ichiran.html#landformclassification",
-        "https://www.e-stat.go.jp/gis/statmap-search?type=1&toukeiCode=00200521"
-      ]
-    },
-    {
-      "id": "chiba-wakaba",
-      "nameEn": "Chiba Wakaba",
-      "nameJa": "千葉市若葉区",
-      "pref": "Chiba",
-      "type": "ku",
-      "lat": 35.6462,
-      "lng": 140.15,
-      "rank": 49,
-      "totalScore": 51.0,
-      "shortlisted": false,
-      "scores": {
-        "commute": 42.7,
-        "bus": 6.7,
-        "childcare": 56.2,
-        "space": 60.8,
-        "costco": 62.5,
-        "growth": 19.8,
-        "hazard": 84.1
-      },
-      "hazard": {
-        "pop2020mesh": 149165,
-        "waterAny": 2.2,
-        "waterMid": 1.5,
-        "waterDeep": 0.0,
-        "flood": 1.2,
-        "floodDeep": 0.0,
-        "surge": 1.1,
-        "tsunami": 0.0,
-        "landslide": 1.0,
-        "landslideRed": 0.2,
-        "liqHigh": 8.5,
-        "liqMid": 5.8,
-        "liqRated": 99.9,
-        "fillUpland": 2.7,
-        "quake30": 60.3,
-        "parts": {
-          "water": 39.6,
-          "liquefaction": 22.0,
-          "landslide": 8.8,
-          "earthquake": 13.7
-        }
-      },
-      "commute": {
-        "station": "都賀",
-        "destination": "Tokyo",
-        "minToTokyo": 49,
-        "transfers": 0,
-        "effectiveMin": 49,
-        "passMonthly": 23750,
-        "crowding": "160%",
-        "crowdingLine": "JR総武快速 160%"
-      },
-      "bus": {
-        "available": true,
-        "route": "東京駅～千城台・御成台車庫 (京成)",
-        "morningCount": 1,
-        "eveningCount": 1,
-        "rideMin": "77",
-        "fare": 1200,
-        "passMonthly": null
-      },
-      "childcare": {
-        "daycare0to2Monthly": 54330,
-        "daycare0to2MonthlyImputed": null,
-        "waitlist2025": 0,
-        "waitlist2026": 0,
-        "gakudoWaitlist": 0,
-        "gakudoWaitlistNote": "2025-05-01",
-        "medicalAge": 18,
-        "medicalCopay": 300,
-        "lunchFree": "Elementary free FY2026; junior high free only for 3rd child+",
-        "cashExtras": null,
-        "annualBenefitYen": -977880,
-        "feeNote": "Chiba-shi FY2026 table D9; 2nd child half since 2025-09"
-      },
-      "housing": {
-        "median90to105": 16800000,
-        "n90to105": 6,
-        "median90to110new": 24800000,
-        "nNew": 1,
-        "share90plus": 10.0,
-        "count90under80M": 7,
-        "shareAffordableLarge": 7.8,
-        "count90under80MBuilt2000": 1,
-        "priceUsedForScore": 19525273,
-        "priceBasis": "geometric mean of all-age 90–105 m² median and 70–80 m² ¥/m² × 95 (built≥2000 sample <3)",
-        "landPrice": 95000,
-        "landChange5y": 21.7,
-        "landYoY2026": 7.2,
-        "usedListingsTotal": 90
-      },
-      "costco": {
-        "nearest": "幕張",
-        "km": 16,
-        "driveMin": 37.5
-      },
-      "demographics": {
-        "pop2025": 145508,
-        "change2020to2025": -1.0,
-        "ipss2050": -15.6,
-        "childShare": 10.63
-      },
-      "highlights": [
-        "Weekday commuter bus to Tokyo Station",
-        "Zero daycare waitlist",
-        "Crowded line (JR総武快速 160%)"
-      ],
-      "dataFlags": [
-        "municipal cash extras not systematically surveyed (Tokyo-only 018/gift = 0 by rule)",
-        "built≥2000 90–110 m² sample <3: price blends all-age median with 70–80 m² unit price × 95"
-      ],
-      "sources": [
-        "https://transit.yahoo.co.jp/search/result?from=%E9%83%BD%E8%B3%80&to=%E6%9D%B1%E4%BA%AC&y=2026&m=10&d=14&hh=08&m1=4&m2=5&type=4&ticket=ic",
-        "https://www.mlit.go.jp/report/press/content/002015142.pdf",
-        "https://suumo.jp/jj/bukken/ichiran/JJ010FJ001/?ar=030&bs=011&ta=12&sc=12104&mb=90&mt=9999999&pc=100",
-        "https://totinokati.com/kakaku/place/12104/kouji/",
-        "https://uub.jp/cdr/j/zogen.html",
-        "https://uub.jp/cdr/j/f.html",
-        "https://uub.jp/cdr/j/child.html",
-        "https://hubmedia.co.jp/costco/costco-store/japan-all-costco-stores/",
-        "https://www.pref.chiba.lg.jp/jika/hoikusho/jouhou/documents/r080401itiran.pdf",
-        "https://www.cfa.go.jp/assets/contents/node/basic_page/field_ref_resources/69799c33-85cb-44f6-8c70-08ed3a292ab5/c253a682/20251222_policies_kosodateshien_houkago-jidou_80.pdf",
-        "https://www.city.chiba.jp/kodomomirai/yojikyoiku/unei/documents/r8_riyousyafutanngaku.pdf",
-        "https://www.pref.chiba.lg.jp/jika/boshi/kodomo-iryo/documents/joseinaiyou.pdf",
-        "https://www.keiseibus.co.jp/express-bus/90402-2/",
         "https://disaportal.gsi.go.jp/hazardmapportal/hazardmap/copyright/opendata.html",
         "https://www.j-shis.bosai.go.jp/api-pshm-meshinfo",
         "https://maps.gsi.go.jp/development/ichiran.html#landformclassification",
@@ -7955,6 +7975,138 @@
       ]
     },
     {
+      "id": "chiba-midori",
+      "nameEn": "Chiba Midori",
+      "nameJa": "千葉市緑区",
+      "pref": "Chiba",
+      "type": "ku",
+      "lat": 35.5786,
+      "lng": 140.1904,
+      "rank": 66,
+      "totalScore": 46.9,
+      "shortlisted": false,
+      "scores": {
+        "commute": 28.8,
+        "bus": 26.7,
+        "childcare": 56.2,
+        "space": 54.0,
+        "costco": 37.5,
+        "growth": 37.4,
+        "hazard": 80.2
+      },
+      "hazard": {
+        "pop2020mesh": 126413,
+        "waterAny": 1.6,
+        "waterMid": 0.9,
+        "waterDeep": 0.0,
+        "flood": 1.2,
+        "floodDeep": 0.0,
+        "surge": 1.0,
+        "tsunami": 0.0,
+        "landslide": 2.1,
+        "landslideRed": 1.1,
+        "liqHigh": 11.0,
+        "liqMid": 8.1,
+        "liqRated": 96.1,
+        "fillUpland": 5.0,
+        "quake30": 62.1,
+        "parts": {
+          "water": 39.7,
+          "liquefaction": 20.9,
+          "landslide": 6.8,
+          "earthquake": 12.7
+        }
+      },
+      "commute": {
+        "station": "鎌取",
+        "destination": "Tokyo",
+        "minToTokyo": 53,
+        "transfers": 1,
+        "effectiveMin": 58,
+        "passMonthly": 24880,
+        "crowding": "160%",
+        "crowdingLine": "JR総武快速 160%"
+      },
+      "bus": {
+        "available": true,
+        "route": "マイタウンライナー おゆみ野・ちはら台線 (あすか交通+平和交通; おゆみ野・学園前・有吉) → 東京駅日本橋口/銀座",
+        "morningCount": 4,
+        "eveningCount": 4,
+        "rideMin": "72–112 (おゆみ野駅)",
+        "fare": 1200,
+        "passMonthly": null
+      },
+      "childcare": {
+        "daycare0to2Monthly": 54330,
+        "daycare0to2MonthlyImputed": null,
+        "waitlist2025": 0,
+        "waitlist2026": 0,
+        "gakudoWaitlist": 0,
+        "gakudoWaitlistNote": "2025-05-01",
+        "medicalAge": 18,
+        "medicalCopay": 300,
+        "lunchFree": "Elementary free FY2026; junior high free only for 3rd child+",
+        "cashExtras": null,
+        "annualBenefitYen": -977880,
+        "feeNote": "Chiba-shi FY2026 table D9; 2nd child half since 2025-09"
+      },
+      "housing": {
+        "median90to105": 18500000,
+        "n90to105": 5,
+        "median90to110new": null,
+        "nNew": 0,
+        "share90plus": 5.1,
+        "count90under80M": 5,
+        "shareAffordableLarge": 5.1,
+        "count90under80MBuilt2000": 0,
+        "priceUsedForScore": 22663041,
+        "priceBasis": "geometric mean of all-age 90–105 m² median and 70–80 m² ¥/m² × 95 (built≥2000 sample <3)",
+        "landPrice": 81000,
+        "landChange5y": 18.5,
+        "landYoY2026": 6.3,
+        "usedListingsTotal": 98
+      },
+      "costco": {
+        "nearest": "幕張",
+        "km": 22,
+        "driveMin": 52.5
+      },
+      "demographics": {
+        "pop2025": 128147,
+        "change2020to2025": -1.0,
+        "ipss2050": -1.5,
+        "childShare": 14.01
+      },
+      "highlights": [
+        "Weekday commuter bus to Tokyo Station",
+        "Zero daycare waitlist",
+        "Crowded line (JR総武快速 160%)"
+      ],
+      "dataFlags": [
+        "municipal cash extras not systematically surveyed (Tokyo-only 018/gift = 0 by rule)",
+        "built≥2000 90–110 m² sample <3: price blends all-age median with 70–80 m² unit price × 95"
+      ],
+      "sources": [
+        "https://transit.yahoo.co.jp/search/result?from=%E9%8E%8C%E5%8F%96&to=%E6%9D%B1%E4%BA%AC&y=2026&m=10&d=14&hh=08&m1=4&m2=5&type=4&ticket=ic",
+        "https://www.mlit.go.jp/report/press/content/002015142.pdf",
+        "https://suumo.jp/jj/bukken/ichiran/JJ010FJ001/?ar=030&bs=011&ta=12&sc=12105&mb=90&mt=9999999&pc=100",
+        "https://totinokati.com/kakaku/place/12105/kouji/",
+        "https://uub.jp/cdr/j/zogen.html",
+        "https://uub.jp/cdr/j/f.html",
+        "https://uub.jp/cdr/j/child.html",
+        "https://hubmedia.co.jp/costco/costco-store/japan-all-costco-stores/",
+        "https://www.pref.chiba.lg.jp/jika/hoikusho/jouhou/documents/r080401itiran.pdf",
+        "https://www.cfa.go.jp/assets/contents/node/basic_page/field_ref_resources/69799c33-85cb-44f6-8c70-08ed3a292ab5/c253a682/20251222_policies_kosodateshien_houkago-jidou_80.pdf",
+        "https://www.city.chiba.jp/kodomomirai/yojikyoiku/unei/documents/r8_riyousyafutanngaku.pdf",
+        "https://www.pref.chiba.lg.jp/jika/boshi/kodomo-iryo/documents/joseinaiyou.pdf",
+        "https://heiwakotsu.com/timefare_mtl_chihara.htm",
+        "https://disaportal.gsi.go.jp/hazardmapportal/hazardmap/copyright/opendata.html",
+        "https://www.j-shis.bosai.go.jp/api-pshm-meshinfo",
+        "https://maps.gsi.go.jp/development/ichiran.html#landformclassification",
+        "https://www.e-stat.go.jp/gis/statmap-search?type=1&toukeiCode=00200521"
+      ]
+    },
+    {
       "id": "kawaguchi",
       "nameEn": "Kawaguchi",
       "nameJa": "川口市",
@@ -7962,7 +8114,7 @@
       "type": "shi",
       "lat": 35.8019,
       "lng": 139.7173,
-      "rank": 66,
+      "rank": 67,
       "totalScore": 46.6,
       "shortlisted": false,
       "scores": {
@@ -8068,128 +8220,6 @@
         "https://www.pref.saitama.lg.jp/documents/286861/shityousonnbetu20260827kai.pdf",
         "https://www.cfa.go.jp/assets/contents/node/basic_page/field_ref_resources/69799c33-85cb-44f6-8c70-08ed3a292ab5/c253a682/20251222_policies_kosodateshien_houkago-jidou_80.pdf",
         "https://www.city.kawaguchi.lg.jp/soshiki/01080/050/4/35870.html",
-        "https://disaportal.gsi.go.jp/hazardmapportal/hazardmap/copyright/opendata.html",
-        "https://www.j-shis.bosai.go.jp/api-pshm-meshinfo",
-        "https://maps.gsi.go.jp/development/ichiran.html#landformclassification",
-        "https://www.e-stat.go.jp/gis/statmap-search?type=1&toukeiCode=00200521"
-      ]
-    },
-    {
-      "id": "chiba-midori",
-      "nameEn": "Chiba Midori",
-      "nameJa": "千葉市緑区",
-      "pref": "Chiba",
-      "type": "ku",
-      "lat": 35.5786,
-      "lng": 140.1904,
-      "rank": 67,
-      "totalScore": 45.6,
-      "shortlisted": false,
-      "scores": {
-        "commute": 28.8,
-        "bus": 0.0,
-        "childcare": 56.2,
-        "space": 54.0,
-        "costco": 37.5,
-        "growth": 37.4,
-        "hazard": 80.2
-      },
-      "hazard": {
-        "pop2020mesh": 126413,
-        "waterAny": 1.6,
-        "waterMid": 0.9,
-        "waterDeep": 0.0,
-        "flood": 1.2,
-        "floodDeep": 0.0,
-        "surge": 1.0,
-        "tsunami": 0.0,
-        "landslide": 2.1,
-        "landslideRed": 1.1,
-        "liqHigh": 11.0,
-        "liqMid": 8.1,
-        "liqRated": 96.1,
-        "fillUpland": 5.0,
-        "quake30": 62.1,
-        "parts": {
-          "water": 39.7,
-          "liquefaction": 20.9,
-          "landslide": 6.8,
-          "earthquake": 12.7
-        }
-      },
-      "commute": {
-        "station": "鎌取",
-        "destination": "Tokyo",
-        "minToTokyo": 53,
-        "transfers": 1,
-        "effectiveMin": 58,
-        "passMonthly": 24880,
-        "crowding": "160%",
-        "crowdingLine": "JR総武快速 160%"
-      },
-      "bus": null,
-      "childcare": {
-        "daycare0to2Monthly": 54330,
-        "daycare0to2MonthlyImputed": null,
-        "waitlist2025": 0,
-        "waitlist2026": 0,
-        "gakudoWaitlist": 0,
-        "gakudoWaitlistNote": "2025-05-01",
-        "medicalAge": 18,
-        "medicalCopay": 300,
-        "lunchFree": "Elementary free FY2026; junior high free only for 3rd child+",
-        "cashExtras": null,
-        "annualBenefitYen": -977880,
-        "feeNote": "Chiba-shi FY2026 table D9; 2nd child half since 2025-09"
-      },
-      "housing": {
-        "median90to105": 18500000,
-        "n90to105": 5,
-        "median90to110new": null,
-        "nNew": 0,
-        "share90plus": 5.1,
-        "count90under80M": 5,
-        "shareAffordableLarge": 5.1,
-        "count90under80MBuilt2000": 0,
-        "priceUsedForScore": 22663041,
-        "priceBasis": "geometric mean of all-age 90–105 m² median and 70–80 m² ¥/m² × 95 (built≥2000 sample <3)",
-        "landPrice": 81000,
-        "landChange5y": 18.5,
-        "landYoY2026": 6.3,
-        "usedListingsTotal": 98
-      },
-      "costco": {
-        "nearest": "幕張",
-        "km": 22,
-        "driveMin": 52.5
-      },
-      "demographics": {
-        "pop2025": 128147,
-        "change2020to2025": -1.0,
-        "ipss2050": -1.5,
-        "childShare": 14.01
-      },
-      "highlights": [
-        "Zero daycare waitlist",
-        "Crowded line (JR総武快速 160%)"
-      ],
-      "dataFlags": [
-        "municipal cash extras not systematically surveyed (Tokyo-only 018/gift = 0 by rule)",
-        "built≥2000 90–110 m² sample <3: price blends all-age median with 70–80 m² unit price × 95"
-      ],
-      "sources": [
-        "https://transit.yahoo.co.jp/search/result?from=%E9%8E%8C%E5%8F%96&to=%E6%9D%B1%E4%BA%AC&y=2026&m=10&d=14&hh=08&m1=4&m2=5&type=4&ticket=ic",
-        "https://www.mlit.go.jp/report/press/content/002015142.pdf",
-        "https://suumo.jp/jj/bukken/ichiran/JJ010FJ001/?ar=030&bs=011&ta=12&sc=12105&mb=90&mt=9999999&pc=100",
-        "https://totinokati.com/kakaku/place/12105/kouji/",
-        "https://uub.jp/cdr/j/zogen.html",
-        "https://uub.jp/cdr/j/f.html",
-        "https://uub.jp/cdr/j/child.html",
-        "https://hubmedia.co.jp/costco/costco-store/japan-all-costco-stores/",
-        "https://www.pref.chiba.lg.jp/jika/hoikusho/jouhou/documents/r080401itiran.pdf",
-        "https://www.cfa.go.jp/assets/contents/node/basic_page/field_ref_resources/69799c33-85cb-44f6-8c70-08ed3a292ab5/c253a682/20251222_policies_kosodateshien_houkago-jidou_80.pdf",
-        "https://www.city.chiba.jp/kodomomirai/yojikyoiku/unei/documents/r8_riyousyafutanngaku.pdf",
-        "https://www.pref.chiba.lg.jp/jika/boshi/kodomo-iryo/documents/joseinaiyou.pdf",
         "https://disaportal.gsi.go.jp/hazardmapportal/hazardmap/copyright/opendata.html",
         "https://www.j-shis.bosai.go.jp/api-pshm-meshinfo",
         "https://maps.gsi.go.jp/development/ichiran.html#landformclassification",
@@ -9044,11 +9074,11 @@
       "lat": 35.5137,
       "lng": 140.089,
       "rank": 75,
-      "totalScore": 41.6,
+      "totalScore": 42.1,
       "shortlisted": false,
       "scores": {
         "commute": 25.8,
-        "bus": 16.7,
+        "bus": 26.7,
         "childcare": 50.9,
         "space": 59.0,
         "costco": 29.2,
@@ -9090,11 +9120,11 @@
       },
       "bus": {
         "available": true,
-        "route": "勝浦～東京線 via 市原鶴舞BT (rural south of the city, not 五井)",
-        "morningCount": 1,
-        "eveningCount": 2,
-        "rideMin": "75",
-        "fare": 1700,
+        "route": "マイタウンライナー おゆみ野・ちはら台線 from ちはら台 (あすか交通+平和交通) → 東京駅日本橋口/銀座; also 勝浦～東京線 via 市原鶴舞BT (1 AM / 2 PM). Not from 五井",
+        "morningCount": 4,
+        "eveningCount": 4,
+        "rideMin": "90–130 (ちはら台駅)",
+        "fare": 1200,
         "passMonthly": null
       },
       "childcare": {
@@ -9162,7 +9192,7 @@
         "https://www.pref.chiba.lg.jp/jika/hoikusho/jouhou/documents/r080401itiran.pdf",
         "https://www.cfa.go.jp/assets/contents/node/basic_page/field_ref_resources/69799c33-85cb-44f6-8c70-08ed3a292ab5/c253a682/20251222_policies_kosodateshien_houkago-jidou_80.pdf",
         "https://www.pref.chiba.lg.jp/jika/boshi/kodomo-iryo/documents/joseinaiyou.pdf",
-        "https://www.kominato-bus.com/highway/high/katsuura-tokyo.html",
+        "https://heiwakotsu.com/timefare_mtl_chihara.htm",
         "https://disaportal.gsi.go.jp/hazardmapportal/hazardmap/copyright/opendata.html",
         "https://www.j-shis.bosai.go.jp/api-pshm-meshinfo",
         "https://maps.gsi.go.jp/development/ichiran.html#landformclassification",

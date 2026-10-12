@@ -21,6 +21,12 @@
     { "area": "chiba-wakaba", "name": "千城台", "lat": 35.6255, "lng": 140.1914 },
     { "area": "chiba-hanamigawa", "name": "草野車庫", "lat": 35.6680, "lng": 140.0880 },
     { "area": "chiba-inage", "name": "長沼", "lat": 35.6530, "lng": 140.1270 },
-    { "area": "ichihara", "name": "市原鶴舞BT", "lat": 35.3830, "lng": 140.1830 }
+    { "area": "ichihara", "name": "市原鶴舞BT", "lat": 35.3830, "lng": 140.1830 },
+    { "area": "urayasu", "name": "明海四丁目 (新浦安)", "lat": 35.6380, "lng": 139.9210 },
+    { "area": "chiba-mihama", "name": "幕張ベイタウン (9番街)", "lat": 35.6447, "lng": 140.0437 },
+    { "area": "chiba-inage", "name": "平和交通本社 (稲毛ルート)", "lat": 35.6590, "lng": 140.1150 },
+    { "area": "chiba-midori", "name": "おゆみ野駅", "lat": 35.5680, "lng": 140.1860 },
+    { "area": "chiba-wakaba", "name": "大宮町ターミナル", "lat": 35.5920, "lng": 140.1650 },
+    { "area": "ichihara", "name": "ちはら台駅", "lat": 35.5433, "lng": 140.1959 }
   ]
 }

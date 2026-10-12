@@ -9,6 +9,33 @@ Tokyo-side terminals used below:
 
 All of these are at Tokyo Station. Otemachi is a 5–10 minute walk from the Nihonbashi exit or Yaesu. No route terminates in Nihonbashi or Otemachi itself.
 
+## ⚠ Correction 2026-10-12 (user report): three Chiba routes were missed
+
+The user lives in Makuhari and commutes on the **マイタウンライナー ベイエリア線** (平和交通 + あすか交通), which this note had listed as "No Tokyo Station bus found: 幕張". **Why it was missed:** the first sweep relied on the big groups' route lists (京成, 小湊, 日東, JRバス関東). The independent operators 平和交通 and あすか交通 (ビィー・トランセグループ) were never checked. Keisei's 新浦安 commuter route was skipped because Keisei files it as a "東京ディズニーリゾート" route.
+
+**Re-sweep method:** I listed every route in Jorudan's per-prefecture highway-bus index (乗換案内 高速バス情報, "千葉～東京" 43 routes, "埼玉～東京" 2, "神奈川～東京" 6, "茨城～東京" 19, "東京都内" 6; index updated 2026-09-03). Each route with a weekday Tokyo Station terminal was checked against the operator's own timetable. I also checked the full Keisei express-bus list (every 904xx route page) and the Tobu highway list.
+
+Routes found and added (weekday; A = buses arriving at Tokyo Station by ~9:30, P = departures from Tokyo 17:30–21:30):
+
+| Municipality | Route (operator) | Stops in the municipality | A | P (all evening) | Ride | Fare | Source (timetable date) |
+|---|---|---|---|---|---|---|---|
+| **浦安市** | 東京駅～TDR・新浦安地区 (京成バス + JRバス関東) | 日の出七丁目, アールフォーラム, ベイパーク, ベイモール, シンボルロード・パークシティ, 明海四丁目, 海園の街, 潮音の街北, 高洲七/四丁目, 富岡三丁目 | **10** (arr. 5:59 … 9:29, every 15–25 min at peak) | **5** (18:10, 18:40, 19:30, 20:20, 21:10; 8 incl. 21:40, 22:10, 23:10) | 23–33 min from 富岡三丁目, 44–54 from 日の出七丁目 | ¥730 (IC ¥680); late-night bus ¥1,050 | [京成 90401](https://www.keiseibus.co.jp/express-bus/90401-2/) (2024-05-27 timetable). The page's policy text says 回数券・定期券は販売しておりません |
+| **千葉市美浜区** | マイタウンライナー ベイエリア線 (平和交通 + あすか交通) | Bay Town (コロンブスシティ, 浜田緑地, 若葉公園, セントラルタワー, 9/12番街, ミラリオ, 海浜打瀬小), エリスト, 検見川浜駅/高校, 美浜区役所入口, 真砂東小, 歯科大正門, プラウドシティ・ウエスト; あすか runs also from あすか交通本社, 稲毛海岸1/2丁目, 高洲入口/1丁目 | **4** (arr. 東京駅日本橋口 6:16, 7:01, 7:41, 8:01; then 銀座 and 東雲イオン) | **3** (Tokyo Yaesu-south 18:50, 19:50, 20:50; 6 incl. 21:50, 22:50, 0:00) | 38–81 min (若葉公園 → Tokyo 38/53/73/73; 9番街 46/61/81/81) | ¥800 (Bay Town etc.); ¥1,000 from 稲毛 route / あすか本社 / 稲毛海岸 / 高洲 | [平和交通 ベイエリア線](https://heiwakotsu.com/timefare_mtl_bayarea.htm) and its timetable image `timefare_mtl_bayarea/20261001_bayarea.png` (sheet dated 2025-02-01, file name 2026-10-01). Seat-capacity, first-come, no standing |
+| **千葉市稲毛区** | same line, 稲毛ルート (平和交通 runs only) | 平和交通本社 (宮野木町), 園生町交差点, 宮野木公園, あさま台入口, 熊野神社, スカイタウン, スカイマンション, 稲毛霊園, 稲毛自動車教習所入口 | **2** (arr. 6:16, 7:41) | **3** (18:50, 19:50, 20:50; 4 incl. 21:50; plus 0:00) | 59–94 min (スカイタウン) | ¥1,000 | same |
+| **千葉市緑区** | マイタウンライナー おゆみ野・ちはら台線 (あすか交通 西岬 + 平和交通) | おゆみ野駅, しのぼり公園前, おゆみ野ハイム, 扇田小, 学園前駅/入口, 有吉中, 農業センター入口 … | **4** (arr. 東京駅日本橋口 6:25, 7:05, 7:25, 8:35; later 10:05, 11:05) | **4** (Tokyo Yaesu-south 17:30, 18:40, 19:30, 20:30; 7 incl. 15:30, 16:30, 21:40) | 72–112 min (おゆみ野駅) | ¥1,200 | [平和交通 おゆみ野・ちはら台線](https://heiwakotsu.com/timefare_mtl_chihara.htm), image `20260301_chihara.png` (sheet 2025-02-01; operator change 2026-03-01) |
+| **市原市** (ちはら台) | same line, origin ちはら台駅 | ちはら台駅, ちはら台公園, 大厩公園, ちはら台中央, パークシティちはら台 … | **4** | **4** | 90–130 min (ちはら台駅) | ¥1,200 | same |
+| **千葉市若葉区** (大宮町) | same line, last pick-up 大宮町ターミナル | 大宮町ターミナル (赤井寮 is 中央区 赤井町) | **4** | **4** | 55–95 min | ¥1,200 | same |
+
+Also found, **not scored**:
+- **東京～ユーカリが丘：四街道 (マイタウンダイレクトバス 四街道ICルート)**: already covered by the 佐倉 row.
+- **新宿～南船橋・海浜幕張・学園前 (小湊)**: goes to Busta Shinjuku, not Tokyo Station. Already noted under Cited Findings.
+- **幕張～東京・秋葉原 (幕張メッセ中央)**: event-only temporary service.
+- **柏の葉キャンパス・流山おおたかの森～東京駅** (opened 2021-10, 17 runs; cut 2022-05): it is absent from the 2026 Jorudan index, the Keisei express list and the Tobu highway list. Treated as **discontinued**.
+- **Saitama, Kanagawa, Tama**: the Jorudan index has no Tokyo-Station commuter route (Saitama: ムーミンバレーパーク and 本庄 only; Kanagawa: 東名 lines from 東名綾瀬, plus leisure routes). This confirms Q2 below.
+- **Ibaraki**: only つくば号 is relevant. みと/ひたち/かしま/はさき号 do not stop in study areas.
+
+Scoring effect: bus is a 5-weight bonus with ×0.6 when the bus is >15 min slower than rail. All six new routes are slower than rail at peak, so all six get the ×0.6. Urayasu 0 → 46.7 (total 65.2 → 67.5), 美浜 0 → 23.3 (61.3 → 62.5, rank 5 → 4), 稲毛 6.7 → 16.7 (rank 11 → 10), 若葉 6.7 → 26.7 (rank 49 → 45), 緑 0 → 26.7 (rank 67 → 66), 市原 16.7 → 26.7. No other area changed and the shortlist is unchanged. See data/DATA_LOG.md item 8.
+
 ---
 
 ## Q1. Which origins have frequent commuter service? (per-municipality route table)
@@ -18,7 +45,7 @@ Only the Aqua-Line corridor has frequent service: 木更津市 and 君津市, wi
 
 Every other candidate either has only 1–5 morning buses or has no Tokyo Station bus at all:
 - 1–5 morning buses: 山武市/東金市 (Seaside Liner), 佐倉市 (Yukarigaoka), 千葉市若葉区/花見川区, 富里市, 大網白里市, 市原市 (鶴舞 only).
-- No Tokyo Station bus found: 幕張 (Mihama/Hanamigawa), 千葉ニュータウン (印西/白井), 鎌ケ谷, 成田ニュータウン, 茂原 (suspended 2020), 市原 Anesaki/Goi, and 守谷.
+- No Tokyo Station bus found: 千葉ニュータウン (印西/白井), 鎌ケ谷, 成田ニュータウン, 茂原 (suspended 2020), 市原 Anesaki/Goi, 守谷, 柏/流山 (2021 line gone). ~~幕張 (Mihama/Hanamigawa)~~ was **wrong**: see the correction above (美浜, 稲毛, 緑, 若葉 [大宮町], 市原 [ちはら台] and 浦安 do have routes).
 - つくば市 is the one Ibaraki exception, with about 30 buses a day each way. Its morning ride is slow (85–105 min).
 
 ### Master table (weekday, as published on operator pages)

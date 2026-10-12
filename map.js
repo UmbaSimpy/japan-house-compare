@@ -5,7 +5,7 @@
 ════════════════════════════════════════════════ */
 const MP = {
   layer: 'total', sel: null, shortOnly: false, showCostco: true, showBus: true, showRanks: true,
-  tab: 'pros', cat: 'all', map: null, base: null, labels: null, polys: {}, rankLayer: null,
+  tab: 'pros', cat: 'all', map: null, base: null, labels: null, polys: {}, edges: {}, rankLayer: null,
   costcoLayer: null, busLayer: null, domains: {},
 };
 const MP_LAYERS = ['total', 'space', 'commute', 'childcare', 'hazard', 'growth', 'bus', 'costco', 'live'];
@@ -171,27 +171,48 @@ function mpStyle(a) {
   return {
     fillColor: mpColor(mpVal(a, MP.layer)),
     fillOpacity: hidden ? 0.04 : sel && !isSel ? 0.18 : a.shortlisted ? 0.58 : 0.36,
-    color: isSel ? (mpLight() ? '#111' : '#fff') : mpLight() ? 'rgba(255,255,255,.9)' : 'rgba(10,10,18,.85)',
-    weight: isSel ? 3.5 : a.shortlisted ? 1.2 : 0.8,
-    dashArray: a.shortlisted || isSel ? null : '4 3',
+    // casing: the visible border line is drawn on top by mpEdgeStyle (own pane), so boundaries read without hover
+    color: isSel ? (mpLight() ? '#111' : '#fff') : mpLight() ? 'rgba(255,255,255,.95)' : 'rgba(10,10,18,.9)',
+    weight: isSel ? 4.5 : 3,
+  };
+}
+
+function mpEdgeStyle(a) {
+  return {
+    pane: 'mpEdges', interactive: false, fill: false,
+    color: mpLight() ? 'rgba(25,25,35,.78)' : 'rgba(235,235,245,.7)',
+    weight: a.shortlisted ? 1.3 : 1, dashArray: a.shortlisted ? null : '5 3',
+    opacity: MP.shortOnly && !a.shortlisted ? .35 : 1,
   };
 }
 
 function mpRestyle() {
-  mpAreas().forEach(a => MP.polys[a.id].setStyle(mpStyle(a)));
+  mpAreas().forEach(a => { MP.polys[a.id].setStyle(mpStyle(a)); MP.edges[a.id]?.setStyle(mpEdgeStyle(a)); });
   mpRanks();
   mpLegend();
+}
+
+// Rank of every area on one layer, among all areas (ties share a rank). 'total' = the official (or personalised) rank.
+function mpLRank(l = MP.layer) {
+  if (l === 'total') return Object.fromEntries(mpAreas().map(a => [a.id, a.rank]));
+  const vs = mpAreas().map(a => [a.id, mpVal(a, l)]).filter(x => x[1] != null).sort((x, y) => y[1] - x[1]);
+  const out = {};
+  vs.forEach(([id, v], i) => { out[id] = i && v === vs[i - 1][1] ? out[vs[i - 1][0]] : i + 1; });
+  return out;
 }
 
 function mpRanks() {
   if (MP.rankLayer) MP.rankLayer.remove();
   MP.rankLayer = L.layerGroup();
-  if (MP.showRanks) mpAreas().filter(a => a.shortlisted).forEach(a => {
-    const sel = MP.sel === a.id;
+  // total: shortlisted areas only (official rank); a single layer: every visible area, ranked on that layer alone
+  const rk = mpLRank(), byLayer = MP.layer !== 'total';
+  if (MP.showRanks) mpAreas().filter(a => byLayer ? !(MP.shortOnly && !a.shortlisted) : a.shortlisted).forEach(a => {
+    const sel = MP.sel === a.id, r = rk[a.id];
+    if (r == null) return;
     L.marker([a.lat, a.lng], {
-      interactive: false, keyboard: false,
-      icon: L.divIcon({ className: 'mp-rk' + (sel ? ' sel' : ''), iconSize: [22, 22],
-        html: `<span style="--c:${mpColor(mpVal(a, MP.layer))}">${a.rank}</span>` }),
+      interactive: false, keyboard: false, zIndexOffset: sel ? 1000 : 100 - r,
+      icon: L.divIcon({ className: 'mp-rk' + (sel ? ' sel' : '') + (byLayer && r <= 3 ? ' top' : '') + (byLayer && r > 10 ? ' far' : ''),
+        iconSize: [22, 22], html: `<span style="--c:${mpColor(mpVal(a, MP.layer))}">${r}</span>` }),
     }).addTo(MP.rankLayer);
   });
   MP.rankLayer.addTo(MP.map);
@@ -269,21 +290,25 @@ function initMap() {
   }).addTo(map);
   mpTiles();
 
+  const edgePane = map.createPane('mpEdges');   // area borders above the fills, never catch the mouse
+  edgePane.style.zIndex = 450; edgePane.style.pointerEvents = 'none';
   MAP_DATA.context.forEach(c => L.polygon(mpLL(c.poly), {
-    className: 'mp-ctx', weight: .6, fill: true, fillOpacity: 0, interactive: true,
+    className: 'mp-ctx', weight: 1, fill: true, fillOpacity: 0, interactive: true,
   }).bindTooltip(`${c.name} · ${t('map.notAnalysed')}`, { sticky: true, className: 'mp-tip ctx' }).addTo(map));
 
   mpLoadPrefs(); mpRescore();
   const all = L.featureGroup();
   mpAreas().forEach(a => {
     const p = L.polygon(mpLL(a.poly), mpStyle(a));
-    p.on('mouseover', () => { if (MP.sel !== a.id) p.setStyle({ weight: 3, fillOpacity: .85 }); p.bringToFront(); mpHoverRow(a.id, true); });
+    p.on('mouseover', () => { if (MP.sel !== a.id) p.setStyle({ weight: 5, fillOpacity: .85 }); p.bringToFront(); mpHoverRow(a.id, true); });
     p.on('mouseout', () => { p.setStyle(mpStyle(a)); if (MP.sel) MP.polys[MP.sel].bringToFront(); mpHoverRow(a.id, false); });
     p.on('click', () => mpSelect(a.id));
     p.bindTooltip(() => `<b>${mpEsc(mpName(a))}</b> <span class="mp-tip-alt">${mpEsc(mpAlt(a))}</span><br>
-      ${t('map.layers.' + MP.layer)} <b>${mpVal(a, MP.layer)?.toFixed(1) ?? '—'}</b> · #${a.rank}${a.shortlisted ? '' : ` · <i>${t('map.belowGate')}</i>`}`,
+      ${t('map.layers.' + MP.layer)} <b>${mpVal(a, MP.layer)?.toFixed(1) ?? '—'}</b> · ${MP.layer === 'total' ? '#' + a.rank
+        : `<b>${t('map.layerRank', mpLRank()[a.id] ?? '—', t('map.layers.' + MP.layer))}</b> · ${t('map.overallRank', a.rank)}`}${a.shortlisted ? '' : ` · <i>${t('map.belowGate')}</i>`}`,
       { sticky: true, className: 'mp-tip' });
     MP.polys[a.id] = p.addTo(all);
+    MP.edges[a.id] = L.polygon(mpLL(a.poly), mpEdgeStyle(a)).addTo(map);
   });
   all.addTo(map);
   MP.bounds = all.getBounds();
@@ -391,6 +416,7 @@ function mpListHTML() {
   const list = mpAreas().filter(a => !MP.shortOnly || a.shortlisted)
     .slice().sort((x, y) => (mpVal(y, MP.layer) ?? -1) - (mpVal(x, MP.layer) ?? -1));
   const short = mpAreas().filter(a => a.shortlisted).length;
+  const rk = mpLRank(), byLayer = MP.layer !== 'total';
   return `<div class="mp-head">
       <h2 class="mp-title">${t('map.title')}</h2>
       <p class="mp-sub">${t('map.sub')}</p>
@@ -400,8 +426,8 @@ function mpListHTML() {
     <ol class="mp-rank">${list.map((a, i) => {
       const v = mpVal(a, MP.layer);
       return `<li class="mp-row${a.shortlisted ? '' : ' gated'}" data-pick="${a.id}" style="animation-delay:${Math.min(i, 30) * 14}ms">
-        <span class="mp-rnum">${i + 1}</span>
-        <span class="mp-rname">${MP.cmp.includes(a.id) ? '<i class="mp-incmp" title="compare">⇄</i>' : ''}${mpEsc(mpName(a))}<small>${t('map.prefs.' + a.pref)}${a.shortlisted ? '' : ` · ${t('map.belowGate')}`}</small></span>
+        <span class="mp-rnum">${rk[a.id] ?? '—'}</span>
+        <span class="mp-rname">${MP.cmp.includes(a.id) ? '<i class="mp-incmp" title="compare">⇄</i>' : ''}${mpEsc(mpName(a))}<small>${t('map.prefs.' + a.pref)}${byLayer ? ` · ${t('map.overallRank', a.rank)}` : ''}${a.shortlisted ? '' : ` · ${t('map.belowGate')}`}</small></span>
         <span class="mp-rbar"><i style="width:${Math.max(3, MP.layer === 'live' ? (v ?? 0) / (mpDomain('live')[1] || 1) * 100 : v ?? 0)}%;background:${mpColor(v)}"></i></span>
         <b class="mp-rval">${v?.toFixed(0) ?? '—'}</b>
       </li>`;
@@ -448,6 +474,7 @@ function mpDetailHTML(a) {
         <div class="mp-dalt">${mpEsc(mpAlt(a))} · ${t('map.prefs.' + a.pref)} · ${t('map.types.' + a.type)}</div>
         <div class="mp-badges">
           <span class="mp-badge">${t('map.rankOf', a.rank, mpAreas().length)}</span>
+          ${MP.layer !== 'total' ? `<span class="mp-badge lr" style="--c:${mpColor(mpVal(a, MP.layer))}">${MP_CAT_ICON[MP_SCORE_CAT[MP.layer]] || ''} ${t('map.layerRank', mpLRank()[a.id] ?? '—', t('map.layers.' + MP.layer))}</span>` : ''}
           ${a.shortlisted ? `<span class="mp-badge ok">✓ ${t('map.shortlisted')}</span>`
             : `<span class="mp-badge warn" title="${mpEsc(t('map.gatedTip'))}">${t('map.gated')}</span>`}
           ${mpCmpBtn(a)}
@@ -456,11 +483,11 @@ function mpDetailHTML(a) {
     </div>
     ${mpKpis(a)}
     <div class="mp-bars">${MP_SUBS.map(s => {
-      const v = a.scores[s] ?? 0;
-      return `<div class="mp-bar" title="${mpEsc(mpLayerDesc(s))}">
+      const v = a.scores[s] ?? 0, r = mpLRank(s)[a.id];
+      return `<div class="mp-bar${MP.layer === s ? ' on' : ''}" title="${mpEsc(mpLayerDesc(s))}">
         <span class="mp-bl">${MP_CAT_ICON[MP_SCORE_CAT[s]]} ${t('map.layers.' + s)} <small>${t('map.weight', mpWPct(s) + '%')}</small></span>
         <span class="mp-bt"><i style="width:0;background:${mpColor(v, s)}" data-to="width:${Math.max(2, v)}%"></i></span>
-        <b>${v.toFixed(0)}</b></div>`;
+        <b>${v.toFixed(0)}</b><small class="mp-brk" title="${mpEsc(t('map.layerRank', r ?? '—', t('map.layers.' + s)))}">#${r ?? '—'}</small></div>`;
     }).join('')}</div>
     <div class="mp-tabs" role="tablist">${['pros', 'cons', 'info'].map(k =>
       `<button type="button" role="tab" class="mp-tab ${k}${MP.tab === k ? ' active' : ''}" data-mtab="${k}">

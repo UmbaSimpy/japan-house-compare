@@ -237,21 +237,30 @@ BUS = {
  "Sodegaura":dict(available=True,route="袖ケ浦～東京線「東京ガウライナー」(小湊鉄道) → 東京駅日本橋口",
                  morningCount=3,eveningCount=5,rideMin="50–60 (+10–25 Aqua-Line delay)",fare=1500,passMonthly=51300,
                  src="https://www.kominato-bus.com/highway/high/sodegaura-tokyo.html",ride=55,imputed=False),
- "Ichihara":dict(available=True,route="勝浦～東京線 via 市原鶴舞BT (rural south of the city, not 五井)",
-                 morningCount=1,eveningCount=2,rideMin="75",fare=1700,passMonthly=None,
-                 src="https://www.kominato-bus.com/highway/high/katsuura-tokyo.html",ride=75,imputed=False),
+ "Ichihara":dict(available=True,route="マイタウンライナー おゆみ野・ちはら台線 from ちはら台 (あすか交通+平和交通) → 東京駅日本橋口/銀座; also 勝浦～東京線 via 市原鶴舞BT (1 AM / 2 PM). Not from 五井",
+                 morningCount=4,eveningCount=4,rideMin="90–130 (ちはら台駅)",fare=1200,passMonthly=None,
+                 src="https://heiwakotsu.com/timefare_mtl_chihara.htm",ride=100,imputed=False),
  "Sakura":dict(available=True,route="東京駅～ユーカリが丘・臼井・千代田団地 (京成バス千葉イースト)",
                  morningCount=2,eveningCount=2,rideMin="77–107",fare=1400,passMonthly=None,
                  src="https://www.keiseibus.co.jp/express-bus/90404-2/",ride=92,imputed=False),
- "Chiba-Wakaba":dict(available=True,route="東京駅～千城台・御成台車庫 (京成)",
-                 morningCount=1,eveningCount=1,rideMin="77",fare=1200,passMonthly=None,
-                 src="https://www.keiseibus.co.jp/express-bus/90402-2/",ride=77,imputed=False),
+ "Chiba-Wakaba":dict(available=True,route="マイタウンライナー おゆみ野・ちはら台線 from 大宮町ターミナル (あすか交通+平和交通) → 東京駅日本橋口/銀座; also 東京駅～千城台・御成台車庫 (京成, 1 AM / 1 PM)",
+                 morningCount=4,eveningCount=4,rideMin="55–95 (大宮町ターミナル)",fare=1200,passMonthly=None,
+                 src="https://heiwakotsu.com/timefare_mtl_chihara.htm",ride=70,imputed=False),
  "Chiba-Hanamigawa":dict(available=True,route="ちばきたライナー (草野車庫 P&R; stop-to-ward mapping inferred)",
                  morningCount=1,eveningCount=1,rideMin="67",fare=1100,passMonthly=None,
                  src="https://www.keiseibus.co.jp/express-bus/90420-2/",ride=67,imputed=False),
- "Chiba-Inage":dict(available=True,route="ちばきたライナー (長沼, ワンズモール stops; mapping inferred)",
-                 morningCount=1,eveningCount=1,rideMin="~60–67",fare=1100,passMonthly=None,
-                 src="https://www.keiseibus.co.jp/express-bus/90420-2/",ride=67,imputed=False),
+ "Chiba-Inage":dict(available=True,route="マイタウンライナー ベイエリア線, 稲毛ルート (平和交通: 平和交通本社・スカイタウン・稲毛5丁目…) → 東京駅日本橋口/銀座; also ちばきたライナー (長沼, 1 AM / 1 PM)",
+                 morningCount=2,eveningCount=3,rideMin="59–94 (スカイタウン)",fare=1000,passMonthly=None,
+                 src="https://heiwakotsu.com/timefare_mtl_bayarea.htm",ride=75,imputed=False),
+ "Urayasu":dict(available=True,route="東京駅～TDR・新浦安地区 (京成バス; 新浦安 bay districts 日の出・明海・高洲・富岡) → 東京駅日本橋口",
+                 morningCount=10,eveningCount=5,rideMin="23–33 (富岡三丁目) to 44–54 (日の出七丁目)",fare=730,passMonthly=None,
+                 src="https://www.keiseibus.co.jp/express-bus/90401-2/",ride=45,imputed=False),
+ "Chiba-Mihama":dict(available=True,route="マイタウンライナー ベイエリア線 (平和交通+あすか交通; 幕張ベイタウン・ベイパーク・検見川浜・稲毛海岸・高洲) → 東京駅日本橋口/銀座",
+                 morningCount=4,eveningCount=3,rideMin="38–81 (若葉公園 / 9番街)",fare=800,passMonthly=None,
+                 src="https://heiwakotsu.com/timefare_mtl_bayarea.htm",ride=65,imputed=False),
+ "Chiba-Midori":dict(available=True,route="マイタウンライナー おゆみ野・ちはら台線 (あすか交通+平和交通; おゆみ野・学園前・有吉) → 東京駅日本橋口/銀座",
+                 morningCount=4,eveningCount=4,rideMin="72–112 (おゆみ野駅)",fare=1200,passMonthly=None,
+                 src="https://heiwakotsu.com/timefare_mtl_chihara.htm",ride=85,imputed=False),
  "Tsukuba":dict(available=True,route="つくば号 (JRバス関東+関東鉄道), ~30–32 trips/day each way, seated-capacity",
                  morningCount=None,eveningCount=None,rideMin="85–105",fare=1260,passMonthly=None,
                  src="https://ja.wikipedia.org/wiki/つくば号",ride=95,imputed=True),
@@ -525,7 +534,7 @@ for i, a in enumerate(areas):
 
 RUBRIC = """Total = Σ weight × sub-score / 100, each sub-score 0–100. Weights: space 25, commute 25, childcare 20, hazard 10, growth 10, bus 5, costco 5 (users can re-weight on the map).
 COMMUTE: effective minutes E = station-to-station minutes (best of Tokyo Stn / Otemachi, Yahoo!乗換案内 arrive 08:45 on 2026-10-14) + 5 per transfer. Base = 100×(80−E)/65 clamped 0–100 (E≤15 → 100, E≥80 → 0). Crowding adj. (MLIT FY2025 peak of main line): ≥158% −5; 150–157% −2; ≤125% +5; unmeasured 0. Pass adj.: 1-month pass >¥30k −5, >¥45k −10.
-BUS (bonus): weekday buses arriving Tokyo Stn ≤~9:30 (A) and leaving 17:30–21:30 (P): 50×min(A,9)/9 + 50×min(P,9)/9; ×0.6 if scheduled ride > rail effective minutes + 15. No route found = 0 (evidence of absence from operator lists). Tsukuba counts unknown → imputed A=P=5 (flagged). Aoba (東名江田) timetable unknown → 0 (flagged).
+BUS (bonus): weekday buses arriving Tokyo Stn ≤~9:30 (A) and leaving 17:30–21:30 (P): 50×min(A,9)/9 + 50×min(P,9)/9; ×0.6 if scheduled ride > rail effective minutes + 15. No route found = 0 (evidence of absence from operator lists; re-swept 2026-10-12 against the Jorudan per-prefecture route index after the user reported the missed 幕張 line). Tsukuba counts unknown → imputed A=P=5 (flagged). Aoba (東名江田) timetable unknown → 0 (flagged).
 CHILDCARE (100): fee 35×(1 − 1st-child 0–2 認可 monthly fee/¥65,000) for a ¥10M dual-income household (所得割 ≈¥285k); unknown fee → prefecture median of confirmed paying cities (Chiba ¥54,900, Saitama ¥60,000, Ibaraki ¥50,500), flagged. Tokyo cash 10: 018サポート + 赤ちゃんファースト = 8, +2 verified ward cash ≥¥100k (+1 if conflicting). Waitlist 30 (2026-04 待機児童; 2025 if 2026 missing): 0→30, 1–9→24, 10–29→18, 30–59→12, 60–99→6, ≥100→0. 学童 waitlist 15: 0→15, 1–49 or '<50'→10, 50–149→5, ≥150→0. Medical 5: to 18 & ¥0→5, ¥200→4, ¥300→3.5, to 15/¥500→2.5, ¥600/day→2, unknown→3.5 (flagged). Lunch 5: all free→5, JH free→5, partial→3, JH 3rd child only→2, paid→1, unknown→2 (flagged).
 SPACE (100): 0.4×Price + 0.3×Count + 0.3×AffordableShare. Price = 100 × (ln ¥150M − ln P)/(ln ¥150M − ln ¥40M), clamped (P≤¥40M → 100, ≥¥150M → 0); P = geometric mean of SUUMO all-age 90–105 m² median and built≥2000 90–110 m² median (each n≥3); if one sample has n<3 it is replaced by the 70–80 m² ¥/m² × 95 estimate; if both n<3, the estimate alone (flagged). Count = 100 × min(1, de-duplicated ≥90 m² listings under ¥80M / 40). AffordableShare = 100 × min(1, (≥90 m² listings under ¥80M ÷ all used-condo listings) / 15%). All asking prices, SUUMO crawl 2026-10-12; ¥80M is the writer's affordability line for a ~¥10M household.
 GROWTH (100): population change 2020→25 (census) −4%→0 … +8%→35; IPSS 2050 vs 2020 −15%→0 … +15%→30; residential land price 5-yr change 5%→0 … 45%→20; 0–14 share 2020 9%→0 … 15%→10; pipeline adjustment −3…+5 (confirmed near-term projects +, stalled flagships −). Clamped 0–100.

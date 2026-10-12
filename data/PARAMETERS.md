@@ -78,7 +78,7 @@ Pros/cons/info on the map are **derived in `map.js` → `mpPoints()`** from the 
 ### bus (null = no commuter-usable route found)
 | Field | Meaning | Source | Fetch method | Refresh |
 |---|---|---|---|---|
-| route, morningCount (arr. ≤9:30), eveningCount (dep. 17:30–21:30), rideMin, fare, passMonthly | Weekday highway bus to Tokyo Station | Operator timetables: 日東交通, 京成バス, 小湊鉄道, JRバス関東/関東鉄道 (つくば号); Kisarazu city 金田BT PDF | manual reading of operator pages (see `commuter_buses.md`, each row dated) | every 6 months (driver shortage → cuts) |
+| route, morningCount (arr. ≤9:30), eveningCount (dep. 17:30–21:30), rideMin, fare, passMonthly | Weekday highway bus to Tokyo Station | Operator timetables: 日東交通, 京成バス, 小湊鉄道, JRバス関東/関東鉄道 (つくば号), **平和交通/あすか交通 (マイタウンライナー; timetables are images)**; Kisarazu city 金田BT PDF. **Completeness check:** Jorudan 乗換案内 高速バス情報 per-prefecture index (`mb.jorudan.co.jp/os/bexp/area/12-13/` etc.; needs a JS browser) | 1) list every route in the Jorudan index for 千葉/埼玉/神奈川/茨城/東京→東京, 2) read each Tokyo-Station route on the operator page (see `commuter_buses.md`, each row dated). Do not rely on the big groups' lists alone (DATA_LOG item 8) | every 6 months (driver shortage → cuts) |
 | map_extras.json → busOrigins | Stop coordinates for the dashed lines | approximate | hand | when routes change |
 
 ### childcare
