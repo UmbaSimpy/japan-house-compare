@@ -305,3 +305,87 @@ The shortlist is unchanged. Only neighbours shifted by one place (港区 4 → 5
 - The 柏の葉・おおたかの森 → 東京駅 line (2021) is no longer listed anywhere and is treated as discontinued.
 
 **Next refresh:** re-run the Jorudan index sweep, not just the operator pages, every 6 months, or when the user asks. Details and per-route stop lists are in `research_notes/…/commuter_buses.md` → "Correction 2026-10-12".
+
+## 9. Space v2: modern 100 m² price + choice (2026-10-13, user decision)
+
+**Trigger:** the user said the space parameter was "not clear". In v1, space = 0.4·Price + 0.3·Count + 0.3·Share:
+- Price was a blend of the all-age and the modern median, so it described no real flat.
+- Count and share included 1970s–80s stock, which inflated new-town areas.
+
+I offered three options:
+- **A:** fix the formula.
+- **B:** personal live filters.
+- **C:** split space into separate Price and Choice layers.
+
+The user chose **A** and asked that the tooltip explain the score.
+
+**Formula (`build_locations.py`, constants `SPACE_*`):**
+- **Qualifying listing:** a de-duplicated used condo, ≥90 m², built 2000 or later.
+  - Source: `condo_raw/raw.json` (`l90`, SUUMO asking prices, crawl 2026-10-12).
+  - De-duplication key: name + rounded m² + price.
+- **Price (50%):**
+  - P = median ¥/m² of all qualifying listings × 100 m².
+  - Scored on a log scale: ¥30M → 100, ¥150M → 0.
+  - No qualifying listing → 0 points. 1–2 listings → flagged as a thin sample in `dataFlags`.
+- **Choice (50%):**
+  - n = qualifying listings under ¥80M.
+  - Score = 100·ln(1+n)/ln(61), so 0→0, 1→17, 5→44, 10→58, 20→74, 40→90, ≥60→100.
+- **Unchanged:** the space gate (≥10) and the shortlist (top 28 that pass the gate).
+- The all-age median, the share and the all-age count under ¥80M stay as info only.
+- New housing fields: `modern90Count`, `modern90Under`, `modern90PpmMedian`, `spacePricePts`, `spaceChoicePts`. `priceUsedForScore` is now P and may be null.
+
+**UI:**
+- The Space bar in the area detail shows a hover/focus card with the price, choice, old-stock note and source.
+- The map tooltip and the list row show "¥xxM/100 m² · n under ¥80M" when the Space layer is on.
+- Compare rows: modern price (scored), modern under ¥80M (scored), all-age under ¥80M (info).
+- Scripts are at `?v=16`.
+
+**Result: ranks before → after.**
+
+| Area | space v1 → v2 | total | rank | modern 90 m²+ (all / <¥80M) | 100 m² price |
+|---|---|---|---|---|---|
+| 浦安 | 52.9 → 46.5 | 67.5 → 65.9 | 1 → 1 | 36 / 9 | ¥83M |
+| 松戸 | 55.4 → 73.2 | 58.4 → 62.8 | 15 → 2 | 13 / 13 | ¥40M |
+| 船橋 | 81.4 → 79.6 | 62.6 → 62.2 | 3 → 3 | 41 / 36 | ¥48M |
+| 美浜 | 73.4 → 65.9 | 62.5 → 60.6 | 4 → 5 | 43 / 26 | ¥65M |
+| 習志野 | 70.8 → 60.0 | 60.6 → 58.0 | 6 → 11 | 8 / 7 | ¥49M |
+| 稲毛 | 64.6 → 52.6 | 59.5 → 56.5 | 10 → 18 | 8 / 7 | ¥62M |
+| 印西 | 100 → 77.4 | 60.6 → 54.9 | 7 → 23 | 18 / 18 | ¥39M |
+| 町田 | 84.1 → 69.3 | 57.1 → 53.4 | 19 → 29 | 16 / 16 | ¥49M |
+| 稲城 | 89.2 → 59.5 | 57.7 → 50.3 | 17 → 41 | 13 / 12 | ¥60M |
+| **柏** | 78.0 → 23.0 | 63.5 → 49.7 | 2 → 46 (off) | 3 / 1 | ¥94M |
+| **多摩** | 96.1 → 37.2 | 58.8 → 44.1 | 12 → 65 (off) | 4 / 3 | ¥78M |
+| **白井** | 93.2 → 0 | 56.0 → 32.7 | 24 → 75 (off) | 0 / 0 | — |
+| **葛飾** | 30.3 → 0 | 56.9 → 49.4 | 21 → 50 (off) | 0 / 0 | — |
+
+**Shortlist changes:**
+- Off: 柏, 多摩, 白井, 葛飾, 中野, 横浜港北.
+- On: 立川, 川崎中原, 千葉若葉, 戸田, 小金井, 八千代.
+- 千葉若葉 is on the strength of a single ¥24M listing, which is flagged as thin.
+
+**Checks:**
+- Cross-checked against the live light list (`area-stats`):
+  - 柏: modern 3, of which 1 under ¥80M.
+  - 多摩: 4 / 3.
+  - 白井: 0.
+  - 印西: 18 / 18.
+
+  These match the crawl, so the drops are real for "built 2000+" and not a scraping gap.
+- Diffed `locations.json` before and after: only space, the totals and the ranks changed. The backup is in the session scratchpad.
+
+**Sensitivity to the build-year cutoff.** This is the main lever. The 1990s new-town stock (白井 16 units, 稲城 24, 都筑 20, 印西 21) is excluded at 2000.
+
+| cutoff | 柏 | 多摩 | 白井 | 印西 | 稲毛 |
+|---|---|---|---|---|---|
+| 1982 | #2 | #24 | #44 (off) | #16 | — |
+| 1990 | #5 | #40 (off) | #35 (on) | #11 | #2 |
+| **2000 (chosen)** | #46 (off) | #65 (off) | #75 (off) | #23 | #18 |
+
+I chose 2000 because it is the "modern" definition already used across the site (`count90under80MBuilt2000`) and it roughly means post-2000 seismic and insulation standards. The cutoff was put to the user to confirm.
+
+**Limitations:**
+- Asking prices, not sold prices.
+- A single crawl (2026-10-12), so small counts swing.
+- ¥80M is the writer's affordability line for a household earning about ¥10M a year.
+- Areas with 1–2 qualifying listings get a price from a thin sample (flagged).
+- The watchlist (areas.json) still contains 柏 and 多摩, which were added when they were top-10 under v1.

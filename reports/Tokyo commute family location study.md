@@ -1,5 +1,13 @@
 # Bayside Chiba wins the family space race
 
+> **Change 2026-10-13 (space redefined).** The space score now counts only condos of 90 m² or more built in 2000 or later. It is 50% the typical price of a 100 m² modern flat and 50% the number of such flats under ¥80M.
+>
+> Rankings on the map differ from the body below:
+> - Kashiwa, Tama, Shiroi and Katsushika drop off the shortlist; they have almost no modern large stock.
+> - Matsudo rises to #2.
+>
+> Details are in `data/DATA_LOG.md` item 9.
+
 > **Correction 2026-10-12 (buses).** This report says highway buses are "mostly unattainable" and lists 幕張 as having no Tokyo Station bus. That is wrong. Three Chiba commuter routes were missed:
 > - **京成 新浦安 → 東京駅**: 10 morning arrivals by 9:30, ¥730.
 > - **マイタウンライナー ベイエリア線** (平和交通 + あすか交通), serving 幕張ベイタウン, 検見川浜, 稲毛海岸 and 稲毛: 4 morning buses, 6 evening buses (3 of them 17:30–21:30).

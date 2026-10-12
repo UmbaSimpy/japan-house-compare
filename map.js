@@ -104,26 +104,17 @@ function mpPoints(a) {
     add(near >= 90 ? 'pros' : near < 50 ? 'cons' : 'info', 'childcare', R('peds', near, hl.pedsDedicated, hl.peds, hl.per10k));
   }
 
-  const n = h.count90under80M, m = h.count90under80MBuilt2000 ?? 0;
-  if (!h.share90plus && !n) add('cons', 'housing', R('noLarge'));
-  else if (h.share90plus != null) {
-    if (h.share90plus >= 20) add('pros', 'housing', R('shareHigh', h.share90plus));
-    else if (h.share90plus < 6) add('cons', 'housing', R('shareLow', h.share90plus));
-    else add('info', 'housing', R('shareHigh', h.share90plus));
+  // space v2 (2026-10-13): scored = listings ≥90 m² built 2000+; everything else is info
+  const q = h.modern90Count ?? 0, u = h.modern90Under ?? 0, P = h.priceUsedForScore;
+  if (!q) add('cons', 'housing', R('spNone'));
+  else {
+    add(u >= 20 ? 'pros' : u <= 3 ? 'cons' : 'info', 'housing', R(u >= 20 ? 'spChoiceBig' : u <= 3 ? 'spChoiceSmall' : 'spChoice', u, q));
+    if (P) add(P <= 50e6 ? 'pros' : P >= 90e6 ? 'cons' : 'info', 'housing', R(P <= 50e6 ? 'spPriceLow' : P >= 90e6 ? 'spPriceHigh' : 'spPrice', yenM(P)));
   }
-  if (n != null && (n || h.share90plus)) {
-    if (n >= 30) add('pros', 'housing', R('poolBig', n, m));
-    else if (n <= 5) add('cons', 'housing', R('poolSmall', n));
-    else add('info', 'housing', R('poolMid', n, m));
-  }
-  if (h.median90to105) {
-    const p = h.median90to105;
-    add(p <= 55e6 ? 'pros' : p >= 100e6 ? 'cons' : 'info', 'housing', R(p <= 55e6 ? 'priceLow' : p >= 100e6 ? 'priceHigh' : 'price', yenM(p)));
-  }
-  if (h.median90to110new) {
-    const p = h.median90to110new, k = p >= 75e6 ? 'modernHigh' : p <= 50e6 ? 'modernLow' : 'modern';
-    add(k === 'modernHigh' ? 'cons' : k === 'modernLow' ? 'pros' : 'info', 'housing', R(k, yenM(p), h.nNew ?? '?'));
-  }
+  if (h.count90under80M) add('info', 'housing', R('spOld', h.count90under80M, h.count90under80MBuilt2000 ?? 0));
+  else if (!h.share90plus) add('info', 'housing', R('noLarge'));
+  if (h.share90plus != null) add('info', 'housing', R('shareHigh', h.share90plus));
+  if (h.median90to105) add('info', 'housing', R('price', yenM(h.median90to105)));
   if (h.landPrice) add('info', 'housing', R('land', yen(h.landPrice), h.landChange5y));
   const lv = mpLive(a);
   if (lv && !lv.stale) {
@@ -263,6 +254,21 @@ function mpLegend() {
     <div class="mp-lg-k"><i class="sw solid"></i>${t('map.shortlisted')}<i class="sw dash"></i>${t('map.belowGate')}<i class="sw none"></i>${t('map.notAnalysed')}</div>`;
 }
 
+// Plain-language breakdown of one area's Space score (tooltip, detail bar, list). Mirrors build_locations.space_points.
+function mpSpaceWhy(a) {
+  const h = a.housing || {}, n = h.modern90Count ?? 0, P = h.priceUsedForScore, ym = v => t('map.yenM', v);
+  const pp = Math.round(h.spacePricePts ?? 0), cp = Math.round(h.spaceChoicePts ?? 0);
+  return {
+    lines: [t('map.sp.head', Math.round(a.scores.space ?? 0), pp, cp),
+      P ? t('map.sp.price', ym(P), n, n < 3) : t('map.sp.priceNone'),
+      t('map.sp.choice', h.modern90Under ?? 0),
+      ...(h.count90under80M != null ? [t('map.sp.old', h.count90under80M, h.count90under80MBuilt2000 ?? 0)] : []),
+      t('map.sp.src')],
+    short: t('map.sp.short', P ? ym(P) : '—', pp, h.modern90Under ?? 0, cp),
+    row: t('map.sp.row', P ? ym(P) : '—', h.modern90Under ?? 0),
+  };
+}
+
 function mpLayerDesc(l) {
   if (l === 'total') return t('map.layerDesc.total', MP_SUBS.map(k => `${t('map.layers.' + k)} ${mpWPct(k)}`).join(' · '), mpCustomW());
   if (l === 'commute' && MP.office) return t('map.layerDesc.commuteOffice', mpOfficeName(mpOfficeInfo(MP.office)));
@@ -305,7 +311,7 @@ function initMap() {
     p.on('click', () => mpSelect(a.id));
     p.bindTooltip(() => `<b>${mpEsc(mpName(a))}</b> <span class="mp-tip-alt">${mpEsc(mpAlt(a))}</span><br>
       ${t('map.layers.' + MP.layer)} <b>${mpVal(a, MP.layer)?.toFixed(1) ?? '—'}</b> · ${MP.layer === 'total' ? '#' + a.rank
-        : `<b>${t('map.layerRank', mpLRank()[a.id] ?? '—', t('map.layers.' + MP.layer))}</b> · ${t('map.overallRank', a.rank)}`}${a.shortlisted ? '' : ` · <i>${t('map.belowGate')}</i>`}`,
+        : `<b>${t('map.layerRank', mpLRank()[a.id] ?? '—', t('map.layers.' + MP.layer))}</b> · ${t('map.overallRank', a.rank)}`}${a.shortlisted ? '' : ` · <i>${t('map.belowGate')}</i>`}${MP.layer === 'space' ? `<br><span class="mp-tip-alt">${mpEsc(mpSpaceWhy(a).short)}</span>` : ''}`,
       { sticky: true, className: 'mp-tip' });
     MP.polys[a.id] = p.addTo(all);
     MP.edges[a.id] = L.polygon(mpLL(a.poly), mpEdgeStyle(a)).addTo(map);
@@ -425,9 +431,9 @@ function mpListHTML() {
     <div class="mp-desc"><b>${t('map.layers.' + MP.layer)}</b> — ${mpLayerDesc(MP.layer)}</div>
     <ol class="mp-rank">${list.map((a, i) => {
       const v = mpVal(a, MP.layer);
-      return `<li class="mp-row${a.shortlisted ? '' : ' gated'}" data-pick="${a.id}" style="animation-delay:${Math.min(i, 30) * 14}ms">
+      return `<li class="mp-row${a.shortlisted ? '' : ' gated'}" data-pick="${a.id}" style="animation-delay:${Math.min(i, 30) * 14}ms"${MP.layer === 'space' ? ` title="${mpEsc(mpSpaceWhy(a).lines.join('\n'))}"` : ''}>
         <span class="mp-rnum">${rk[a.id] ?? '—'}</span>
-        <span class="mp-rname">${MP.cmp.includes(a.id) ? '<i class="mp-incmp" title="compare">⇄</i>' : ''}${mpEsc(mpName(a))}<small>${t('map.prefs.' + a.pref)}${byLayer ? ` · ${t('map.overallRank', a.rank)}` : ''}${a.shortlisted ? '' : ` · ${t('map.belowGate')}`}</small></span>
+        <span class="mp-rname">${MP.cmp.includes(a.id) ? '<i class="mp-incmp" title="compare">⇄</i>' : ''}${mpEsc(mpName(a))}<small>${t('map.prefs.' + a.pref)}${byLayer ? ` · ${t('map.overallRank', a.rank)}` : ''}${MP.layer === 'space' ? ` · ${mpEsc(mpSpaceWhy(a).row)}` : ''}${a.shortlisted ? '' : ` · ${t('map.belowGate')}`}</small></span>
         <span class="mp-rbar"><i style="width:${Math.max(3, MP.layer === 'live' ? (v ?? 0) / (mpDomain('live')[1] || 1) * 100 : v ?? 0)}%;background:${mpColor(v)}"></i></span>
         <b class="mp-rval">${v?.toFixed(0) ?? '—'}</b>
       </li>`;
@@ -451,7 +457,7 @@ function mpKpis(a) {
   const k = [
     MP.office ? ['office', mpOffice(a) ? `${mpOffice(a).min}<small>${t('map.min')}</small>` : t('map.unknown'), mpOfficeName(mpOfficeInfo(MP.office))]
       : ['commute', c.minToTokyo != null ? `${c.minToTokyo}<small>${t('map.min')}</small>` : t('map.unknown')],
-    ['large', h.median90to105 ? t('map.yenM', h.median90to105) : t('map.unknown')],
+    ['large', h.priceUsedForScore ? t('map.yenM', h.priceUsedForScore) : t('map.unknown')],
     ['daycare', fee === 0 ? t('map.free') : fee != null ? `${t('map.yen', fee)}<small>${t('map.perMonth')}${ch.daycare0to2Monthly == null ? '*' : ''}</small>` : t('map.unknown')],
     ['costco', co.driveMin != null ? `${Math.round(co.driveMin)}<small>${t('map.min')}</small>` : t('map.unknown')],
   ];
@@ -484,7 +490,9 @@ function mpDetailHTML(a) {
     ${mpKpis(a)}
     <div class="mp-bars">${MP_SUBS.map(s => {
       const v = a.scores[s] ?? 0, r = mpLRank(s)[a.id];
-      return `<div class="mp-bar${MP.layer === s ? ' on' : ''}" title="${mpEsc(mpLayerDesc(s))}">
+      const tip = s === 'space' ? mpSpaceWhy(a).lines : [t('map.layers.' + s), mpLayerDesc(s)];
+      return `<div class="mp-bar${MP.layer === s ? ' on' : ''}${s === 'space' ? ' wide' : ''}" tabindex="0">
+        <span class="mp-btip" role="tooltip">${tip.map((x, i) => i ? `<span>${mpEsc(x)}</span>` : `<b>${mpEsc(x)}</b>`).join('')}</span>
         <span class="mp-bl">${MP_CAT_ICON[MP_SCORE_CAT[s]]} ${t('map.layers.' + s)} <small>${t('map.weight', mpWPct(s) + '%')}</small></span>
         <span class="mp-bt"><i style="width:0;background:${mpColor(v, s)}" data-to="width:${Math.max(2, v)}%"></i></span>
         <b>${v.toFixed(0)}</b><small class="mp-brk" title="${mpEsc(t('map.layerRank', r ?? '—', t('map.layers.' + s)))}">#${r ?? '—'}</small></div>`;

@@ -284,6 +284,19 @@ PIPE = {
  "Narashino":(-3,"津田沼駅南口 redevelopment paused (2025-05)"),"Nakano":(-3,"中野サンプラザ redevelopment back to square one"),
 }
 
+# ---------------------------------------------------------------- space (v2, 2026-10-13, user chose option "A")
+SPACE_YEAR = 2000          # "modern" = built 2000 or later
+SPACE_BUDGET = 8000        # 万円: ¥80M affordability line for a ~¥10M household (writer's assumption)
+SPACE_P_HI, SPACE_P_LO = 3000, 15000   # 100 m² price (万円): ≤¥30M → 100 pts, ≥¥150M → 0 pts (log scale)
+SPACE_N_FULL = 60          # modern 90 m²+ listings under budget for full choice points (log scale)
+
+def space_points(q_ppm, q80):
+    """Price pts from the median ¥/m² of qualifying listings × 100 m²; choice pts from the count under budget."""
+    P = q_ppm * 100 if q_ppm else None
+    price = 0.0 if P is None else 100 * clamp((math.log(SPACE_P_LO) - math.log(P)) / (math.log(SPACE_P_LO) - math.log(SPACE_P_HI)), 0, 1)
+    choice = 100 * min(1.0, math.log1p(q80) / math.log1p(SPACE_N_FULL))
+    return P, price, choice
+
 # ---------------------------------------------------------------- helpers
 def clamp(x, lo=0.0, hi=100.0): return max(lo, min(hi, x))
 def lin(x, x0, x1, y0, y1):
@@ -298,8 +311,11 @@ def raw_stats(name):
         seen.add(k); U.append(x)
     modern = [x["p"] for x in U if 90 <= x["a"] <= 110 and x.get("y") and x["y"] >= 2000]
     u80 = [x for x in U if x["p"] < 8000]
+    Q = [x for x in U if x["a"] >= 90 and x.get("y") and x["y"] >= SPACE_YEAR]   # qualifying: 90 m2+, built 2000+
     return dict(modern_med=statistics.median(modern) if modern else None, modern_n=len(modern),
-                u80=len(u80), u80_modern=sum(1 for x in u80 if x.get("y") and x["y"] >= 2000), sc=raw[name]["sc"])
+                u80=len(u80), u80_modern=sum(1 for x in u80 if x.get("y") and x["y"] >= 2000), sc=raw[name]["sc"],
+                q_n=len(Q), q_ppm=statistics.median([x["p"] / x["a"] for x in Q]) if Q else None,
+                q80=sum(1 for x in Q if x["p"] < SPACE_BUDGET))
 
 def commute_score(m, x, crowd, pss):
     eff = m + 5 * x
@@ -400,25 +416,20 @@ for (en, ja, pref, typ, st, dest, mins, xf, pss, crowd, crowdtxt, lat, lng) in A
         annual = tokyo_cash - 12 * (fee1 + fee2)
     else:
         annual = None
-    # space
+    # space (v2): what a modern large flat costs + how many you could choose from (see RUBRIC)
     med_all = s["med_p"]; n_all = s["nb"]
     mm, mn = rs["modern_med"], rs["modern_n"]
-    est95 = s["est95"]
-    if mm is not None and mn >= 3 and med_all is not None and n_all >= 3:
-        P = math.sqrt(mm * med_all); pbasis = "geometric mean of all-age 90–105 m² and built≥2000 90–110 m² medians"
-    elif med_all is not None and n_all >= 3:
-        P = math.sqrt(med_all * est95); pbasis = "geometric mean of all-age 90–105 m² median and 70–80 m² ¥/m² × 95 (built≥2000 sample <3)"
-        flags.append("built≥2000 90–110 m² sample <3: price blends all-age median with 70–80 m² unit price × 95")
-    elif mm is not None and mn >= 3:
-        P = math.sqrt(mm * est95); pbasis = "geometric mean of built≥2000 median and 70–80 m² ¥/m² × 95 (all-age sample <3)"
-        flags.append("all-age 90–105 m² sample <3: price blends built≥2000 median with 70–80 m² unit price × 95")
+    aff_share = 100 * rs["u80"] / s["total"] if s["total"] else 0   # info only since v2
+    P, price_s, cnt_s = space_points(rs["q_ppm"], rs["q80"])
+    ss = 0.5 * price_s + 0.5 * cnt_s
+    if rs["q_n"] == 0:
+        pbasis = "no 90 m²+ built-2000+ listing: price part = 0"
+        flags.append("no 90 m²+ condo built 2000+ listed (2026-10-12 crawl): space price part scored 0")
+    elif rs["q_n"] < 3:
+        pbasis = f"median ¥/m² of only {rs['q_n']} 90 m²+ built-2000+ listing(s) × 100 m² (thin)"
+        flags.append(f"only {rs['q_n']} listing(s) of 90 m²+ built 2000+: space price from a thin sample")
     else:
-        P = est95; pbasis = "70–80 m² ¥/m² × 95 (no usable ≥90 m² sample)"; flags.append("no usable ≥90 m² price sample: 95 m² price estimated from 70–80 m² unit price (thin)")
-    price_s = 100 * clamp((math.log(15000) - math.log(P)) / (math.log(15000) - math.log(4000)), 0, 1)
-    cnt_s = 100 * min(1, rs["u80"] / 40)
-    aff_share = 100 * rs["u80"] / s["total"] if s["total"] else 0
-    aff_s = 100 * min(1, aff_share / 15)
-    ss = 0.4 * price_s + 0.3 * cnt_s + 0.3 * aff_s
+        pbasis = f"median ¥/m² of {rs['q_n']} 90 m²+ built-2000+ listings × 100 m²"
     # growth
     pop, chg, ipss, child = DEMO[en]
     land5 = s["land5"]
@@ -444,8 +455,8 @@ for (en, ja, pref, typ, st, dest, mins, xf, pss, crowd, crowdtxt, lat, lng) in A
     elif wv >= 75: hl.append(f"Daycare waitlist {wv} (2026)")
     if isinstance(gak, int) and gak >= 150: hl.append(f"学童 waitlist {gak}")
     if s["share"] >= 20: hl.append(f"{s['share']:.0f}% of used listings ≥90 m²")
-    if rs["u80"] >= 30: hl.append(f"{rs['u80']} ≥90 m² listings under ¥80M")
-    if P >= 15000: hl.append("95 m² condo ≥¥150M")
+    if rs["q80"] >= 20: hl.append(f"{rs['q80']} modern (2000+) ≥90 m² listings under ¥80M")
+    if P and P >= 15000: hl.append("Modern 100 m² condo ≥¥150M")
     if chg >= 5: hl.append(f"Population +{chg}% (2020→25)")
     if chg <= -2: hl.append(f"Population {chg}% (2020→25)")
     if cmin <= 15: hl.append(f"Costco {cn} ~{cmin:g} min")
@@ -514,7 +525,10 @@ for (en, ja, pref, typ, st, dest, mins, xf, pss, crowd, crowdtxt, lat, lng) in A
         "housing": {"median90to105": int(med_all * 10000) if med_all else None, "n90to105": n_all,
                     "median90to110new": int(mm * 10000) if mm else None, "nNew": mn,
                     "share90plus": round(s["share"], 1), "count90under80M": rs["u80"], "shareAffordableLarge": round(aff_share, 1), "count90under80MBuilt2000": rs["u80_modern"],
-                    "priceUsedForScore": int(P * 10000), "priceBasis": pbasis,
+                    "priceUsedForScore": (int(P * 10000) if P else None), "priceBasis": pbasis,
+                    "modern90Count": rs["q_n"], "modern90Under": rs["q80"],
+                    "modern90PpmMedian": (int(rs["q_ppm"] * 10000) if rs["q_ppm"] else None),
+                    "spacePricePts": round(price_s, 1), "spaceChoicePts": round(cnt_s, 1),
                     "landPrice": int(round(float(s["land_m2"].replace(",", "")) * 10000)), "landChange5y": round(land5, 1),
                     "landYoY2026": float(s["land_yoy"]), "usedListingsTotal": s["total"]},
         "costco": {"nearest": cn, "km": ckm, "driveMin": cmin},
@@ -536,7 +550,7 @@ RUBRIC = """Total = Σ weight × sub-score / 100, each sub-score 0–100. Weight
 COMMUTE: effective minutes E = station-to-station minutes (best of Tokyo Stn / Otemachi, Yahoo!乗換案内 arrive 08:45 on 2026-10-14) + 5 per transfer. Base = 100×(80−E)/65 clamped 0–100 (E≤15 → 100, E≥80 → 0). Crowding adj. (MLIT FY2025 peak of main line): ≥158% −5; 150–157% −2; ≤125% +5; unmeasured 0. Pass adj.: 1-month pass >¥30k −5, >¥45k −10.
 BUS (bonus): weekday buses arriving Tokyo Stn ≤~9:30 (A) and leaving 17:30–21:30 (P): 50×min(A,9)/9 + 50×min(P,9)/9; ×0.6 if scheduled ride > rail effective minutes + 15. No route found = 0 (evidence of absence from operator lists; re-swept 2026-10-12 against the Jorudan per-prefecture route index after the user reported the missed 幕張 line). Tsukuba counts unknown → imputed A=P=5 (flagged). Aoba (東名江田) timetable unknown → 0 (flagged).
 CHILDCARE (100): fee 35×(1 − 1st-child 0–2 認可 monthly fee/¥65,000) for a ¥10M dual-income household (所得割 ≈¥285k); unknown fee → prefecture median of confirmed paying cities (Chiba ¥54,900, Saitama ¥60,000, Ibaraki ¥50,500), flagged. Tokyo cash 10: 018サポート + 赤ちゃんファースト = 8, +2 verified ward cash ≥¥100k (+1 if conflicting). Waitlist 30 (2026-04 待機児童; 2025 if 2026 missing): 0→30, 1–9→24, 10–29→18, 30–59→12, 60–99→6, ≥100→0. 学童 waitlist 15: 0→15, 1–49 or '<50'→10, 50–149→5, ≥150→0. Medical 5: to 18 & ¥0→5, ¥200→4, ¥300→3.5, to 15/¥500→2.5, ¥600/day→2, unknown→3.5 (flagged). Lunch 5: all free→5, JH free→5, partial→3, JH 3rd child only→2, paid→1, unknown→2 (flagged).
-SPACE (100): 0.4×Price + 0.3×Count + 0.3×AffordableShare. Price = 100 × (ln ¥150M − ln P)/(ln ¥150M − ln ¥40M), clamped (P≤¥40M → 100, ≥¥150M → 0); P = geometric mean of SUUMO all-age 90–105 m² median and built≥2000 90–110 m² median (each n≥3); if one sample has n<3 it is replaced by the 70–80 m² ¥/m² × 95 estimate; if both n<3, the estimate alone (flagged). Count = 100 × min(1, de-duplicated ≥90 m² listings under ¥80M / 40). AffordableShare = 100 × min(1, (≥90 m² listings under ¥80M ÷ all used-condo listings) / 15%). All asking prices, SUUMO crawl 2026-10-12; ¥80M is the writer's affordability line for a ~¥10M household.
+SPACE (100) = 50% Price + 50% Choice, counting only 'qualifying' listings: used condos ≥90 m² built 2000 or later (de-duplicated, SUUMO asking prices, crawl 2026-10-12). PRICE = typical price of a 100 m² modern flat = median ¥/m² of the qualifying listings (all prices) × 100; log scale ¥30M → 100 pts, ¥150M → 0 pts; no qualifying listing → 0 (1–2 listings flagged as thin). CHOICE = qualifying listings under ¥80M (the writer's affordability line for a ~¥10M household): 100 × ln(1+n)/ln(61), i.e. 0 → 0, 1 → 17, 5 → 44, 10 → 58, 20 → 74, 40 → 90, ≥60 → 100. Older or smaller stock is shown as info but not scored. (v1 until 2026-10-13: 0.4 blended all-age/modern price + 0.3 count/40 + 0.3 share — replaced because the blend described no real flat and old stock inflated it.)
 GROWTH (100): population change 2020→25 (census) −4%→0 … +8%→35; IPSS 2050 vs 2020 −15%→0 … +15%→30; residential land price 5-yr change 5%→0 … 45%→20; 0–14 share 2020 9%→0 … 15%→10; pipeline adjustment −3…+5 (confirmed near-term projects +, stalled flagships −). Clamped 0–100.
 HAZARD (100, higher = safer; all shares = % of residents, 2020 census 500 m mesh, 4×4 sample points per cell, data/area_hazard.json from area_hazard.py): WATER 40 × (1 − (0.25·shallow<0.5 m + 0.6·0.5–3 m + 1.0·≥3 m)/100) using the deepest of flood (洪水 想定最大規模), storm surge (高潮 想定最大規模) and tsunami (津波 想定最大規模) — all ハザードマップポータル open data; GROUND 25 × (1 − (liquefaction high + 0.4·mid + 0.4·upland fill)/100) from 国土地理院 地形分類 (landform-based tendency, not a site survey; fill over hills/plateaus = collapse risk per GSI, counted as upland fill, not liquefaction; prefectural 液状化 maps are not open data); LANDSLIDE 10 × (1 − min(1, (土砂災害警戒区域 + 特別警戒区域 share)/10%)); EARTHQUAKE 25 × linear from J-SHIS 2024 30-yr P(震度6弱+) 40% → 25 … 85% → 0 (population-weighted at the 5 most-populated cells). Max-scenario maps describe rare (≈1/1000-yr) events; condo upper floors are not flooded but building services and access are.
 COSTCO: estimated drive minutes (midpoint of range) to nearest Kanto warehouse: ≤15 → 100, ≥75 → 0, linear.

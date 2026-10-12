@@ -203,9 +203,9 @@ function mpCmpRows() {
     ]),
     sec('housing', [
       [L('median'), a => a.housing.median90to105, a => `${yenM(a.housing.median90to105)}<div class="cmp-sub">n=${a.housing.n90to105 ?? '?'}</div>`, 'lo'],
-      [L('modern'), a => a.housing.median90to110new, a => `${yenM(a.housing.median90to110new)}<div class="cmp-sub">n=${a.housing.nNew ?? '?'}</div>`, 'lo'],
-      [L('scorePrice'), a => a.housing.priceUsedForScore, a => yenM(a.housing.priceUsedForScore), 'lo'],
-      [L('pool'), a => a.housing.count90under80M, a => String(a.housing.count90under80M ?? '—'), 'hi'],
+      [L('scorePrice'), a => a.housing.priceUsedForScore, a => `${yenM(a.housing.priceUsedForScore)}<div class="cmp-sub">n=${a.housing.modern90Count ?? '?'} · ${Math.round(a.housing.spacePricePts ?? 0)} pts</div>`, 'lo'],
+      [L('pool'), a => a.housing.modern90Under, a => `${a.housing.modern90Under ?? '—'}<div class="cmp-sub">${Math.round(a.housing.spaceChoicePts ?? 0)} pts</div>`, 'hi'],
+      [L('poolAll'), a => a.housing.count90under80M, a => String(a.housing.count90under80M ?? '—'), 'hi'],
       [L('share'), a => a.housing.share90plus, a => pct(a.housing.share90plus), 'hi'],
       [L('liveN'), a => mpLive(a)?.u80 ?? null, a => { const v = mpLive(a); return v ? `${v.u80} <span class="cmp-sub">/ ${v.n90}</span><div class="cmp-sub">${v.date}</div>` : '—'; }, 'hi'],
       [L('liveMedian'), a => mpLive(a)?.median90to105 ?? null, a => { const v = mpLive(a); return v?.median90to105 ? `${t('map.yenM', v.median90to105)}<div class="cmp-sub">n=${v.n90to105}</div>` : '—'; }, 'lo'],

@@ -44,7 +44,7 @@ Refresh steps:
 
 | Sub-score | Weight | Formula (full text in `locations.json` → `rubric`) |
 |---|---|---|
-| space | 25 | 0.4·Price (log scale ¥40M=100 … ¥150M=0) + 0.3·Count (90 m²+ under ¥80M, 40=100) + 0.3·Share (those ÷ all listings, 15%=100) |
+| space | 25 | **v2 (2026-10-13):** only listings ≥90 m² built 2000+ count. 0.5·Price (median ¥/m² of those × 100 m²; log ¥30M=100 … ¥150M=0; none → 0) + 0.5·Choice (those under ¥80M; 100·ln(1+n)/ln 61, 60+=100). Constants `SPACE_*` in build_locations.py. v1 (0.4 blended price + 0.3 count/40 + 0.3 share) retired, DATA_LOG item 9 |
 | commute | 25 | E = minutes + 5/transfer; 100·(80−E)/65; crowding ±5; pass >¥30k −5, >¥45k −10 |
 | childcare | 20 | fee 35 + Tokyo cash 10 + daycare waitlist 30 + 学童 15 + medical 5 + lunch 5 |
 | growth | 10 | population 2020→25 (35) + IPSS 2050 (30) + land 5y (20) + child share (10) ± pipeline |
@@ -100,6 +100,8 @@ Pros/cons/info on the map are **derived in `map.js` → `mpPoints()`** from the 
 | median90to110new, nNew | Same, built ≥2000, 90–110 m² | same | same | same |
 | share90plus | 90 m²+ listings ÷ all used listings (%) | same | same | same |
 | count90under80M / …Built2000 | 90 m²+ listings under ¥80M (and built ≥2000) | same | same | same |
+| modern90Count, modern90Under, modern90PpmMedian | **Scored (space v2):** listings ≥90 m² built ≥2000 (any price / under ¥80M) and their median ¥/m² | same (`raw.json` l90, de-dup) | `build_locations.py` raw_stats | same |
+| priceUsedForScore, spacePricePts, spaceChoicePts | modern 100 m² price (= ppm × 100) and the two space parts, shown in the map tooltip | derived | same | same |
 | usedListingsTotal | All used-condo listings | same | same | same |
 | landPrice, landChange5y, landYoY2026 | 公示地価 residential average | MLIT via トチノカチ | `scripts/land.py` | yearly (published March) |
 
