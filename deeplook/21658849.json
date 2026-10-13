@@ -470,41 +470,80 @@
  "sections": [
   {
    "key": "A",
-   "title": "Is the price fair?",
-   "intro": "Asking price per m² against similar flats for sale now. Contract prices are usually a few % lower than asking.",
+   "title": {
+    "en": "Is the price fair?",
+    "ja": "価格は妥当か"
+   },
+   "intro": {
+    "en": "Asking price per m² against similar flats for sale now. Contract prices are usually a few % lower than asking.",
+    "ja": "現在売りに出ている類似物件との㎡単価（売出価格）の比較。成約価格は通常、売出価格より数%低くなります。"
+   },
    "items": [
     {
      "level": "good",
-     "head": "¥533k/m² — the cheapest of 15 comparable flats",
-     "detail": "Comparable = 90 m²+ used condos for sale now in Chiba Mihama, built 2005–2015.",
-     "cmp": "Median ¥609k/m² · range ¥533k–757k · all ages in the area: median ¥623k/m² (54 flats)",
+     "head": {
+      "en": "¥533k/m² — the cheapest of 15 comparable flats",
+      "ja": "53.3万円/㎡ — 類似物件15件の中で最も割安"
+     },
+     "detail": {
+      "en": "Comparable = 90 m²+ used condos for sale now in Chiba Mihama, built 2005–2015.",
+      "ja": "比較対象＝千葉市美浜区で現在売出中の専有面積90㎡以上の中古マンション（築2005〜2015年）。"
+     },
+     "cmp": {
+      "en": "Median ¥609k/m² · range ¥533k/m²–¥757k/m² · all ages in the area: median ¥623k/m² (54 flats)",
+      "ja": "中央値 60.9万円/㎡・範囲 53.3万円/㎡〜75.7万円/㎡・エリア全体（築年問わず）の中央値 62.3万円/㎡（54件）"
+     },
      "ask": null
     },
     {
      "level": "ask",
-     "head": "Much cheaper than its peers — find out why",
-     "detail": "Typical reasons: low floor, poor orientation, a view blocked by a newer building, an upcoming levy, a structural or legal issue, a stigma (告知事項), or a seller in a hurry.",
+     "head": {
+      "en": "Much cheaper than its peers — find out why",
+      "ja": "類似物件よりかなり安い — 理由を確認"
+     },
+     "detail": {
+      "en": "Typical reasons: low floor, poor orientation, a view blocked by a newer building, an upcoming levy, a structural or legal issue, a stigma (告知事項), or a seller in a hurry.",
+      "ja": "よくある理由：低層階、方角、新しい建物による眺望・日照の悪化、修繕一時金の予定、構造・法令上の問題、告知事項（心理的瑕疵）、売り急ぎ。"
+     },
      "cmp": "",
-     "ask": "Why is it priced below similar flats? How long has it been on the market and has the price changed?"
+     "ask": {
+      "en": "Why is it priced below similar flats? How long has it been on the market and has the price changed?",
+      "ja": "類似物件より安い理由は何ですか？売出しからどのくらい経ち、価格改定はありましたか？"
+     }
     },
     {
      "level": "info",
-     "head": "On our radar since 2026-10-12 (first price ¥48.8M)",
+     "head": {
+      "en": "On our radar since 2026-10-12 (first price ¥48.8M)",
+      "ja": "当サイトでの初確認：2026-10-12（当初価格 4,880万円）"
+     },
      "detail": "",
      "cmp": "",
      "ask": null
     },
     {
      "level": "good",
-     "head": "8 min walk to 検見川浜 — closer than 88% of the area's large flats",
+     "head": {
+      "en": "8 min walk to 検見川浜 — closer than 88% of the area's large flats",
+      "ja": "検見川浜駅 徒歩8分 — エリア内の90㎡以上物件の88%より駅に近い"
+     },
      "detail": "",
-     "cmp": "Area median 15 min (90 m²+ listings, walk access only)",
+     "cmp": {
+      "en": "Area median 15 min (90 m²+ listings, walk access only)",
+      "ja": "エリア中央値 徒歩15分（90㎡以上・徒歩物件のみ）"
+     },
      "ask": null
     },
     {
      "level": "info",
-     "head": "Actual sale prices nearby: not yet included",
-     "detail": "Needs the MLIT 不動産情報ライブラリ API key (transaction prices by district).",
+     "head": {
+      "en": "Actual sale prices nearby: not yet included",
+      "ja": "周辺の成約価格：未対応"
+     },
+     "detail": {
+      "en": "Needs the MLIT 不動産情報ライブラリ API key (transaction prices by district).",
+      "ja": "国土交通省「不動産情報ライブラリ」のAPIキー取得後に、地区別の取引価格を追加します。"
+     },
      "cmp": "",
      "ask": null
     }
@@ -522,41 +561,89 @@
   },
   {
    "key": "B",
-   "title": "What it really costs",
-   "intro": "Monthly running costs, how the fees compare, and the one-off costs of buying.",
+   "title": {
+    "en": "What it really costs",
+    "ja": "実際にかかる費用"
+   },
+   "intro": {
+    "en": "Monthly running costs, how the fees compare, and the one-off costs of buying.",
+    "ja": "毎月の費用、管理費・修繕積立金の水準比較、購入時の諸費用。"
+   },
    "items": [
     {
      "level": "watch",
-     "head": "Repair fund ¥15,100/month = ¥165/m²",
-     "detail": "MLIT guideline for a building like this (under 20 floors, 5,000–10,000 m², floor area estimated ~5,700 m²): average ¥252/m², ⅔ of buildings ¥170–320. (The floor area is a rough estimate near the 5,000 m² line — the smaller band's average is ¥335/m².) At the guideline average this flat would pay ≈ ¥23,073/month (+¥7,973). A fund below the guideline usually means future increases or a one-off levy (一時金).",
-     "cmp": "Peers built ±5 years (428 watchlist condos): median ¥196/m², middle half ¥140–240 → this flat is at the 38th percentile.",
-     "ask": "Please share the 長期修繕計画 and the current repair-fund balance. Are increases or a 一時金 planned?"
+     "head": {
+      "en": "Repair fund ¥15,100/month = ¥165/m²",
+      "ja": "修繕積立金 月15,100円（165円/㎡）"
+     },
+     "detail": {
+      "en": "MLIT guideline for a building like this (under 20 floors, 5,000–10,000 m², floor area estimated ~5,700 m²): average ¥252/m², ⅔ of buildings ¥170–320. (The floor area is a rough estimate near the 5,000 m² line — the smaller band's average is ¥335/m².) At the guideline average this flat would pay ≈ ¥23,073/month (+¥7,973). A fund below the guideline usually means future increases or a one-off levy (一時金).",
+      "ja": "国土交通省「マンションの修繕積立金に関するガイドライン」の目安（20階未満・延床5,000〜10,000㎡、延床面積は約5,700㎡と推定）：平均252円/㎡、事例の3分の2が170〜320円/㎡。（延床面積は概算で5,000㎡の境界付近のため、5,000㎡未満の区分では平均335円/㎡。）ガイドライン平均なら本住戸は月約23,073円（現在より+7,973円）。目安を下回る場合、将来の値上げや一時金徴収の可能性が高くなります。"
+     },
+     "cmp": {
+      "en": "Peers built ±5 years (428 watchlist condos): median ¥196/m², middle half ¥140–240 → this flat is at the 38th percentile.",
+      "ja": "築年±5年の比較物件（428件）：中央値196円/㎡、中位50%は140〜240円/㎡ → 本物件は下から38%の位置。"
+     },
+     "ask": {
+      "en": "Please share the 長期修繕計画 and the current repair-fund balance. Are increases or a 一時金 planned?",
+      "ja": "長期修繕計画書と修繕積立金の現在の残高を見せてください。値上げや一時金の予定はありますか？"
+     }
     },
     {
      "level": "ok",
-     "head": "Management fee ¥16,200/month = ¥177/m² (委託(通勤))",
-     "detail": "Small buildings cost more per flat; staffed (常駐) management costs more than visiting (巡回).",
-     "cmp": "Peers of similar age and size (0–60 units): median ¥177/m² → 50th percentile (70 condos)",
+     "head": {
+      "en": "Management fee ¥16,200/month = ¥177/m² (委託(通勤))",
+      "ja": "管理費 月16,200円（177円/㎡）（委託(通勤)）"
+     },
+     "detail": {
+      "en": "Small buildings cost more per flat; staffed (常駐) management costs more than visiting (巡回).",
+      "ja": "小規模マンションほど1戸あたりの負担は大きく、常駐管理は巡回管理より高くなります。"
+     },
+     "cmp": {
+      "en": "Peers of similar age and size (0–60 units): median ¥177/m² → 50th percentile (70 condos)",
+      "ja": "築年・規模（0–60戸）の近い比較物件：中央値177円/㎡ → 下から50%の位置（70件）"
+     },
      "ask": null
     },
     {
      "level": "info",
-     "head": "Other fixed monthly charges ¥1,680",
-     "detail": "インターネット定額料金 ¥1,260 · CATV定額料金 ¥420",
+     "head": {
+      "en": "Other fixed monthly charges ¥1,680",
+      "ja": "その他の毎月の費用 1,680円"
+     },
+     "detail": {
+      "en": "インターネット定額料金 ¥1,260 · CATV定額料金 ¥420",
+      "ja": "インターネット定額料金 1,260円・CATV定額料金 420円"
+     },
      "cmp": "",
      "ask": null
     },
     {
      "level": "info",
-     "head": "≈ ¥170,735/month before parking and property tax",
-     "detail": "Loan ¥137,755 (100% of price, 35 years, 1.00% variable — the Apartments tab default) + fees ¥32,980 · parking would add ¥7,500+",
+     "head": {
+      "en": "≈ ¥170,735/month before parking and property tax",
+      "ja": "毎月 約170,735円（駐車場代・固定資産税を除く）"
+     },
+     "detail": {
+      "en": "Loan ¥137,755 (100% of price, 35 years, 1.00% variable — the Apartments tab default) + fees ¥32,980 · parking would add ¥7,500+",
+      "ja": "住宅ローン返済 137,755円（物件価格の100%を借入、35年、変動金利1.00%：中古マンションタブの設定値）＋管理費等 32,980円・駐車場を借りると +7,500円〜"
+     },
      "cmp": "",
-     "ask": "What was the last 固定資産税・都市計画税 bill for this unit?"
+     "ask": {
+      "en": "What was the last 固定資産税・都市計画税 bill for this unit?",
+      "ja": "この住戸の固定資産税・都市計画税（年額）はいくらですか？"
+     }
     },
     {
      "level": "info",
-     "head": "One-off buying costs ≈ ¥3,140,400–¥4,116,400",
-     "detail": "Agent fee (仲介手数料, 3% + ¥60k + tax) ¥1,676,400 · plus registration tax and scrivener, loan fees and guarantee, fire + earthquake insurance, stamp duty, pro-rated property tax and fees: typically 3–5% of the price.",
+     "head": {
+      "en": "One-off buying costs ≈ ¥3,140,400–¥4,116,400",
+      "ja": "購入時の諸費用 約3,140,400円〜4,116,400円"
+     },
+     "detail": {
+      "en": "Agent fee (仲介手数料, 3% + ¥60k + tax) ¥1,676,400 · plus registration tax and scrivener, loan fees and guarantee, fire + earthquake insurance, stamp duty, pro-rated property tax and fees: typically 3–5% of the price.",
+      "ja": "仲介手数料（物件価格×3%＋6万円＋消費税）1,676,400円。ほかに登録免許税・司法書士報酬、ローン事務手数料・保証料、火災保険・地震保険、印紙税、固定資産税・管理費等の日割り精算などで、物件価格の3〜5%程度。"
+     },
      "cmp": "",
      "ask": null
     }
@@ -567,34 +654,55 @@
      "https://www.mlit.go.jp/jutakukentiku/house/content/001747009.pdf"
     ],
     [
-     "SUUMO listing",
+     "SUUMO",
      "https://suumo.jp/ms/chuko/chiba/sc_chibashimihama/nc_21658849/"
     ]
    ]
   },
   {
    "key": "C",
-   "title": "Land rights and legal limits",
+   "title": {
+    "en": "Land rights and legal limits",
+    "ja": "権利関係・法令上の制限"
+   },
    "intro": "",
    "items": [
     {
      "level": "good",
-     "head": "Land rights: 所有権",
-     "detail": "Freehold share of the land (normal for condos).",
+     "head": {
+      "en": "Land rights: 所有権",
+      "ja": "敷地の権利形態：所有権"
+     },
+     "detail": {
+      "en": "Freehold share of the land (normal for condos).",
+      "ja": "敷地の所有権（共有持分）。マンションとして一般的です。"
+     },
      "cmp": "",
      "ask": null
     },
     {
      "level": "ask",
-     "head": "Zoning (用途地域) not stated",
-     "detail": "Check the zoning of the plot and the neighbouring blocks (city zoning map).",
+     "head": {
+      "en": "Zoning (用途地域) not stated",
+      "ja": "用途地域の記載なし"
+     },
+     "detail": {
+      "en": "Check the zoning of the plot and the neighbouring blocks (city zoning map).",
+      "ja": "敷地と周辺街区の用途地域を自治体の都市計画図で確認してください。"
+     },
      "cmp": "",
      "ask": null
     },
     {
      "level": "info",
-     "head": "Planned roads, district plans, filled-land and building-coverage checks: not yet automated",
-     "detail": "With the MLIT API key the report will add 都市計画道路, 地区計画 and 用途地域 of the surrounding blocks.",
+     "head": {
+      "en": "Planned roads, district plans, filled-land and building-coverage checks: not yet automated",
+      "ja": "都市計画道路・地区計画・盛土・建ぺい率等の確認：未対応"
+     },
+     "detail": {
+      "en": "With the MLIT API key the report will add 都市計画道路, 地区計画 and 用途地域 of the surrounding blocks.",
+      "ja": "不動産情報ライブラリのAPIキー取得後に、都市計画道路・地区計画・周辺の用途地域を追加します。"
+     },
      "cmp": "",
      "ask": null
     }
@@ -608,36 +716,69 @@
   },
   {
    "key": "D",
-   "title": "Earthquake safety",
+   "title": {
+    "en": "Earthquake safety",
+    "ja": "地震への備え"
+   },
    "intro": "",
    "items": [
     {
      "level": "good",
-     "head": "Built 2010-10 — current seismic standard (新耐震)",
-     "detail": "The rule depends on the building-permit date (from June 1981); completion from spring 1983 is almost always new-standard.",
+     "head": {
+      "en": "Built 2010-10 — current seismic standard (新耐震)",
+      "ja": "2010年10月築 — 新耐震基準"
+     },
+     "detail": {
+      "en": "The rule depends on the building-permit date (from June 1981); completion from spring 1983 is almost always new-standard.",
+      "ja": "新耐震基準かどうかは建築確認日（1981年6月1日以降）で決まります。1983年春以降の竣工であれば、ほぼ確実に新耐震です。"
+     },
      "cmp": "",
      "ask": null
     },
     {
      "level": "info",
-     "head": "Structure: RC, 5 floors",
-     "detail": "RC/SRC are the norm for condos.",
+     "head": {
+      "en": "Structure: RC, 5 floors",
+      "ja": "構造：RC造 5階建"
+     },
+     "detail": {
+      "en": "RC/SRC are the norm for condos.",
+      "ja": "マンションではRC造・SRC造が一般的です。"
+     },
      "cmp": "",
      "ask": null
     },
     {
      "level": "risk",
-     "head": "30-year chance of shaking ≥ 6-lower here: 73% (≥ 6-upper: 23%)",
-     "detail": "≥ 5-upper: 99%. Modern buildings are designed for this; the risk is contents, lifts, pipes and the days without water or power.",
-     "cmp": "Study areas (population-weighted, ≥ 6-lower): median 59%, range 24–89% → rank 62 of 78 from the safest",
+     "head": {
+      "en": "30-year chance of shaking ≥ 6-lower here: 73% (≥ 6-upper: 23%)",
+      "ja": "今後30年間に震度6弱以上の揺れに見舞われる確率：73%（6強以上：23%）"
+     },
+     "detail": {
+      "en": "≥ 5-upper: 99%. Modern buildings are designed for this; the risk is contents, lifts, pipes and the days without water or power.",
+      "ja": "震度5強以上：99%。新耐震の建物はこの揺れを想定して設計されていますが、家具の転倒、エレベーター・配管の損傷、断水・停電の期間がリスクです。"
+     },
+     "cmp": {
+      "en": "Study areas (population-weighted, ≥ 6-lower): median 59%, range 24–89% → rank 62 of 78 from the safest",
+      "ja": "調査対象エリア（人口加重、6弱以上）：中央値59%、範囲24〜89% → 安全な方から78中62位"
+     },
      "ask": null
     },
     {
      "level": "risk",
-     "head": "Ground: 埋立地 — shaking amplified ×1.80",
-     "detail": "Soft ground amplifies shaking (AVS30 201 m/s; about 1.6 or more counts as soft). Ask how the building is founded (piles to bearing stratum?).",
+     "head": {
+      "en": "Ground: 埋立地 — shaking amplified ×1.80",
+      "ja": "地盤：埋立地 — 表層地盤増幅率 1.80"
+     },
+     "detail": {
+      "en": "Soft ground amplifies shaking (AVS30 201 m/s; about 1.6 or more counts as soft). Ask how the building is founded (piles to bearing stratum?).",
+      "ja": "軟らかい地盤ほど揺れが増幅されます（AVS30＝201m/s、増幅率1.6以上が揺れやすい目安）。建物の基礎（支持層まで杭が届いているか）を確認してください。"
+     },
      "cmp": "",
-     "ask": "What kind of foundation does the building have (支持層までの杭基礎)?"
+     "ask": {
+      "en": "What kind of foundation does the building have (支持層までの杭基礎)?",
+      "ja": "建物の基礎の種類は何ですか（支持層までの杭基礎か）？"
+     }
     }
    ],
    "src": [
@@ -649,55 +790,106 @@
   },
   {
    "key": "E",
-   "title": "Water and ground",
-   "intro": "Depth bands are the maximum assumed scenario (想定最大規模) at SUUMO's map point; SUUMO's point is approximate, so the worst value within ~100 m is shown too.",
+   "title": {
+    "en": "Water and ground",
+    "ja": "浸水・地盤"
+   },
+   "intro": {
+    "en": "Depth bands are the maximum assumed scenario (想定最大規模) at SUUMO's map point; SUUMO's point is approximate, so the worst value within ~100 m is shown too.",
+    "ja": "浸水深は想定最大規模。SUUMOの地図位置は概略のため、地点の値に加えて半径約100m内の最大値も表示しています。"
+   },
    "items": [
     {
      "level": "watch",
-     "head": "River flood: 0.5–3 m at the point",
-     "detail": "The flat is on floor 3: it stays dry, but entrances, parking, lifts and the building's electrical room may not. Expect days without lifts/water if the electrical room floods.",
+     "head": {
+      "en": "River flood: 0.5–3 m at the point",
+      "ja": "洪水（河川）：地点の想定浸水深 0.5〜3m"
+     },
+     "detail": {
+      "en": "The flat is on floor 3: it stays dry, but entrances, parking, lifts and the building's electrical room may not. Expect days without lifts/water if the electrical room floods.",
+      "ja": "住戸は3階のため住戸自体は浸水しにくいものの、エントランス・駐車場・エレベーター・電気室は浸水する可能性があります。電気室が浸水するとエレベーターや給水が数日止まることがあります。"
+     },
      "cmp": "",
-     "ask": "Where are the electrical room (電気室), water pumps and parking — basement or ground floor? Any flood barriers (止水板)?"
+     "ask": {
+      "en": "Where are the electrical room (電気室), water pumps and parking — basement or ground floor? Any flood barriers (止水板)?",
+      "ja": "電気室・給水ポンプ・駐車場は地下ですか、1階ですか？止水板などの浸水対策はありますか？"
+     }
     },
     {
      "level": "watch",
-     "head": "Storm surge: 0.5–3 m at the point",
-     "detail": "The flat is on floor 3: it stays dry, but entrances, parking, lifts and the building's electrical room may not. Expect days without lifts/water if the electrical room floods.",
+     "head": {
+      "en": "Storm surge: 0.5–3 m at the point",
+      "ja": "高潮：地点の想定浸水深 0.5〜3m"
+     },
+     "detail": {
+      "en": "The flat is on floor 3: it stays dry, but entrances, parking, lifts and the building's electrical room may not. Expect days without lifts/water if the electrical room floods.",
+      "ja": "住戸は3階のため住戸自体は浸水しにくいものの、エントランス・駐車場・エレベーター・電気室は浸水する可能性があります。電気室が浸水するとエレベーターや給水が数日止まることがあります。"
+     },
      "cmp": "",
-     "ask": "Where are the electrical room (電気室), water pumps and parking — basement or ground floor? Any flood barriers (止水板)?"
+     "ask": {
+      "en": "Where are the electrical room (電気室), water pumps and parking — basement or ground floor? Any flood barriers (止水板)?",
+      "ja": "電気室・給水ポンプ・駐車場は地下ですか、1階ですか？止水板などの浸水対策はありますか？"
+     }
     },
     {
      "level": "good",
-     "head": "Tsunami: outside the mapped zone",
+     "head": {
+      "en": "Tsunami: outside the mapped zone",
+      "ja": "津波：浸水想定区域外"
+     },
      "detail": "",
      "cmp": "",
      "ask": null
     },
     {
      "level": "good",
-     "head": "No landslide zone within ~100 m",
+     "head": {
+      "en": "No landslide zone within ~100 m",
+      "ja": "半径約100m以内に土砂災害警戒区域なし"
+     },
      "detail": "",
      "cmp": "",
      "ask": null
     },
     {
      "level": "risk",
-     "head": "Liquefaction tendency: high",
-     "detail": "Landform: 盛土地･埋立地 on 旧水部 (国土地理院). Condo towers on piles usually stand, but roads, pipes, gas and sewers around them can fail for weeks (as in Urayasu 2011).",
+     "head": {
+      "en": "Liquefaction tendency: high",
+      "ja": "液状化の傾向：高い"
+     },
+     "detail": {
+      "en": "Landform: 盛土地･埋立地 on 旧水部 (国土地理院). Condo towers on piles usually stand, but roads, pipes, gas and sewers around them can fail for weeks (as in Urayasu 2011).",
+      "ja": "地形分類：旧水部の上の盛土地･埋立地（国土地理院）。杭基礎のマンション自体は残ることが多いものの、周辺の道路・上下水道・ガスが数週間使えなくなることがあります（2011年の浦安市など）。"
+     },
      "cmp": "",
-     "ask": "Was the building or site damaged in 2011 (東日本大震災)? Ground improvement?"
+     "ask": {
+      "en": "Was the building or site damaged in 2011 (東日本大震災)? Ground improvement?",
+      "ja": "東日本大震災で建物や敷地に被害はありましたか？地盤改良はされていますか？"
+     }
     },
     {
      "level": "info",
-     "head": "Area context (Chiba Mihama)",
+     "head": {
+      "en": "Area context (Chiba Mihama)",
+      "ja": "エリアの状況（千葉市美浜区）"
+     },
      "detail": "",
-     "cmp": "95% of residents live in some water zone · 97% on high-liquefaction ground · 0.5% in landslide zones",
+     "cmp": {
+      "en": "95% of residents live in some water zone · 97% on high-liquefaction ground · 0.5% in landslide zones",
+      "ja": "住民の95%が何らかの浸水想定区域内・97%が液状化しやすい地盤・0.5%が土砂災害警戒区域内"
+     },
      "ask": null
     },
     {
      "level": "info",
-     "head": "Old maps",
-     "detail": "Check what the site was before (sea, paddy, river) on 今昔マップ; past disaster records and 大規模盛土 maps come with the MLIT API key.",
+     "head": {
+      "en": "Old maps",
+      "ja": "旧版地図"
+     },
+     "detail": {
+      "en": "Check what the site was before (sea, paddy, river) on 今昔マップ; past disaster records and 大規模盛土 maps come with the MLIT API key.",
+      "ja": "今昔マップで以前の土地利用（海・水田・河川など）を確認してください。災害履歴と大規模盛土造成地はAPIキー取得後に追加します。"
+     },
      "cmp": "",
      "ask": null
     }
@@ -719,48 +911,99 @@
   },
   {
    "key": "F",
-   "title": "Commute to Tokyo Stn",
-   "intro": "Yahoo!乗換案内, next Wednesday, arrive by 08:45, IC fare, no paid express. Door-to-door = access to the station + train + 5 min at the office end.",
+   "title": {
+    "en": "Commute to Tokyo Stn",
+    "ja": "東京への通勤"
+   },
+   "intro": {
+    "en": "Yahoo!乗換案内, next Wednesday, arrive by 08:45, IC fare, no paid express. Door-to-door = access to the station + train + 5 min at the office end.",
+    "ja": "Yahoo!乗換案内（次の水曜日、8:45着、IC運賃、有料特急なし）。ドアツードア＝駅までのアクセス＋乗車時間＋勤務先側の徒歩5分。"
+   },
    "items": [
     {
      "level": "ok",
-     "head": "検見川浜 (JR京葉線): 50 min door-to-door, 0 transfers",
-     "detail": "Walk 8 min + train 37 min · 1-month commuter pass ¥18,720",
-     "cmp": "Faster than 51% of the 77 study areas' typical door-to-door (10 min walk at home)",
+     "head": {
+      "en": "検見川浜 (JR京葉線): 50 min door-to-door, 0 transfers",
+      "ja": "検見川浜駅（JR京葉線）：ドアツードア50分・乗換0回"
+     },
+     "detail": {
+      "en": "Walk 8 min + train 37 min · 1-month commuter pass ¥18,720",
+      "ja": "徒歩8分＋乗車37分・通勤定期（1か月）18,720円"
+     },
+     "cmp": {
+      "en": "Faster than 51% of the 77 study areas' typical door-to-door (10 min walk at home)",
+      "ja": "調査対象77エリアの標準的なドアツードア（自宅側徒歩10分）の51%より速い"
+     },
      "ask": null
     },
     {
      "level": "ok",
-     "head": "新検見川 (JR総武線): 69 min door-to-door, 1 transfer",
-     "detail": "Walk 6 min + bus 12 min + ~3 min wait + train 43 min · 1-month commuter pass ¥18,720",
-     "cmp": "Faster than 18% of the 77 study areas' typical door-to-door (10 min walk at home)",
+     "head": {
+      "en": "新検見川 (JR総武線): 69 min door-to-door, 1 transfer",
+      "ja": "新検見川駅（JR総武線）：ドアツードア69分・乗換1回"
+     },
+     "detail": {
+      "en": "Walk 6 min + bus 12 min + ~3 min wait + train 43 min · 1-month commuter pass ¥18,720",
+      "ja": "徒歩6分＋バス12分＋待ち約3分＋乗車43分・通勤定期（1か月）18,720円"
+     },
+     "cmp": {
+      "en": "Faster than 18% of the 77 study areas' typical door-to-door (10 min walk at home)",
+      "ja": "調査対象77エリアの標準的なドアツードア（自宅側徒歩10分）の18%より速い"
+     },
      "ask": null
     },
     {
      "level": "ok",
-     "head": "海浜幕張 (JR京葉線): 67 min door-to-door, 0 transfers",
-     "detail": "Walk 28 min + train 34 min · 1-month commuter pass ¥18,450",
-     "cmp": "Faster than 23% of the 77 study areas' typical door-to-door (10 min walk at home)",
+     "head": {
+      "en": "海浜幕張 (JR京葉線): 67 min door-to-door, 0 transfers",
+      "ja": "海浜幕張駅（JR京葉線）：ドアツードア67分・乗換0回"
+     },
+     "detail": {
+      "en": "Walk 28 min + train 34 min · 1-month commuter pass ¥18,450",
+      "ja": "徒歩28分＋乗車34分・通勤定期（1か月）18,450円"
+     },
+     "cmp": {
+      "en": "Faster than 23% of the 77 study areas' typical door-to-door (10 min walk at home)",
+      "ja": "調査対象77エリアの標準的なドアツードア（自宅側徒歩10分）の23%より速い"
+     },
      "ask": null
     },
     {
      "level": "info",
-     "head": "Rush-hour crowding on the area's main line: JR京葉 123%",
-     "detail": "MLIT peak-hour 混雑率 (150% = can read a newspaper folded; 180% = pressed together).",
+     "head": {
+      "en": "Rush-hour crowding on the area's main line: JR京葉 123%",
+      "ja": "エリアの主要路線の混雑率：JR京葉 123%"
+     },
+     "detail": {
+      "en": "MLIT peak-hour 混雑率 (150% = can read a newspaper folded; 180% = pressed together).",
+      "ja": "国土交通省のピーク時混雑率（150%＝新聞を折りたたんで読める程度、180%＝体が触れ合う程度）。"
+     },
      "cmp": "",
      "ask": null
     },
     {
      "level": "good",
-     "head": "Commuter bus to Tokyo Station runs from this area",
-     "detail": "マイタウンライナー ベイエリア線 (平和交通+あすか交通; 幕張ベイタウン・ベイパーク・検見川浜・稲毛海岸・高洲) → 東京駅日本橋口/銀座 · 4 morning runs, fare ¥800",
+     "head": {
+      "en": "Commuter bus to Tokyo Station runs from this area",
+      "ja": "このエリアから東京駅方面への通勤バスあり"
+     },
+     "detail": {
+      "en": "マイタウンライナー ベイエリア線 (平和交通+あすか交通; 幕張ベイタウン・ベイパーク・検見川浜・稲毛海岸・高洲) → 東京駅日本橋口/銀座 · 4 morning runs, fare ¥800",
+      "ja": "マイタウンライナー ベイエリア線 (平和交通+あすか交通; 幕張ベイタウン・ベイパーク・検見川浜・稲毛海岸・高洲) → 東京駅日本橋口/銀座・朝4便・運賃800円"
+     },
      "cmp": "",
      "ask": null
     },
     {
      "level": "good",
-     "head": "2 different line(s) listed",
-     "detail": "A second line is a fallback when one line stops (Keiyo line is often stopped by wind).",
+     "head": {
+      "en": "2 different line(s) listed",
+      "ja": "利用可能な路線：2路線"
+     },
+     "detail": {
+      "en": "A second line is a fallback when one line stops (Keiyo line is often stopped by wind).",
+      "ja": "1路線が止まった時の代替手段になります（京葉線は強風で運転見合わせが多い路線です）。"
+     },
      "cmp": "",
      "ask": null
     }
@@ -774,77 +1017,140 @@
   },
   {
    "key": "G",
-   "title": "Building management and condition",
+   "title": {
+    "en": "Building management and condition",
+    "ja": "管理・建物の状態"
+   },
    "intro": "",
    "items": [
     {
      "level": "ok",
-     "head": "Management: 委託(通勤)",
-     "detail": "常駐 = resident manager, 日勤/通勤 = manager on weekdays.",
+     "head": {
+      "en": "Management: 委託(通勤)",
+      "ja": "管理形態：委託(通勤)"
+     },
+     "detail": {
+      "en": "常駐 = resident manager, 日勤/通勤 = manager on weekdays.",
+      "ja": "常駐＝管理員が住み込み、日勤・通勤＝平日の日中に管理員が勤務。"
+     },
      "cmp": "",
      "ask": null
     },
     {
      "level": "ok",
-     "head": "50 units",
-     "detail": "Enough owners to share fixed costs.",
+     "head": {
+      "en": "50 units",
+      "ja": "総戸数50戸"
+     },
+     "detail": {
+      "en": "Enough owners to share fixed costs.",
+      "ja": "固定費を分担できる戸数があります。"
+     },
      "cmp": "",
      "ask": null
     },
     {
      "level": "ask",
-     "head": "Age 16 years — 1st major repair (外壁・屋上防水) due around now",
-     "detail": "Major repairs come every ~12–15 years. Ask whether the last one was done on time and paid from the fund (not by a levy or loan).",
+     "head": {
+      "en": "Age 16 years — 1st major repair (外壁・屋上防水) due around now",
+      "ja": "築16年 — 1回目の大規模修繕（外壁・屋上防水）の時期"
+     },
+     "detail": {
+      "en": "Major repairs come every ~12–15 years. Ask whether the last one was done on time and paid from the fund (not by a levy or loan).",
+      "ja": "大規模修繕はおおむね12〜15年ごと。前回が計画どおり実施され、一時金や借入ではなく積立金で賄えたかを確認してください。"
+     },
      "cmp": "",
-     "ask": "When was the last 大規模修繕, what did it cover and how was it paid? What is planned next?"
+     "ask": {
+      "en": "When was the last 大規模修繕, what did it cover and how was it paid? What is planned next?",
+      "ja": "前回の大規模修繕はいつ、どんな工事で、費用はどう賄いましたか？次回の予定は？"
+     }
     },
     {
      "level": "ask",
-     "head": "Builder: not stated",
+     "head": {
+      "en": "Builder: not stated",
+      "ja": "施工会社：記載なし"
+     },
      "detail": "",
      "cmp": "",
-     "ask": "Who built it (施工会社)?"
+     "ask": {
+      "en": "Who built it (施工会社)?",
+      "ja": "施工会社はどこですか？"
+     }
     },
     {
      "level": "ask",
-     "head": "Key documents decide this section",
-     "detail": "重要事項調査報告書 (fund balance, arrears, loans of the association), 総会議事録 (last 2–3 years), 長期修繕計画, 管理規約・使用細則.",
+     "head": {
+      "en": "Key documents decide this section",
+      "ja": "この項目は重要書類で判断"
+     },
+     "detail": {
+      "en": "重要事項調査報告書 (fund balance, arrears, loans of the association), 総会議事録 (last 2–3 years), 長期修繕計画, 管理規約・使用細則.",
+      "ja": "重要事項調査報告書（積立金残高・滞納・管理組合の借入）、総会議事録（直近2〜3年分）、長期修繕計画書、管理規約・使用細則。"
+     },
      "cmp": "",
-     "ask": "Can I see the 重要事項調査報告書 and the last 2–3 years of 総会議事録?"
+     "ask": {
+      "en": "Can I see the 重要事項調査報告書 and the last 2–3 years of 総会議事録?",
+      "ja": "重要事項調査報告書と直近2〜3年分の総会議事録を見せてください。"
+     }
     }
    ],
    "src": []
   },
   {
    "key": "H",
-   "title": "The flat itself",
+   "title": {
+    "en": "The flat itself",
+    "ja": "住戸そのもの"
+   },
    "intro": "",
    "items": [
     {
      "level": "ok",
-     "head": "Floor 3 of 5",
-     "detail": "Middle floor: neighbours above and below insulate.",
+     "head": {
+      "en": "Floor 3 of 5",
+      "ja": "5階建の3階"
+     },
+     "detail": {
+      "en": "Middle floor: neighbours above and below insulate.",
+      "ja": "中間階：上下階の住戸があり、断熱面で有利。"
+     },
      "cmp": "",
      "ask": null
     },
     {
      "level": "good",
-     "head": "Balcony faces 南東",
+     "head": {
+      "en": "Balcony faces 南東",
+      "ja": "主要採光面：南東向き"
+     },
      "detail": "",
      "cmp": "",
      "ask": null
     },
     {
      "level": "good",
-     "head": "Corner unit (角住戸)",
-     "detail": "More windows and light; slightly more heat loss.",
+     "head": {
+      "en": "Corner unit (角住戸)",
+      "ja": "角住戸"
+     },
+     "detail": {
+      "en": "More windows and light; slightly more heat loss.",
+      "ja": "窓が多く明るい反面、熱は逃げやすくなります。"
+     },
      "cmp": "",
      "ask": null
     },
     {
      "level": "info",
-     "head": "91.56 m² (壁芯) ≈ 86.1 m² registered",
-     "detail": "The tax rules (mortgage credit ≥ 50 m²) use the registered 内法 area, about 5–8% smaller than the advertised 壁芯 area.",
+     "head": {
+      "en": "91.56 m² (壁芯) ≈ 86.1 m² registered",
+      "ja": "専有面積91.56㎡（壁芯）→ 登記面積は約86.1㎡"
+     },
+     "detail": {
+      "en": "The tax rules (mortgage credit ≥ 50 m²) use the registered 内法 area, about 5–8% smaller than the advertised 壁芯 area.",
+      "ja": "住宅ローン控除などの床面積要件（50㎡以上）は登記簿上の内法面積で判定され、広告の壁芯面積より5〜8%程度小さくなります。"
+     },
      "cmp": "",
      "ask": null
     }
@@ -853,48 +1159,93 @@
   },
   {
    "key": "I",
-   "title": "Energy, windows and running cost",
-   "intro": "Energy labels are only required for new buildings (from April 2024): used flats almost never show them, so proxies are used.",
+   "title": {
+    "en": "Energy, windows and running cost",
+    "ja": "省エネ性能・窓・光熱費"
+   },
+   "intro": {
+    "en": "Energy labels are only required for new buildings (from April 2024): used flats almost never show them, so proxies are used.",
+    "ja": "省エネ性能表示は2024年4月以降の新築が対象のため、中古ではほぼ表示がありません。築年や設備から推定します。"
+   },
    "items": [
     {
      "level": "ask",
-     "head": "No energy label (normal for used flats)",
+     "head": {
+      "en": "No energy label (normal for used flats)",
+      "ja": "省エネ性能の表示なし（中古では一般的）"
+     },
      "detail": "",
      "cmp": "",
-     "ask": "Is there a 住宅性能評価書, BELS or 長期優良住宅 certificate?"
+     "ask": {
+      "en": "Is there a 住宅性能評価書, BELS or 長期優良住宅 certificate?",
+      "ja": "住宅性能評価書、BELS、長期優良住宅の認定などはありますか？"
+     }
     },
     {
      "level": "good",
-     "head": "Likely designed to 1999 rules (次世代省エネ, ~today's 等級4)",
-     "detail": "Era is only a hint: condos were not required to meet the energy standard until 2025.",
+     "head": {
+      "en": "Likely designed to 1999 rules (次世代省エネ, ~today's 等級4)",
+      "ja": "設計時の基準は次世代省エネ基準（1999年、現在の断熱等級4相当）と推定"
+     },
+     "detail": {
+      "en": "Era is only a hint: condos were not required to meet the energy standard until 2025.",
+      "ja": "あくまで目安です。省エネ基準への適合義務化は2025年からです。"
+     },
      "cmp": "",
      "ask": null
     },
     {
      "level": "ask",
-     "head": "Window type not stated",
-     "detail": "In condos the window frames are common property: you usually cannot replace them yourself; inner windows (内窓) are allowed and subsidised.",
+     "head": {
+      "en": "Window type not stated",
+      "ja": "窓（サッシ・ガラス）の仕様の記載なし"
+     },
+     "detail": {
+      "en": "In condos the window frames are common property: you usually cannot replace them yourself; inner windows (内窓) are allowed and subsidised.",
+      "ja": "マンションのサッシは共用部分のため、通常は個人で交換できません。内窓（二重窓）の設置は可能なことが多く、補助金の対象にもなります。"
+     },
      "cmp": "",
-     "ask": "Are the windows single or double glazed? Were sashes replaced in a major repair?"
+     "ask": {
+      "en": "Are the windows single or double glazed? Were sashes replaced in a major repair?",
+      "ja": "窓は単板ガラスですか、複層ガラスですか？大規模修繕でサッシは交換されましたか？"
+     }
     },
     {
      "level": "ask",
-     "head": "Gas type not stated",
-     "detail": "Propane (LPG) costs much more than city gas.",
+     "head": {
+      "en": "Gas type not stated",
+      "ja": "ガスの種類の記載なし"
+     },
+     "detail": {
+      "en": "Propane (LPG) costs much more than city gas.",
+      "ja": "プロパンガスは都市ガスより料金がかなり高くなります。"
+     },
      "cmp": "",
-     "ask": "City gas or propane? Electricity contract (high-voltage bulk 一括受電)?"
+     "ask": {
+      "en": "City gas or propane? Electricity contract (high-voltage bulk 一括受電)?",
+      "ja": "都市ガスですか、プロパンガスですか？電気は一括受電ですか？"
+     }
     },
     {
      "level": "info",
-     "head": "Equipment: 床暖房",
+     "head": {
+      "en": "Equipment: 床暖房",
+      "ja": "設備：床暖房"
+     },
      "detail": "",
      "cmp": "",
      "ask": null
     },
     {
      "level": "good",
-     "head": "Mortgage tax credit: eligible",
-     "detail": "Built 1982 or later ✓ · registered area ≥ 50 m² ✓. Without an energy certificate a used home falls in the basic tier: 0.7% of the loan balance up to ¥20M for 10 years (max ¥140k/year). With a 省エネ基準適合 certificate it is 13 years; ZEH-level / 長期優良 raises the cap to ¥35M.",
+     "head": {
+      "en": "Mortgage tax credit: eligible",
+      "ja": "住宅ローン控除：対象"
+     },
+     "detail": {
+      "en": "Built 1982 or later ✓ · registered area ≥ 50 m² ✓. Without an energy certificate a used home falls in the basic tier: 0.7% of the loan balance up to ¥20M for 10 years (max ¥140k/year). With a 省エネ基準適合 certificate it is 13 years; ZEH-level / 長期優良 raises the cap to ¥35M.",
+      "ja": "1982年以降の建築 ✓・登記面積50㎡以上 ✓。省エネ性能の証明がない中古住宅は「その他の住宅」：年末残高の0.7%、借入限度額2,000万円、控除期間10年（年最大14万円）。省エネ基準適合の証明があれば控除期間13年、ZEH水準・認定長期優良住宅なら限度額3,500万円。"
+     },
      "cmp": "",
      "ask": null
     }
@@ -912,112 +1263,187 @@
   },
   {
    "key": "J",
-   "title": "Parking and mobility",
+   "title": {
+    "en": "Parking and mobility",
+    "ja": "駐車場・駐輪場"
+   },
    "intro": "",
    "items": [
     {
      "level": "good",
-     "head": "Parking: 敷地内(7500円~1万円/月)",
-     "detail": "",
-     "cmp": "Area watchlist listings with on-site parking: median ¥7,350/month (228 listings)",
+     "head": {
+      "en": "Parking: 敷地内(7500円~1万円/月)",
+      "ja": "駐車場：敷地内(7500円~1万円/月)"
+     },
+     "detail": {
+      "en": "",
+      "ja": ""
+     },
+     "cmp": {
+      "en": "Area watchlist listings with on-site parking: median ¥7,350/month (228 listings)",
+      "ja": "エリア内の敷地内駐車場の月額：中央値7,350円（228件）"
+     },
      "ask": null
     },
     {
      "level": "ask",
-     "head": "Bicycle parking for child seats, EV charging",
+     "head": {
+      "en": "Bicycle parking for child seats, EV charging",
+      "ja": "子ども乗せ自転車の駐輪・EV充電"
+     },
      "detail": "",
      "cmp": "",
-     "ask": "Bicycle parking: spaces available and fee? Large (child-seat) bikes allowed?"
+     "ask": {
+      "en": "Bicycle parking: spaces available and fee? Large (child-seat) bikes allowed?",
+      "ja": "駐輪場の空きと料金は？子ども乗せ自転車（大型）は置けますか？"
+     }
     }
    ],
    "src": []
   },
   {
    "key": "K",
-   "title": "Family life around it",
-   "intro": "Nearby facilities from SUUMO's 周辺環境 tab; area figures from the location study.",
+   "title": {
+    "en": "Family life around it",
+    "ja": "子育て・周辺環境"
+   },
+   "intro": {
+    "en": "Nearby facilities from SUUMO's 周辺環境 tab; area figures from the location study.",
+    "ja": "周辺施設はSUUMOの「周辺環境」より、エリアの数値は当サイトのエリア調査より。"
+   },
    "items": [
     {
      "level": "info",
-     "head": "Elementary school: 千葉市立磯辺小学校 — 12 min (900 m)",
+     "head": {
+      "en": "Elementary school: 千葉市立磯辺小学校 — 12 min (900 m)",
+      "ja": "小学校：千葉市立磯辺小学校 — 徒歩12分（900m）"
+     },
      "detail": "",
      "cmp": "",
      "ask": null
     },
     {
      "level": "info",
-     "head": "Junior high: 千葉市立磯辺中学校 — 7 min (540 m)",
+     "head": {
+      "en": "Junior high: 千葉市立磯辺中学校 — 7 min (540 m)",
+      "ja": "中学校：千葉市立磯辺中学校 — 徒歩7分（540m）"
+     },
      "detail": "",
      "cmp": "",
      "ask": null
     },
     {
      "level": "info",
-     "head": "Kindergarten / daycare: いそべ幼稚園 — 2 min (146 m)",
+     "head": {
+      "en": "Kindergarten / daycare: いそべ幼稚園 — 2 min (146 m)",
+      "ja": "幼稚園・保育園：いそべ幼稚園 — 徒歩2分（146m）"
+     },
      "detail": "",
      "cmp": "",
      "ask": null
     },
     {
      "level": "info",
-     "head": "Park: 北磯辺第二公園 — 1 min (30 m)",
+     "head": {
+      "en": "Park: 北磯辺第二公園 — 1 min (30 m)",
+      "ja": "公園：北磯辺第二公園 — 徒歩1分（30m）"
+     },
      "detail": "",
      "cmp": "",
      "ask": null
     },
     {
      "level": "info",
-     "head": "Supermarket: Food warehouseペリエ検見川浜店 — 8 min (608 m)",
+     "head": {
+      "en": "Supermarket: Food warehouseペリエ検見川浜店 — 8 min (608 m)",
+      "ja": "スーパー：Food warehouseペリエ検見川浜店 — 徒歩8分（608m）"
+     },
      "detail": "",
      "cmp": "",
      "ask": null
     },
     {
      "level": "info",
-     "head": "Clinic / hospital: きむらクリニック — 9 min (700 m)",
+     "head": {
+      "en": "Clinic / hospital: きむらクリニック — 9 min (700 m)",
+      "ja": "病院・クリニック：きむらクリニック — 徒歩9分（700m）"
+     },
      "detail": "",
      "cmp": "",
      "ask": null
     },
     {
      "level": "info",
-     "head": "Station: 検見川浜駅 — 9 min (700 m)",
+     "head": {
+      "en": "Station: 検見川浜駅 — 9 min (700 m)",
+      "ja": "駅：検見川浜駅 — 徒歩9分（700m）"
+     },
      "detail": "",
      "cmp": "",
      "ask": null
     },
     {
      "level": "ask",
-     "head": "Assigned school district",
-     "detail": "The school you are assigned to (学区) is not always the nearest one.",
+     "head": {
+      "en": "Assigned school district",
+      "ja": "通学区域（学区）"
+     },
+     "detail": {
+      "en": "The school you are assigned to (学区) is not always the nearest one.",
+      "ja": "指定される学校は、最寄りの学校とは限りません。"
+     },
      "cmp": "",
-     "ask": "Which elementary and junior-high school is this address assigned to (通学区域)?"
+     "ask": {
+      "en": "Which elementary and junior-high school is this address assigned to (通学区域)?",
+      "ja": "この住所の通学区域の小学校・中学校はどこですか？"
+     }
     },
     {
      "level": "good",
-     "head": "Daycare waitlist (Chiba Mihama): 0 (2026)",
+     "head": {
+      "en": "Daycare waitlist (Chiba Mihama): 0 (2026)",
+      "ja": "待機児童数（千葉市美浜区）：0人（2026年）"
+     },
      "detail": "",
-     "cmp": "0–2 daycare fee ~¥54,330/month · child medical subsidy to age 18",
+     "cmp": {
+      "en": "0–2 daycare fee ~¥54,330/month · child medical subsidy to age 18",
+      "ja": "0〜2歳の保育料 約54,330円/月・子ども医療費助成 18歳まで"
+     },
      "ask": null
     },
     {
      "level": "good",
-     "head": "Crime: #15/74 safest study area",
+     "head": {
+      "en": "Crime: #15/74 safest study area",
+      "ja": "治安：調査対象74エリア中 安全な方から15位"
+     },
      "detail": "",
-     "cmp": "Burglary 0.51/10k residents · violent 4.16/10k · all 6.87/1k (2025)",
+     "cmp": {
+      "en": "Burglary 0.51/10k residents · violent 4.16/10k · all 6.87/1k (2025)",
+      "ja": "侵入窃盗 人口1万人あたり0.51件・粗暴犯 1万人あたり4.16件・刑法犯全体 千人あたり6.87件（2025年）"
+     },
      "ask": null
     },
     {
      "level": "info",
-     "head": "Paediatrics: 25 clinics in the area (13.5 per 10k children)",
+     "head": {
+      "en": "Paediatrics: 25 clinics in the area (13.5 per 10k children)",
+      "ja": "小児科：エリア内25施設（子ども1万人あたり13.5）"
+     },
      "detail": "",
      "cmp": "",
      "ask": null
     },
     {
      "level": "info",
-     "head": "Main roads and rail lines next door",
-     "detail": "Check on the visit and on the map: traffic noise, trucks at night, train noise.",
+     "head": {
+      "en": "Main roads and rail lines next door",
+      "ja": "近くの幹線道路・線路"
+     },
+     "detail": {
+      "en": "Check on the visit and on the map: traffic noise, trucks at night, train noise.",
+      "ja": "内見時と地図で確認：車の騒音、夜間のトラック、電車の音。"
+     },
      "cmp": "",
      "ask": null
     }
@@ -1026,33 +1452,54 @@
   },
   {
    "key": "L",
-   "title": "Resale and future value",
+   "title": {
+    "en": "Resale and future value",
+    "ja": "資産価値・売却のしやすさ"
+   },
    "intro": "",
    "items": [
     {
      "level": "ok",
-     "head": "Population Chiba Mihama: +4.9% 2020–25, projected -14.4% by 2050 (社人研)",
-     "detail": "Shrinking areas see weaker resale and fewer services.",
+     "head": {
+      "en": "Population Chiba Mihama: +4.9% 2020–25, projected -14.4% by 2050 (社人研)",
+      "ja": "人口（千葉市美浜区）：2020→25年 +4.9%、2050年推計 -14.4%（社人研）"
+     },
+     "detail": {
+      "en": "Shrinking areas see weaker resale and fewer services.",
+      "ja": "人口が減る地域では、売却価格や生活サービスが弱くなりがちです。"
+     },
      "cmp": "",
      "ask": null
     },
     {
      "level": "info",
-     "head": "55 large (90 m²+) flats for sale in the area now",
-     "detail": "Many similar listings = easy to compare, but also competition when you sell.",
+     "head": {
+      "en": "55 large (90 m²+) flats for sale in the area now",
+      "ja": "エリア内で90㎡以上の物件が現在55件売出中"
+     },
+     "detail": {
+      "en": "Many similar listings = easy to compare, but also competition when you sell.",
+      "ja": "類似物件が多いと比較しやすい反面、売却時には競合になります。"
+     },
      "cmp": "",
      "ask": null
     },
     {
      "level": "info",
-     "head": "Area projects: Makuhari-Toyosuna station (Keiyo line); Makuhari Bay Park new town (~4,500 homes; 5th tower 2026)",
+     "head": {
+      "en": "Area projects: Makuhari-Toyosuna station (Keiyo line); Makuhari Bay Park new town (~4,500 homes; 5th tower 2026)",
+      "ja": "エリアの開発計画：JR京葉線 幕張豊砂駅、幕張ベイパーク"
+     },
      "detail": "",
      "cmp": "",
      "ask": null
     },
     {
      "level": "info",
-     "head": "Land-price trend at the nearest official point (公示地価): with the MLIT API key",
+     "head": {
+      "en": "Land-price trend at the nearest official point (公示地価): with the MLIT API key",
+      "ja": "最寄りの地価公示地点の推移：APIキー取得後に追加"
+     },
      "detail": "",
      "cmp": "",
      "ask": null
@@ -1062,33 +1509,63 @@
   },
   {
    "key": "M",
-   "title": "Contract terms",
+   "title": {
+    "en": "Contract terms",
+    "ja": "契約条件"
+   },
    "intro": "",
    "items": [
     {
      "level": "info",
-     "head": "Sold through an agent (仲介)",
-     "detail": "Agent fee applies. Individual sellers often limit defect liability to ~3 months.",
+     "head": {
+      "en": "Sold through an agent (仲介)",
+      "ja": "取引態様：仲介"
+     },
+     "detail": {
+      "en": "Agent fee applies. Individual sellers often limit defect liability to ~3 months.",
+      "ja": "仲介手数料がかかります。個人の売主の場合、契約不適合責任は引渡しから3か月程度に限定されることが多いです。"
+     },
      "cmp": "",
-     "ask": "How long is the seller's 契約不適合責任, and is equipment excluded?"
+     "ask": {
+      "en": "How long is the seller's 契約不適合責任, and is equipment excluded?",
+      "ja": "売主の契約不適合責任の期間は？設備は免責ですか？"
+     }
     },
     {
      "level": "ask",
-     "head": "No inspection mentioned",
-     "detail": "An independent inspection (インスペクション, ~¥50–100k) and 既存住宅売買瑕疵保険 protect you and can be a loan/tax condition.",
+     "head": {
+      "en": "No inspection mentioned",
+      "ja": "建物状況調査の記載なし"
+     },
+     "detail": {
+      "en": "An independent inspection (インスペクション, ~¥50–100k) and 既存住宅売買瑕疵保険 protect you and can be a loan/tax condition.",
+      "ja": "第三者による建物状況調査（インスペクション、5〜10万円程度）と既存住宅売買瑕疵保険は買主を守り、ローンや税制の要件になる場合もあります。"
+     },
      "cmp": "",
-     "ask": "Can I arrange an inspection (インスペクション) before signing?"
+     "ask": {
+      "en": "Can I arrange an inspection (インスペクション) before signing?",
+      "ja": "契約前に建物状況調査（インスペクション）を実施できますか？"
+     }
     },
     {
      "level": "ask",
-     "head": "Disclosures",
+     "head": {
+      "en": "Disclosures",
+      "ja": "告知事項"
+     },
      "detail": "",
      "cmp": "",
-     "ask": "Any 告知事項 (incidents, leaks, disputes with neighbours, asbestos survey)?"
+     "ask": {
+      "en": "Any 告知事項 (incidents, leaks, disputes with neighbours, asbestos survey)?",
+      "ja": "告知事項（事件・事故、漏水、近隣トラブル、アスベスト調査の有無など）はありますか？"
+     }
     },
     {
      "level": "info",
-     "head": "Handover: 即引渡可",
+     "head": {
+      "en": "Handover: 即引渡可",
+      "ja": "引渡し時期：即引渡可"
+     },
      "detail": "",
      "cmp": "",
      "ask": null

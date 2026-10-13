@@ -61,7 +61,7 @@ function dlRenderList() {
     const c = i.counts || {};
     return `<div class="dl-card">
       <a class="dl-name" href="deeplook/${dlEsc(i.id)}.html">${dlEsc(i.name)}</a>
-      <div class="dl-meta">${dlEsc(i.area || '')} · ${dlMan(i.price)} · ${i.m2 ?? '–'} m² · ${i.year ?? '–'}${i.commute ? ` · ${t('dl.min', i.commute, offName(i.office))}` : ''}</div>
+      <div class="dl-meta">${dlEsc((LANG === 'ja' ? i.areaJa : i.area) || i.area || '')} · ${dlMan(i.price)} · ${i.m2 ?? '–'}${LANG === 'ja' ? '㎡' : ' m²'} · ${i.year ?? '–'}${LANG === 'ja' ? '年築' : ''}${i.commute ? ` · ${t('dl.min', i.commute, offName(i.office))}` : ''}</div>
       <div class="dl-cnt">${c.risk ? `<span class="r">${t('dl.risk', c.risk)}</span>` : ''}${c.watch ? `<span class="w">${t('dl.watch', c.watch)}</span>` : ''}${c.ask ? `<span class="a">${t('dl.ask', c.ask)}</span>` : ''}${c.good ? `<span class="g">${t('dl.good', c.good)}</span>` : ''}</div>
       <div class="dl-foot"><span>${dlEsc(i.date)}</span>
         <a href="deeplook/${dlEsc(i.id)}.html">${t('dl.open')}</a>

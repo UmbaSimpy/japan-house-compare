@@ -703,3 +703,15 @@ Central wards (千代田, 中央, 港, 新宿, 渋谷, 豊島): commercial redev
 - 公示地価 trend
 
 Houses and new condos are not covered yet.
+
+**Bilingual (2026-10-13, user: "It should also be jap/eng / All pages should / Add a language selector and ensure the japanese is correct"):**
+- Every text in `deeplook.py` is now `T(en, ja)`.
+- Reports render both languages, and CSS shows one. The language selector (EN / 日本語) in the report bar shares the localStorage key `lang` with the main site, so the choice carries over both ways. `?lang=ja|en` overrides it.
+- Japanese uses standard real-estate terms:
+  - 修繕積立金, 管理形態, 新耐震/旧耐震基準, 建築確認日
+  - 表層地盤増幅率, 想定最大規模, 浸水想定区域, 土砂災害警戒区域
+  - 用途地域, 契約不適合責任, 建物状況調査, 既存住宅売買瑕疵保険
+  - 重要事項調査報告書, 登記面積/壁芯/内法, 諸費用, ドアツードア, 通学区域
+- Prices in 万円 and ¥/m² as 万円/㎡.
+- `index.json` now also has `areaJa`. The tab cards show the Japanese area, ㎡ and 年築. The Japanese tab text was reviewed.
+- The 4 reports were regenerated: same finding counts as before.
