@@ -935,7 +935,8 @@ function renderCompare() {
       const same = shows.every(s => s === shows[0]);
       if (cmp.diffOnly && same) return '';
       const label = r.key.startsWith('cat.') ? t('catLong.' + r.key.slice(4)) : r.key === 'total' ? t('catLong.total') : t('row.' + r.key);
-      return `<tr><th scope="row">${label}</th>${shows.map((s, i) => `<td class="${cls[i]}">${s}</td>`).join('')}</tr>`;
+      const info = cgI(`l.${cmp.kind}.${r.key}`, 'l.' + r.key);   // ⓘ explanation (cmp-glossary.js)
+      return `<tr><th scope="row">${label}${info}</th>${shows.map((s, i) => `<td class="${cls[i]}">${s}</td>`).join('')}</tr>`;
     }).join('');
     return body ? `<tbody><tr class="cmp-sec"><th colspan="${items.length + 1}">${t('sec.' + sec)}</th></tr>${body}</tbody>` : '';
   }).join('');

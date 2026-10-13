@@ -851,3 +851,30 @@ Houses and new condos are not covered yet.
 - Instead, a scheduled Claude task on the user's PC, `loan-rates-manual`, runs at 12:30 on the 2nd of each month, after the Action. It opens the three official pages in the app's built-in browser, which is an ordinary visit. It records the figures with `python loan_rates.py --set mizuho v=… f10=… aeon … shinsei …`, which applies the same range and > 0.6-point checks and recomputes the presets. It then commits and pushes `data/loan_rates.json` only.
 - If the PC or app is off on the 2nd, the task runs at the next launch.
 - Task file: `C:\Users\dammi\.claude\scheduled-tasks\loan-rates-manual\SKILL.md`.
+
+## 18. ⓘ explanations in both compare views (2026-10-13, user: "in the compare page i want a similar info popup to explain each parameter in depth / What it means, why it matters etc")
+
+**What:**
+- `cmp-glossary.js` (new) holds `window.CMPG`, one entry per compare row. Each entry has `what` / `why` / `read` / `tip`, and each field is [EN, JA]. This is the same pattern as Deep look's `deeplook/glossary.js`.
+- **Area comparison** (`map-tools.js → mpCmpRows`): keys are `a.<map.cmp.r key>`, `a.sub.<layer>` and `a.total`.
+  - The label helper `L()` appends the ⓘ button, so a new row with a glossary entry gets it automatically.
+  - Pros and Cons are the only rows without one.
+- **Listings comparison** (`app.js → renderCompare`, used for houses, used condos and new condos): keys are `l.<row key>`, with `l.<kind>.<key>` overrides where a row means something different per kind (e.g. the score categories, area, structure).
+- **Popup:**
+  - Hovering shows the summary.
+  - Clicking opens a popup titled with the row label, with sections What it is / Why it matters / How to read it / What to do.
+  - Escape or × closes only the popup; the compare dialog stays open.
+  - The text is in the site language at render time.
+
+**Accuracy:** the score formulas quoted in the popups were copied from the code:
+- `build_locations.py`: commute_score, wait/gak/med points, hazard_score, growth, bus_score, space constants
+- `inject_mansion.py`: access/condition/extras points, value model features
+- `inject_newms.py`: score docstring and code
+- `app.js`: scoreSet
+
+**Keep in sync:** if a threshold changes in those files or in PARAMETERS.md, update the matching `CMPG` entry.
+
+**Checked in the preview:**
+- Area compare: 42/42 parameter rows have an ⓘ.
+- Listings compare: used condos 42/42, new condos 42/42, houses 22/22.
+- EN and JA text verified; Escape behaviour verified.

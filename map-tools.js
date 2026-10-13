@@ -221,17 +221,17 @@ function mpCmpBtn(a) {
 function mpCmpRows() {
   const yen = v => v == null ? '—' : t('map.yen', v), yenM = v => v == null ? '—' : t('map.yenM', v), pct = v => v == null ? '—' : v + '%';
   const sec = (k, rows) => ({ sec: k, rows });
-  const L = (k, ...x) => t('map.cmp.r.' + k, ...x);
+  const L = (k, ...x) => t('map.cmp.r.' + k, ...x) + cgI('a.' + k);   // ⓘ explanation (cmp-glossary.js); '' when no entry
   const out = [
     sec('scores', [
-      [t('map.total'), a => a.totalScore, a => a.totalScore.toFixed(1), 'hi'],
+      [t('map.total') + cgI('a.total'), a => a.totalScore, a => a.totalScore.toFixed(1), 'hi'],
       [L('rank'), a => a.rank, a => '#' + a.rank, 'lo'],
-      ...MP_SUBS.map(k => [`${MP_CAT_ICON[MP_SCORE_CAT[k]]} ${t('map.layers.' + k)} <small>${mpWPct(k)}%</small>`, a => a.scores[k],
+      ...MP_SUBS.map(k => [`${MP_CAT_ICON[MP_SCORE_CAT[k]]} ${t('map.layers.' + k)} <small>${mpWPct(k)}%</small>${cgI('a.sub.' + k)}`, a => a.scores[k],
         a => `<span class="mp-cbar"><i style="width:${Math.max(2, a.scores[k])}%;background:${mpColor(a.scores[k], k)}"></i></span>${a.scores[k].toFixed(0)}`, 'hi']),
     ]),
     sec('commute', [
       ...(MP.office ? [[L('office', mpOfficeName(mpOfficeInfo(MP.office))), a => mpOffice(a)?.min ?? null,
-        a => { const o = mpOffice(a); return o ? `${o.min} ${t('map.min')} · ${t('map.cmp.xfer', o.xfer)}<div class="cmp-sub">${L('door')} ≈ ${o.min + MP.walkHome + MP.walkOffice} ${t('map.min')}</div>` : '—'; }, 'lo'],
+        a => { const o = mpOffice(a); return o ? `${o.min} ${t('map.min')} · ${t('map.cmp.xfer', o.xfer)}<div class="cmp-sub">${t('map.cmp.r.door')} ≈ ${o.min + MP.walkHome + MP.walkOffice} ${t('map.min')}</div>` : '—'; }, 'lo'],
         [L('officePass'), a => mpOffice(a)?.pass ?? null, a => yen(mpOffice(a)?.pass), 'lo']] : []),
       [L('toTokyo'), a => a.commute.minToTokyo, a => `${a.commute.minToTokyo} ${t('map.min')} · ${t('map.cmp.xfer', a.commute.transfers)}<div class="cmp-sub">${mpEsc(a.commute.station)} → ${t('map.dest.' + a.commute.destination)}</div>`, 'lo'],
       [L('crowding'), a => parseInt(a.commute.crowding, 10) || null, a => mpEsc(a.commute.crowdingLine || '—'), 'lo'],

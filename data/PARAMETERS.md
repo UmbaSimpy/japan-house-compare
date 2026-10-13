@@ -63,6 +63,8 @@ Weights changed 2026-10-12 (user choice "Hazard 10, trim space"): space 30→25,
 
 Shortlist = top 28 by total among areas with space ≥ 10. Missing data is imputed and the substitution is written to each area's `dataFlags`; it is never silently scored 0.
 
+The ⓘ explanations in both compare views (`cmp-glossary.js`, DATA_LOG item 18) quote the formulas above and the listing-score rules: change them together.
+
 Pros/cons/info on the map are **derived in `map.js` → `mpPoints()`** from the fields below with fixed thresholds (e.g. commute ≤30 min = pro, ≥50 = con). Change the thresholds there, not in the data.
 
 ## Field reference (`data/locations.json` → `areas[]`)
