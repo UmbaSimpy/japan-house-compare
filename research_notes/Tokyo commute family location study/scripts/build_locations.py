@@ -3,6 +3,7 @@
 # plus condo_raw/summary.json, raw.json (SUUMO crawl 2026-10-12).
 import json, math, os, statistics, sys
 from urllib.parse import quote
+from datetime import date
 
 BASE = r"D:\Cartella Privata\Claude\japan-house-compare"
 NOTES = os.path.join(BASE, "research_notes", "Tokyo commute family location study", "condo_raw")
@@ -270,25 +271,49 @@ BUS = {
 }
 
 # ---------------------------------------------------------------- pipeline adjustments (growth)
-PIPE = {
- "Nagareyama":(3,"TX 8-car upgrade (early 2030s)"),"Kashiwa":(3,"TX 8-car upgrade (柏の葉)"),"Moriya":(3,"TX 8-car upgrade"),
- "Tsukubamirai":(3,"TX 8-car upgrade"),"Yashio":(3,"TX 8-car upgrade; platform extension FY2026"),
- "Tsukuba":(5,"TX 8-car upgrade + large condo project selling from spring 2026"),
- "Yokohama-Kohoku":(5,"相鉄・東急新横浜線 open since 2023-03 (新綱島, 新横浜)"),
- "Chuo":(3,"晴海フラッグ (~11,000 residents)"),"Minato":(3,"高輪ゲートウェイシティ (2025); 南北線 品川延伸 mid-2030s"),
- "Koto":(3,"有楽町線 豊洲–住吉 extension, mid-2030s"),"Shinagawa":(3,"南北線 品川延伸; 羽田空港アクセス線 (FY2031)"),
- "Chiba-Chuo":(3,"千葉駅 redevelopment; top net-inflow rate in region"),"Chiba-Mihama":(3,"幕張ベイパーク new town"),
- "Saitama-Urawa":(2,"羽田空港アクセス線 through-running (FY2031)"),"Saitama-Omiya":(2,"羽田空港アクセス線 through-running (FY2031)"),
- "Saitama-Chuo":(2,"羽田空港アクセス線 through-running (FY2031)"),"Kawaguchi":(1,"上野東京ライン stop, 2037 at earliest"),
- "Ota":(1,"新空港線 (蒲蒲線) 2038–42"),
- "Narashino":(-3,"津田沼駅南口 redevelopment paused (2025-05)"),"Nakano":(-3,"中野サンプラザ redevelopment back to square one"),
-}
+# 2026-10-13: the hand-kept PIPE dict became a register, data/pipeline.json (one row per project, points per area
+# from a fixed rubric; re-checked monthly — method in the project memory and DATA_LOG item 13).
+# Area adjustment = sum of project points, clamped to PIPE_CLAMP.
+PIPE_REG = json.load(open(os.path.join(BASE, "data", "pipeline.json"), encoding="utf-8"))
+PIPE_CLAMP = tuple(PIPE_REG["rubric"]["clamp"])
+PIPE_BY_AREA = {}
+for _p in PIPE_REG["projects"]:
+    if _p.get("until") and _p["until"] < date.today().isoformat()[:7]:   # aged out (opened/completed long enough ago)
+        continue
+    for _aid, _pts in _p["pts"].items():
+        PIPE_BY_AREA.setdefault(_aid, []).append((_pts, _p["name"], _p["id"], _p.get("nameJa"), _p["status"]))
+
+def pipeline_adj(aid):
+    rows = sorted(PIPE_BY_AREA.get(aid, []), key=lambda r: -abs(r[0]))
+    pts = max(PIPE_CLAMP[0], min(PIPE_CLAMP[1], sum(r[0] for r in rows)))
+    return pts, rows
 
 # ---------------------------------------------------------------- space (v2, 2026-10-13, user chose option "A")
 SPACE_YEAR = 2000          # "modern" = built 2000 or later
 SPACE_BUDGET = 8000        # 万円: ¥80M affordability line for a ~¥10M household (writer's assumption)
 SPACE_P_HI, SPACE_P_LO = 3000, 15000   # 100 m² price (万円): ≤¥30M → 100 pts, ≥¥150M → 0 pts (log scale)
 SPACE_N_FULL = 60          # modern 90 m²+ listings under budget for full choice points (log scale)
+
+# 30-day smoothing (2026-10-13, DATA_LOG item 12): when the daily snapshot history (area_stats.py) holds at least
+# SMOOTH_MIN_DAYS days with the modern-stock fields in the last SMOOTH_DAYS days, space uses the medians of those
+# daily values instead of the single study crawl (raw.json). Until then the crawl is used and the area is flagged.
+SMOOTH_DAYS, SMOOTH_MIN_DAYS = 30, 10
+_HIST = os.path.join(BASE, "data", "area_stats_history.json")
+HIST = json.load(open(_HIST, encoding="utf-8")) if os.path.exists(_HIST) else {}
+
+def smoothed(aid):
+    h = HIST.get(aid, {})
+    days = sorted(d for d in h if len(h[d]) >= 7 and h[d][5] is not None)
+    if not days:
+        return None
+    last = days[-1]
+    from datetime import date as _d
+    win = [d for d in days if (_d.fromisoformat(last) - _d.fromisoformat(d)).days < SMOOTH_DAYS]
+    if len(win) < SMOOTH_MIN_DAYS:
+        return None
+    med = lambda k: statistics.median(h[d][k] for d in win if h[d][k] is not None) if any(h[d][k] is not None for d in win) else None
+    ppm = med(6)
+    return dict(q80=int(round(med(4))), q_n=int(round(med(5))), q_ppm=(ppm / 10000 if ppm else None), days=len(win), last=last)
 
 def space_points(q_ppm, q80):
     """Price pts from the median ¥/m² of qualifying listings × 100 m²; choice pts from the count under budget."""
@@ -370,6 +395,11 @@ def yahoo(st, dest):
 areas = []
 for (en, ja, pref, typ, st, dest, mins, xf, pss, crowd, crowdtxt, lat, lng) in A:
     s = summary[en]; rs = raw_stats(en); flags = []
+    aid = en.lower().replace("-shi", "")
+    sm = smoothed(aid)
+    if sm:      # 30-day medians replace the single crawl for the scored space inputs
+        rs = dict(rs, q80=sm["q80"], q_n=sm["q_n"], q_ppm=sm["q_ppm"])
+        flags.append(f"space from {sm['days']}-day medians of the daily snapshot (to {sm['last']})")
     # commute
     cs, eff = commute_score(mins, xf, crowd, pss)
     if crowd is None: flags.append("crowding not measured by MLIT for this line: no crowding adjustment")
@@ -433,14 +463,13 @@ for (en, ja, pref, typ, st, dest, mins, xf, pss, crowd, crowdtxt, lat, lng) in A
     # growth
     pop, chg, ipss, child = DEMO[en]
     land5 = s["land5"]
-    pipe = PIPE.get(en, (0, None))
-    gs = lin(chg, -4, 8, 0, 35) + lin(ipss, -15, 15, 0, 30) + lin(land5, 5, 45, 0, 20) + lin(child, 9, 15, 0, 10) + pipe[0]
+    pipe_pts, pipe_rows = pipeline_adj(aid)
+    gs = lin(chg, -4, 8, 0, 35) + lin(ipss, -15, 15, 0, 30) + lin(land5, 5, 45, 0, 20) + lin(child, 9, 15, 0, 10) + pipe_pts
     gs = clamp(gs)
     # costco
     cn, ckm, cmin = COSTCO[en]
     cos = clamp(100 * (75 - cmin) / 60)
     if en in COSTCO_IMPUTED: flags.append("Costco drive time estimated by report writer with the research method (not in source table)")
-    aid = en.lower().replace("-shi", "")
     hz = HAZ[aid]
     hs, hparts = hazard_score(hz)
     if hz["liqRated"] < 60: flags.append(f"Liquefaction: only {hz['liqRated']:g}% of residents are on GSI-classified landform (rest unrated, scored neutral)")
@@ -460,7 +489,7 @@ for (en, ja, pref, typ, st, dest, mins, xf, pss, crowd, crowdtxt, lat, lng) in A
     if chg >= 5: hl.append(f"Population +{chg}% (2020→25)")
     if chg <= -2: hl.append(f"Population {chg}% (2020→25)")
     if cmin <= 15: hl.append(f"Costco {cn} ~{cmin:g} min")
-    if pipe[1]: hl.append(pipe[1])
+    for r in pipe_rows[:2]: hl.append(r[1])
     if crowd and crowd >= 160: hl.append(f"Crowded line ({crowdtxt})")
     if pss > 30000: hl.append(f"Expensive pass ¥{pss:,}/month")
 
@@ -533,6 +562,7 @@ for (en, ja, pref, typ, st, dest, mins, xf, pss, crowd, crowdtxt, lat, lng) in A
                     "landYoY2026": float(s["land_yoy"]), "usedListingsTotal": s["total"]},
         "costco": {"nearest": cn, "km": ckm, "driveMin": cmin},
         "demographics": {"pop2025": pop, "change2020to2025": chg, "ipss2050": ipss, "childShare": child},
+        "pipeline": {"pts": pipe_pts, "projects": [{"id": r[2], "name": r[1], "nameJa": r[3], "status": r[4], "pts": r[0]} for r in pipe_rows]},
         "highlights": hl, "dataFlags": flags, "sources": sources,
     })
 
@@ -551,7 +581,7 @@ COMMUTE: effective minutes E = station-to-station minutes (best of Tokyo Stn / O
 BUS (bonus): weekday buses arriving Tokyo Stn ≤~9:30 (A) and leaving 17:30–21:30 (P): 50×min(A,9)/9 + 50×min(P,9)/9; ×0.6 if scheduled ride > rail effective minutes + 15. No route found = 0 (evidence of absence from operator lists; re-swept 2026-10-12 against the Jorudan per-prefecture route index after the user reported the missed 幕張 line). Tsukuba counts unknown → imputed A=P=5 (flagged). Aoba (東名江田) timetable unknown → 0 (flagged).
 CHILDCARE (100): fee 35×(1 − 1st-child 0–2 認可 monthly fee/¥65,000) for a ¥10M dual-income household (所得割 ≈¥285k); unknown fee → prefecture median of confirmed paying cities (Chiba ¥54,900, Saitama ¥60,000, Ibaraki ¥50,500), flagged. Tokyo cash 10: 018サポート + 赤ちゃんファースト = 8, +2 verified ward cash ≥¥100k (+1 if conflicting). Waitlist 30 (2026-04 待機児童; 2025 if 2026 missing): 0→30, 1–9→24, 10–29→18, 30–59→12, 60–99→6, ≥100→0. 学童 waitlist 15: 0→15, 1–49 or '<50'→10, 50–149→5, ≥150→0. Medical 5: to 18 & ¥0→5, ¥200→4, ¥300→3.5, to 15/¥500→2.5, ¥600/day→2, unknown→3.5 (flagged). Lunch 5: all free→5, JH free→5, partial→3, JH 3rd child only→2, paid→1, unknown→2 (flagged).
 SPACE (100) = 50% Price + 50% Choice, counting only 'qualifying' listings: used condos ≥90 m² built 2000 or later (de-duplicated, SUUMO asking prices, crawl 2026-10-12). PRICE = typical price of a 100 m² modern flat = median ¥/m² of the qualifying listings (all prices) × 100; log scale ¥30M → 100 pts, ¥150M → 0 pts; no qualifying listing → 0 (1–2 listings flagged as thin). CHOICE = qualifying listings under ¥80M (the writer's affordability line for a ~¥10M household): 100 × ln(1+n)/ln(61), i.e. 0 → 0, 1 → 17, 5 → 44, 10 → 58, 20 → 74, 40 → 90, ≥60 → 100. Older or smaller stock is shown as info but not scored. (v1 until 2026-10-13: 0.4 blended all-age/modern price + 0.3 count/40 + 0.3 share — replaced because the blend described no real flat and old stock inflated it.)
-GROWTH (100): population change 2020→25 (census) −4%→0 … +8%→35; IPSS 2050 vs 2020 −15%→0 … +15%→30; residential land price 5-yr change 5%→0 … 45%→20; 0–14 share 2020 9%→0 … 15%→10; pipeline adjustment −3…+5 (confirmed near-term projects +, stalled flagships −). Clamped 0–100.
+GROWTH (100): population change 2020→25 (census) −4%→0 … +8%→35; IPSS 2050 vs 2020 −15%→0 … +15%→30; residential land price 5-yr change 5%→0 … 45%→20; 0–14 share 2020 9%→0 … 15%→10; pipeline adjustment −3…+5 = sum of project points from the register data/pipeline.json (rubric there; re-checked monthly). Clamped 0–100.
 HAZARD (100, higher = safer; all shares = % of residents, 2020 census 500 m mesh, 4×4 sample points per cell, data/area_hazard.json from area_hazard.py): WATER 40 × (1 − (0.25·shallow<0.5 m + 0.6·0.5–3 m + 1.0·≥3 m)/100) using the deepest of flood (洪水 想定最大規模), storm surge (高潮 想定最大規模) and tsunami (津波 想定最大規模) — all ハザードマップポータル open data; GROUND 25 × (1 − (liquefaction high + 0.4·mid + 0.4·upland fill)/100) from 国土地理院 地形分類 (landform-based tendency, not a site survey; fill over hills/plateaus = collapse risk per GSI, counted as upland fill, not liquefaction; prefectural 液状化 maps are not open data); LANDSLIDE 10 × (1 − min(1, (土砂災害警戒区域 + 特別警戒区域 share)/10%)); EARTHQUAKE 25 × linear from J-SHIS 2024 30-yr P(震度6弱+) 40% → 25 … 85% → 0 (population-weighted at the 5 most-populated cells). Max-scenario maps describe rare (≈1/1000-yr) events; condo upper floors are not flooded but building services and access are.
 COSTCO: estimated drive minutes (midpoint of range) to nearest Kanto warehouse: ≤15 → 100, ≥75 → 0, linear.
 SHORTLIST: top 28 by total among areas whose space sub-score is >= 10; higher-ranked areas below the space gate (central wards where 90–100 m² asks ¥120M–¥430M) stay ranked but are not shortlisted.

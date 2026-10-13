@@ -4,6 +4,8 @@
    · area compare   → 2–3 areas side by side                     (DATA_LOG item 3)
    · your office    → commute sub-score from the precomputed
                       Yahoo matrix (MAP_DATA.commute)            (DATA_LOG item 5)
+   · your budget    → space Choice re-counted from today's light list
+                      (area-listings.js); ¥80M = study values    (DATA_LOG item 12)
    Scoring mirrors build_locations.py: total = Σ w·s / Σ w; shortlist = top N with space ≥ gate.
 ════════════════════════════════════════════════ */
 const MP_PREF_KEY = 'mpPrefs';
@@ -11,12 +13,20 @@ const mpClamp = (x, lo = 0, hi = 100) => Math.max(lo, Math.min(hi, x));
 const mpWSum = () => MP_SUBS.reduce((s, k) => s + (MP.weights[k] || 0), 0) || 1;
 const mpWPct = k => Math.round((MP.weights[k] || 0) / mpWSum() * 100);
 const mpCustomW = () => MP_SUBS.some(k => MP.weights[k] !== MAP_DATA.weights[k]);
+const MP_BUDGET0 = 8000;                   // 万円 — build_locations.SPACE_BUDGET (study line)
+const mpBudgetCustom = () => MP.budget !== MP_BUDGET0;
+const mpCustom = () => mpCustomW() || !!MP.office || mpBudgetCustom();
+const mpBudgetStr = (b = MP.budget) => LANG === 'ja'
+  ? (b >= 10000 ? `${Math.floor(b / 10000)}億${b % 10000 ? (b % 10000).toLocaleString() + '万' : ''}円` : `${b.toLocaleString()}万円`)
+  : `¥${b / 100}M`;
+// strings written for the ¥80M line → the user's budget (only where the number shown follows the budget)
+const mpB = s => mpBudgetCustom() ? String(s).replace(/¥80M/g, mpBudgetStr()).replace(/8,000万円/g, mpBudgetStr()) : s;
 const mpOfficeInfo = id => (MAP_DATA.commute?.offices || []).find(o => o.id === id);
 const mpOfficeName = o => o ? (LANG === 'ja' ? o.ja : o.en) : '';
 
 function mpLoadPrefs() {
   MP.weights = { ...MAP_DATA.weights };
-  MP.office = null; MP.walkHome = 10; MP.walkOffice = 5; MP.cmp = [];
+  MP.office = null; MP.walkHome = 10; MP.walkOffice = 5; MP.cmp = []; MP.budget = MP_BUDGET0;
   try {
     const p = JSON.parse(localStorage.getItem(MP_PREF_KEY) || 'null');
     if (p) {
@@ -24,6 +34,7 @@ function mpLoadPrefs() {
       if (p.office && mpOfficeInfo(p.office)) MP.office = p.office;
       if (Number.isFinite(p.walkHome)) MP.walkHome = p.walkHome;
       if (Number.isFinite(p.walkOffice)) MP.walkOffice = p.walkOffice;
+      if (Number.isFinite(p.budget) && p.budget >= 3000 && p.budget <= 20000) MP.budget = p.budget;
       if (Array.isArray(p.cmp)) MP.cmp = p.cmp.filter(id => mpById(id)).slice(0, 3);
     }
   } catch (e) {}
@@ -31,7 +42,7 @@ function mpLoadPrefs() {
 function mpSavePrefs() {
   try {
     localStorage.setItem(MP_PREF_KEY, JSON.stringify({ weights: MP.weights, office: MP.office,
-      walkHome: MP.walkHome, walkOffice: MP.walkOffice, cmp: MP.cmp }));
+      walkHome: MP.walkHome, walkOffice: MP.walkOffice, cmp: MP.cmp, budget: MP.budget }));
   } catch (e) {}
 }
 
@@ -51,16 +62,31 @@ function mpOfficeScore(a) {            // same formula as build_locations.commut
   return mpClamp(mpClamp(100 * (80 - eff) / 65) + adj);
 }
 
-/* ── re-score everything from the current weights / office ── */
+/* ── budget: space = ½ price (study, unchanged) + ½ choice, choice = 100·ln(1+n)/ln(61) where n = today's
+      de-duplicated listings ≥90 m², built 2000+, priced under the budget (same rule as build_locations.space_points) ── */
+function mpBudgetSpace(a) {
+  const d = typeof AREA_LISTINGS !== 'undefined' ? AREA_LISTINGS.areas?.[a.id] : null;
+  const rows = d ? d.rows.filter(r => r[3] >= 90 && r[5] >= 2000) : [];
+  const n = rows.filter(r => r[2] < MP.budget).length;
+  const cp = 100 * Math.min(1, Math.log1p(n) / Math.log1p(60));
+  return { n, q: rows.length, cp, space: 0.5 * (a.housing.spacePricePts ?? 0) + 0.5 * cp };
+}
+
+/* ── re-score everything from the current weights / office / budget ── */
 function mpRescore() {
+  const budgetLive = mpBudgetCustom() && typeof AREA_LISTINGS !== 'undefined';
+  if (mpBudgetCustom() && !budgetLive) mpLsLoad();   // re-applied when the list arrives
   mpAreas().forEach(a => {
-    if (!a._0) a._0 = { totalScore: a.totalScore, rank: a.rank, shortlisted: a.shortlisted, commute: a.scores.commute };
+    if (!a._0) a._0 = { totalScore: a.totalScore, rank: a.rank, shortlisted: a.shortlisted, commute: a.scores.commute, space: a.scores.space };
     const oc = MP.office ? mpOfficeScore(a) : null;
     a.scores.commute = oc ?? a._0.commute;
     a.officeMissing = !!MP.office && oc == null;
+    const b = budgetLive ? mpBudgetSpace(a) : null;
+    a.scores.space = b ? b.space : a._0.space;
+    a.budget = b;                              // null = study values (¥80M snapshot)
   });
   MP.domains = {};
-  if (!mpCustomW() && !MP.office) {           // defaults → exact study values (no rounding drift)
+  if (!mpCustomW() && !MP.office && !mpBudgetCustom()) {           // defaults → exact study values (no rounding drift)
     mpAreas().forEach(a => Object.assign(a, { totalScore: a._0.totalScore, rank: a._0.rank, shortlisted: a._0.shortlisted }));
     return;
   }
@@ -76,7 +102,7 @@ function mpRescore() {
 function mpApply(quiet = 'still') {
   mpRescore(); mpSavePrefs(); mpRestyle(); mpPanel(quiet);
   const b = document.querySelector('[data-pers]');
-  if (b) b.classList.toggle('custom', mpCustomW() || !!MP.office);
+  if (b) b.classList.toggle('custom', mpCustom());
   if (typeof refreshHeader === 'function') refreshHeader();
 }
 
@@ -99,6 +125,15 @@ function mpPersHTML() {
       <p class="mp-pnote">${offs.length ? t('map.pers.officeNote', MAP_DATA.commute.searchDate) : t('map.pers.noMatrix')}</p>
     </div>
     <div class="mp-ps">
+      <div class="mp-ph"><b>💴 ${t('map.pers.budget')}</b>
+        <button type="button" class="mp-preset" data-breset${mpBudgetCustom() ? '' : ' disabled'}>${t('map.pers.reset')}</button></div>
+      <label class="mp-wrow">
+        <span>${t('map.pers.budgetLbl')}</span>
+        <input type="range" min="5000" max="15000" step="500" value="${MP.budget}" data-budget>
+        <b data-bv>${mpBudgetStr()}</b></label>
+      <p class="mp-pnote">${t('map.pers.budgetNote')}</p>
+    </div>
+    <div class="mp-ps">
       <div class="mp-ph"><b>⚖ ${t('map.pers.weights')}</b>
         <button type="button" class="mp-preset" data-wreset${mpCustomW() ? '' : ' disabled'}>${t('map.pers.reset')}</button></div>
       ${MP_SUBS.map(k => `<label class="mp-wrow">
@@ -119,6 +154,11 @@ function mpPersBind(ctl) {
       MP_SUBS.forEach(s => { const el = ctl.querySelector(`[data-wv="${s}"]`); if (el) el.textContent = mpWPct(s) + '%'; });
       const r = ctl.querySelector('[data-wreset]'); if (r) r.disabled = !mpCustomW();
       later();
+    } else if (e.target.dataset.budget !== undefined) {
+      MP.budget = +e.target.value;
+      const v = ctl.querySelector('[data-bv]'); if (v) v.textContent = mpBudgetStr();
+      const r = ctl.querySelector('[data-breset]'); if (r) r.disabled = !mpBudgetCustom();
+      later();
     } else if (e.target.dataset.walk) {
       MP[e.target.dataset.walk] = Math.max(0, Math.min(40, +e.target.value || 0));
       mpSavePrefs(); mpPanel('still');
@@ -132,6 +172,12 @@ function mpPersBind(ctl) {
       MP.persOpen = !MP.persOpen;
       ctl.querySelector('.mp-pers').hidden = !MP.persOpen;
       e.target.closest('[data-pers]').classList.toggle('active', MP.persOpen);
+    } else if (e.target.closest('[data-breset]')) {
+      MP.budget = MP_BUDGET0;
+      const i = ctl.querySelector('[data-budget]'); if (i) i.value = MP.budget;
+      const v = ctl.querySelector('[data-bv]'); if (v) v.textContent = mpBudgetStr();
+      e.target.closest('[data-breset]').disabled = true;
+      mpApply();
     } else if (e.target.closest('[data-wreset]')) {
       MP.weights = { ...MAP_DATA.weights };
       ctl.querySelectorAll('[data-w]').forEach(i => { i.value = MP.weights[i.dataset.w]; });
@@ -204,12 +250,13 @@ function mpCmpRows() {
     sec('housing', [
       [L('median'), a => a.housing.median90to105, a => `${yenM(a.housing.median90to105)}<div class="cmp-sub">n=${a.housing.n90to105 ?? '?'}</div>`, 'lo'],
       [L('scorePrice'), a => a.housing.priceUsedForScore, a => `${yenM(a.housing.priceUsedForScore)}<div class="cmp-sub">n=${a.housing.modern90Count ?? '?'} · ${Math.round(a.housing.spacePricePts ?? 0)} pts</div>`, 'lo'],
-      [L('pool'), a => a.housing.modern90Under, a => `${a.housing.modern90Under ?? '—'}<div class="cmp-sub">${Math.round(a.housing.spaceChoicePts ?? 0)} pts</div>`, 'hi'],
+      [mpB(L('pool')), a => a.budget ? a.budget.n : a.housing.modern90Under, a => `${a.budget ? a.budget.n : a.housing.modern90Under ?? '—'}<div class="cmp-sub">${Math.round(a.budget ? a.budget.cp : a.housing.spaceChoicePts ?? 0)} pts${a.budget ? ' · ' + AREA_LISTINGS.generated : ''}</div>`, 'hi'],
       [L('poolAll'), a => a.housing.count90under80M, a => String(a.housing.count90under80M ?? '—'), 'hi'],
       [L('share'), a => a.housing.share90plus, a => pct(a.housing.share90plus), 'hi'],
       [L('liveN'), a => mpLive(a)?.u80 ?? null, a => { const v = mpLive(a); return v ? `${v.u80} <span class="cmp-sub">/ ${v.n90}</span><div class="cmp-sub">${v.date}</div>` : '—'; }, 'hi'],
       [L('liveMedian'), a => mpLive(a)?.median90to105 ?? null, a => { const v = mpLive(a); return v?.median90to105 ? `${t('map.yenM', v.median90to105)}<div class="cmp-sub">n=${v.n90to105}</div>` : '—'; }, 'lo'],
       [L('projects'), a => mpLive(a)?.projects ?? null, a => { const v = mpLive(a); return v ? `${v.projects}<div class="cmp-sub">${mpEsc(v.projectNames.slice(0, 3).join(' · '))}</div>` : '—'; }, null],
+      [L('fees'), a => mpLive(a)?.fees?.monthly ?? null, a => { const f = mpLive(a)?.fees; return f?.n ? `${yen(f.monthly)}<div class="cmp-sub">¥${f.perM2}/m² · n=${f.n}</div>` : f?.nAll ? `${yen(f.monthlyAll)}*<div class="cmp-sub">¥${f.perM2All}/m² · n=${f.nAll}</div>` : '—'; }, 'lo'],
       [L('land'), a => a.housing.landPrice, a => `${yen(a.housing.landPrice)}/m²<div class="cmp-sub">${a.housing.landChange5y > 0 ? '+' : ''}${a.housing.landChange5y}% / 5y</div>`, null],
     ]),
     sec('hazard', [
@@ -220,6 +267,11 @@ function mpCmpRows() {
       [L('quake'), a => a.hazard?.quake30, a => pct(a.hazard?.quake30), 'lo'],
       [L('noise'), a => (a.noise?.flags || []).reduce((m, f) => Math.max(m, f.level === 'con' ? 2 : 1), 0),
         a => a.noise ? a.noise.flags.map(f => (f.level === 'con' ? '✈✈ ' : '✈ ') + t('map.cmp.noise_' + f.kind)).join('<br>') : t('map.cmp.noiseNone'), 'lo'],
+    ]),
+    sec('crime', [
+      [L('burg'), a => a.crime?.burglaryPer10k ?? null, a => a.crime?.burglaryPer10k != null ? `${a.crime.burglaryPer10k}<div class="cmp-sub">${a.crime.burglary} · 2025</div>` : '—', 'lo'],
+      [L('viol'), a => a.crime?.violentPer10k ?? null, a => a.crime?.violentPer10k != null ? `${a.crime.violentPer10k}<div class="cmp-sub">${a.crime.violent} · 2025</div>` : '—', 'lo'],
+      [L('crimeAll'), a => a.crime?.totalPer1k ?? null, a => a.crime?.totalPer1k != null ? `${a.crime.totalPer1k}<div class="cmp-sub">${a.crime.total} · 2025</div>` : '—', 'lo'],
     ]),
     sec('growth', [
       [L('pop'), a => a.demographics.change2020to2025, a => `${a.demographics.change2020to2025 > 0 ? '+' : ''}${a.demographics.change2020to2025}%`, 'hi'],
@@ -247,7 +299,7 @@ function mpCmpHTML() {
   const list = (i, k) => `<ul class="mp-cl ${k}">${pts[i][k].map(p => `<li>${MP_CAT_ICON[p.cat]} ${mpEsc(p.text)}</li>`).join('') || `<li class="none">—</li>`}</ul>`;
   return `<div class="cmp-dialog mp-cmpd" role="dialog" aria-modal="true">
     <div class="cmp-top"><h2>${t('map.cmp.title')}</h2>
-      ${mpCustomW() || MP.office ? `<span class="mp-badge warn">${t('map.cmp.custom')}</span>` : ''}
+      ${mpCustom() ? `<span class="mp-badge warn">${t('map.cmp.custom')}</span>` : ''}
       <button type="button" class="cmp-close" data-cmpclose aria-label="close">×</button></div>
     <p class="cmp-legend"><span class="cmp-g">■</span> ${t('map.cmp.best')} · <span class="cmp-r">■</span> ${t('map.cmp.worst')}</p>
     <div class="cmp-scroll"><table class="cmp-table">
@@ -290,7 +342,8 @@ function mpLsLoad() {
   MP.lsLoading = true;
   const s = document.createElement('script');
   s.src = 'area-listings.js?v=' + ((typeof AREA_STATS !== 'undefined' && AREA_STATS.generated) || Date.now());
-  s.onload = () => { MP.lsLoading = false; const el = document.getElementById('mp-ls'); if (el && MP.sel) el.innerHTML = mpLsHTML(mpById(MP.sel)); };
+  s.onload = () => { MP.lsLoading = false; if (mpBudgetCustom()) { mpApply('still'); return; }
+    const el = document.getElementById('mp-ls'); if (el && MP.sel) el.innerHTML = mpLsHTML(mpById(MP.sel)); };
   s.onerror = () => { MP.lsLoading = false; MP.lsFailed = true; const el = document.getElementById('mp-ls'); if (el) el.innerHTML = mpLsHTML(mpById(MP.sel)); };
   document.head.appendChild(s);
 }
@@ -299,7 +352,7 @@ function mpLsHTML(a) {
     if (!MP.lsFailed) mpLsLoad();
     return `<div class="mp-ls-h"><h3>🏢 ${t('map.ls.title')}</h3></div><p class="mp-ls-note">${t(MP.lsFailed ? 'map.ls.failed' : 'map.ls.loading')}</p>`;
   }
-  const d = AREA_LISTINGS.areas?.[a.id], under = AREA_LISTINGS.under || 8000;
+  const d = AREA_LISTINGS.areas?.[a.id], under = MP.budget;   // badge line = your budget (¥80M default)
   if (!d) return `<div class="mp-ls-h"><h3>🏢 ${t('map.ls.title')}</h3></div><p class="mp-ls-note">${t('map.ls.none')}</p>`;
   const today = new Date(AREA_LISTINGS.generated);
   const isNew = r => r[9] && (today - new Date(r[9])) / 864e5 < MP_LS_NEW_DAYS;
@@ -313,20 +366,20 @@ function mpLsHTML(a) {
   const href = r => 'https://suumo.jp' + (String(r[0]).includes('/') ? r[0].replace(/(\d+)$/, 'nc_$1/') : d.base + 'nc_' + r[0] + '/');
   const yenM = man => t('map.yenM', man * 1e4);
   return `<div class="mp-ls-h"><h3>🏢 ${t('map.ls.title')} <span>${d.rows.length}</span></h3>
-      <div class="mp-ls-sum">${t('map.ls.sum', nUnder, nNew, nCut)}</div></div>
+      <div class="mp-ls-sum">${mpB(t('map.ls.sum', nUnder, nNew, nCut))}</div></div>
     <div class="mp-ls-ctl">
       <button type="button" class="mp-chip${MP.lsUnder ? '' : ' on'}" data-lsu="0">${t('map.ls.all')}</button>
-      <button type="button" class="mp-chip${MP.lsUnder ? ' on' : ''}" data-lsu="1">${t('map.ls.under')}</button>
+      <button type="button" class="mp-chip${MP.lsUnder ? ' on' : ''}" data-lsu="1">${mpB(t('map.ls.under'))}</button>
       <select data-lss aria-label="${t('map.ls.sort')}">${Object.keys(sorts).map(k => `<option value="${k}"${(MP.lsSort || 'price') === k ? ' selected' : ''}>${t('map.ls.sorts.' + k)}</option>`).join('')}</select>
     </div>
     ${shown.length ? `<ul class="mp-ls">${shown.map(r => `<li><a href="${mpEsc(href(r))}" target="_blank" rel="noopener">
-      <span class="mp-lp ${r[2] < under ? 'ok' : 'over'}" title="${t(r[2] < under ? 'map.ls.okTip' : 'map.ls.overTip')}">${yenM(r[2])}</span>
+      <span class="mp-lp ${r[2] < under ? 'ok' : 'over'}" title="${mpB(t(r[2] < under ? 'map.ls.okTip' : 'map.ls.overTip'))}">${yenM(r[2])}</span>
       <span class="mp-ln"><b>${mpEsc(r[1] || '—')}</b>
         <small>${r[3]} m² · ${mpEsc(r[4] || '?')} · ${r[5] || '?'} · ${mpEsc(r[6] || '?')} ${r[8] ? t('map.ls.bus') : r[7] != null ? t('map.ls.walk', r[7]) : ''} · ¥${Math.round(r[2] / r[3] * 1e4 / 1e3).toLocaleString()}k/m²</small></span>
       <span class="mp-lb">${isNew(r) ? `<i class="new">${t('map.ls.new')}</i>` : ''}${r[10] ? `<i class="cut" title="${t('map.ls.wasTip', yenM(r[10]))}">↓ ${yenM(r[10])}</i>` : ''}</span>
-      </a></li>`).join('')}</ul>` : `<p class="mp-ls-note">${t('map.ls.noneUnder')}</p>`}
+      </a></li>`).join('')}</ul>` : `<p class="mp-ls-note">${mpB(t('map.ls.noneUnder'))}</p>`}
     ${rows.length > 12 ? `<button type="button" class="mp-ls-more" data-lsall>${MP.lsAll ? t('map.ls.less') : t('map.ls.more', rows.length)}</button>` : ''}
-    <p class="mp-ls-note">${t('map.ls.note', AREA_LISTINGS.generated)}${a.tracked ? ' ' + t('map.ls.watch') : ''}</p>`;
+    <p class="mp-ls-note">${mpB(t('map.ls.note', AREA_LISTINGS.generated))}${a.tracked ? ' ' + t('map.ls.watch') : ''}</p>`;
 }
 
 function mpCmpClose() {

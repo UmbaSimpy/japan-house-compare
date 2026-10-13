@@ -12,7 +12,10 @@ Writes  area-stats.js                 const AREA_STATS = {generated, areas:{id:{
         area-listings.js              const AREA_LISTINGS — every de-duplicated ≥90 m² unit per area (light list in
                                       the map panel; all prices, flagged against UNDER), lazy-loaded by the map
         data/area_listings_state.json first-seen date + first price per SUUMO id → "new" / "price cut" badges
-        data/area_stats_history.json  {id: {date: [n90, median90, u80, projects]}} (last 180 days)
+        data/area_stats_history.json  {id: {date: [n90, median90, u80, projects, u80modern, n90modern, m2price90modern]}}
+                                      (last 180 days; the last three since 2026-10-13)
+  • monthly fees (管理費 + 修繕積立金) for the watchlist areas only, from today's mansions.json (the
+    condo scraper reads each listing's detail page; runs before this step): AREA_STATS.areas[id].fees
 
 The study scores in data/locations.json are NOT changed by this (they are track B, frozen at the
 study date) — the map shows these numbers as "live now" next to the study values.
@@ -122,6 +125,7 @@ def used(ta, sc, name):
         if len(cards) < 100:
             break
     v = list(units.values())
+    mod = [x for x in v if (x[2] or 0) >= 2000]
     return {
         "total": total, "raw90": raw, "n90": len(v),
         "median90": int(statistics.median(x[0] for x in v) * 10000) if v else None,
@@ -130,6 +134,8 @@ def used(ta, sc, name):
         "m2price90": int(statistics.median(x[0] / x[1] for x in v) * 10000) if v else None,
         "u80": sum(x[0] < UNDER for x in v),
         "u80modern": sum(x[0] < UNDER and (x[2] or 0) >= 2000 for x in v),
+        "n90modern": len(mod),                # scored stock (space v2): ≥90 m², built 2000+
+        "m2price90modern": int(statistics.median(x[0] / x[1] for x in mod) * 10000) if mod else None,
         "_units": v,                          # popped by main() → area-listings.js
     }
 
@@ -160,6 +166,28 @@ def area_codes():
     loc = json.load(open("data/locations.json", encoding="utf-8"))
     bnd = {f["name"]: f["code"] for f in json.load(open("data/boundaries.json", encoding="utf-8"))["features"]}
     return [(a["id"], bnd[a["nameJa"]], a["nameJa"]) for a in loc["areas"]]
+
+
+def fees():
+    """Median monthly 管理費 + 修繕積立金 of watchlist condos ≥90 m² (scored stock = built 2000+; all ages as context)."""
+    src = Path("mansions.json")
+    if not src.exists():
+        return {}
+    sc = {a["key"]: a["sc"] for a in json.load(open("areas.json", encoding="utf-8"))}
+    sid = {code: aid for aid, code, _ in area_codes()}
+    groups = {}
+    for m in json.loads(src.read_text(encoding="utf-8")):
+        aid = sid.get(sc.get(m.get("areaKey")))
+        f = (m.get("mgmtFee") or 0) + (m.get("repairFund") or 0)
+        if aid and f and (m.get("areaM2") or 0) >= 90:
+            groups.setdefault(aid, []).append((f, m["areaM2"], m.get("builtYear") or 0))
+    out = {}
+    for aid, xs in groups.items():
+        mod = [x for x in xs if x[2] >= 2000]
+        med = lambda v: round(statistics.median(v)) if v else None
+        out[aid] = {"n": len(mod), "monthly": med([x[0] for x in mod]), "perM2": med([x[0] / x[1] for x in mod]),
+                    "nAll": len(xs), "monthlyAll": med([x[0] for x in xs]), "perM2All": med([x[0] / x[1] for x in xs])}
+    return out
 
 
 def read_js(path):
@@ -219,7 +247,10 @@ def main():
                 lists[aid] = prev_list[aid]
             continue
         h = hist.setdefault(aid, {})
-        h[today] = [rec["n90"], rec["median90"], rec["u80"], rec["projects"]]
+        # [n90, median90, u80, projects, u80modern, n90modern, m2price90modern] — the last three feed the
+        # 30-day smoothing of the space score at the next study refresh (DATA_LOG item 12)
+        h[today] = [rec["n90"], rec["median90"], rec["u80"], rec["projects"],
+                    rec["u80modern"], rec["n90modern"], rec["m2price90modern"]]
         for d in sorted(h)[:-180]:
             del h[d]
         # change vs the latest snapshot at least 7 / 30 days old: [Δ n90, Δ u80, Δ projects]
@@ -228,6 +259,11 @@ def main():
             r = h[ref[-1]] if ref else None
             rec[key] = [rec["n90"] - r[0], rec["u80"] - r[2], rec["projects"] - r[3]] if r else None
         out[aid] = rec
+    fee = fees()
+    for aid, rec in out.items():
+        rec.pop("fees", None)
+        if aid in fee:
+            rec["fees"] = fee[aid]
     if len(failed) > len(out) / 2:
         raise SystemExit(f"too many failures ({len(failed)}) — keeping the previous file")
     OUT_JS.write_text("/* generated daily by area_stats.py — do not edit */\nconst AREA_STATS = " +

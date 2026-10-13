@@ -1,5 +1,11 @@
 # Bayside Chiba wins the family space race
 
+> **Change 2026-10-13 (growth pipeline, crime).**
+> - The growth score's pipeline adjustment now comes from a sourced project register, `data/pipeline.json` (40 projects, swept monthly). Before, a few points were set by hand.
+> - Growth moves by at most 4 points and the shortlist is unchanged. Examples: 美浜 +5 (幕張豊砂, ベイパーク), 習志野 −3 (津田沼南口 paused).
+> - The map also shows official 2025 police crime figures per area. These are info only and not scored.
+> - Details: `data/DATA_LOG.md` items 11–13.
+
 > **Change 2026-10-13 (space redefined).** The space score now counts only condos of 90 m² or more built in 2000 or later. It is 50% the typical price of a 100 m² modern flat and 50% the number of such flats under ¥80M.
 >
 > Rankings on the map differ from the body below:

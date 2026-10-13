@@ -1,0 +1,797 @@
+{
+ "about": "Pipeline register for the growth sub-score (track B). One row per project; 'pts' gives the points each study area gets from it under the rubric. Area adjustment = sum of its pts, clamped to -3..+5, added to growth before the 0-100 clamp (build_locations.py). Method + monthly search procedure: memory project_japan_house_compare.md and data/DATA_LOG.md item 13.",
+ "rubric": {
+  "railNew": "New line / new station / extension serving the area: opened within the last 5 years +3; licensed or under construction opening <=2032 +3, 2033-2037 +2, later +1; officially planned (route fixed in a government plan, no licence yet) +1",
+  "railCapacity": "Capacity / reliability / faster-service work on the area's main commute line (longer trains, platform rebuilds, new stop of a faster service, new through-running): under construction or licensed opening <=2032 +2 (+1 if the line serves only part of the area); design stage or later +1",
+  "redevelopment": "Station-front redevelopment or residential supply that changes the local centre (>= ~300 homes or a civic/commercial hub): under construction +2; city-planned (都市計画決定) or union approved +1; completed within the last 2 years +1; idea / study stage 0 (watch only)",
+  "newTown": "New-town or cluster supplying >= 1,000 homes within ~5 years: +2",
+  "setback": "Flagship project paused for years or cancelled -3; re-planned with a later date -1",
+  "centralWards": "In Chiyoda, Chuo, Minato, Shinjuku, Shibuya and Toshima commercial redevelopment is constant background and is not counted; only rail and >= 1,000-home residential supply count there",
+  "clamp": [
+   -3,
+   5
+  ],
+  "until": "Rows with 'until' stop counting after that month (opened/completed projects age out); pipeline_check.py lists them"
+ },
+ "checked": "2026-10-13",
+ "projects": [
+  {
+   "id": "tx8",
+   "name": "Tsukuba Express 8-car trains",
+   "nameJa": "つくばエクスプレス8両化",
+   "kind": "railCapacity",
+   "status": "construction",
+   "date": "early 2030s (platforms 秋葉原-六町 done FY2025; 八潮・流山セントラルパーク FY2026)",
+   "pts": {
+    "adachi": 2,
+    "yashio": 2,
+    "misato": 2,
+    "nagareyama": 2,
+    "kashiwa": 2,
+    "moriya": 2,
+    "tsukubamirai": 2,
+    "tsukuba": 2
+   },
+   "src": [
+    "https://www.kenbiya.com/ar/ns/region/shutoken/10181.html",
+    "https://trafficnews.jp/post/657379"
+   ],
+   "checked": "2026-10-13"
+  },
+  {
+   "id": "tozai-minamisunamachi",
+   "name": "Tozai line Minami-Sunamachi 2-platform rebuild (fewer delays)",
+   "nameJa": "東西線 南砂町駅 2面3線化",
+   "kind": "railCapacity",
+   "status": "construction",
+   "date": "FY2031",
+   "pts": {
+    "koto": 2,
+    "edogawa": 2,
+    "urayasu": 2,
+    "ichikawa": 2,
+    "funabashi": 1
+   },
+   "src": [
+    "https://trafficnews.jp/post/552149",
+    "https://www.tokyometro.jp/news/images_h/metroNews260428_1.pdf"
+   ],
+   "checked": "2026-10-13",
+   "note": "Funabashi +1: Tozai serves only 西船橋/原木中山"
+  },
+  {
+   "id": "haneda-access",
+   "name": "JR Haneda Airport Access Line (through-running onto Utsunomiya/Takasaki lines)",
+   "nameJa": "羽田空港アクセス線（東山手ルート）",
+   "kind": "railCapacity",
+   "status": "construction",
+   "date": "FY2031",
+   "pts": {
+    "saitama-omiya": 2,
+    "saitama-urawa": 2,
+    "saitama-chuo": 2
+   },
+   "src": [
+    "https://tabiris.com/archives/newline2026-1/"
+   ],
+   "checked": "2026-10-13"
+  },
+  {
+   "id": "yurakucho-ext",
+   "name": "Yurakucho line extension Toyosu–Sumiyoshi",
+   "nameJa": "有楽町線延伸（豊洲〜住吉）",
+   "kind": "railNew",
+   "status": "construction",
+   "date": "mid-2030s (works started 2024-11)",
+   "pts": {
+    "koto": 2
+   },
+   "src": [
+    "https://www.tokyometro-newline.jp/"
+   ],
+   "checked": "2026-10-13"
+  },
+  {
+   "id": "namboku-ext",
+   "name": "Namboku line extension to Shinagawa",
+   "nameJa": "南北線延伸（白金高輪〜品川）",
+   "kind": "railNew",
+   "status": "construction",
+   "date": "mid-2030s",
+   "pts": {
+    "minato": 2
+   },
+   "src": [
+    "https://www.tokyometro-newline.jp/"
+   ],
+   "checked": "2026-10-13"
+  },
+  {
+   "id": "shin-yokohama-line",
+   "name": "Sotetsu–Tokyu Shin-Yokohama line (新綱島, 新横浜)",
+   "nameJa": "相鉄・東急新横浜線",
+   "kind": "railNew",
+   "status": "open",
+   "date": "opened 2023-03 (counts until 2028-03)",
+   "pts": {
+    "yokohama-kohoku": 3
+   },
+   "src": [
+    "https://www.city.yokohama.lg.jp/kurashi/machizukuri-kankyo/toshiseibi/jokyo/kukakuseiri/tsunashima/tunahigasiguchi.html"
+   ],
+   "checked": "2026-10-13",
+   "until": "2028-03"
+  },
+  {
+   "id": "tsunashima-east",
+   "name": "Tsunashima east-exit redevelopment",
+   "nameJa": "綱島駅東口駅前地区 市街地再開発",
+   "kind": "redevelopment",
+   "status": "planned",
+   "date": "施行予定者 横浜市住宅供給公社; schedule not published",
+   "pts": {
+    "yokohama-kohoku": 1
+   },
+   "src": [
+    "https://www.city.yokohama.lg.jp/kurashi/machizukuri-kankyo/toshiseibi/jokyo/kukakuseiri/tsunashima/tunahigasiguchi.html"
+   ],
+   "checked": "2026-10-13"
+  },
+  {
+   "id": "makuhari-toyosuna",
+   "name": "Makuhari-Toyosuna station (Keiyo line)",
+   "nameJa": "JR京葉線 幕張豊砂駅",
+   "kind": "railNew",
+   "status": "open",
+   "date": "opened 2023-03 (counts until 2028-03)",
+   "pts": {
+    "chiba-mihama": 3
+   },
+   "src": [
+    "https://www.city.chiba.jp/sogoseisaku/shichokoshitsu/kohokocho/dayori22/documents/0301-02.pdf"
+   ],
+   "checked": "2026-10-13",
+   "until": "2028-03"
+  },
+  {
+   "id": "makuhari-baypark",
+   "name": "Makuhari Bay Park new town (~4,500 homes; 5th tower 2026)",
+   "nameJa": "幕張ベイパーク",
+   "kind": "newTown",
+   "status": "construction",
+   "date": "towers 2024–2026; resales from ~2027",
+   "pts": {
+    "chiba-mihama": 2
+   },
+   "src": [
+    "https://www.pref.chiba.lg.jp/kigyou/soumu/documents/2024-3.pdf",
+    "https://www.city.chiba.jp/sogoseisaku/miraitoshi/makuhari/makuharishintoshinbaytown.html"
+   ],
+   "checked": "2026-10-13"
+  },
+  {
+   "id": "chiba-mitsukoshi",
+   "name": "Brillia Tower Chiba (ex-Mitsukoshi site, 491 homes)",
+   "nameJa": "三越千葉店跡地 Brillia Tower 千葉",
+   "kind": "redevelopment",
+   "status": "completed",
+   "date": "completed 2026-08, handover 2026-12 (counts until 2028)",
+   "pts": {
+    "chiba-chuo": 1
+   },
+   "src": [
+    "https://www.kenbiya.com/ar/ns/region/shutoken/7872.html"
+   ],
+   "checked": "2026-10-13",
+   "until": "2028-12"
+  },
+  {
+   "id": "chiba-jr-branch-site",
+   "name": "Chiba station JR branch-office site (civic hall + shops + housing)",
+   "nameJa": "千葉駅前 JR千葉支社跡地 再開発",
+   "kind": "redevelopment",
+   "status": "planned",
+   "date": "plan announced; no city-planning decision yet",
+   "pts": {
+    "chiba-chuo": 1
+   },
+   "src": [
+    "https://www.city.chiba.jp/toshi/toshi/keikaku/documents/granddesign.pdf"
+   ],
+   "checked": "2026-10-13",
+   "note": "+1 because the city's grand design names it; drop to 0 if no decision by 2027"
+  },
+  {
+   "id": "kitasenju-east",
+   "name": "Kita-Senju station east redevelopment (100 m+ tower)",
+   "nameJa": "北千住駅前地区 第一種市街地再開発",
+   "kind": "redevelopment",
+   "status": "city-planned",
+   "date": "都市計画決定 2026-06",
+   "pts": {
+    "adachi": 1
+   },
+   "src": [
+    "https://trafficnews.jp/post/678671"
+   ],
+   "checked": "2026-10-13"
+  },
+  {
+   "id": "tateishi",
+   "name": "Keisei-Tateishi station towers (3 redevelopments)",
+   "nameJa": "京成立石駅 北口・南口 再開発",
+   "kind": "redevelopment",
+   "status": "construction",
+   "date": "北口 started 2025-11; completion 2029–31",
+   "pts": {
+    "katsushika": 2
+   },
+   "src": [
+    "https://trafficnews.jp/post/132239"
+   ],
+   "checked": "2026-10-13"
+  },
+  {
+   "id": "shinkoiwa-south",
+   "name": "Shin-Koiwa south-exit redevelopment (39 floors)",
+   "nameJa": "新小岩駅南口地区 再開発",
+   "kind": "redevelopment",
+   "status": "approved",
+   "date": "B街区 completion FY2032",
+   "pts": {
+    "katsushika": 1
+   },
+   "src": [
+    "https://www.kenbiya.com/ar/ns/region/tokyo/10096.html"
+   ],
+   "checked": "2026-10-13"
+  },
+  {
+   "id": "shinkin-brt",
+   "name": "Shin-Kin line passenger service as BRT (Shin-Koiwa–Takasago–Kanamachi)",
+   "nameJa": "新金線旅客化（BRT）",
+   "kind": "railNew",
+   "status": "planned",
+   "date": "late 2030s (構想 2026-01; 事業化計画 consultant 2026-06)",
+   "pts": {
+    "katsushika": 1
+   },
+   "src": [
+    "https://trafficnews.jp/post/676334",
+    "https://www.watch.impress.co.jp/docs/news/2080018.html"
+   ],
+   "checked": "2026-10-13"
+  },
+  {
+   "id": "koiwa",
+   "name": "Koiwa station redevelopments (north exit; 南小岩七丁目)",
+   "nameJa": "JR小岩駅北口地区・南小岩七丁目地区 再開発",
+   "kind": "redevelopment",
+   "status": "construction",
+   "date": "北口 FY2029; 南小岩七丁目 FY2030 (南口 FIRSTA III done 2026-03)",
+   "pts": {
+    "edogawa": 2
+   },
+   "src": [
+    "https://www.city.edogawa.tokyo.jp/e020/toshikeikaku/chiki/koiwaekishuhen/katsudo/631/shigaichisaikaihatsujigyo.html"
+   ],
+   "checked": "2026-10-13"
+  },
+  {
+   "id": "nishinippori",
+   "name": "Nishi-Nippori station-front (46-floor tower) + Mikawashima north (~760 homes)",
+   "nameJa": "西日暮里駅前地区・三河島駅前北地区 再開発",
+   "kind": "redevelopment",
+   "status": "approved",
+   "date": "西日暮里 union 2025-01, works 2027, completion ~2031; 三河島北 都計 2021",
+   "pts": {
+    "arakawa": 2
+   },
+   "src": [
+    "https://kuruma-news.jp/post/870336",
+    "https://www.toshiseibi.metro.tokyo.lg.jp/machizukuri/shigaichi_seibi/sai-kai/saikaihatsu/arakawa_18_13"
+   ],
+   "checked": "2026-10-13"
+  },
+  {
+   "id": "akabane-1",
+   "name": "Akabane 1-chome district 1 redevelopment",
+   "nameJa": "赤羽一丁目第一地区 再開発",
+   "kind": "redevelopment",
+   "status": "construction",
+   "date": "union 2024-01; completion 2029-06",
+   "pts": {
+    "kita": 2
+   },
+   "src": [
+    "https://www.toshiseibi.metro.tokyo.lg.jp/machizukuri/shigaichi_seibi/sai-kai/saikaihatsu/akabane_17_5"
+   ],
+   "checked": "2026-10-13"
+  },
+  {
+   "id": "oyama",
+   "name": "Tobu Tojo line elevation at Oyama + Oyama/Kami-Itabashi towers",
+   "nameJa": "東武東上線 大山駅付近 連続立体交差・大山町/上板橋南口 再開発",
+   "kind": "railCapacity",
+   "status": "construction",
+   "date": "elevation FY2030; towers 2027",
+   "pts": {
+    "itabashi": 3
+   },
+   "src": [
+    "https://www.city.itabashi.tokyo.jp/bousai/1059698/1059831/1059851.html",
+    "https://trafficnews.jp/post/542643/2"
+   ],
+   "checked": "2026-10-13",
+   "note": "2 (elevation) + 1 (towers)"
+  },
+  {
+   "id": "keio-elevation",
+   "name": "Keio line elevation Sasazuka–Sengawa (7 stations, Meidaimae 2-island)",
+   "nameJa": "京王線 笹塚〜仙川 連続立体交差",
+   "kind": "railCapacity",
+   "status": "construction",
+   "date": "FY2030 end",
+   "pts": {
+    "setagaya": 2
+   },
+   "src": [
+    "https://tetsudo-ch.com/13014030.html"
+   ],
+   "checked": "2026-10-13"
+  },
+  {
+   "id": "musashikoganei-north",
+   "name": "Musashi-Koganei north-exit east (35-floor tower)",
+   "nameJa": "武蔵小金井駅北口駅前東地区 再開発",
+   "kind": "redevelopment",
+   "status": "construction",
+   "date": "union 2025-06; works FY2026; completion FY2029",
+   "pts": {
+    "koganei": 2
+   },
+   "src": [
+    "https://trafficnews.jp/post/558369",
+    "https://www.toshiseibi.metro.tokyo.lg.jp/machizukuri/shigaichi_seibi/sai-kai/saikaihatsu/saikaihatsukoganei-3"
+   ],
+   "checked": "2026-10-13"
+  },
+  {
+   "id": "jiyugaoka-129",
+   "name": "Jiyugaoka 1-29 redevelopment (JIYUGAOKA MUSE SQUARE)",
+   "nameJa": "自由が丘一丁目29番地区 再開発",
+   "kind": "redevelopment",
+   "status": "completed",
+   "date": "completed 2026-07 (counts until 2028)",
+   "pts": {
+    "meguro": 1
+   },
+   "src": [
+    "https://www.city.meguro.tokyo.jp/kurashi/sumai/katsudo/jiyuugaokaeki/1-29kettei.html"
+   ],
+   "checked": "2026-10-13",
+   "until": "2028-07"
+  },
+  {
+   "id": "harumi-flag",
+   "name": "Harumi Flag (~5,600 homes) + Tsukishima 3-chome north tower (1,285 homes)",
+   "nameJa": "晴海フラッグ・月島三丁目北地区",
+   "kind": "newTown",
+   "status": "completed",
+   "date": "Harumi 2024–25; Tsukishima 2026-04",
+   "pts": {
+    "chuo": 2
+   },
+   "src": [
+    "https://note.com/minamisouken01/n/na77ba9cf5c40"
+   ],
+   "checked": "2026-10-13",
+   "until": "2029-12"
+  },
+  {
+   "id": "rinkai-subway",
+   "name": "Toshin–Rinkai subway (Tokyo–Ginza–Harumi–Ariake)",
+   "nameJa": "都心部・臨海地域地下鉄",
+   "kind": "railNew",
+   "status": "planned",
+   "date": "2040s",
+   "pts": {
+    "chuo": 1
+   },
+   "src": [
+    "https://www.toshiseibi.metro.tokyo.lg.jp/bunyabetsu/kotsu_butsuryu/pdf/kentoukai_06gaiyou.pdf"
+   ],
+   "checked": "2026-10-13"
+  },
+  {
+   "id": "shinagawa-oimachi",
+   "name": "Oimachi TRACKS (opened 2026-03) + Livio Tower Shinagawa (815 homes, 2026)",
+   "nameJa": "大井町トラックス・リビオタワー品川",
+   "kind": "redevelopment",
+   "status": "completed",
+   "date": "2026 (counts until 2028)",
+   "pts": {
+    "shinagawa": 1
+   },
+   "src": [
+    "https://note.com/minamisouken01/n/na77ba9cf5c40"
+   ],
+   "checked": "2026-10-13",
+   "until": "2028-03"
+  },
+  {
+   "id": "kamakama",
+   "name": "Shin-kuko line (Kamakama line) Yaguchinowatashi–Keikyu-Kamata",
+   "nameJa": "新空港線（蒲蒲線）",
+   "kind": "railNew",
+   "status": "approved",
+   "date": "速達性向上計画 認定 2025-10; opening 2038–42",
+   "pts": {
+    "ota": 1
+   },
+   "src": [
+    "https://www.city.ota.tokyo.jp/seikatsu/sumaimachinami/koutsu/kamakamasen/sinkukosenqa.html"
+   ],
+   "checked": "2026-10-13"
+  },
+  {
+   "id": "oedo-ext",
+   "name": "Oedo line extension to Oizumi-gakuen-cho",
+   "nameJa": "大江戸線延伸（光が丘〜大泉学園町）",
+   "kind": "railNew",
+   "status": "planned",
+   "date": "~2040 (not yet licensed)",
+   "pts": {
+    "nerima": 1
+   },
+   "src": [
+    "https://tabiris.com/?p=60261"
+   ],
+   "checked": "2026-10-13"
+  },
+  {
+   "id": "blue-line-ext",
+   "name": "Yokohama Blue line extension Azamino–Shin-Yurigaoka (new station 嶮山/すすき野 in Aoba)",
+   "nameJa": "ブルーライン延伸（あざみ野〜新百合ヶ丘）",
+   "kind": "railNew",
+   "status": "planned",
+   "date": "target 2030 under review; not yet licensed",
+   "pts": {
+    "yokohama-aoba": 1
+   },
+   "src": [
+    "https://trafficnews.jp/post/658738"
+   ],
+   "checked": "2026-10-13"
+  },
+  {
+   "id": "tama-monorail-machida",
+   "name": "Tama Monorail extension to Machida",
+   "nameJa": "多摩都市モノレール 町田方面延伸",
+   "kind": "railNew",
+   "status": "planned",
+   "date": "2040s (route chosen 2021)",
+   "pts": {
+    "machida": 1
+   },
+   "src": [
+    "https://www.city.machida.tokyo.jp/kurashi/sumai/kotsu/keikaku/kyougikai.files/suke.pdf"
+   ],
+   "checked": "2026-10-13"
+  },
+  {
+   "id": "saitama-railway-ext",
+   "name": "Saitama Railway extension Urawa-Misono–Iwatsuki (stadium station)",
+   "nameJa": "埼玉高速鉄道 延伸（浦和美園〜岩槻）",
+   "kind": "railNew",
+   "status": "planned",
+   "date": "requested 2026-03; target 2041; operator decision pending",
+   "pts": {
+    "saitama-midori": 1
+   },
+   "src": [
+    "https://www.pref.saitama.lg.jp/a0109/chika7/202603chika7.html"
+   ],
+   "checked": "2026-10-13"
+  },
+  {
+   "id": "kawaguchi-utl",
+   "name": "Ueno-Tokyo line stop at Kawaguchi",
+   "nameJa": "上野東京ライン 川口駅停車",
+   "kind": "railCapacity",
+   "status": "design",
+   "date": "basic design tender 2026-07; 2037 at earliest; new mayor 2026-02 adds uncertainty",
+   "pts": {
+    "kawaguchi": 1
+   },
+   "src": [
+    "https://trafficnews.jp/post/684524"
+   ],
+   "checked": "2026-10-13"
+  },
+  {
+   "id": "omiya-east",
+   "name": "Omiya east-exit Daimoncho 3-chome naka redevelopment",
+   "nameJa": "大宮駅東口大門町3丁目中地区 再開発",
+   "kind": "redevelopment",
+   "status": "city-planned",
+   "date": "都市計画決定 2023-12",
+   "pts": {
+    "saitama-omiya": 1
+   },
+   "src": [
+    "https://www.city.saitama.lg.jp/001/010/015/004/006/002/p099605.html"
+   ],
+   "checked": "2026-10-13"
+  },
+  {
+   "id": "kawasaki-arena",
+   "name": "Kawasaki Arena City + Keikyu-Kawasaki west-exit redevelopment",
+   "nameJa": "川崎新！アリーナシティ・京急川崎駅西口地区 再開発",
+   "kind": "redevelopment",
+   "status": "city-planned",
+   "date": "arena 2028-10 (reports of 2030-10); west exit 都計 2023-09, FY2030",
+   "pts": {
+    "kawasaki-kawasaki": 2
+   },
+   "src": [
+    "https://www.city.kawasaki.jp/500/cmsfiles/contents/0000146/146413/NL4.pdf",
+    "https://tetsudo-ch.com/12924518.html"
+   ],
+   "checked": "2026-10-13",
+   "note": "1 (arena, works from 2027) + 1 (west exit, city-planned)"
+  },
+  {
+   "id": "saginuma",
+   "name": "Saginuma station-front redevelopment",
+   "nameJa": "鷺沼駅前地区 再開発",
+   "kind": "redevelopment",
+   "status": "approved",
+   "date": "union 2024-11; completion FY2031",
+   "pts": {
+    "kawasaki-miyamae": 1
+   },
+   "src": [
+    "https://www.city.kawasaki.jp/500/page/0000096264.html"
+   ],
+   "checked": "2026-10-13"
+  },
+  {
+   "id": "yokohama-minami-east",
+   "name": "Yokohama station south-east exit tower (45 floors)",
+   "nameJa": "横浜駅みなみ東口地区 再開発",
+   "kind": "redevelopment",
+   "status": "planned",
+   "date": "works FY2028; use FY2037",
+   "pts": {
+    "yokohama-nishi": 1
+   },
+   "src": [
+    "https://trafficnews.jp/post/539546"
+   ],
+   "checked": "2026-10-13"
+  },
+  {
+   "id": "ebigawa-station",
+   "name": "Toyo Rapid new station at Ebigawa upstream (Funabashi Medical Town)",
+   "nameJa": "東葉高速線 新駅（海老川上流地区）",
+   "kind": "railNew",
+   "status": "planned",
+   "date": "name chosen 2026-06; 区画整理 underway; opening not announced",
+   "pts": {
+    "funabashi": 1
+   },
+   "src": [
+    "https://trafficnews.jp/post/672195",
+    "https://www.city.funabashi.lg.jp/machi/kaihatsu/index.html"
+   ],
+   "checked": "2026-10-13"
+  },
+  {
+   "id": "inzai-brands",
+   "name": "Brands City Chiba New Town Chuo (400+ homes)",
+   "nameJa": "ブランズシティ千葉ニュータウン中央",
+   "kind": "redevelopment",
+   "status": "completed",
+   "date": "handover 2026-08 (counts until 2028)",
+   "pts": {
+    "inzai": 1
+   },
+   "src": [
+    "https://www.lnews.jp/2026/06/s0625701.html"
+   ],
+   "checked": "2026-10-13",
+   "until": "2028-08"
+  },
+  {
+   "id": "tsukuba-70",
+   "name": "Tsukuba station block 70 (570 condos + 200 rentals)",
+   "nameJa": "つくば駅前 70街区 開発（大和ハウス）",
+   "kind": "redevelopment",
+   "status": "approved",
+   "date": "contract 2026-06; completion 2033-06",
+   "pts": {
+    "tsukuba": 1
+   },
+   "src": [
+    "https://www.kenbiya.com/ar/ns/region/shutoken/10356.html"
+   ],
+   "checked": "2026-10-13"
+  },
+  {
+   "id": "tsudanuma",
+   "name": "Tsudanuma south-exit redevelopment paused (~10 years)",
+   "nameJa": "津田沼駅南口 再開発 一時中断",
+   "kind": "setback",
+   "status": "paused",
+   "date": "paused 2025-01; mall partly reopens autumn 2028 for ~10 years",
+   "pts": {
+    "narashino": -3
+   },
+   "src": [
+    "https://travel.watch.impress.co.jp/docs/news/2094222.html"
+   ],
+   "checked": "2026-10-13"
+  },
+  {
+   "id": "nakano-sunplaza",
+   "name": "Nakano Sunplaza redevelopment re-planned",
+   "nameJa": "中野サンプラザ 再開発 再計画",
+   "kind": "setback",
+   "status": "replanned",
+   "date": "back to square one 2025; new schedule: developer call 2027-04, completion FY2034",
+   "pts": {
+    "nakano": -1
+   },
+   "src": [
+    "https://www.businessinsider.jp/article/2606-nakano-sunplaza-developer-interview-about-future/"
+   ],
+   "checked": "2026-10-13",
+   "note": "was -3 while cancelled; -1 now that a dated plan exists"
+  }
+ ],
+ "watch": [
+  {
+   "name": "京葉線–りんかい線 直通",
+   "areas": [
+    "urayasu",
+    "chiba-mihama",
+    "narashino",
+    "funabashi"
+   ],
+   "why": "JR East president positive 2026-08; nothing decided",
+   "src": "https://tabiris.com/?p=65456"
+  },
+  {
+   "name": "TX 東京駅延伸・臨海地下鉄接続",
+   "areas": [
+    "adachi",
+    "yashio",
+    "misato",
+    "nagareyama",
+    "kashiwa",
+    "moriya",
+    "tsukubamirai",
+    "tsukuba"
+   ],
+   "why": "requests 2026-04; Tokyo still studying",
+   "src": "https://tabiris.com/archives/tx-seicho/"
+  },
+  {
+   "name": "松戸駅 改良・駅ビル / 新拠点ゾーン",
+   "areas": [
+    "matsudo"
+   ],
+   "why": "old schedule 2026–27 for the passage/station building, no recent confirmation; 新拠点 at planning stage",
+   "src": "https://www.chisou.go.jp/tiiki/toshisaisei/kinkyuseibi_list/pdf/profile/07_matsudoeki.pdf"
+  },
+  {
+   "name": "柏駅東口 再整備（旧そごう跡地）",
+   "areas": [
+    "kashiwa"
+   ],
+   "why": "city takes the land 2026-12; scheme study 2026",
+   "src": "https://www.city.kashiwa.lg.jp/chushinshigaichi/shiseijoho/keikaku/machizukuri/higashiguchi/20250825higashikanren.html"
+  },
+  {
+   "name": "竹ノ塚駅東口 再開発",
+   "areas": [
+    "adachi"
+   ],
+   "why": "区・UR・東武 agreement; ~20,000 m² complex, schedule unclear",
+   "src": "https://www.ur-net.go.jp/east/press/hndcds00000048qi-att/220331_takenozuka.pdf"
+  },
+  {
+   "name": "王子駅中央口 再開発（50階×2案）",
+   "areas": [
+    "kita"
+   ],
+   "why": "urban-planning procedure expected from 2026 summer",
+   "src": "https://go2senkyo.com/seijika/20671/posts/1430607"
+  },
+  {
+   "name": "本八幡駅北口駅前地区 再開発",
+   "areas": [
+    "ichikawa"
+   ],
+   "why": "city-planning decision was planned 2024-03; status unconfirmed",
+   "src": "https://www.city.ichikawa.lg.jp/common/000315113.pdf"
+  },
+  {
+   "name": "三鷹駅南口中央通り東地区",
+   "areas": [
+    "mitaka"
+   ],
+   "why": "UR-led council studying",
+   "src": "https://www.city.mitaka.lg.jp/c_service/034/attached/attach_34634_6.pdf"
+  },
+  {
+   "name": "町田駅周辺 再開発（推進計画 2024-06）",
+   "areas": [
+    "machida"
+   ],
+   "why": "plan stage; 小田急 asset redevelopment",
+   "src": "https://trafficnews.jp/post/131187"
+  },
+  {
+   "name": "多摩センター駅周辺 再構築・多摩NT実行プログラム",
+   "areas": [
+    "tama",
+    "inagi"
+   ],
+   "why": "vision 2026-03; no project yet",
+   "src": "https://www.toshiseibi.metro.tokyo.lg.jp/documents/d/toshiseibi/260603_gaiyo_jipro"
+  },
+  {
+   "name": "五井駅東口 土地区画整理",
+   "areas": [
+    "ichihara"
+   ],
+   "why": "都市計画決定 targeted FY2026",
+   "src": "https://www.kenbiya.com/ar/ns/region/shutoken/8615.html"
+  },
+  {
+   "name": "千葉マリンスタジアム再構築（ドーム案）",
+   "areas": [
+    "chiba-mihama"
+   ],
+   "why": "agreement 2026-06; ~2034 per press",
+   "src": "https://www.chibanippo.co.jp/news/economics/975276"
+  },
+  {
+   "name": "川口駅周辺まちづくり指針",
+   "areas": [
+    "kawaguchi"
+   ],
+   "why": "素案 2026-01; study to 2027-03",
+   "src": "https://trafficnews.jp/post/684524"
+  },
+  {
+   "name": "白井市×UR 包括連携（白井駅前）",
+   "areas": [
+    "shiroi"
+   ],
+   "why": "agreement 2026-03",
+   "src": "https://www.ur-net.go.jp/east/press/bn5k440000000rgm-att/260330_siroisi.pdf"
+  },
+  {
+   "name": "新鎌ヶ谷駅前 商業・オフィス",
+   "areas": [
+    "kamagaya"
+   ],
+   "why": "commercial 2026, office 2028 (2023 press)",
+   "src": "https://www.kenbiya.com/ar/ns/region/shutoken/9393.html"
+  },
+  {
+   "name": "北千葉道路",
+   "areas": [
+    "inzai",
+    "shiroi",
+    "kamagaya",
+    "ichikawa"
+   ],
+   "why": "no opening date",
+   "src": "https://kuruma-news.jp/post/1059557"
+  }
+ ]
+}

@@ -7,9 +7,11 @@ This file lists every input behind the **Area map** tab: what each field means, 
 | Track | What | How it updates | Who triggers |
 |---|---|---|---|
 | **A. Listings** (automatic) | SUUMO used/new condos and houses, price history, Telegram, **and the map's live area counts** (`area_stats.py` → `area-stats.js`) | GitHub Actions `.github/workflows/daily-scrape.yml`, daily 05:00 UTC | Automatic |
-| **B. Area study** (manual) | Everything else on the Area map (this file): study, area hazard (`area_hazard.py`), office commute matrix (`commute_matrix.py`), paediatrics (`area_health.py`), aircraft noise (`data/area_noise.json`) + listing liquefaction (`hazard.py`, `hazard_cache.json`) | Re-research + rebuild locally, then commit | **The user asks for it** (e.g. "refresh the area study"). Never run on a schedule. |
+| **B. Area study** (manual) | Everything else on the Area map (this file): study, area hazard (`area_hazard.py`), office commute matrix (`commute_matrix.py`), paediatrics (`area_health.py`), aircraft noise (`data/area_noise.json`), crime (`area_crime.py`) + listing liquefaction (`hazard.py`, `hazard_cache.json`) | Re-research + rebuild locally, then commit | **The user asks for it** (e.g. "refresh the area study"). Never run on a schedule. |
 
 Track B data changes slowly (yearly policies, annual statistics). The suggested cadence is in the last column of each table.
+
+**Exception: the pipeline register (`data/pipeline.json`) is swept every month** (user decision 2026-10-13), using the fixed method in DATA_LOG item 13 and `python pipeline_check.py`. It is still manual: Claude runs it when the user asks, or from a monthly reminder the user sets up.
 
 ## Pipeline (track B)
 
@@ -25,6 +27,9 @@ data/area_hazard.json  (area_hazard.py)                        ← hazard exposu
 data/commute_matrix.json (commute_matrix.py)                   ← home stn → 38 office hubs (office picker)
 data/area_health.json  (area_health.py)                        ← paediatrics (info only)
 data/area_noise.json   (hand-curated)                          ← aircraft noise flags (info only)
+data/area_crime.json   (area_crime.py)                         ← police crime counts 2025 (info only)
+data/pipeline.json     (hand-curated, monthly sweep)           ← rail/redevelopment register → read by build_locations.py (growth)
+data/area_stats_history.json (track A)                         ← 30-day median of space inputs → read by build_locations.py
         │  python build_map.py
         ▼
 map-data.js  → loaded by suumo-compare.html / index.html → map.js + map-tools.js render it
@@ -113,7 +118,7 @@ Caveat: these are asking prices. In the 23 wards, 80–100 m² asking prices run
 | pop2025, change2020to2025 | 2025 census, final count (2026-09-29) | 統計局 via uub.jp | web table | every 5 years (next: 2030 census) |
 | ipss2050 | IPSS 令和5年推計, 2020→2050 % | 国立社会保障・人口問題研究所 via uub.jp | web table | when IPSS republishes (~5 years) |
 | childShare | 0–14 share (2020 census) | uub.jp | web | swap in 2025-census values when published |
-| pipeline adj. (in growth score) | Rail/redevelopment projects | news + operator pages (`demographics_development.md`) | manual | yearly |
+| pipeline adj. (in growth score) | Sum of project points from the register, clamped −3…+5; `pipeline.pts` + `pipeline.projects[]` per area | `data/pipeline.json` (one row per project, URL sources per row; rubric inside the file) | monthly sweep: `pipeline_check.py` checklist + web search (DATA_LOG item 13) | **monthly** |
 
 ### costco
 | Field | Meaning | Source | Fetch method | Refresh |
@@ -142,6 +147,8 @@ Caveat: these are asking prices. In the 23 wards, 80–100 m² asking prices run
 | total, n90, raw90, median90, median90to105, n90to105, m2price90, u80, u80modern | used-condo listings, de-duplicated (name+m²+price) | SUUMO 中古マンション search per municipality | `area_stats.py` (daily Action) | daily |
 | projects, projectNames, newUnits | new-condo projects on sale vs 新築未入居 resales | SUUMO 新築マンション search | same | daily |
 | d7, d30 | change in [n90, u80, projects] vs the latest snapshot ≥7/30 days old | `data/area_stats_history.json` (180 days) | same | daily |
+| fees {n, monthly, perM2, nAll, monthlyAll, perM2All} | median 管理費+修繕積立金 per month and per m² of watchlist used condos ≥90 m² built 2000+ (`All` = any age, used when no modern listing) | `mansions.json` (detail pages, watchlist areas only) | `area_stats.py → fees()` | daily |
+| history rows (`area_stats_history.json`) | [n90, median90, u80, projects, u80modern, n90modern, m2price90modern]; the last three since 2026-10-13 | same | same | daily (180 days kept) |
 | `area-listings.js` → areas[id] = {base, rows} | light list: every de-duplicated 90 m²+ unit, all prices (flag vs ¥80M); row = [ncId, name, price万, m², layout, year, station, walk, bus, firstSeen, was万] | same SUUMO cards (no extra requests) + `data/area_listings_state.json` (first seen / first price per id) | same | daily |
 
 Watchlist (full scored pipeline, Apartments tab) = the areas in `areas.json`; since 2026-10-12 also the top-10 shortlisted areas with `minM2: 80`. See DATA_LOG item 7.
@@ -152,12 +159,34 @@ Watchlist (full scored pipeline, Apartments tab) = the areas in `areas.json`; si
 | peds, pedsDedicated, pedsHospitals, per10k, dedicatedPer10k | facilities offering general 小児科 in the municipality; dedicated = name/first-department rule | 国土数値情報 P04 医療機関 2020 (CC BY 4.0) | `area_health.py` (zips cached in `data/cache/p04/`) | when MLIT publishes a newer P04 edition (2020 is latest as of 2026-10) |
 | kidsNear1km, kidsNearDedicated1km | % of children 0–14 within 1 km (straight line) | P04 + 2020 census mesh | same | same |
 
+### crime (`data/area_crime.json`, info only, not scored)
+| Field | Meaning | Source | Fetch method | Refresh |
+|---|---|---|---|---|
+| total, totalPer1k | all 刑法犯 recorded in the municipality, per 1,000 residents (pop2025) | Tokyo: 警視庁 町丁別 CSV R7; Kanagawa: c0030_67.pdf; Saitama: r7keihoukansityouson.pdf; Chiba: 000071144.pdf; Ibaraki: Tsukuba total only (site offline) | `area_crime.py` (Tokyo CSV + Chiba PDF parsed; Kanagawa/Saitama transcribed in the script); raw files cached in `data/cache/crime/` (gitignored) | yearly (police publish the calendar year in Feb–Mar) |
+| burglary, burglaryPer10k | 空き巣 + 忍込み (home break-ins), per 10,000 residents | same | same | same |
+| violent, violentPer10k | 凶悪犯 + 粗暴犯, per 10,000; null in Saitama (not published per city) and Ibaraki | same | same | same |
+| safetyIndex | Crime map layer, 0–100 (100 = safest): 60% burglary (log 0.2→100 … 3.0→0) + 40% violent (log 2.5→100 … 25→0); burglary only where violent is null | derived | same | same |
+
+Pros/cons thresholds (`map.js`): burglary ≤0.5/10k pro, ≥1.5 con; violent ≤3.5/10k pro, ≥10 con; all-crime ≥10/1k shown as a commercial-hub note.
+
 ### noise (`data/area_noise.json`, info only, hand-curated)
 | Field | Meaning | Source | Fetch method | Refresh |
 |---|---|---|---|---|
 | flags[] {kind, level con/info, note, url} | aircraft routes / military airfields affecting the municipality | MLIT 羽田空港のこれから, ward pages, MOD 防衛局 pages (URL per flag) | manual research | when routes or 第一種区域 change (Atsugi revision ~autumn 2027) |
 
+### Personalise: budget slider (browser only, DATA_LOG item 12)
+| Setting | Meaning | Default / range |
+|---|---|---|
+| budget (万円) | Re-computes **Choice** live from `area-listings.js`: n = rows with m² ≥90, built ≥2000, price < budget; Choice = 100·ln(1+n)/ln 61; space = ½ study Price + ½ new Choice | 8,000 (= study `SPACE_BUDGET`); 5,000–15,000, step 500; stored in the browser only |
+
+### Space smoothing (build_locations.py, DATA_LOG item 12)
+| Constant | Meaning | Value |
+|---|---|---|
+| SMOOTH_DAYS | window: median of the daily history values for u80modern, n90modern and m2price90modern | 30 days |
+| SMOOTH_MIN_DAYS | below this many days with the new fields, the study crawl values are used (flag in `dataFlags` when smoothing applies) | 10 |
+
 ## Known gaps to fill on the next refresh
+- Crime: Ibaraki police statistics pages are offline (Tsukuba total only; Moriya, Tsukubamirai none). Saitama publishes no violent-crime figures per city.
 - 0–2 fees for 13 suburbs (imputed): Kashiwa, Inzai, Matsudo, Narashino, Shiroi, Yachiyo, Sakura, Kisarazu, Sodegaura, Ichihara, Kamagaya, Moriya, Toda, Koshigaya, Misato, Yashio.
 - Saitama cities' medical copay; つくば号 weekday timetable; 東名江田 bus timetable.
 - City-level new-condo supply (paid 不動産経済研究所 data); 2025-census child share.

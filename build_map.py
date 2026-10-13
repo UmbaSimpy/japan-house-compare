@@ -57,7 +57,7 @@ def build():
 
     # info-only layers (track B, manual refresh) — shown as pros/cons/info and in Compare, never scored
     info = {key: json.load(open(f, encoding="utf-8")) for key, f in
-            (("health", "data/area_health.json"), ("noise", "data/area_noise.json")) if os.path.exists(f)}
+            (("health", "data/area_health.json"), ("noise", "data/area_noise.json"), ("crime", "data/area_crime.json")) if os.path.exists(f)}
 
     areas, used = [], set()
     for a in loc["areas"]:

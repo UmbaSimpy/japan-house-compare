@@ -421,3 +421,154 @@ I chose 2000 because it is the "modern" definition already used across the site 
 
 Scripts: the session scratchpad `review.py` and `access.py`, read-only on `locations.json`, `raw.json`, `area-stats.js` and `mansions.json`. **No score was changed.** Proposals are listed in the report §4, awaiting the user's choice.
 - Note: the raw.json key for 多摩 is `Tama-shi`; ward keys use hyphens (`Chiba-Mihama`). A review script that looks up by `nameEn` must map these.
+
+## 11. Crime per area: official police counts 2025 (2026-10-13, user request "real data") — track B, info only
+
+**What:** `area_crime.py` writes `data/area_crime.json`. `build_map.py` attaches it as `a.crime`. The map shows:
+- the **Crime** layer (safety index)
+- pros/cons/info rows (🚓 category)
+- a Compare section
+- a source link in the detail panel
+
+**Not part of the total score.** It could be made weightable later if the user asks.
+
+**Sources** (認知件数 = offences recorded where they happened; calendar year 2025 = 令和7年):
+
+| Pref | Document | Extraction |
+|---|---|---|
+| Tokyo | 警視庁「区市町村の町丁別、罪種別及び手口別認知件数」R7 CSV ([page](https://www.keishicho.metro.tokyo.lg.jp/about_mpd/jokyo_tokei/jokyo/ninchikensu.html)) | CSV (cp932); the 「<区市>計」 rows; columns 総合計, 凶悪犯計, 粗暴犯計, 侵入窃盗空き巣, 侵入窃盗忍込み |
+| Kanagawa | 神奈川県警 [c0030_67.pdf](https://www.police.pref.kanagawa.jp/assets/entry/c0030_67.pdf) | p.1 罪名別 (総数/凶悪犯/粗暴犯) and p.3 窃盗手口別 (空き巣/忍込み) for the 10 study wards, transcribed into `KANAGAWA` from the rendered pages |
+| Saitama | 埼玉県警 [r7keihoukansityouson.pdf](https://www.police.pref.saitama.lg.jp/documents/27624/r7keihoukansityouson.pdf) | 総数, 空き巣 and 忍込み transcribed into `SAITAMA`. **No 凶悪犯/粗暴犯 per city is published**, so violent is null |
+| Chiba | 千葉県警 市区町村別 罪種・手口別 認知件数 R7 (000071144.pdf, [index](https://www.police.pref.chiba.jp/keisoka/safe-life_crime_statisticsA-03.html)) | PyMuPDF words, columns mapped by x position → `data/cache/crime/chiba_r7_parsed.json`; rows checked against the rendered page images |
+| Ibaraki | 茨城県警 statistics pages | **Offline.** The site moved to /kenkei/, every PDF returns a 196-byte 404 page, and there is no archive copy. Tsukuba total 1,769 (暫定, the police table as quoted in search results). Moriya and Tsukubamirai have no data |
+
+**Checks:**
+- Tokyo 計 rows equal the sum of their 丁目 rows: 江東 3,456, 杉並 2,547, 足立 4,617.
+- Inzai's 忍込み 33 looked high, so it was re-read on the page image. It is correct (確定値).
+
+**Definitions (per resident, pop2025):**
+- `burglaryPer10k` = (空き巣 + 忍込み) per 10,000 residents. This is the most residential measure.
+- `violentPer10k` = (凶悪犯 + 粗暴犯) per 10,000 residents.
+- `totalPer1k` = all 刑法犯 per 1,000 residents.
+- `safetyIndex` (the layer) = 60% burglary + 40% violent:
+  - Each part is log-scaled between fixed bounds: burglary 0.2/10k → 100 … 3.0 → 0; violent 2.5 → 100 … 25 → 0.
+  - Values outside the bounds are clamped.
+  - Where violent is null (Saitama), burglary is used alone.
+
+**Pros/cons thresholds (`map.js`):**
+- burglary ≤0.5 pro, ≥1.5 con
+- violent ≤3.5 pro, ≥10 con
+- all-crime ≥10/1k is shown as a "commercial hub" note
+
+**Results:**
+- Highest burglary per 10k: 印西 3.81, 草加 3.42, 八千代 2.49, 八潮 2.46, 袖ケ浦 2.46, 市原 2.42.
+- Lowest burglary per 10k: 千代田 0.15, 文京 0.16, 江東 0.22, 中原 0.26, 三鷹 0.26.
+- Violent crime is highest in the hubs: 千代田 57.6, 新宿 31.9, 渋谷 22.4, 港 22.2, 横浜西区 16.0.
+- Safest shortlisted areas by index: 中原 89, 三鷹 87, 小金井 84, 世田谷 78, 杉並 77.
+- Least safe shortlisted areas by index: 千葉中央 35 (violent 11.3), 印西 36 (burglary 3.81), 八千代 37, 若葉 39, 川崎区 40.
+
+**Limitations:**
+- Offences are counted where they happen. Commercial and nightlife wards look worse per resident than they are for a family in their residential parts.
+- Municipal averages hide large 丁目 differences. The Tokyo CSV has 丁目 rows that could be used later.
+- There is one year only. A 3-year average is possible at the next refresh.
+- Raw files are in `data/cache/crime/` (gitignored), so they must be re-downloaded at a refresh.
+
+**Re-run:** police publish the calendar year in Feb–Mar.
+1. Download the new files.
+2. Update `KANAGAWA`/`SAITAMA` and re-parse Chiba.
+3. Run `python area_crime.py`, then `python build_map.py`.
+
+## 12. Budget slider, 30-day smoothing of space, fees row (2026-10-13, review proposals 2 + 5)
+
+**Budget slider** (⚙ Personalise → 💴 Budget, `map-tools.js`):
+- Range ¥50M–¥150M, step ¥5M. The default is ¥80M, the study's `SPACE_BUDGET`.
+- It is stored in the viewer's browser only (prefs key `budget`).
+- At any other value, **Choice** is recomputed for every area from `area-listings.js` (light list, daily). n = de-duplicated rows with ≥90 m², built ≥2000, price < budget.
+- Space = ½ study Price points + ½ new Choice points. The total then re-ranks, as with custom weights.
+- The "under ¥80M" texts switch to the chosen budget. The space tooltip names the light-list date.
+- `area-listings.js` is lazy-loaded the first time a custom budget is applied.
+- Check: Urayasu at ¥100M gave n 23, Choice 77, space 57 (study 46.5). Reset restored the study values.
+- Caveat: the light list is today's stock, while the study Choice is the 2026-10-12 crawl, so a custom budget mixes the two dates.
+
+**30-day smoothing** (`build_locations.py`, applies at study rebuilds):
+- The review proposed a 30-day *union* of listings. **A median of the daily values was used instead.** A union counts every flat listed at any time in the month, which inflates n in high-turnover areas.
+- `area_stats.py` history rows gained `u80modern`, `n90modern` and `m2price90modern` from 2026-10-13.
+- When ≥10 (`SMOOTH_MIN_DAYS`) of the last 30 (`SMOOTH_DAYS`) days have these fields, space uses their medians, and a `dataFlags` entry says so.
+- Until then the crawl values are used, so nothing changed today.
+- **Check at first activation (from ~2026-10-23):** the daily counts come from the area_stats search (de-dup name+m²+price), and the crawl de-dups slightly differently. Compare n for 3 areas and note any offset here.
+
+**Fees row** (proposal 5):
+- `area_stats.py → fees()` computes the median 管理費 + 修繕積立金 of watchlist used condos ≥90 m² built 2000+, from `mansions.json`. Detail pages exist only there, so this covers watchlist areas only.
+- It appears as an info row under housing and in Compare.
+- 緑区 and 白井 have no modern listings, so they fall back to all ages (`feesAll`).
+- 2026-10-13:
+
+| Area | ¥/month | ¥/m² |
+|---|---|---|
+| 浦安 | 36,789 | 324 |
+| 船橋 | 38,440 | 347 |
+| 美浜 | 45,395 | 440 |
+| 市川 | 46,860 | 462 |
+| 印西 | 32,000 | 320 |
+| 川崎区 | 29,990 | 308 |
+| 足立 | 31,014 | 322 |
+
+## 13. Pipeline register for the growth score + monthly sweep (2026-10-13, review proposal 4)
+
+**What changed:**
+- The hard-coded `PIPE` dict in `build_locations.py` (a few hand-set points) was replaced by **`data/pipeline.json`**.
+- Each row is one project: id, name, nameJa, kind, status, date, pts per area, src URLs, checked, optional `until`, note.
+- A `watch` list holds projects that do not score yet. The rubric is inside the file.
+- An area's adjustment is the sum of its rows' pts, clamped to −3…+5, and added to growth before the 0–100 clamp.
+- Rows whose `until` month has passed stop counting, so opened or completed projects age out. Seven rows carry `until` (2028-03 … 2029-12).
+
+**Rubric:**
+
+| Kind | Rule | Points |
+|---|---|---|
+| railNew | opened in the last 5 years | +3 |
+| railNew | licensed, opening ≤2032 | +3 |
+| railNew | licensed, opening 2033–37 | +2 |
+| railNew | licensed, opening later | +1 |
+| railNew | officially planned | +1 |
+| railCapacity | under construction or licensed ≤2032 | +2 (+1 if only part of the area) |
+| railCapacity | design stage | +1 |
+| redevelopment | under construction | +2 |
+| redevelopment | 都市計画決定 or union approved | +1 |
+| redevelopment | completed ≤2 years ago | +1 |
+| redevelopment | study stage | 0 (watch) |
+| newTown | ≥1,000 homes | +2 |
+| setback | paused | −3 |
+| setback | re-planned | −1 |
+
+Central wards (千代田, 中央, 港, 新宿, 渋谷, 豊島): commercial redevelopment is not counted.
+
+**Baseline sweep, 2026-10-13:**
+- ~50 web searches: rail news, operator and MLIT pages, and grouped per-area queries that covered all 77 areas.
+- Result: **40 register rows + 16 watch items.**
+- Area totals:
+  - 美浜 +5 (幕張豊砂 station, ベイパーク)
+  - 江東, 葛飾, 江戸川, 港北 +4
+  - 足立, 板橋, つくば, 中央, 大宮 +3
+  - 中野 −1 (サンプラザ re-planned)
+  - 習志野 −3 (津田沼南口 paused)
+- 30 areas have no row: central wards (rule above) and quiet suburbs.
+
+**Effect:**
+- Growth moves by ≤4 points, so the total moves by ≤0.4.
+- Rank swaps: 市川↔豊島 8/9, 川崎区↔千代田 12/13, 足立↔千葉中央 15/16, 板橋 48→44, 葛飾 50→45.
+- **Shortlist and top-10 shortlisted set unchanged**, so the watchlist is unchanged.
+- The map lists each project as a growth pro or con with its points: "Coming", "Recent" (open/completed) or "Setback".
+
+### Monthly sweep method (user decision 2026-10-13: "search every month … make sure you don't miss any new ones")
+
+1. Run `git pull --rebase --autostash`, then `python pipeline_check.py > <scratchpad>/sweep.md`. The checklist has five parts:
+   1. **Every register row**, oldest `checked` first. Rows are flagged ⚠ when all their dates have passed or their `until` has passed.
+   2. **The watch list.**
+   3. **New SUUMO 新築 project names** per area that were not in `data/pipeline_seen.json`. They come from AREA_STATS `projectNames`, which covers all 77 areas daily. This is the safety net for residential projects that never make the news.
+   4. **Fixed sources:** MLIT 鉄道局 press, 東京都 鉄道新線, press of all 17 operators, tabiris, 乗りものニュース, 東京都/横浜市/川崎市/さいたま市/千葉市 再開発 lists, prefectural 都市計画審議会 agendas and 組合設立認可, 健美家 首都圏, 関東地方整備局.
+   5. **The per-area query loop** for all 77 areas: 「{名} 再開発 {year}」 and 「{名} 新駅 OR 延伸 OR 都市計画決定」. Areas with no row are listed first.
+2. For every row, re-check status, date and source. Change status and pts per the rubric, add the URL that shows the change, and set `checked`.
+3. Add new rows: news items, watch items that reached a scoring status, and new-condo projects with ≥300 homes or a station-front tower. Anything that is not yet scoring goes on `watch`.
+4. Set the top-level `checked`. Run `build_locations.py` and then `build_map.py`. Compare the shortlist and the top-10 shortlisted set, and apply the watchlist rule (item 10) if they changed. Bump `?v=` and copy to index.html.
+5. Log a dated entry under this item: rows changed, new rows, area totals that moved, and any rank or shortlist change. Then run `python pipeline_check.py --mark`. Commit; push only with the user's OK.
