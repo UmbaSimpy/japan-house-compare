@@ -1,0 +1,76 @@
+
+######## house: 12 pages
+FIELDS (present / filled):
+  価格: 12/12 present, 12 filled
+  間取り: 12/12 present, 12 filled
+  販売戸数: 12/12 present, 12 filled
+  総戸数: 12/12 present, 1 filled
+  土地面積: 12/12 present, 12 filled
+  建物面積: 12/12 present, 12 filled
+  私道負担・道路: 12/12 present, 12 filled
+  完成時期(築年月): 12/12 present, 12 filled
+  住所: 12/12 present, 12 filled
+  交通: 12/12 present, 12 filled
+  販売スケジュール: 12/12 present, 0 filled
+  イベント情報: 12/12 present, 5 filled
+  所在地: 12/12 present, 12 filled
+  最多価格帯: 12/12 present, 0 filled
+  諸費用: 12/12 present, 2 filled
+  建ぺい率・容積率: 12/12 present, 11 filled
+  引渡可能時期: 12/12 present, 12 filled
+  土地の権利形態: 12/12 present, 12 filled
+  構造・工法: 12/12 present, 12 filled
+  エネルギー消費性能: 12/12 present, 0 filled
+  断熱性能: 12/12 present, 0 filled
+  目安光熱費: 12/12 present, 0 filled
+  施工: 12/12 present, 1 filled
+  リフォーム: 12/12 present, 6 filled
+  用途地域: 12/12 present, 12 filled
+  地目: 12/12 present, 1 filled
+  その他制限事項: 12/12 present, 6 filled
+  その他概要・特記事項: 12/12 present, 12 filled
+TAGS (特徴ピックアップ):
+  浴室に窓 10 | 都市ガス 10 | 小学校 徒歩10分以内 10 | システムキッチン 9 | 浴室乾燥機 9 | トイレ2ヶ所 9 | 2階建 9 | 閑静な住宅地 9 | 温水洗浄便座 9 | 全居室収納 8 | 前道6m以上 8 | 食器洗乾燥機 8 | 陽当り良好 8 | TVモニタ付インターホン 8 | 土地50坪以上 7 | 対面式キッチン 7 | 全室2面採光 7 | LDK18畳以上 6 | 納戸 6 | 内外装リフォーム 6 | 庭 6 | 通風良好 6 | 即引渡可 5 | オートバス 5 | IHクッキングヒーター 5 | シャワー付洗面化粧台 5 | 平坦地 5 | 浄水器 5 | 床下収納 5 | 駐車2台可 4 | LDK15畳以上 4 | 全居室6畳以上 4 | 総合病院 徒歩10分以内 4 | 整形地 4 | 全居室複層ガラスか複層サッシ 4 | スーパー 徒歩10分以内 4 | 浴室1坪以上 3 | ウォークインクローゼット 3 | 緑豊かな住宅地 3 | 周辺交通量少なめ 3 | 駅まで平坦 3 | 全居室フローリング 3 | 床暖房 3 | 区画整理地内 3 | LDK20畳以上 2 | 市街地が近い 2 | 東南向き 2 | ウッドデッキ 2 | 複層ガラス 2 | 南庭 2 | 3面採光 2 | 南面バルコニー 2 | オール電化 2 | 内装リフォーム 2 | 南西向き 2 | 和室 2 | パントリー(食器・食品の収納庫) 1 | ルーフバルコニー 1 | 眺望良好 1 | テニスコートが近い 1 | シューズインクローク 1 | テラス 1 | 整備された歩道 1 | 太陽光発電システム 1 | 2沿線以上利用可 1 | リビング階段 1 | BS・CS・CATV 1 | セキュリティ充実 1 | 年内引渡可 1 | 省エネ給湯器 1 | 海まで2km以内 1 | 外装リフォーム 1 | リノベーション 1 | ハイルーフ駐車場 1 | 天井高2.5m以上 1 | 家庭菜園 1 | 南向き 1 | 南側道路面す 1 | ワイドバルコニー 1 | 都市近郊 1
+FREE-TEXT KEYWORDS (pages mentioning):
+  pair glass 5 | seismic 0 | repair history 5 | mgmt company 0 | inspection 0 | energy cert 12 | loan deduction 0 | liability waiver 0 | disclosure 0 | asbestos 0 | setback 4 | gas/sewer 11 | reno detail 6
+
+######## ms: 40 pages
+FIELDS (present / filled):
+  物件名: 40/40 present, 40 filled
+  価格: 40/40 present, 40 filled
+  間取り: 40/40 present, 40 filled
+  販売戸数: 40/40 present, 40 filled
+  総戸数: 40/40 present, 38 filled
+  専有面積: 40/40 present, 40 filled
+  その他面積: 40/40 present, 39 filled
+  所在階/構造・階建: 40/40 present, 40 filled
+  完成時期(築年月): 40/40 present, 40 filled
+  住所: 40/40 present, 40 filled
+  交通: 40/40 present, 40 filled
+  販売スケジュール: 40/40 present, 0 filled
+  イベント情報: 40/40 present, 21 filled
+  最多価格帯: 40/40 present, 0 filled
+  管理費: 40/40 present, 40 filled
+  修繕積立金: 40/40 present, 40 filled
+  修繕積立基金: 40/40 present, 0 filled
+  諸費用: 40/40 present, 16 filled
+  引渡可能時期: 40/40 present, 40 filled
+  所在階: 40/40 present, 40 filled
+  向き: 40/40 present, 40 filled
+  エネルギー消費性能: 40/40 present, 0 filled
+  断熱性能: 40/40 present, 0 filled
+  目安光熱費: 40/40 present, 0 filled
+  リフォーム: 40/40 present, 21 filled
+  その他制限事項: 40/40 present, 6 filled
+  その他概要・特記事項: 40/40 present, 29 filled
+  所在地: 40/40 present, 40 filled
+  構造・階建て: 40/40 present, 40 filled
+  敷地面積: 40/40 present, 0 filled
+  敷地の権利形態: 40/40 present, 40 filled
+  用途地域: 40/40 present, 35 filled
+  駐車場: 40/40 present, 29 filled
+  施工: 40/40 present, 20 filled
+TAGS (特徴ピックアップ):
+  エレベーター 30 | システムキッチン 28 | TVモニタ付インターホン 27 | 陽当り良好 26 | 全居室収納 25 | 浴室乾燥機 25 | 温水洗浄便座 25 | 通風良好 23 | シャワー付洗面化粧台 22 | ペット相談 21 | 駐輪場 21 | ウォークインクローゼット 20 | LDK15畳以上 19 | 2沿線以上利用可 19 | スーパー 徒歩10分以内 18 | 食器洗乾燥機 18 | 内装リフォーム 18 | 対面式キッチン 18 | 小学校 徒歩10分以内 18 | 宅配ボックス 18 | 和室 17 | セキュリティ充実 16 | 浄水器 16 | バイク置場 15 | 眺望良好 14 | オートバス 13 | 角住戸 13 | 全居室フローリング 13 | 閑静な住宅地 12 | 駅まで平坦 12 | 市街地が近い 11 | リノベーション 11 | 南面バルコニー 11 | 2面以上バルコニー 11 | 即引渡可 10 | 24時間ゴミ出し可 10 | 平坦地 10 | 南西向き 9 | 南向き 8 | BS・CS・CATV 8 | 床暖房 8 | 浴室1坪以上 8 | 整備された歩道 7 | 東南向き 7 | フローリング張替 7 | 平面駐車場 7 | 都市近郊 7 | 緑豊かな住宅地 6 | LDK18畳以上 6 | ディスポーザー(生ごみ粉砕処理器) 6 | ワイドバルコニー 5 | 共有施設充実 5 | 自走式駐車場 5 | 節水型トイレ 5 | LDK20畳以上 4 | 24時間有人管理 4 | 全居室6畳以上 4 | シューズインクローク 4 | 可動間仕切り 4 | 納戸 4 | 周辺交通量少なめ 4 | 最上階・上階なし 4 | 省エネ給湯器 4 | 高層階 3 | リバーサイド 3 | 始発駅 3 | ゲストルーム 3 | キッズルーム・託児所 3 | 3面採光 3 | 複層ガラス 3 | 区画整理地内 3 | 総合病院 徒歩10分以内 3 | バリアフリー 3 | 前面棟無 3 | 高機能トイレ 3 | IHクッキングヒーター 2 | 年内引渡可 2 | ルーフバルコニー 2 | 海まで2km以内 2 | フラット35・S適合証明書 2 | 高速ネット対応 2 | パントリー(食器・食品の収納庫) 2 | 全居室複層ガラスか複層サッシ 2 | トイレ2ヶ所 1 | 瑕疵保証付(不動産会社独自) 1 | ミストサウナ 1 | 花火大会鑑賞 1 | バルコニー・屋上に水栓あり 1 | 床下収納 1 | テラス 1 | 適合リノベーション 1 | フラット35Sに対応 1 | 建築確認完了検査済証 1 | 省エネルギー対策 1 | ゴルフ場が近い 1 | テニスコートが近い 1 | ハイルーフ駐車場空きあり 1 | 全室2面採光 1 | 全室南西向き 1 | TV付浴室 1 | 耐震基準適合証明書 1
+FREE-TEXT KEYWORDS (pages mentioning):
+  pair glass 3 | seismic 40 | repair history 2 | mgmt company 1 | inspection 1 | energy cert 40 | loan deduction 3 | liability waiver 0 | disclosure 0 | asbestos 0 | setback 0 | gas/sewer 0 | reno detail 2
