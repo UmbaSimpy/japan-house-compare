@@ -6720,39 +6720,6 @@
   "lastSeen": "2026-10-13",
   "area": "mihama"
  },
- "21347617": {
-  "detail": {
-   "mgmtFee": 11800,
-   "repairFund": 12320,
-   "totalUnits": 69,
-   "floor": 5,
-   "bldgFloors": 14,
-   "structure": "SRC",
-   "facing": "南",
-   "parking": "onsite",
-   "parkingFee": 11700,
-   "renovation": false,
-   "renoNote": null,
-   "landRights": "owned",
-   "builder": null,
-   "balconyM2": 10.8,
-   "access": [
-    "JR総武線「西千葉」歩9分",
-    "京成千葉線「西登戸」歩11分",
-    "京成千葉線「みどり台」歩13分"
-   ]
-  },
-  "firstSeen": "2026-09-23",
-  "seeded": true,
-  "priceHistory": [
-   [
-    "2026-09-23",
-    2680
-   ]
-  ],
-  "lastSeen": "2026-10-13",
-  "area": "mihama"
- },
  "21313589": {
   "detail": {
    "mgmtFee": 9250,
@@ -10661,6 +10628,10 @@
    [
     "2026-09-23",
     7390
+   ],
+   [
+    "2026-10-13",
+    7150
    ]
   ],
   "lastSeen": "2026-10-13",
@@ -16003,39 +15974,6 @@
    [
     "2026-10-11",
     1590
-   ]
-  ],
-  "lastSeen": "2026-10-13"
- },
- "21413874": {
-  "detail": {
-   "mgmtFee": 14080,
-   "repairFund": 15100,
-   "totalUnits": 90,
-   "floor": 5,
-   "bldgFloors": 10,
-   "structure": "RC",
-   "facing": "南",
-   "parking": "onsite",
-   "parkingFee": 12000,
-   "renovation": false,
-   "renoNote": null,
-   "landRights": "owned",
-   "builder": null,
-   "balconyM2": 23.19,
-   "access": [
-    "北総線「白井」歩5分",
-    "北総線「小室」歩28分",
-    "北総線「西白井」歩30分"
-   ]
-  },
-  "area": "shiroi",
-  "firstSeen": "2026-09-23",
-  "seeded": true,
-  "priceHistory": [
-   [
-    "2026-09-23",
-    1720
    ]
   ],
   "lastSeen": "2026-10-13"
@@ -22117,6 +22055,10 @@
    [
     "2026-09-23",
     2280
+   ],
+   [
+    "2026-10-13",
+    2180
    ]
   ],
   "lastSeen": "2026-10-13"
@@ -24450,38 +24392,6 @@
    [
     "2026-09-23",
     3598
-   ]
-  ],
-  "lastSeen": "2026-10-13"
- },
- "20392075": {
-  "detail": {
-   "mgmtFee": 17500,
-   "repairFund": 16330,
-   "totalUnits": 23,
-   "floor": 1,
-   "bldgFloors": 5,
-   "structure": "RC",
-   "facing": "西",
-   "parking": "onsite",
-   "parkingFee": 10000,
-   "renovation": true,
-   "renoNote": "2015年4月完了 水回り設備交換:キッチン・浴室・トイレ 内装リフォーム:壁",
-   "landRights": "owned",
-   "builder": "白井建設(株)",
-   "balconyM2": 6.01,
-   "access": [
-    "JR総武線「津田沼」歩9分",
-    "京成本線「京成津田沼」歩9分"
-   ]
-  },
-  "area": "narashino",
-  "firstSeen": "2026-09-23",
-  "seeded": true,
-  "priceHistory": [
-   [
-    "2026-09-23",
-    3680
    ]
   ],
   "lastSeen": "2026-10-13"
@@ -48811,6 +48721,10 @@
    [
     "2026-10-12",
     2480
+   ],
+   [
+    "2026-10-13",
+    2300
    ]
   ],
   "lastSeen": "2026-10-13"
@@ -50948,40 +50862,6 @@
   ],
   "lastSeen": "2026-10-13"
  },
- "21888169": {
-  "detail": {
-   "mgmtFee": 9912,
-   "repairFund": 12637,
-   "totalUnits": 110,
-   "floor": 4,
-   "bldgFloors": 10,
-   "structure": "RC",
-   "facing": "南",
-   "parking": "onsite",
-   "parkingFee": 18000,
-   "parkingText": "敷地内(1万8000円~2万円/月)",
-   "renovation": true,
-   "renoNote": "2026年10月完了予定 水回り設備交換:キッチン・浴室・トイレ 内装リフォーム:壁・床・全室",
-   "landRights": "owned",
-   "builder": null,
-   "balconyM2": 28.2,
-   "access": [
-    "都電荒川線「荒川車庫前」歩3分",
-    "JR高崎線「尾久」歩8分",
-    "都電荒川線「梶原」歩11分"
-   ]
-  },
-  "area": "arakawa",
-  "firstSeen": "2026-10-12",
-  "seeded": true,
-  "priceHistory": [
-   [
-    "2026-10-12",
-    7990
-   ]
-  ],
-  "lastSeen": "2026-10-13"
- },
  "21721000": {
   "detail": {
    "mgmtFee": 9912,
@@ -53065,40 +52945,6 @@
   ],
   "lastSeen": "2026-10-13"
  },
- "20939251": {
-  "detail": {
-   "mgmtFee": 15180,
-   "repairFund": 17690,
-   "totalUnits": 38,
-   "floor": 1,
-   "bldgFloors": 4,
-   "structure": "RC",
-   "facing": "南",
-   "parking": "none",
-   "parkingFee": null,
-   "parkingText": "無",
-   "renovation": true,
-   "renoNote": "2026年7月完了 水回り設備交換:キッチン・浴室・トイレ 内装リフォーム:壁・床 その他:内装その他",
-   "landRights": "owned",
-   "builder": "(株)長谷工コーポレーション",
-   "balconyM2": 10.45,
-   "access": [
-    "JR常磐線「新松戸」歩14分",
-    "JR武蔵野線「新松戸」歩14分",
-    "流鉄流山線「幸谷」歩15分"
-   ]
-  },
-  "area": "matsudo",
-  "firstSeen": "2026-10-13",
-  "seeded": true,
-  "priceHistory": [
-   [
-    "2026-10-13",
-    2790
-   ]
-  ],
-  "lastSeen": "2026-10-13"
- },
  "21866792": {
   "detail": {
    "mgmtFee": 11730,
@@ -54534,40 +54380,6 @@
     "JR常磐線「新松戸」歩14分",
     "JR武蔵野線「新松戸」歩14分",
     "流鉄流山線「幸谷」歩15分"
-   ]
-  },
-  "area": "matsudo",
-  "firstSeen": "2026-10-13",
-  "seeded": true,
-  "priceHistory": [
-   [
-    "2026-10-13",
-    2790
-   ]
-  ],
-  "lastSeen": "2026-10-13"
- },
- "21899452": {
-  "detail": {
-   "mgmtFee": 15180,
-   "repairFund": 17690,
-   "totalUnits": 38,
-   "floor": 1,
-   "bldgFloors": 4,
-   "structure": "RC",
-   "facing": "南",
-   "parking": "unknown",
-   "parkingFee": null,
-   "parkingText": "-",
-   "renovation": true,
-   "renoNote": "2026年7月完了 水回り設備交換:キッチン・浴室・トイレ 内装リフォーム:壁・床 その他:ハウスクリーニング等",
-   "landRights": "owned",
-   "builder": "(株)長谷工コーポレーション",
-   "balconyM2": 10.45,
-   "access": [
-    "JR武蔵野線「新松戸」歩14分",
-    "流鉄流山線「幸谷」歩16分",
-    "JR常磐線「馬橋」歩19分"
    ]
   },
   "area": "matsudo",
@@ -57650,6 +57462,10 @@
    [
     "2026-10-13",
     6180
+   ],
+   [
+    "2026-10-13",
+    5980
    ]
   ],
   "lastSeen": "2026-10-13"
@@ -60884,40 +60700,6 @@
    [
     "2026-10-13",
     6980
-   ]
-  ],
-  "lastSeen": "2026-10-13"
- },
- "20991528": {
-  "detail": {
-   "mgmtFee": 18200,
-   "repairFund": 11700,
-   "totalUnits": 73,
-   "floor": 10,
-   "bldgFloors": 15,
-   "structure": "RC",
-   "facing": "西",
-   "parking": "full",
-   "parkingFee": null,
-   "parkingText": "空無",
-   "renovation": true,
-   "renoNote": "2026年9月完了 水回り設備交換:キッチン・浴室・トイレ 内装リフォーム:壁・床・全室",
-   "landRights": "owned",
-   "builder": null,
-   "balconyM2": 9.1,
-   "access": [
-    "日暮里・舎人ライナー「江北」歩1分",
-    "東武大師線「大師前」歩15分",
-    "日暮里・舎人ライナー「高野」歩8分"
-   ]
-  },
-  "area": "adachi",
-  "firstSeen": "2026-10-13",
-  "seeded": true,
-  "priceHistory": [
-   [
-    "2026-10-13",
-    7180
    ]
   ],
   "lastSeen": "2026-10-13"
@@ -64532,6 +64314,10 @@
    [
     "2026-10-13",
     3980
+   ],
+   [
+    "2026-10-13",
+    3780
    ]
   ],
   "lastSeen": "2026-10-13"
@@ -66502,6 +66288,207 @@
    [
     "2026-10-13",
     8980
+   ]
+  ],
+  "lastSeen": "2026-10-13"
+ },
+ "21930927": {
+  "detail": {
+   "mgmtFee": 12670,
+   "repairFund": 13340,
+   "totalUnits": 239,
+   "floor": 14,
+   "bldgFloors": 14,
+   "structure": "RC",
+   "facing": "南西",
+   "parking": "onsite",
+   "parkingFee": 4000,
+   "parkingText": "敷地内(4000円/月)",
+   "renovation": true,
+   "renoNote": "2026年11月完了予定 水回り設備交換:キッチン・浴室・トイレ 内装リフォーム:壁・床・全室 その他:ハウスクリーニング...",
+   "landRights": "owned",
+   "builder": null,
+   "balconyM2": 23.23,
+   "access": [
+    "北総線「印西牧の原」歩12分",
+    "JR成田線「小林」歩51分",
+    "北総線「印旛日本医大」歩54分"
+   ]
+  },
+  "area": "inzai",
+  "firstSeen": "2026-10-13",
+  "seeded": false,
+  "priceHistory": [
+   [
+    "2026-10-13",
+    2988
+   ]
+  ],
+  "lastSeen": "2026-10-13"
+ },
+ "21931789": {
+  "detail": {
+   "mgmtFee": 5800,
+   "repairFund": 17200,
+   "totalUnits": 498,
+   "floor": 4,
+   "bldgFloors": 5,
+   "structure": "RC",
+   "facing": "南",
+   "parking": "full",
+   "parkingFee": null,
+   "parkingText": "空無",
+   "renovation": true,
+   "renoNote": "2026年7月完了 水回り設備交換:キッチン・浴室・トイレ 内装リフォーム:壁・床・全室 その他:洗面所/給排水管",
+   "landRights": "owned",
+   "builder": "大成建設株式会社",
+   "balconyM2": 8.29,
+   "access": [
+    "京成本線「谷津」歩10分",
+    "JR京葉線「南船橋」歩11分",
+    "京成本線「船橋競馬場」歩17分"
+   ]
+  },
+  "area": "narashino",
+  "firstSeen": "2026-10-13",
+  "seeded": false,
+  "priceHistory": [
+   [
+    "2026-10-13",
+    1588
+   ]
+  ],
+  "lastSeen": "2026-10-13"
+ },
+ "21932176": {
+  "detail": {
+   "mgmtFee": 9912,
+   "repairFund": 12637,
+   "totalUnits": 110,
+   "floor": 4,
+   "bldgFloors": 10,
+   "structure": "RC",
+   "facing": "南",
+   "parking": "onsite",
+   "parkingFee": 18000,
+   "parkingText": "敷地内(1万8000円~2万円/月)",
+   "renovation": true,
+   "renoNote": "2026年10月完了予定 水回り設備交換:キッチン・浴室・トイレ 内装リフォーム:壁・床・全室",
+   "landRights": "owned",
+   "builder": null,
+   "balconyM2": 28.2,
+   "access": [
+    "都電荒川線「荒川車庫前」歩3分",
+    "JR高崎線「尾久」歩8分",
+    "都電荒川線「梶原」歩11分"
+   ]
+  },
+  "area": "arakawa",
+  "firstSeen": "2026-10-13",
+  "seeded": false,
+  "priceHistory": [
+   [
+    "2026-10-13",
+    7990
+   ]
+  ],
+  "lastSeen": "2026-10-13"
+ },
+ "21930733": {
+  "detail": {
+   "mgmtFee": 10000,
+   "repairFund": 16300,
+   "totalUnits": 63,
+   "floor": 8,
+   "bldgFloors": 11,
+   "structure": "RC",
+   "facing": "南西",
+   "parking": "unknown",
+   "parkingFee": null,
+   "parkingText": "-",
+   "renovation": true,
+   "renoNote": "2027年1月完了予定 水回り設備交換:キッチン・浴室・トイレ 内装リフォーム:壁・床・全室 その他:ハウスクリーニング...",
+   "landRights": "owned",
+   "builder": null,
+   "balconyM2": 8.82,
+   "access": [
+    "JR武蔵野線「南流山」歩14分",
+    "つくばエクスプレス「南流山」歩14分",
+    "流鉄流山線「鰭ヶ崎」歩22分"
+   ]
+  },
+  "area": "matsudo",
+  "firstSeen": "2026-10-13",
+  "seeded": false,
+  "priceHistory": [
+   [
+    "2026-10-13",
+    3180
+   ]
+  ],
+  "lastSeen": "2026-10-13"
+ },
+ "21793254": {
+  "detail": {
+   "mgmtFee": 10600,
+   "repairFund": 20870,
+   "totalUnits": 72,
+   "floor": 3,
+   "bldgFloors": 6,
+   "structure": "RC",
+   "facing": "南西",
+   "parking": "full",
+   "parkingFee": null,
+   "parkingText": "空無",
+   "renovation": true,
+   "renoNote": "2026年6月完了 水回り設備交換:キッチン・トイレ 内装リフォーム:壁・床 その他:内装その他",
+   "landRights": "owned",
+   "builder": "池田建設株式会社",
+   "balconyM2": 13.48,
+   "access": [
+    "京成松戸線「元山」歩5分"
+   ]
+  },
+  "area": "matsudo",
+  "firstSeen": "2026-10-13",
+  "seeded": false,
+  "priceHistory": [
+   [
+    "2026-10-13",
+    2898
+   ]
+  ],
+  "lastSeen": "2026-10-13"
+ },
+ "21906872": {
+  "detail": {
+   "mgmtFee": 15800,
+   "repairFund": 11700,
+   "totalUnits": 73,
+   "floor": 10,
+   "bldgFloors": 15,
+   "structure": "RC",
+   "facing": "南西",
+   "parking": "unknown",
+   "parkingFee": null,
+   "parkingText": "-",
+   "renovation": true,
+   "renoNote": "2026年9月完了 水回り設備交換:キッチン・浴室・トイレ 内装リフォーム:壁・床",
+   "landRights": "owned",
+   "builder": null,
+   "balconyM2": 9.1,
+   "access": [
+    "日暮里・舎人ライナー「江北」歩1分",
+    "東武大師線「大師前」歩15分"
+   ]
+  },
+  "area": "adachi",
+  "firstSeen": "2026-10-13",
+  "seeded": false,
+  "priceHistory": [
+   [
+    "2026-10-13",
+    7180
    ]
   ],
   "lastSeen": "2026-10-13"
