@@ -228,6 +228,16 @@ Think about what happens if one of you stops working (parental leave) or you sep
 8. **Checklist and timeline:** the purchase flow as a checklist with dates (offer → pre-screening → contract → full screening → settlement → tax return) and the documents for each step.
 9. **Refinance check later:** after buying, enter your loan and get a monthly Telegram note if the market rate is far enough below yours.
 
+## 5. Status (2026-10-13)
+
+Built:
+- **1. Loan tab:** simulator, rate-rise table, loan types side by side, borrowing estimate, balance chart, rate snapshot with a "without PR" column, and a guide covering both residency situations (work visa now, PR expected within ~2 years).
+- **2. All-in monthly cost** on every card, in the comparison and in Deep look.
+- **3. "+1%" rate-rise figure** on cards and in Deep look.
+- **Default rate:** 1.525% (SMBC variable, no PR needed), with 10% down and 35 years.
+
+See DATA_LOG item 16 and PARAMETERS.md "Loan". Still open: proposals 4–9.
+
 ## Sources
 - Mogecheck, [住宅ローン金利2026年10月の最新動向](https://mogecheck.jp/articles/show/51rzNy7XEJ5o4mQ6ZkVv) (bank rates, indices, BOJ timeline, prime-rate change)
 - [MUFG 住宅ローン金利 (October 2026)](https://www.bk.mufg.jp/kariru/jutaku/yuuguu/index.html) (rates, list rate, discount, conditions, fee)

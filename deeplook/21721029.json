@@ -11,8 +11,8 @@
    "リフォームする": "リフォーム",
    "売る": "売却査定",
    "住まいの相談": "講座/相談",
-   "情報提供日": "26/10/12",
-   "次回更新予定日": "26/10/20",
+   "情報提供日": "26/10/13",
+   "次回更新予定日": "26/10/21",
    "物件名": "稲毛パイロットホーム7号棟",
    "価格": "1780万円 [ □ 支払シミュレーション ]",
    "間取り": "3LDK",
@@ -198,14 +198,16 @@
    }
   ],
   "siteArea": null,
-  "infoDate": "26/10/12"
+  "infoDate": "26/10/13"
  },
  "area": "chiba-mihama",
  "office": "tokyo",
  "facts": {
   "repairPerM2": 235,
-  "monthlyLoan": 50247,
+  "monthlyLoan": 49247,
   "monthlyFees": 28200,
+  "monthlyAllIn": 81155,
+  "up1": 8238,
   "buyCosts": [
    1187400,
    1543400
@@ -450,12 +452,12 @@
     {
      "level": "info",
      "head": {
-      "en": "≈ ¥78,447/month before parking and property tax",
-      "ja": "毎月 約78,447円（駐車場代・固定資産税を除く）"
+      "en": "≈ ¥81,155/month all-in (before parking) · +1% rate: +¥8,238",
+      "ja": "毎月の総額 約81,155円（駐車場代を除く）・金利+1%で+8,238円"
      },
      "detail": {
-      "en": "Loan ¥50,247 (100% of price, 35 years, 1.00% variable — the Apartments tab default) + fees ¥28,200",
-      "ja": "住宅ローン返済 50,247円（物件価格の100%を借入、35年、変動金利1.00%：中古マンションタブの設定値）＋管理費等 28,200円"
+      "en": "Loan ¥49,247 (10% down, 35 years, 1.52% — your Loan tab settings) + fees ¥28,200 + property tax ≈ ¥3,708 (0.25% of price / year, estimate)",
+      "ja": "住宅ローン返済 49,247円（頭金10%・35年・金利1.52%：「住宅ローン」タブの設定）＋管理費等 28,200円＋固定資産税等 約3,708円（価格の年0.25%で概算）"
      },
      "cmp": "",
      "ask": {

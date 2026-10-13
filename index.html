@@ -1223,6 +1223,85 @@
     .dl-btn { font-size: .78rem; color: var(--text-2); text-decoration: none; border: 1px solid var(--border); border-radius: var(--r-sm); padding: 5px 9px; white-space: nowrap; }
     .dl-btn:hover { color: var(--accent); border-color: var(--accent); }
     @media (max-width: 600px) { .dl-btn .dl-t { display: none; } }
+    /* ── Loan tab + all-in lines on cards (loan.js) ── */
+    .ln-line { font-size: .8rem; color: var(--text-2); margin: 2px 0 4px; cursor: help; }
+    .ln-up { color: #d98a00; font-size: .74rem; white-space: nowrap; }
+    .ln-root { max-width: 1000px; margin: 0 auto; padding: 20px 16px 48px; }
+    .ln-top { display: flex; align-items: baseline; gap: 12px; flex-wrap: wrap; }
+    .ln-h { font-family: var(--ff-disp); font-size: 1.7rem; font-weight: 600; margin: 0 auto 6px 0; }
+    .ln-print { font: inherit; font-size: .8rem; padding: 6px 12px; border-radius: var(--r-sm); border: 1px solid var(--border); background: var(--card-bg); color: var(--text-1); cursor: pointer; }
+    .ln-lead { color: var(--text-2); font-size: .85rem; line-height: 1.55; margin: 0 0 14px; }
+    .ln-note { color: var(--text-3); font-size: .8rem; line-height: 1.55; margin: 8px 0 0; }
+    .ln-grid { display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr); gap: 18px; align-items: start; }
+    @media (max-width: 760px) { .ln-grid { grid-template-columns: 1fr; } }
+    .ln-in fieldset { border: 1px solid var(--border); border-radius: var(--r); padding: 6px 12px 10px; margin: 0 0 10px; background: var(--card-bg); min-width: 0; }
+    .ln-in legend { font-size: .76rem; font-weight: 600; color: var(--text-2); padding: 0 4px; letter-spacing: .04em; }
+    .ln-f { display: flex; justify-content: space-between; align-items: center; gap: 10px; padding: 5px 0; border-bottom: 1px dashed var(--border); font-size: .86rem; }
+    .ln-f:last-child { border-bottom: 0; }
+    .ln-l small { display: block; color: var(--text-3); font-size: .72rem; line-height: 1.3; }
+    .ln-v { display: flex; align-items: center; gap: 5px; flex: none; }
+    .ln-v em { font-style: normal; color: var(--text-3); font-size: .75rem; }
+    .ln-v input[type=number] { width: 92px; padding: 5px 7px; border-radius: var(--r-sm); border: 1px solid var(--border); background: transparent; color: var(--text-1); font: inherit; font-size: .88rem; text-align: right; }
+    .ln-v select { max-width: 230px; padding: 5px 6px; border-radius: var(--r-sm); border: 1px solid var(--border); background: var(--card-bg); color: var(--text-1); font: inherit; font-size: .82rem; }
+    .ln-v input[type=checkbox] { width: 18px; height: 18px; accent-color: var(--accent); }
+    @media (max-width: 420px) { .ln-v select { max-width: 170px; } .ln-v input[type=number] { width: 80px; } }
+    .ln-out { position: sticky; top: 70px; background: var(--card-bg); border: 1px solid var(--border); border-radius: var(--r); padding: 14px 16px; }
+    @media (max-width: 760px) { .ln-out { position: static; } }
+    .ln-big small { display: block; color: var(--text-2); font-size: .78rem; }
+    .ln-big b { font-family: var(--ff-disp); font-size: 2.3rem; font-weight: 600; line-height: 1.1; color: var(--accent); }
+    .ln-big span { display: block; color: var(--text-3); font-size: .74rem; }
+    .ln-warn { margin: 10px 0 0; padding: 8px 10px; border-radius: var(--r-sm); background: rgba(217,138,0,.12); border: 1px solid rgba(217,138,0,.45); font-size: .8rem; line-height: 1.45; }
+    .ln-brk { list-style: none; margin: 12px 0 0; padding: 0; font-size: .85rem; }
+    .ln-brk li { display: flex; justify-content: space-between; gap: 10px; padding: 3px 0; }
+    .ln-brk li b { font-weight: 600; white-space: nowrap; }
+    .ln-brk .tot { border-top: 1px solid var(--border); margin-top: 3px; padding-top: 6px; }
+    .ln-brk .up b { color: #d98a00; }
+    .ln-k { border-top: 1px solid var(--border); padding-top: 8px; color: var(--text-2); }
+    .ln-sec { margin-top: 26px; }
+    .ln-sec h3 { font-size: 1.05rem; margin: 0 0 6px; }
+    .ln-tw { overflow-x: auto; }
+    .ln-t { border-collapse: collapse; width: 100%; font-size: .84rem; }
+    .ln-t th, .ln-t td { padding: 6px 8px; border-bottom: 1px solid var(--border); text-align: right; white-space: nowrap; }
+    .ln-t th:first-child { text-align: left; font-weight: 500; }
+    .ln-t thead th { color: var(--text-3); font-weight: 500; font-size: .75rem; }
+    .ln-t small { color: var(--text-3); }
+    .ln-t tr.now { background: rgba(224,90,58,.08); }
+    .ln-rt td:last-child { white-space: normal; text-align: left; color: var(--text-2); font-size: .78rem; min-width: 220px; }
+    .ln-rt td:nth-child(5) { text-align: left; white-space: normal; font-size: .78rem; min-width: 110px; }
+    .ln-rt tr.dim { opacity: .45; }
+    .ln-rt tr.hi th { color: var(--green); font-weight: 600; }
+    .np-yes, .np-cond, .np-spouse { color: var(--green); }
+    .np-no { color: var(--accent); }
+    .ln-pr { font-size: .68rem; padding: 1px 6px; border-radius: 8px; background: rgba(224,90,58,.15); color: var(--accent); white-space: nowrap; }
+    .ln-comfort { margin-top: 10px; padding: 10px 12px; border-radius: var(--r-sm); border: 1px solid var(--border); background: var(--card-bg); font-size: .88rem; line-height: 1.5; }
+    .ln-svg { width: 100%; height: auto; display: block; }
+    .ln-svg .ax text { font-size: 10px; fill: var(--text-3); }
+    .ln-svg .ax line { stroke: var(--border); stroke-width: 1; }
+    .ln-svg .lb { fill: none; stroke: var(--accent); stroke-width: 2.2; }
+    .ln-svg .li { fill: none; stroke: var(--text-3); stroke-width: 1.6; stroke-dasharray: 4 3; }
+    .ln-svg .cr { fill: rgba(46,125,50,.10); }
+    .ln-leg { display: flex; gap: 14px; flex-wrap: wrap; font-size: .75rem; color: var(--text-2); margin: 4px 0 8px; }
+    .ln-leg span::before { content: ""; display: inline-block; width: 14px; height: 3px; margin-right: 5px; vertical-align: middle; }
+    .ln-leg .lb::before { background: var(--accent); }
+    .ln-leg .li::before { border-top: 2px dashed var(--text-3); height: 0; }
+    .ln-leg .cr::before { background: rgba(46,125,50,.35); height: 8px; }
+    .ln-guide details { border: 1px solid var(--border); border-radius: var(--r-sm); background: var(--card-bg); margin: 0 0 8px; padding: 0 14px; }
+    .ln-guide summary { cursor: pointer; padding: 10px 0; font-weight: 600; font-size: .92rem; }
+    .ln-guide ul, .ln-guide ol { margin: 0 0 12px; padding-left: 20px; font-size: .86rem; line-height: 1.6; color: var(--text-2); }
+    .ln-guide li { margin: 3px 0; }
+    .ln-guide b { color: var(--text-1); }
+    .ln-src { color: var(--text-3); font-size: .74rem; margin-top: 18px; }
+    @media print {
+      html:has(#panel-loan.active) .header, html:has(#panel-loan.active) .tab-nav, html:has(#panel-loan.active) .panel:not(#panel-loan), html:has(#panel-loan.active) .ln-print, html:has(#panel-loan.active) #toast { display: none !important; }
+      html:has(#panel-loan.active) #panel-loan { display: block !important; }
+      html:has(#panel-loan.active), html:has(#panel-loan.active) body { background: #fff !important; }
+      html:has(#panel-loan.active) { --text-1: #000; --text-2: #333; --text-3: #666; --card-bg: #fff; --border: #ccc; }
+      html:has(#panel-loan.active) .ln-root { max-width: none; padding: 0; font-size: 9.5pt; }
+      html:has(#panel-loan.active) .ln-out { position: static; }
+      html:has(#panel-loan.active) details, html:has(#panel-loan.active) .ln-t tr, html:has(#panel-loan.active) fieldset { break-inside: avoid; }
+      html:has(#panel-loan.active) .ln-break { break-before: page; }
+      html:has(#panel-loan.active) * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    }
   </style>
 </head>
 <body>
@@ -1263,6 +1342,7 @@
     <button class="tab-btn" data-tab="listings" data-i18n="tabHouses">Houses</button>
     <button class="tab-btn" data-tab="trends" data-i18n="tabTrends">Trends</button>
     <button class="tab-btn" data-tab="deeplook" data-i18n="tabDeep">Deep look</button>
+    <button class="tab-btn" data-tab="loan" data-i18n="tabLoan">Loan</button>
   </div>
 </nav>
 
@@ -1278,6 +1358,10 @@
 </div>
 
 <!-- PANEL: DEEP LOOK -->
+<div class="panel" id="panel-loan">
+  <div class="ln-root" id="ln-root"></div>
+</div>
+
 <div class="panel" id="panel-deeplook">
   <div class="dl-root" id="dl-root"></div>
 </div>
@@ -2241,12 +2325,13 @@ const msGroups = [{"key": "mihama", "name": "Mihama-ku", "nameJa": "美浜区", 
 const mansionHistory = [{"date": "2026-09-23", "count": 736, "avgPrice": 3533, "medianPpm": 36.2, "areas": {"mihama": {"count": 341, "avgPrice": 4366, "medianPpm": 49.3}, "chibant": {"count": 139, "avgPrice": 2276, "medianPpm": 19.7}, "midori": {"count": 60, "avgPrice": 2220, "medianPpm": 29.1}, "narashino": {"count": 196, "avgPrice": 3378, "medianPpm": 38.0}}}, {"date": "2026-09-24", "count": 733, "avgPrice": 3543, "medianPpm": 36.2, "areas": {"mihama": {"count": 341, "avgPrice": 4375, "medianPpm": 49.6}, "chibant": {"count": 138, "avgPrice": 2284, "medianPpm": 20.1}, "midori": {"count": 58, "avgPrice": 2252, "medianPpm": 29.1}, "narashino": {"count": 196, "avgPrice": 3363, "medianPpm": 37.7}}}, {"date": "2026-09-25", "count": 728, "avgPrice": 3538, "medianPpm": 35.7, "areas": {"mihama": {"count": 341, "avgPrice": 4372, "medianPpm": 49.6}, "chibant": {"count": 137, "avgPrice": 2252, "medianPpm": 19.5}, "midori": {"count": 58, "avgPrice": 2244, "medianPpm": 29.1}, "narashino": {"count": 192, "avgPrice": 3365, "medianPpm": 37.5}}}, {"date": "2026-09-26", "count": 735, "avgPrice": 3532, "medianPpm": 35.4, "areas": {"mihama": {"count": 349, "avgPrice": 4325, "medianPpm": 49.2}, "chibant": {"count": 138, "avgPrice": 2256, "medianPpm": 19.7}, "midori": {"count": 58, "avgPrice": 2244, "medianPpm": 29.1}, "narashino": {"count": 190, "avgPrice": 3396, "medianPpm": 37.5}}}, {"date": "2026-09-27", "count": 733, "avgPrice": 3538, "medianPpm": 35.4, "areas": {"mihama": {"count": 346, "avgPrice": 4347, "medianPpm": 49.6}, "chibant": {"count": 141, "avgPrice": 2267, "medianPpm": 20.1}, "midori": {"count": 58, "avgPrice": 2264, "medianPpm": 29.8}, "narashino": {"count": 188, "avgPrice": 3396, "medianPpm": 37.5}}}, {"date": "2026-09-28", "count": 723, "avgPrice": 3524, "medianPpm": 35.3, "areas": {"mihama": {"count": 340, "avgPrice": 4319, "medianPpm": 49.3}, "chibant": {"count": 138, "avgPrice": 2259, "medianPpm": 20.1}, "midori": {"count": 58, "avgPrice": 2264, "medianPpm": 29.8}, "narashino": {"count": 187, "avgPrice": 3405, "medianPpm": 37.5}}}, {"date": "2026-09-29", "count": 718, "avgPrice": 3536, "medianPpm": 35.7, "areas": {"mihama": {"count": 333, "avgPrice": 4351, "medianPpm": 49.6}, "chibant": {"count": 136, "avgPrice": 2298, "medianPpm": 20.8}, "midori": {"count": 57, "avgPrice": 2269, "medianPpm": 29.8}, "narashino": {"count": 192, "avgPrice": 3376, "medianPpm": 37.5}}}, {"date": "2026-09-30", "count": 720, "avgPrice": 3530, "medianPpm": 36.2, "areas": {"mihama": {"count": 333, "avgPrice": 4354, "medianPpm": 49.6}, "chibant": {"count": 137, "avgPrice": 2298, "medianPpm": 20.8}, "midori": {"count": 59, "avgPrice": 2286, "medianPpm": 30.0}, "narashino": {"count": 191, "avgPrice": 3360, "medianPpm": 37.5}}}, {"date": "2026-10-01", "count": 725, "avgPrice": 3527, "medianPpm": 35.7, "areas": {"mihama": {"count": 337, "avgPrice": 4344, "medianPpm": 49.6}, "chibant": {"count": 139, "avgPrice": 2301, "medianPpm": 20.8}, "midori": {"count": 59, "avgPrice": 2286, "medianPpm": 30.0}, "narashino": {"count": 190, "avgPrice": 3359, "medianPpm": 37.5}}}, {"date": "2026-10-02", "count": 727, "avgPrice": 3524, "medianPpm": 35.9, "areas": {"mihama": {"count": 334, "avgPrice": 4346, "medianPpm": 50.1}, "chibant": {"count": 141, "avgPrice": 2288, "medianPpm": 20.8}, "midori": {"count": 59, "avgPrice": 2286, "medianPpm": 30.0}, "narashino": {"count": 193, "avgPrice": 3382, "medianPpm": 37.5}}}, {"date": "2026-10-03", "count": 734, "avgPrice": 3530, "medianPpm": 35.9, "areas": {"mihama": {"count": 337, "avgPrice": 4353, "medianPpm": 50.1}, "chibant": {"count": 146, "avgPrice": 2317, "medianPpm": 22.8}, "midori": {"count": 58, "avgPrice": 2276, "medianPpm": 30.0}, "narashino": {"count": 193, "avgPrice": 3387, "medianPpm": 37.7}}}, {"date": "2026-10-04", "count": 744, "avgPrice": 3525, "medianPpm": 36.3, "areas": {"mihama": {"count": 343, "avgPrice": 4311, "medianPpm": 49.7}, "chibant": {"count": 148, "avgPrice": 2358, "medianPpm": 22.9}, "midori": {"count": 59, "avgPrice": 2259, "medianPpm": 29.8}, "narashino": {"count": 194, "avgPrice": 3412, "medianPpm": 38.5}}}, {"date": "2026-10-05", "count": 746, "avgPrice": 3540, "medianPpm": 36.3, "areas": {"mihama": {"count": 346, "avgPrice": 4320, "medianPpm": 50.2}, "chibant": {"count": 147, "avgPrice": 2365, "medianPpm": 22.9}, "midori": {"count": 59, "avgPrice": 2259, "medianPpm": 29.8}, "narashino": {"count": 194, "avgPrice": 3430, "medianPpm": 38.8}}}, {"date": "2026-10-06", "count": 735, "avgPrice": 3544, "medianPpm": 36.3, "areas": {"mihama": {"count": 341, "avgPrice": 4322, "medianPpm": 49.7}, "chibant": {"count": 147, "avgPrice": 2377, "medianPpm": 23.9}, "midori": {"count": 57, "avgPrice": 2266, "medianPpm": 30.0}, "narashino": {"count": 190, "avgPrice": 3434, "medianPpm": 38.5}}}, {"date": "2026-10-07", "count": 740, "avgPrice": 3520, "medianPpm": 36.3, "areas": {"mihama": {"count": 340, "avgPrice": 4305, "medianPpm": 49.6}, "chibant": {"count": 148, "avgPrice": 2361, "medianPpm": 23.9}, "midori": {"count": 60, "avgPrice": 2228, "medianPpm": 29.1}, "narashino": {"count": 192, "avgPrice": 3426, "medianPpm": 38.8}}}, {"date": "2026-10-08", "count": 745, "avgPrice": 3531, "medianPpm": 36.3, "areas": {"mihama": {"count": 344, "avgPrice": 4313, "medianPpm": 49.7}, "chibant": {"count": 149, "avgPrice": 2369, "medianPpm": 23.9}, "midori": {"count": 58, "avgPrice": 2232, "medianPpm": 29.1}, "narashino": {"count": 194, "avgPrice": 3427, "medianPpm": 39.0}}}, {"date": "2026-10-09", "count": 749, "avgPrice": 3536, "medianPpm": 36.3, "areas": {"mihama": {"count": 349, "avgPrice": 4292, "medianPpm": 49.6}, "chibant": {"count": 149, "avgPrice": 2383, "medianPpm": 24.5}, "midori": {"count": 59, "avgPrice": 2242, "medianPpm": 29.2}, "narashino": {"count": 192, "avgPrice": 3455, "medianPpm": 39.0}}}, {"date": "2026-10-10", "count": 754, "avgPrice": 3535, "medianPpm": 36.3, "areas": {"mihama": {"count": 346, "avgPrice": 4299, "medianPpm": 49.6}, "chibant": {"count": 153, "avgPrice": 2391, "medianPpm": 24.5}, "midori": {"count": 57, "avgPrice": 2256, "medianPpm": 29.2}, "narashino": {"count": 198, "avgPrice": 3452, "medianPpm": 39.0}}}, {"date": "2026-10-11", "count": 747, "avgPrice": 3552, "medianPpm": 36.3, "areas": {"mihama": {"count": 340, "avgPrice": 4327, "medianPpm": 50.1}, "chibant": {"count": 152, "avgPrice": 2389, "medianPpm": 24.9}, "midori": {"count": 56, "avgPrice": 2279, "medianPpm": 30.0}, "narashino": {"count": 199, "avgPrice": 3473, "medianPpm": 39.0}}}, {"date": "2026-10-12", "count": 1234, "avgPrice": 4078, "medianPpm": 38.2, "areas": {"mihama": {"count": 341, "avgPrice": 4385, "medianPpm": 50.6}, "chibant": {"count": 151, "avgPrice": 2381, "medianPpm": 24.5}, "midori": {"count": 58, "avgPrice": 2267, "medianPpm": 29.2}, "narashino": {"count": 200, "avgPrice": 3470, "medianPpm": 39.2}, "urayasu": {"count": 65, "avgPrice": 7891, "medianPpm": 75.3}, "kashiwa": {"count": 68, "avgPrice": 3153, "medianPpm": 24.8}, "funabashi": {"count": 129, "avgPrice": 4081, "medianPpm": 37.7}, "ichikawa": {"count": 56, "avgPrice": 6122, "medianPpm": 58.0}, "inage": {"count": 57, "avgPrice": 3184, "medianPpm": 29.7}, "tama": {"count": 78, "avgPrice": 3805, "medianPpm": 31.6}, "arakawa": {"count": 31, "avgPrice": 8931, "medianPpm": 89.7}}}];
 </script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
-<script src="i18n.js?v=25"></script>
-<script src="map-data.js?v=25"></script>
+<script src="i18n.js?v=26"></script>
+<script src="map-data.js?v=26"></script>
 <script src="area-stats.js"></script>
-<script src="map.js?v=25"></script>
-<script src="map-tools.js?v=25"></script>
-<script src="deeplook.js?v=25"></script>
-<script src="app.js?v=25"></script>
+<script src="map.js?v=26"></script>
+<script src="map-tools.js?v=26"></script>
+<script src="loan.js?v=26"></script>
+<script src="deeplook.js?v=26"></script>
+<script src="app.js?v=26"></script>
 </body>
 </html>

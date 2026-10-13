@@ -13,7 +13,7 @@ tiles + 国土地理院 地形分類 (via area_hazard.py); J-SHIS 確率論的�
 Yahoo!乗換案内 (via commute_matrix.py); our own data: area-listings.js, data/condo_peers.json,
 map-data.js, data/area_listings_state.json, data/area_noise.json, data/commute_matrix.json.
 
-Run:  python deeplook.py <suumo url> [--office tokyo] [--rate 1.0]      local
+Run:  python deeplook.py <suumo url> [--office tokyo] [--rate 1.525] [--down 10] [--years 35] [--tax 0.25]      local
       python deeplook.py --ci                                              GitHub Action (env ISSUE_BODY / IN_URL)
       python deeplook.py --peers                                           mansions.json → data/condo_peers.json
 """
@@ -48,6 +48,8 @@ GUIDE = [("under 20 floors, floor area < 5,000 m²", 335, 235, 430),
          ("under 20 floors, 10,000–20,000 m²", 271, 200, 330),
          ("under 20 floors, ≥ 20,000 m²", 255, 190, 325),
          ("20 floors or more", 338, 240, 410)]
+LOAN = {"rate": 1.525, "down": 10.0, "years": 35, "tax": 0.25}   # Loan tab defaults (loan.js); the issue body overrides them
+
 SRC = {
     "guide": ("MLIT 修繕積立金ガイドライン (2024)", "https://www.mlit.go.jp/jutakukentiku/house/content/001747009.pdf"),
     "jshis": ("J-SHIS 地震ハザードステーション", "https://www.j-shis.bosai.go.jp/map/"),
@@ -403,7 +405,8 @@ class Report:
                 self.cur["src"].append(p)
 
 
-def analyse(raw, office_id="tokyo", rate=1.0):
+def analyse(raw, office_id="tokyo", rate=None):
+    rate = LOAN["rate"] if rate is None else rate
     L = listing(raw)
     md = read_js("map-data.js")
     areas = md.get("areas", [])
@@ -549,17 +552,21 @@ def analyse(raw, office_id="tokyo", rate=1.0):
               T(" · ".join(f"{k} {fmt_yen(v)}" for k, v in L["extras"]), "・".join(f"{k} {yj(v)}" for k, v in L["extras"])))
     pk = yens(L["parking"] or "")
     pk_area = [p["parkingFee"] for p in P if A and p.get("areaKey") == A.get("tracked") and p.get("parkingFee")]
-    loan = price * 10000 if price else None
-    r_m = rate / 100 / 12
-    pay = loan * r_m / (1 - (1 + r_m) ** -420) if loan and r_m else (loan / 420 if loan else None)
+    dn, yrs, txp = LOAN["down"], int(LOAN["years"]), LOAN["tax"]
+    loan = price * 10000 * (1 - dn / 100) if price else None
+    ann = lambda P, r, n: P * (r / 1200) / (1 - (1 + r / 1200) ** -n) if r else P / n
+    pay = ann(loan, rate, yrs * 12) if loan else None
+    up1 = ann(loan, rate + 1, yrs * 12) - pay if loan else None
+    ptax = price * 10000 * txp / 100 / 12 if price else 0
     fees = (L["mgmt"] or 0) + (L["repair"] or 0) + extras
-    monthly = sum(v for v in (pay, L["mgmt"], L["repair"], extras) if v)
-    facts.update(monthlyLoan=round(pay) if pay else None, monthlyFees=fees)
+    monthly = sum(v for v in (pay, L["mgmt"], L["repair"], extras, ptax) if v)
+    facts.update(monthlyLoan=round(pay) if pay else None, monthlyFees=fees, monthlyAllIn=round(monthly), up1=round(up1) if up1 else None)
     if pay:
-        R.add("info", T(f"≈ {fmt_yen(monthly)}/month before parking and property tax", f"毎月 約{yj(monthly)}（駐車場代・固定資産税を除く）"),
-              T(f"Loan {fmt_yen(pay)} (100% of price, 35 years, {rate:.2f}% variable — the Apartments tab default) + fees {fmt_yen(fees)}"
+        R.add("info", T(f"≈ {fmt_yen(monthly)}/month all-in (before parking) · +1% rate: +{fmt_yen(up1)}",
+                        f"毎月の総額 約{yj(monthly)}（駐車場代を除く）・金利+1%で+{yj(up1)}"),
+              T(f"Loan {fmt_yen(pay)} ({dn:g}% down, {yrs} years, {rate:.3g}% — your Loan tab settings) + fees {fmt_yen(fees)} + property tax ≈ {fmt_yen(ptax)} ({txp:g}% of price / year, estimate)"
                 + (f" · parking would add {fmt_yen(pk[0])}+" if pk else ""),
-                f"住宅ローン返済 {yj(pay)}（物件価格の100%を借入、35年、変動金利{rate:.2f}%：中古マンションタブの設定値）＋管理費等 {yj(fees)}"
+                f"住宅ローン返済 {yj(pay)}（頭金{dn:g}%・{yrs}年・金利{rate:.3g}%：「住宅ローン」タブの設定）＋管理費等 {yj(fees)}＋固定資産税等 約{yj(ptax)}（価格の年{txp:g}%で概算）"
                 + (f"・駐車場を借りると +{yj(pk[0])}〜" if pk else "")),
               ask=T("What was the last 固定資産税・都市計画税 bill for this unit?", "この住戸の固定資産税・都市計画税（年額）はいくらですか？"))
     if price:
@@ -1042,8 +1049,8 @@ def render(raw, L, A, office, R, facts, rate):
                     + (f'<p class="src">{tx(UI["srcs"])} {src}</p>' if src else "") + "</section>")
     te, tj = f"Deep look: {raw['name']}", f"物件ディープ分析：{raw['name']}"
     area_t = T(f" · {A['nameEn']}", f"・{A['nameJa']}") if A else ""
-    sub = T(f" · SUUMO {raw['id']} · analysed {raw['fetched']} · commute to {office.get('en')} · loan rate {rate:.2f}%",
-            f"・SUUMO {raw['id']}・{raw['fetched']}分析・通勤先 {office.get('ja', '')}・金利{rate:.2f}%")
+    sub = T(f" · SUUMO {raw['id']} · analysed {raw['fetched']} · commute to {office.get('en')} · loan {rate:.3g}%, {LOAN['down']:g}% down, {int(LOAN['years'])} years",
+            f"・SUUMO {raw['id']}・{raw['fetched']}分析・通勤先 {office.get('ja', '')}・金利{rate:.3g}%・頭金{LOAN['down']:g}%・{int(LOAN['years'])}年")
     foot = T(f"Automated analysis from public data on {raw['fetched']} — not professional advice. SUUMO fields are entered by the agent; a missing item means \"not stated\", not \"absent\". Hazard depths are the maximum assumed scenarios. Method: reports/Deep look - research and design.md.",
              f"{raw['fetched']}時点の公開データによる自動分析で、専門家の助言ではありません。SUUMOの項目は不動産会社が入力しており、記載がないことは「なし」ではなく「未記載」を意味します。浸水深は想定最大規模です。分析方法：reports/Deep look - research and design.md。")
     return f"""<!doctype html>
@@ -1099,7 +1106,8 @@ document.querySelectorAll('.lang button').forEach(function(b){{b.onclick=functio
 </body></html>"""
 
 
-def run(url, office_id="tokyo", rate=1.0):
+def run(url, office_id="tokyo", rate=None):
+    rate = LOAN["rate"] if rate is None else rate
     m = URL_RE.match((url or "").strip())
     if not m:
         raise SystemExit("not a SUUMO used-condo URL (expected https://suumo.jp/ms/chuko/…/nc_<id>/)")
@@ -1139,12 +1147,16 @@ def ci():
     body = os.environ.get("ISSUE_BODY") or ""
     url = os.environ.get("IN_URL") or (URL_RE.search(body).group(0) if URL_RE.search(body) else "")
     om = re.search(r"office\s*[:=]\s*([a-z]+)", body)
-    rm = re.search(r"rate\s*[:=]\s*([\d.]+)", body)
     office = os.environ.get("IN_OFFICE") or (om.group(1) if om else "tokyo")
-    try:
-        rate = float(os.environ.get("IN_RATE") or (rm.group(1) if rm else 1.0))
-    except ValueError:
-        rate = 1.0
+    for k, lo, hi in (("rate", 0, 10), ("down", 0, 100), ("years", 5, 50), ("tax", 0, 2)):   # Loan tab settings in the issue body
+        mm = re.search(rf"\b{k}\s*[:=]\s*([\d.]+)", body)
+        try:
+            v = float(os.environ.get("IN_" + k.upper()) or (mm.group(1) if mm else LOAN[k]))
+            if lo <= v <= hi:
+                LOAN[k] = v
+        except ValueError:
+            pass
+    rate = LOAN["rate"]
     out = {}
     try:
         e = run(url, office, rate)
@@ -1169,10 +1181,14 @@ if __name__ == "__main__":
     ap = argparse.ArgumentParser()
     ap.add_argument("url", nargs="?")
     ap.add_argument("--office", default="tokyo")
-    ap.add_argument("--rate", type=float, default=1.0)
+    ap.add_argument("--rate", type=float, default=LOAN["rate"])
+    ap.add_argument("--down", type=float, default=LOAN["down"])
+    ap.add_argument("--years", type=int, default=LOAN["years"])
+    ap.add_argument("--tax", type=float, default=LOAN["tax"])
     ap.add_argument("--ci", action="store_true")
     ap.add_argument("--peers", action="store_true")
     a = ap.parse_args()
+    LOAN.update(rate=a.rate, down=a.down, years=a.years, tax=a.tax)
     if a.peers:
         build_peers()
     elif a.ci:

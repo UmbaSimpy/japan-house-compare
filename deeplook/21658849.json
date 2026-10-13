@@ -351,8 +351,10 @@
  "office": "tokyo",
  "facts": {
   "repairPerM2": 165,
-  "monthlyLoan": 137755,
+  "monthlyLoan": 135015,
   "monthlyFees": 32980,
+  "monthlyAllIn": 178161,
+  "up1": 22586,
   "buyCosts": [
    3140400,
    4116400
@@ -621,12 +623,12 @@
     {
      "level": "info",
      "head": {
-      "en": "≈ ¥170,735/month before parking and property tax",
-      "ja": "毎月 約170,735円（駐車場代・固定資産税を除く）"
+      "en": "≈ ¥178,161/month all-in (before parking) · +1% rate: +¥22,586",
+      "ja": "毎月の総額 約178,161円（駐車場代を除く）・金利+1%で+22,586円"
      },
      "detail": {
-      "en": "Loan ¥137,755 (100% of price, 35 years, 1.00% variable — the Apartments tab default) + fees ¥32,980 · parking would add ¥7,500+",
-      "ja": "住宅ローン返済 137,755円（物件価格の100%を借入、35年、変動金利1.00%：中古マンションタブの設定値）＋管理費等 32,980円・駐車場を借りると +7,500円〜"
+      "en": "Loan ¥135,015 (10% down, 35 years, 1.52% — your Loan tab settings) + fees ¥32,980 + property tax ≈ ¥10,167 (0.25% of price / year, estimate) · parking would add ¥7,500+",
+      "ja": "住宅ローン返済 135,015円（頭金10%・35年・金利1.52%：「住宅ローン」タブの設定）＋管理費等 32,980円＋固定資産税等 約10,167円（価格の年0.25%で概算）・駐車場を借りると +7,500円〜"
      },
      "cmp": "",
      "ask": {

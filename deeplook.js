@@ -16,9 +16,9 @@ function dlDefaultOffice() {
   try { const p = JSON.parse(localStorage.getItem('mpPrefs') || 'null'); if (p?.office) return p.office; } catch (e) {}
   return 'tokyo';
 }
-function dlRate() {
-  try { const r = parseFloat(localStorage.getItem('loanRate')); if (r >= 0 && r <= 10) return r; } catch (e) {}
-  return 1.0;
+function dlLoan() {   // the Loan tab's settings (loan.js), sent to the GitHub run in the issue body
+  const c = typeof LN !== 'undefined' ? LN : { rate: 1.525, down: 10, years: 35, taxPct: 0.25 };
+  return `rate: ${c.rate}\ndown: ${c.down}\nyears: ${c.years}\ntax: ${c.taxPct}`;
 }
 
 function dlShell() {
@@ -86,7 +86,7 @@ function dlGo() {
   if (!m) { dlStatus(`<b class="err">${t('dl.bad')}</b>`); return; }
   const url = m[0].endsWith('/') ? m[0] : m[0] + '/';
   const office = document.getElementById('dl-office').value;
-  const body = `${url}\n\noffice: ${office}\nrate: ${dlRate()}\n\n${t('dl.issueNote')}`;
+  const body = `${url}\n\noffice: ${office}\n${dlLoan()}\n\n${t('dl.issueNote')}`;
   const link = `https://github.com/${DL_REPO}/issues/new?title=${encodeURIComponent('Deep look ' + m[1])}&body=${encodeURIComponent(body)}`;
   window.open(link, '_blank', 'noopener');
   DL.wait = { id: m[1], since: new Date().toISOString(), t0: Date.now() };

@@ -207,6 +207,19 @@ Pros/cons thresholds (`map.js`): burglary ≤0.5/10k pro, ≥1.5 con; violent �
 | buying costs | 仲介: (3% + ¥60k) × 1.1 + 3–5% other; 売主: 3–5% | |
 | registered area | 壁芯 × 0.94 | tax-credit ≥50 m² check |
 
+### Loan (`loan.js`, DATA_LOG item 16)
+| Parameter | Meaning | Value / source |
+|---|---|---|
+| default loan | used for every all-in monthly figure until the user changes it | 10% down · 35 years · 1.525% variable (SMBC, no PR needed) · equal payments · no bonus |
+| property tax | 固定資産税 + 都市計画税 estimate | 0.25% of the price per year (used condo ≈ 0.2–0.3%) |
+| buying costs | cash at purchase | 7% of the price (used flat via an agent 6–9%; from a developer ≈ 4%) |
+| rate-rise figure | on cards | payment at rate + 1 point minus today's payment (not shown for full-term fixed) |
+| comfortable limit | Loan tab | all-in ≤ 25% of take-home pay; take-home ≈ 75% of gross |
+| comfortable price | Loan tab | the price where all-in ≤ that limit at today's rate + 1.5 points |
+| bank limit | Loan tab | all loan payments ≤ 30 / 35% of gross at a screening rate of 3.0 / 3.5 / 4.0% |
+| tax credit | 0.7% × min(year-end balance, cap) | used home: no certificate ¥20M / 10 years; energy ¥20M (child ¥30M) / 13 years; ZEH / long-life ¥35M (child ¥45M) / 13 years |
+| rate snapshot | presets and lender table | October 2026 (`LN_RATES_DATE`), from the research report; refresh monthly |
+
 ## Known gaps to fill on the next refresh
 - Deep look: MLIT 不動産情報ライブラリ API key (user to apply) → sale prices, zoning around the plot, planned roads, school districts, 大規模盛土, disaster history, 公示地価.
 - Crime: Ibaraki police statistics pages are offline (Tsukuba total only; Moriya, Tsukubamirai none). Saitama publishes no violent-crime figures per city.

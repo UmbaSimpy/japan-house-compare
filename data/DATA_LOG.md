@@ -715,3 +715,57 @@ Houses and new condos are not covered yet.
 - Prices in 万円 and ¥/m² as 万円/㎡.
 - `index.json` now also has `areaJa`. The tab cards show the Japanese area, ㎡ and 年築. The Japanese tab text was reviewed.
 - The 4 reports were regenerated: same finding counts as before.
+
+## 16. Loan tab, all-in monthly cost on cards, rate-rise figure (2026-10-13, user: "start with those 3"; residency: "work visa but maybe PR in less than 2 years. Consider both")
+
+**Research:** `reports/Home loan research.md` (October 2026 rate snapshot, simulator design, guide, proposals 1–9). This item covers proposals 1, 2 and 3.
+
+**Shared settings (`loan.js`):**
+- Stored in localStorage `loanCfg`; `loanRate` is kept in sync.
+- On first visit, a rate the user typed earlier in the old "Loan %" box is kept, unless it was the old default of 1.0%.
+- Defaults:
+  - price 5,000万; **10% down**; buying costs 7%, paid in cash; **35 years**
+  - **"Variable · without PR (SMBC)" 1.525%**, because the user has no PR yet
+  - equal payments, no bonus
+  - fees ¥30,000; parking 0; **property tax 0.25% of the price per year**
+  - residency: work visa; tax-credit tier: no certificate; child household yes
+- Presets (October 2026):
+
+  | Preset | Rate | Needs PR? |
+  |---|---|---|
+  | Variable · without PR (SMBC) | 1.525% | no |
+  | Variable · lowest (megabanks) | 1.2% | yes |
+  | Variable · online banks | 1.7% | yes |
+  | 10-year fixed | 3.6%, then 2.0% | yes |
+  | Flat 35 | 3.83% | yes |
+  | Custom | – | – |
+
+**Maths:**
+- Equal payments (元利均等) or equal principal (元金均等).
+- The bonus share is repaid semi-annually at rate/2.
+- The full monthly schedule recalculates the payment whenever the rate changes: the fixed period ending, or a rate-rise scenario. The 5-year / 125% rules are not modelled; the guide explains them.
+- Checked against the research reference: ¥60M over 35 years is ¥175,021 at 1.2% (interest ¥13.5M) and ¥259,581 at 3.83%.
+
+**Cards (proposal 2 + 3):**
+- **Used condos:** the "Est. monthly" spec is now **All-in / month** = loan (price − down) + 管理費・修繕積立金 + parking + property tax / 12, with a "+1%: +¥X" rate-rise figure. The tooltip shows the breakdown.
+- **Houses and new condos:** a "≈ ¥X/month all-in · +1%: +¥Y" line under the price. New condos use the lowest price.
+- The sort "All-in monthly", the comparison row and the Apartments "Loan %" box all use the same settings. Changing them re-renders the cards.
+- Every card has a **💴 Loan** button that opens the Loan tab with that price and fees.
+
+**Loan tab (proposal 1):**
+- **Inputs:** home, loan, monthly costs, you (income, residency, tax-credit tier, child household).
+- **Result:** all-in per month with its breakdown; loan amount and loan-to-price; cash at purchase; total interest and total repaid; tax credit over 10 or 13 years (0.7% × min(balance, cap)).
+- **Rate-rise table:** +0.5 / +1 / +2 points from the start or from year 6, and the rate at which the all-in cost reaches 25% of take-home pay (take-home ≈ 75% of gross).
+- **Loan types side by side.**
+- **"What can we borrow":** screening rate 3.0 / 3.5 / 4.0% × repayment ratio 30 / 35%, plus a "comfortable price": all-in ≤ 25% of take-home even with +1.5 points.
+- **Balance chart** with milestones.
+- **Rate snapshot table** for 15 lenders, with a "Without PR?" column (yes / conditions / with a Japanese or PR spouse / PR needed / ask).
+- **Guide:** "your situation: work visa now, PR later" (buy now and refinance after PR vs wait), steps, loan types, two incomes, screening, costs, tax credit, 10 tips. Fully EN/JA. Printable; the print layout applies whenever the Loan tab is active.
+
+**Deep look:**
+- The issue body now carries `rate / down / years / tax` from the Loan tab.
+- The report's monthly item is all-in (loan with down payment + fees + property tax), with "+1% rate: +¥X".
+- CLI: `--rate --down --years --tax`; defaults are the Loan tab defaults.
+- The 4 reports were regenerated with the defaults.
+
+**To refresh monthly:** update `LN_PRESETS` and `LN_BANKS` (and `LN_RATES_DATE`) in `loan.js` from the banks' published rates. This can become `data/loan_rates.json` (proposal 5).

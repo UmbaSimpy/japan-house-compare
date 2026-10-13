@@ -51,7 +51,6 @@ const accessPts = w => w <= 5 ? 20 : w <= 10 ? 16 : w <= 15 ? 12 : w <= 20 ? 8 :
 ═══════════════════════════════════════════════ */
 const MS_SCORE_MAX = { value: 25, access: 20, condition: 20, running: 15, space: 10, extras: 10 };
 const LOW_REPAIR_PER_M2 = 170;   // ¥/m²·month — below the MLIT guideline range
-const LOAN_YEARS = 35;
 const MS_PAGE = 60;
 
 /* ═══════════════════════════════════════════════
@@ -74,11 +73,8 @@ function signedPrice(man) {   // −¥2.3M / −230万円
 const scoreGrade = n => n >= 75 ? 'grade-a' : n >= 55 ? 'grade-b' : 'grade-c';
 const barColor = pct => pct >= 0.7 ? 'c-green' : pct >= 0.4 ? 'c-amber' : 'c-red';
 
-function msMonthly(d) {
-  const P = d.price * 10000, n = LOAN_YEARS * 12, r = ms.rate / 100 / 12;
-  const loan = r === 0 ? P / n : P * r / (1 - Math.pow(1 + r, -n));
-  return Math.round(loan + (d.fees || 0));
-}
+// All-in monthly cost (loan + fees + parking + property tax) with the Loan tab's settings (loan.js)
+const msMonthly = d => Math.round(lnAllIn(d.price, d.fees).total);
 
 function toast(msg) {
   const el = document.getElementById('toast');
@@ -203,11 +199,7 @@ function msWhy(d, key) {
   }
 }
 
-function monthlyTip(d) {
-  const total = msMonthly(d);
-  return t('tipMonthly', { price: fmtYen(d.price), years: LOAN_YEARS, rate: ms.rate, loan: yen(total - (d.fees || 0)),
-    fees: d.fees ? yen(d.fees) : '—', total: yen(total) });
-}
+const monthlyTip = d => lnTip(d.price, d.fees);
 
 function scoreBars(d, max, why, cls = '') {
   return `<div class="score-cats ${cls}">${Object.keys(max).map(k => {
@@ -231,10 +223,11 @@ function stationHTML(d) {
   </div>`;
 }
 
-function cardFoot(kind, key, url) {
+function cardFoot(kind, key, url, price, fees) {
   const on = cmp.kind === kind && cmp.ids.includes(key);
   return `<div class="card-foot">
     <button class="cmp-btn${on ? ' on' : ''}" type="button" data-cmp="${kind}:${escAttr(key)}">${t(on ? 'cmpAdded' : 'cmpAdd')}</button>
+    ${price ? `<a class="dl-btn" href="#loan" data-ln="${price}|${fees ?? ''}" title="${escAttr(t('ln.btnTitle'))}">💴<span class="dl-t"> ${t('ln.btn')}</span></a>` : ''}
     ${kind === 'ms' && /\/ms\/chuko\//.test(url) ? `<a class="dl-btn" href="#deeplook" data-dl="${escAttr(url)}" title="${escAttr(t('dl.btn'))}">🔍<span class="dl-t"> ${t('dl.btn')}</span></a>` : ''}
     <a class="suumo-btn" href="${url}" target="_blank" rel="noopener"><span class="s-mark">S</span>${t('viewSuumo')} ${ICON.out}</a>
   </div>`;
@@ -359,6 +352,7 @@ function houseCardHTML(d) {
     <div class="card-body">
       <div class="card-price">${fmtYen(d.price)}</div>
       <div class="card-price-note">${t('taxNote')}</div>
+      ${lnCardLine(d.price, 0)}
       <div class="card-addr">
         <span class="addr-pin">${ICON.pin}</span>
         <div><div class="addr-area">${escHTML(areaName(d))}</div><div class="addr-street">${escHTML(d.address)}</div></div>
@@ -383,7 +377,7 @@ function houseCardHTML(d) {
         ${scoreBars(d, SCORE_MAX, houseWhy)}
       </div>
       <div class="tags">${tags.join('')}</div>
-      ${cardFoot('house', houseKey(d), d.suumoUrl)}
+      ${cardFoot('house', houseKey(d), d.suumoUrl, d.price, 0)}
     </div>
   </div>`;
 }
@@ -445,12 +439,8 @@ function initHouses() {
 ═══════════════════════════════════════════════ */
 const ms = {
   layout: 'all', area: 'all', cat: 'used', sl: null,   // cat: used | new · sl = slider state
-  toggles: new Set(), q: '', bldg: null, sort: 'score-desc', shown: MS_PAGE, rate: 1.0,
+  toggles: new Set(), q: '', bldg: null, sort: 'score-desc', shown: MS_PAGE,
 };
-try {
-  const saved = parseFloat(localStorage.getItem('loanRate'));
-  if (saved >= 0 && saved <= 10) ms.rate = saved;
-} catch (e) {}
 
 function msDealHTML(d) {
   const v = d.vsExpected;
@@ -513,8 +503,8 @@ function msCardHTML(d) {
           <span class="spec-val">${d.builtYear ?? '?'} <span class="spec-sub">(${t('ageY', d.age ?? '?')} · ${d.shinTaishin ? '新耐震' : '旧耐震'})</span></span></div>
         <div class="spec" data-tip="${escAttr(msWhy(d, 'running'))}"><span class="spec-lbl">${t('feesMonth')}</span>
           <span class="spec-val">${d.fees ? yen(d.fees) : '—'} <span class="spec-sub">${d.feesPerM2 ? `(${t('perM2', yen(d.feesPerM2))})` : ''}</span></span></div>
-        <div class="spec" data-tip="${escAttr(monthlyTip(d))}"><span class="spec-lbl">${t('estMonthly')}</span>
-          <span class="spec-val">${yen(msMonthly(d))} <span class="spec-sub">(@${ms.rate}%)</span></span></div>
+        <div class="spec" data-tip="${escAttr(monthlyTip(d))}"><span class="spec-lbl">${t('ln.estMonthly')}</span>
+          <span class="spec-val">${yen(msMonthly(d))} <span class="spec-sub ln-up">${lnSub(lnAllIn(d.price, d.fees))}</span></span></div>
         <div class="spec"><span class="spec-lbl">${t('building')}</span>
           <span class="spec-val">${t('structure', d.structure)}${d.bldgFloors ? ' ' + t('bldgFloorsN', d.bldgFloors) : ''} <span class="spec-sub">${d.totalUnits ? `(${t('units', d.totalUnits)})` : ''}</span></span></div>
         <div class="spec"><span class="spec-lbl">${t('facingLbl')}</span>
@@ -529,7 +519,7 @@ function msCardHTML(d) {
         ${scoreBars(d, MS_SCORE_MAX, msWhy, 'six')}
       </div>
       <div class="tags">${tags.join('')}</div>
-      ${cardFoot('ms', d.ncId, d.suumoUrl)}
+      ${cardFoot('ms', d.ncId, d.suumoUrl, d.price, d.fees)}
     </div>
   </div>`;
 }
@@ -655,13 +645,12 @@ function initApartments() {
   const search = document.getElementById('ms-search');
   search.addEventListener('input', () => { ms.q = search.value; ms.bldg = null; ms.shown = MS_PAGE; msRender(); });
   const rate = document.getElementById('ms-rate');
-  rate.value = ms.rate;
-  rate.addEventListener('change', () => {
+  rate.value = LN.rate;
+  rate.addEventListener('change', () => {   // quick rate box; everything else is in the Loan tab
     const v = parseFloat(rate.value);
-    if (!(v >= 0 && v <= 10)) { rate.value = ms.rate; return; }
-    ms.rate = v;
-    try { localStorage.setItem('loanRate', String(v)); } catch (e) {}
-    msRender();
+    if (!(v >= 0 && v <= 10)) { rate.value = LN.rate; return; }
+    const p = LN_PRESETS.find(x => x.rate === v);
+    lnSet({ rate: v, preset: p ? p.id : 'custom' });
   });
   document.getElementById('ms-sort-sel').addEventListener('change', e => { ms.sort = e.target.value; ms.shown = MS_PAGE; msRender(); });
   document.getElementById('ms-more').addEventListener('click', () => { ms.shown += MS_PAGE; msRender(); });
@@ -1203,6 +1192,7 @@ function nwCardHTML(d) {
     </div>
     <div class="card-body">
       ${nwPriceHTML(d)}
+      ${lnCardLine(d.priceMin, d.fees)}
       ${d.priceBand ? `<div class="nw-band">${t('nwBand', escHTML(d.priceBand))}</div>` : ''}
       ${dealLine}
       <div class="card-addr">
@@ -1237,7 +1227,7 @@ function nwCardHTML(d) {
         ${scoreBars(d, NW_SCORE_MAX, nwWhy, 'six nw')}
       </div>
       <div class="tags">${tags.join('')}</div>
-      ${cardFoot('new', d.key, d.url)}
+      ${cardFoot('new', d.key, d.url, d.priceMin, d.fees)}
     </div>
   </div>`;
 }
@@ -1326,6 +1316,7 @@ function refreshHeader() {
     return;
   }
   if (tab === 'deeplook' && typeof dlHeader === 'function') { document.getElementById('hdr-count').innerHTML = dlHeader(); return; }
+  if (tab === 'loan') { document.getElementById('hdr-count').innerHTML = t('ln.hdr'); return; }
   document.getElementById('hdr-count').innerHTML = tab === 'apartments'
     ? t('hdrCount', tabCounts.apartments, 'ms') : t('hdrCount', tabCounts.listings, 'house');
 }
@@ -1343,6 +1334,14 @@ function applyStaticText() {
   document.querySelectorAll('.lang-btn').forEach(b => b.classList.toggle('active', b.dataset.lang === LANG));
 }
 
+// Loan settings changed (loan.js) → every monthly figure on cards and in the comparison
+function loanChanged() {
+  const r = document.getElementById('ms-rate'); if (r && document.activeElement !== r) r.value = LN.rate;
+  render();
+  renderApartments();
+  if (!document.getElementById('cmp-modal').hidden) renderCompare();
+}
+
 function setLang(lang) {
   LANG = lang;
   try { localStorage.setItem('lang', lang); } catch (e) {}
@@ -1355,6 +1354,7 @@ function setLang(lang) {
   resetCharts();
   if (typeof mapSetLang === 'function') mapSetLang();
   if (typeof dlSetLang === 'function') dlSetLang();
+  if (typeof lnSetLang === 'function') lnSetLang();
   refreshHeader();
 }
 
@@ -1397,4 +1397,5 @@ render();
 renderApartments();
 if (typeof initMap === 'function') initMap();
 if (typeof initDeepLook === 'function') initDeepLook();
+if (typeof initLoan === 'function') initLoan();
 refreshHeader();

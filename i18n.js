@@ -13,7 +13,7 @@ const I18N = {
 
     // ── filters ──
     layout: 'Layout', only: 'Only', sort: 'Sort', loan: 'Loan %', area: 'Area', all: 'All',
-    loanTitle: 'Used for the estimated monthly cost: 35-year loan, no down payment',
+    loanTitle: 'Loan rate for the all-in monthly figures. Down payment, years, parking and the rest are in the Loan tab.',
     searchPh: 'Building, station, address…', reset: 'Reset', any: 'Any',
     minSize: 'Min size', maxPrice: 'Max price', maxWalk: 'Max walk', builtFrom: 'Built from',
     fmtMinM2: v => `${v} m²+`, fmtMaxPrice: v => `≤ ¥${v / 100}M`, fmtMaxWalk: v => `≤ ${v} min`, fmtYearFrom: v => `${v}+`,
@@ -23,7 +23,7 @@ const I18N = {
     tCut: 'Price dropped', tNew: 'New this week', tNewTitle: 'First seen in the last 7 days',
     sScore: 'Score: Best First', sDefault: 'Default', sValue: 'Best deal vs similar',
     sPriceAsc: 'Price: Low → High', sPriceDesc: 'Price: High → Low', sPpm: '¥/m²: Low → High',
-    sMonthly: 'Est. monthly: Low → High', sFees: 'Fees/m²: Low → High', sArea: 'Area: Largest First',
+    sMonthly: 'All-in monthly: Low → High', sFees: 'Fees/m²: Low → High', sArea: 'Area: Largest First',
     sAge: 'Age: Newest First', sWalk: 'Station: Nearest First', sListed: 'Recently listed', sDrop: 'Biggest price drop',
 
     // ── results ──
@@ -238,7 +238,7 @@ const I18N = {
       nwPhase: 'Sales phase', nwPhaseChange: 'Price change vs previous phase', nwStock: 'Units still listed',
       nwSoldWeek: 'Sold in last 7 days', nwPace: 'Sales pace (per week)',
       nwKindRow: 'Listing type', nwUnits: 'Units on sale', nwParkingRatio: 'Parking per unit', nwDev: 'Developer', nwIso: 'Seismic isolation',
-      price: 'Price', ppm: '¥ per m²', vsSimilar: 'vs similar condos', monthly: 'Est. monthly (loan + fees)', priceChange: 'Price change',
+      price: 'Price', ppm: '¥ per m²', vsSimilar: 'vs similar condos', monthly: 'All-in monthly (loan + fees + tax)', priceChange: 'Price change',
       area: 'Floor area', land: 'Land area', balcony: 'Balcony', layout: 'Layout', built: 'Built', age: 'Age', seismic: 'Seismic code',
       structure: 'Structure', floor: 'Floor', bldgFloors: 'Building height', units: 'Total units', facing: 'Facing',
       fees: 'Fees / month', mgmt: '管理費 (management)', repair: '修繕積立金 (repair fund)', feesM2: 'Fees per m²', repairM2: 'Repair fund per m²',
@@ -266,7 +266,7 @@ const I18N = {
     hdrCount: (n, kind) => `<strong>${n}</strong>件の${kind === 'ms' ? 'マンション' : '一戸建て'}`,
 
     layout: '間取り', only: '絞り込み', sort: '並び替え', loan: '金利 %', area: 'エリア', all: 'すべて',
-    loanTitle: '月々の目安の計算に使用（35年ローン・頭金なし）',
+    loanTitle: '毎月の総額の計算に使う金利。頭金・返済期間・駐車場代などは「住宅ローン」タブで設定できます。',
     searchPh: '建物名・駅・住所…', reset: 'リセット', any: '指定なし',
     minSize: '最低面積', maxPrice: '上限価格', maxWalk: '駅徒歩', builtFrom: '築年',
     fmtMinM2: v => `${v}m²以上`, fmtMaxPrice: v => `${I18N.ja.priceMan(v)}以下`, fmtMaxWalk: v => `${v}分以内`, fmtYearFrom: v => `${v}年以降`,
@@ -276,7 +276,7 @@ const I18N = {
     tCut: '値下げあり', tNew: '今週の新着', tNewTitle: '過去7日以内に初掲載',
     sScore: 'スコアが高い順', sDefault: '標準', sValue: '相場より割安な順',
     sPriceAsc: '価格が安い順', sPriceDesc: '価格が高い順', sPpm: '㎡単価が安い順',
-    sMonthly: '月々の目安が安い順', sFees: '㎡あたり管理費等が安い順', sArea: '面積が広い順',
+    sMonthly: '毎月の総額が安い順', sFees: '㎡あたり管理費等が安い順', sArea: '面積が広い順',
     sAge: '築年数が新しい順', sWalk: '駅から近い順', sListed: '新着順', sDrop: '値下げ幅が大きい順',
 
     housesShown: '件の一戸建てを表示', apartmentsShown: '件のマンションを表示',
@@ -487,7 +487,7 @@ const I18N = {
       nwPhase: '販売期', nwPhaseChange: '前期からの価格変化', nwStock: '掲載中の戸数',
       nwSoldWeek: '直近7日の成約', nwPace: '売れ行き（週あたり）',
       nwKindRow: '物件の種類', nwUnits: '販売戸数', nwParkingRatio: '駐車場設置率', nwDev: '売主', nwIso: '免震',
-      price: '価格', ppm: '㎡単価', vsSimilar: '似た物件との比較', monthly: '月々の目安（ローン＋管理費等）', priceChange: '価格変更',
+      price: '価格', ppm: '㎡単価', vsSimilar: '似た物件との比較', monthly: '毎月の総額（ローン＋管理費等＋税）', priceChange: '価格変更',
       area: '面積', land: '土地面積', balcony: 'バルコニー', layout: '間取り', built: '築年', age: '築年数', seismic: '耐震基準',
       structure: '構造', floor: '所在階', bldgFloors: '建物の階数', units: '総戸数', facing: '向き',
       fees: '管理費・修繕積立金（月）', mgmt: '管理費', repair: '修繕積立金', feesM2: '㎡あたり管理費等', repairM2: '㎡あたり修繕積立金',
@@ -904,7 +904,7 @@ I18N.en.dl = {
   title: 'Deep look — one listing, in depth',
   lead: 'Paste a SUUMO used-condo link. GitHub then analyses it in about 3 minutes: price and fees against similar flats and the MLIT repair-fund guideline, total monthly and buying costs, land rights, seismic standard, shaking, ground, flood and liquefaction at the address, the real door-to-door commute, building management, energy and windows, parking, the neighbourhood and contract terms. It ends with the questions to ask the agent and the documents to request. Every report is printable.',
   office: 'Commute to', go: 'Analyse',
-  how: repo => `Opens a pre-filled issue on GitHub (${repo}) — tap <b>Create</b> while signed in as the repo owner. The issue is public but only contains the link; it closes itself when done and Telegram gets the result. Your loan rate from the Apartments tab is used.`,
+  how: repo => `Opens a pre-filled issue on GitHub (${repo}) — tap <b>Create</b> while signed in as the repo owner. The issue is public but only contains the link; it closes itself when done and Telegram gets the result. Your settings from the Loan tab (rate, down payment, years) are used.`,
   issueNote: '(Created from the Deep look tab. The analysis runs automatically; this issue closes itself.)',
   done: 'Reports', none: 'No reports yet.',
   bad: 'That is not a SUUMO used-condo link (https://suumo.jp/ms/chuko/…/nc_…/). Houses and new condos come later.',
@@ -920,7 +920,7 @@ I18N.ja.dl = {
   title: '物件ディープ分析',
   lead: 'SUUMOの中古マンションのURLを貼り付けると、GitHub上で約3分で分析します。内容：類似物件との㎡単価比較、管理費・修繕積立金の水準（国土交通省ガイドラインとの比較）、毎月の支払額と購入時の諸費用、敷地の権利・用途地域、耐震基準、地震発生確率・地盤・浸水・液状化（所在地点）、実際のドアツードア通勤時間、管理形態、省エネ性能・窓、駐車場、周辺環境、契約条件。最後に不動産会社への質問リストと取り寄せる書類の一覧を付けます。レポートは印刷・PDF保存できます。',
   office: '通勤先', go: '分析する',
-  how: repo => `GitHub（${repo}）に入力済みのIssueが開きます。リポジトリ所有者でログインして<b>Create</b>を押してください。Issueは公開されますが、記載されるのは物件URLのみです。分析が終わるとIssueは自動で閉じ、Telegramに通知が届きます。ローン金利は中古マンションタブの設定値を使用します。`,
+  how: repo => `GitHub（${repo}）に入力済みのIssueが開きます。リポジトリ所有者でログインして<b>Create</b>を押してください。Issueは公開されますが、記載されるのは物件URLのみです。分析が終わるとIssueは自動で閉じ、Telegramに通知が届きます。ローンの条件（金利・頭金・返済期間）は「住宅ローン」タブの設定を使用します。`,
   issueNote: '（物件ディープ分析タブから作成。分析は自動で実行され、このIssueは自動で閉じます。）',
   done: 'レポート', none: 'まだレポートはありません。',
   bad: 'SUUMO中古マンションのURL（https://suumo.jp/ms/chuko/…/nc_…/）ではありません。戸建て・新築マンションは今後対応予定です。',
@@ -931,4 +931,278 @@ I18N.ja.dl = {
   risk: n => `リスク${n}`, watch: n => `要確認${n}`, ask: n => `質問${n}`, good: n => `良い点${n}`,
   hdr: n => `物件ディープ分析レポート <strong>${n}</strong>件`,
   btn: 'ディープ分析',
+};
+
+/* ── Loan (loan.js) ── */
+I18N.en.tabLoan = 'Loan';
+I18N.ja.tabLoan = '住宅ローン';
+I18N.en.ln = {
+  title: 'Home loan', print: 'Print / save as PDF',
+  lead: 'One set of loan settings for the whole site: the monthly figures on every card, the comparison and Deep look reports use what you set here. Rates are an October 2026 snapshot; banks change them every month.',
+  gHome: 'The home', price: 'Price', man: '万円', priceHint: 'or tap 💴 on any listing',
+  down: 'Down payment', costs: 'Buying costs', costsHint: 'used flat via an agent ≈ 6–9%, from a developer ≈ 4%', costsInLoan: 'Add buying costs to the loan (諸費用ローン)',
+  gLoan: 'The loan', preset: 'Loan type', rate: 'Rate', rate2: 'Rate after the fixed period', rate2Hint: 'switches to variable with a smaller discount',
+  years: 'Years', yrs: 'years', bonus: 'Repaid by bonus', bonusHint: 'share of the loan paid twice a year',
+  method: 'Repayment', mAnn: 'Equal payments (元利均等)', mPrin: 'Equal principal (元金均等)',
+  gMonthly: 'Monthly costs', fees: '管理費 + 修繕積立金', yenMo: '円/月', feesHint: 'filled in from the listing', feeRise: 'Fee rise by year 11', feeRiseHint: 'repair funds below the MLIT guideline usually rise',
+  parking: 'Parking', taxPct: 'Property tax', pctYr: '% of price / year', taxHint: '固定資産税＋都市計画税, rough estimate (used condo ≈ 0.2–0.3%)',
+  gYou: 'You', income: 'Household gross income', incomeHint: 'optional: for the borrowing estimate and income shares',
+  residency: 'Residency', resVisa: 'Work visa (no permanent residency yet)', resPR: 'Permanent resident or Japanese',
+  credit: 'Tax-credit tier', crBasic: 'No energy certificate (most used flats)', crEnergy: 'Energy-standard certificate', crZeh: 'ZEH level / certified long-life',
+  child: 'Child household', childHint: 'a child under 19, or one of you under 40',
+  hShock: 'If the rate rises', shockNote: 'Monthly loan payment (without bonus) if the variable rate goes up. Payments are recalculated on what is left, as at banks without the 5-year / 125% rules; with those rules the payment rises more slowly but the unpaid interest piles up.',
+  hTypes: 'Loan types side by side', typesNote: 'Same price, down payment and years at each preset rate.',
+  hBorrow: 'What can we borrow?', hBal: 'Balance over time', hRates: d => `Rates now (${d})`,
+  ratesNote: 'Lowest advertised rates for new loans. They need the bank\'s conditions (salary account, fee type, share of the price borrowed, screening). The real cost is rate + fees + guarantee + insurance add-ons. Check each bank before applying.',
+  hGuide: 'Guide for first-time buyers',
+  allIn: 'All-in per month', perMonth: 'loan + fees + parking + property tax',
+  warnPR: 'This loan type usually needs permanent residency or Japanese nationality. With a work visa, use "Variable · without PR" or check the lenders marked in the rate table.',
+  oLoan: (y, r) => `Loan payment (${y} years, ${r}%)`, oBonus: 'Bonus payment (twice a year)', oTax: p => `Property tax (${p}% of price / 12)`,
+  oUp1: 'If the rate rises 1 point', oFixed: 'Rate is fixed for the whole term', oShare: 'Share of gross income',
+  oLoanAmt: 'Loan amount', oLtv: 'Loan / price', oCash: 'Cash needed at purchase', oInt: 'Total interest', oTotal: 'Total repaid',
+  oCredit: (y, c) => `Tax credit over ${y} years (cap ¥${(c / 100).toFixed(0)}M)`, oNet: y => `Interest in the first ${y} years minus the credit`,
+  feeRiseOut: v => `Fees from year 11 in your scenario: ${v}/month.`,
+  creditNote: 'The credit is 0.7% of the year-end balance and cannot exceed the income tax (plus part of the residence tax) you pay. Conditions and caps from the 2026 reform; check the National Tax Agency page before relying on them.',
+  pts: ' pt', today: 'Today', tFromNow: 'Rise from the start', tFrom6: 'Rise from year 6', tIntAll: 'Total interest', tShare: 'All-in / gross',
+  brkOver: v => `Your all-in cost is already above a comfortable level (≤25% of take-home pay ≈ ${v}/month, take-home ≈ 75% of gross).`,
+  brk: (v, r) => `Your all-in cost reaches a comfortable limit (25% of take-home ≈ ${v}/month) if the rate goes to <b>${r}%</b>.`,
+  shockFixed: 'Full-term fixed: the payment cannot change.', shockF10: 'For a fixed period, rises only apply after the fixed years end.',
+  tMonthly: 'Monthly', tUp1: '+1 point', needsPR: 'needs PR', protected: 'protected', afterN: (y, v) => `from year ${y + 1}: ${v}`,
+  borrowNeed: 'Enter your household gross income above to see how much banks would lend.',
+  tScreen: 'Screening rate', tRatio: q => `≤${q}% of income`,
+  borrowNote: y => `Banks test you at a screening rate of ~3–4% (not your actual rate) with all loan payments ≤30–40% of gross income, over ${y} years. Car loans and card instalments count too. This is the most a bank might lend, not what is comfortable.`,
+  comfort: (m, v, r) => `<b>Comfortable price: about ${m}</b> — all-in ≤ ${v}/month (25% of take-home) even if the rate rises to ${r}%, with your down payment, fees and parking.`,
+  comfortNone: v => `Your fees and parking alone are close to a comfortable all-in level (${v}/month).`,
+  legBal: 'Balance', legInt: 'Interest paid so far', legCredit: y => `Tax-credit years (${y})`,
+  tYear: 'Year', tBal: 'Balance (end of year)', tIntCum: 'Interest so far', tCredit: 'Tax credit that year',
+  tLender: 'Lender', tVar: 'Variable', tF10: '10-year fixed', tFull: 'Full-term fixed', tNP: 'Without PR?', tNote: 'Note',
+  np: { yes: 'Yes (valid status)', cond: 'With conditions', spouse: 'With a Japanese / PR spouse', no: 'PR needed', ask: 'Ask' },
+  bn: {
+    aeon: 'Has a product for residents without PR (conditions apply)', mufg: 'List rate 3.375% − 2.18% discount; fee 2.2%, no guarantee fee',
+    mizuho: 'Rate for the fee-type product', yokohama: 'Screening at 4.0%, ≤35% of income', shinsei: 'Japanese / PR spouse can be the joint guarantor',
+    chiba: 'Main local bank for the Chiba areas', smbc: 'Residents without PR can apply with a valid status',
+    no125: 'No 5-year / 125% rules: payments follow rates directly', jibun: 'Screening rate ≈ 3.83%',
+    rakuten: 'Fixed fee; cancer-50% and all-illness cover included; Flat 35 3.83%', tokyostar: 'Non-PR possible with conditions (incl. Japanese ability)',
+    flat35: '≤90% of price; 3.94% above 90%; 子育てプラス −0.25%/child for 5 years',
+  },
+  p: { v_np: 'Variable · without PR (SMBC)', v_low: 'Variable · lowest (megabanks, PR)', v_net: 'Variable · online banks', f10: '10-year fixed', flat35: 'Flat 35 full-term fixed', custom: 'Custom' },
+  cardLine: v => `≈ ${v}/month all-in`, up1: v => `+1%: +${v}`, fixedTag: '(fixed rate)', btn: 'Loan', btnTitle: 'Open this price in the loan simulator',
+  estMonthly: 'All-in / month',
+  tip: c => `<div class="tip-h">All-in monthly cost</div><ul class="tip-list">
+      <li><span>Loan ${c.loan} (${c.price} − ${c.down}% down), ${c.years}y @ ${c.rate}%</span><span>${c.pay}</span></li>
+      ${c.bonus ? `<li><span>(incl. bonus ${c.bonus} ×2/year, averaged)</span><span></span></li>` : ''}
+      ${c.fees ? `<li><span>管理費 + 修繕積立金</span><span>${c.fees}</span></li>` : ''}
+      ${c.park ? `<li><span>Parking</span><span>${c.park}</span></li>` : ''}
+      <li><span>Property tax (~${c.taxPct}% of price)</span><span>${c.tax}</span></li>
+      <li><b>Total</b><b>${c.total}</b></li>
+      ${c.up1 ? `<li><span>If the rate rises 1 point</span><span>+${c.up1}</span></li>` : ''}</ul>
+      <div class="tip-note">${c.preset}. Change the down payment, years, rate and parking in the Loan tab. Excludes insurance and one-off buying costs.</div>`,
+  hdr: 'Loan simulator and guide',
+  sources: 'Sources: Mogecheck rate survey (Oct 2026), MUFG, JHF Flat 35, kakaku.com, MLIT 民間住宅ローンの実態に関する調査 (1,008 lenders), National Tax Agency 住宅ローン控除. Full notes: reports/Home loan research.md.',
+  guide: `
+<details open><summary>Your situation: work visa now, permanent residency later</summary>
+<ul>
+<li><b>Now (work visa):</b> most banks require permanent residency (PR) or Japanese nationality. In the MLIT survey, 621 of 1,008 lenders accept PR holders, but only 38 accept other foreign residents. Realistic options now:
+  <ul><li><b>SMBC</b>: a valid residence status is enough (variable 1.525%).</li>
+  <li><b>AEON Bank</b>: a product for residents without PR, with conditions.</li>
+  <li><b>SBI Shinsei</b>: if a Japanese or PR spouse is the joint guarantor.</li>
+  <li><b>Tokyo Star Bank</b>: with conditions, including Japanese ability.</li></ul>
+  Expect stricter checks: years in Japan and in the job, the time left on your visa, sometimes a larger down payment (10–20%). Flat 35 is not available without PR.</li>
+<li><b>After PR (expected within ~2 years):</b> almost every bank opens up, including the cheapest megabank variable rates (~1.2%) and Flat 35.</li>
+<li><b>Buy now or wait?</b>
+  <ul><li><b>Buy now</b> with a non-PR lender, then <b>refinance after PR</b> if the gap is worth it. Refinancing costs about 2–3% of the balance (bank fee, registration, scrivener), so it usually pays when the rate gap is ≥0.3–0.5 points and the balance is large. Check that the first loan has no early-repayment penalty.</li>
+  <li><b>Wait for PR</b>: more choice and a lower rate, but rates and prices may rise meanwhile (BOJ has been raising since 2024).</li></ul></li>
+<li><b>Documents for foreign residents</b> (on top of the usual ones): residence card (在留カード), passport, 住民票 showing nationality and status, 2–3 years of 源泉徴収票 and 課税証明書, sometimes proof of Japanese ability or a Japanese-speaking contact.</li>
+</ul></details>
+<details><summary>The steps (used condo, about 1.5–3 months)</summary>
+<ol>
+<li><b>Budget first</b> with this simulator. Get a <b>pre-screening (事前審査)</b> at 2–3 banks before or when you make an offer: free, 3–7 days.</li>
+<li><b>Offer (買付証明書) → purchase contract (売買契約).</b> Deposit (手付金) usually 5–10% of the price. Insist on a <b>loan clause (ローン特約)</b>: if the loan is refused by a set date, the contract is cancelled and the deposit returned.</li>
+<li><b>Full screening (本審査)</b>: income and tax certificates, ID, residence card and the property documents from the agent; 1–3 weeks; includes the health declaration for the loan insurance (団信).</li>
+<li><b>Loan contract (金銭消費貸借契約).</b> The rate is usually the one <b>at drawdown</b>, not at application.</li>
+<li><b>Settlement and handover (決済・引渡し)</b>: the loan is paid out, the seller paid, the property registered and the keys handed over on the same day. Buying costs are paid here.</li>
+<li><b>First year: tax return (確定申告)</b> to start the mortgage tax credit; later years go through your employer (年末調整).</li>
+</ol></details>
+<details><summary>Loan types</summary>
+<ul>
+<li><b>Variable (変動金利)</b>: cheapest now (~1.0–2.0%). Follows the bank's list rate, which follows the BOJ. You carry the rate risk. Good if you could absorb +1–2 points or prepay.</li>
+<li><b>Fixed for a period (固定期間選択型, 3/5/10 years)</b>: certainty while the children are small; afterwards it switches with a smaller discount, so read the after-period terms.</li>
+<li><b>Full-term fixed (全期間固定型, Flat 35)</b>: highest rate now (~3.8–4.4%) but no risk. Flat 35 needs PR and a conformity certificate (適合証明) for a used flat.</li>
+<li><b>Mix (ミックス)</b>: split the loan, e.g. half variable and half fixed. Fees may double.</li>
+<li><b>Repayment</b>: equal payments (元利均等) keep the payment flat; equal principal (元金均等) starts higher and saves interest.</li>
+<li><b>5-year / 125% rules</b> (most banks on variable): the payment changes at most every 5 years and by at most +25%. Interest is deferred, not forgiven; unpaid interest (未払利息) can be due at the end. Sony and PayPay have no such rules.</li>
+</ul></details>
+<details><summary>Two incomes</summary>
+<ul>
+<li><b>Pair loan (ペアローン)</b>: two loans, two insurances; both get the tax credit; double fees; if one dies only that loan is paid off.</li>
+<li><b>Joint debt (連帯債務)</b>: one loan, both liable; both get the tax credit; fewer banks offer it.</li>
+<li><b>Joint guarantor (連帯保証)</b>: one borrower, the other guarantees; only the borrower gets the credit and the insurance.</li>
+<li>Think about parental leave, one income stopping, or separation. For non-PR couples, banks may count only the income of a PR / Japanese partner.</li>
+</ul></details>
+<details><summary>What banks check</summary>
+<ul>
+<li>Age at the end of the loan, health (loan insurance), income, years in the job (usually ≥1), the property's value and the <b>repayment ratio (返済負担率)</b>: all loan payments ≤30–40% of gross income at a <b>screening rate of ~3–4%</b>.</li>
+<li>Most lend up to 100% of the price; some up to 110–150% to cover buying costs.</li>
+<li>Don't take new card or car loans between pre-screening and drawdown, and avoid changing jobs before the screening.</li>
+</ul></details>
+<details><summary>Costs beyond the rate</summary>
+<ul>
+<li><b>Buying costs (諸費用)</b>, used flat via an agent ≈ 6–9% of the price: agent fee 3% + ¥60k + tax; bank fee 2.2% of the loan or a fixed ¥30–100k (then often a guarantee fee 保証料 ~2% or +0.2% on the rate); registration and scrivener ¥0.3–0.6M; fire + earthquake insurance ¥0.1–0.4M for 5 years; stamp duty; pro-rated property tax and fees.</li>
+<li><b>Loan insurance (団体信用生命保険, 団信)</b>: basic cover free; cancer-50% often free; cancer-100% or 3/8-illness +0.1–0.3%; cover for both of you about +0.2%.</li>
+<li><b>Running costs</b>: fees that rise over time (see Deep look §B), property tax, insurance renewal.</li>
+</ul></details>
+<details><summary>Mortgage tax credit (住宅ローン控除, 2026 reform)</summary>
+<ul>
+<li>0.7% of the year-end balance, taken off income tax (and part of residence tax), for 10 or 13 years. Income ≤ ¥20M; registered area ≥50 m²; built 1982 or later (or with a seismic certificate).</li>
+<li>Used home caps: no certificate ¥20M / 10 years; energy-standard ¥20M (child household ¥30M) / 13 years; ZEH level or certified long-life ¥35M (child household ¥45M) / 13 years.</li>
+<li>With variable at ~1.2–1.5%, the credit pays back about half the interest in the early years. Ask the seller for any energy certificate: it can add 3 years.</li>
+</ul></details>
+<details><summary>Ten realistic tips</summary>
+<ol>
+<li>Size the loan by what you can pay, not by what the bank offers (~7× income). A safe all-in cost is ≤25% of take-home pay, with room for +1.5–2 points.</li>
+<li>If you go variable, have a plan for rises (savings to prepay, or a switch to fixed) — run the table above.</li>
+<li>Keep cash after buying: 6+ months of living costs, the first year's fees, furniture and moving.</li>
+<li>Pre-screen at 2–3 banks of different types (a megabank, an online bank, a local bank) with the same documents.</li>
+<li>Compare the total cost over 10 years (rate + fees + guarantee + insurance), not the headline rate.</li>
+<li>Never sign without a loan clause and a realistic screening deadline.</li>
+<li>No new card or car loans between pre-screening and drawdown.</li>
+<li>Prepay early but don't drain your cash; prepaying to shorten the term (期間短縮型) saves the most interest.</li>
+<li>Review every 2–3 years; refinance if the gap is >0.3–0.5 points and the balance is large — especially once you have PR.</li>
+<li>Plan for life events: parental leave, a job change (wait until after the loan), a second income later.</li>
+</ol></details>`,
+};
+I18N.ja.ln = {
+  title: '住宅ローン', print: '印刷・PDF保存',
+  lead: 'サイト全体で共通のローン設定です。各物件カードの月々の金額、比較表、物件ディープ分析は、ここでの設定を使います。金利は2026年10月時点のもので、各行が毎月見直します。',
+  gHome: '物件', price: '物件価格', man: '万円', priceHint: '各物件の💴ボタンからも入力できます',
+  down: '頭金', costs: '諸費用', costsHint: '中古・仲介で約6〜9%、売主物件で約4%', costsInLoan: '諸費用もローンに含める（諸費用ローン）',
+  gLoan: 'ローン', preset: '金利タイプ', rate: '金利', rate2: '固定期間終了後の金利', rate2Hint: '終了後は変動金利（優遇幅は縮小）',
+  years: '返済期間', yrs: '年', bonus: 'ボーナス返済の割合', bonusHint: '借入額のうち年2回のボーナスで返済する割合',
+  method: '返済方法', mAnn: '元利均等返済', mPrin: '元金均等返済',
+  gMonthly: '毎月の費用', fees: '管理費＋修繕積立金', yenMo: '円/月', feesHint: '物件から自動入力', feeRise: '11年目以降の値上げ', feeRiseHint: '国交省ガイドラインを下回る修繕積立金は値上げされるのが一般的',
+  parking: '駐車場代', taxPct: '固定資産税等', pctYr: '%（価格比・年）', taxHint: '固定資産税＋都市計画税の概算（中古マンションで価格の約0.2〜0.3%）',
+  gYou: 'ご自身', income: '世帯の税込年収', incomeHint: '任意：借入可能額と年収に占める割合の計算に使用',
+  residency: '在留資格', resVisa: '就労ビザ（永住権なし）', resPR: '永住者または日本国籍',
+  credit: '住宅ローン控除の区分', crBasic: '省エネ証明なし（中古の大半）', crEnergy: '省エネ基準適合住宅', crZeh: 'ZEH水準省エネ住宅・認定長期優良住宅',
+  child: '子育て世帯・若者夫婦世帯', childHint: '19歳未満の子がいる、または夫婦のどちらかが40歳未満',
+  hShock: '金利が上がったら', shockNote: '変動金利が上昇した場合の毎月のローン返済額（ボーナス返済を除く）。残高と残り期間で返済額を再計算しています（5年ルール・125%ルールのない銀行と同じ）。これらのルールがある場合、返済額の上昇は緩やかですが、払いきれない利息（未払利息）が残ることがあります。',
+  hTypes: '金利タイプの比較', typesNote: '同じ価格・頭金・返済期間で、各金利タイプを比べたものです。',
+  hBorrow: 'いくら借りられる？', hBal: 'ローン残高の推移', hRates: d => `現在の金利（${d}）`,
+  ratesNote: '新規借入の最優遇金利です。適用には各行の条件（給与振込、手数料型、借入割合、審査結果など）があります。実際の負担は金利＋事務手数料＋保証料＋団信の上乗せで比べてください。申込前に各行で必ず確認を。',
+  hGuide: 'はじめての住宅購入ガイド',
+  allIn: '毎月の総額', perMonth: 'ローン返済＋管理費等＋駐車場＋固定資産税等',
+  warnPR: 'この金利タイプは通常、永住権または日本国籍が必要です。就労ビザの場合は「変動・永住権なし可（三井住友銀行）」を選ぶか、金利表で利用可能な金融機関を確認してください。',
+  oLoan: (y, r) => `ローン返済（${y}年・${r}%）`, oBonus: 'ボーナス返済（年2回）', oTax: p => `固定資産税等（価格の${p}%÷12）`,
+  oUp1: '金利が1%上がった場合', oFixed: '全期間固定のため返済額は変わりません', oShare: '税込年収に占める割合',
+  oLoanAmt: '借入額', oLtv: '借入額／物件価格', oCash: '購入時に必要な現金', oInt: '総利息', oTotal: '総返済額',
+  oCredit: (y, c) => `住宅ローン控除（${y}年間、限度額${c.toLocaleString()}万円）`, oNet: y => `当初${y}年間の利息から控除額を引いた額`,
+  feeRiseOut: v => `11年目以降の管理費等（この設定の場合）：月${v}。`,
+  creditNote: '控除額は年末残高の0.7%で、支払った所得税（と住民税の一部）が上限です。2026年度税制改正の要件・限度額に基づく概算のため、国税庁の案内で必ず確認してください。',
+  pts: '%', today: '現在', tFromNow: '当初から上昇', tFrom6: '6年目から上昇', tIntAll: '総利息', tShare: '総額／年収',
+  brkOver: v => `毎月の総額がすでに無理のない水準（手取りの25%≒月${v}、手取りは税込年収の約75%と仮定）を超えています。`,
+  brk: (v, r) => `金利が<b>${r}%</b>まで上がると、毎月の総額が無理のない上限（手取りの25%≒月${v}）に達します。`,
+  shockFixed: '全期間固定型のため、返済額は変わりません。', shockF10: '固定期間選択型では、固定期間の終了後にのみ金利上昇が反映されます。',
+  tMonthly: '毎月の返済', tUp1: '+1%の場合', needsPR: '永住権が必要', protected: '変動なし', afterN: (y, v) => `${y + 1}年目から：${v}`,
+  borrowNeed: '上で世帯の税込年収を入力すると、金融機関が貸してくれる目安額を表示します。',
+  tScreen: '審査金利', tRatio: q => `返済負担率${q}%以内`,
+  borrowNote: y => `金融機関は実際の金利ではなく、約3〜4%の審査金利で、すべての借入の年間返済額が税込年収の30〜40%以内かを見ます（返済期間${y}年で計算）。自動車ローンやカードの分割払いも含まれます。これは借りられる上限で、無理なく返せる額ではありません。`,
+  comfort: (m, v, r) => `<b>無理のない物件価格：約${m}</b> — 金利が${r}%まで上がっても、毎月の総額が月${v}（手取りの25%）以内に収まる価格です（頭金・管理費等・駐車場の設定を反映）。`,
+  comfortNone: v => `管理費等と駐車場代だけで、無理のない毎月の総額（月${v}）に近くなっています。`,
+  legBal: '残高', legInt: '支払済みの利息', legCredit: y => `住宅ローン控除の期間（${y}年）`,
+  tYear: '年目', tBal: '残高（年末）', tIntCum: '利息の累計', tCredit: 'その年の控除額',
+  tLender: '金融機関', tVar: '変動', tF10: '10年固定', tFull: '全期間固定', tNP: '永住権なし', tNote: '備考',
+  np: { yes: '可（在留資格があれば）', cond: '条件付きで可', spouse: '日本人・永住者の配偶者が連帯保証人なら可', no: '永住権が必要', ask: '要確認' },
+  bn: {
+    aeon: '永住権がなくても利用できる商品あり（条件付き）', mufg: '店頭金利3.375%−優遇幅2.18%、事務手数料2.2%、保証料なし',
+    mizuho: '手数料型の金利', yokohama: '審査金利4.0%、返済負担率35%以内', shinsei: '日本人・永住者の配偶者を連帯保証人にできる',
+    chiba: '千葉エリアの主な地方銀行', smbc: '有効な在留資格があれば永住権なしでも申込可',
+    no125: '5年ルール・125%ルールなし（金利変動がそのまま返済額に反映）', jibun: '審査金利は約3.83%',
+    rakuten: '定額の事務手数料、がん50%保障・全疾病保障付き、フラット35は3.83%', tokyostar: '条件付きで永住権なしでも可（日本語能力など）',
+    flat35: '融資率9割以下、9割超は3.94%、子育てプラスで子1人につき当初5年間0.25%引下げ',
+  },
+  p: { v_np: '変動・永住権なし可（三井住友銀行）', v_low: '変動・最低水準（メガバンク、永住権要）', v_net: '変動・ネット銀行', f10: '10年固定', flat35: '全期間固定（フラット35）', custom: 'カスタム' },
+  cardLine: v => `毎月の総額 約${v}`, up1: v => `+1%で+${v}`, fixedTag: '（固定金利）', btn: 'ローン', btnTitle: 'この価格でローンを試算',
+  estMonthly: '毎月の総額',
+  tip: c => `<div class="tip-h">毎月の総額の目安</div><ul class="tip-list">
+      <li><span>借入${c.loan}（${c.price}−頭金${c.down}%）・${c.years}年・${c.rate}%</span><span>${c.pay}</span></li>
+      ${c.bonus ? `<li><span>（ボーナス返済${c.bonus}×年2回を月割りで含む）</span><span></span></li>` : ''}
+      ${c.fees ? `<li><span>管理費＋修繕積立金</span><span>${c.fees}</span></li>` : ''}
+      ${c.park ? `<li><span>駐車場代</span><span>${c.park}</span></li>` : ''}
+      <li><span>固定資産税等（価格の約${c.taxPct}%）</span><span>${c.tax}</span></li>
+      <li><b>合計</b><b>${c.total}</b></li>
+      ${c.up1 ? `<li><span>金利が1%上がった場合</span><span>+${c.up1}</span></li>` : ''}</ul>
+      <div class="tip-note">${c.preset}。頭金・返済期間・金利・駐車場代は「住宅ローン」タブで変更できます。保険料と購入時の諸費用は含みません。</div>`,
+  hdr: '住宅ローンの試算とガイド',
+  sources: '出典：モゲチェック金利調査（2026年10月）、三菱UFJ銀行、住宅金融支援機構（フラット35）、価格.com、国土交通省「民間住宅ローンの実態に関する調査」（1,008機関）、国税庁「住宅借入金等特別控除」。詳細：reports/Home loan research.md',
+  guide: `
+<details open><summary>あなたの状況：今は就労ビザ、いずれ永住権</summary>
+<ul>
+<li><b>現在（就労ビザ）</b>：多くの金融機関は永住権または日本国籍を条件にしています。国交省の調査では、1,008機関のうち永住者に融資するのは621機関、それ以外の外国籍の方に融資するのは38機関のみです。現実的な選択肢：
+  <ul><li><b>三井住友銀行</b>：有効な在留資格があれば申込可（変動1.525%）。</li>
+  <li><b>イオン銀行</b>：永住権がなくても利用できる商品あり（条件付き）。</li>
+  <li><b>SBI新生銀行</b>：日本人または永住者の配偶者が連帯保証人になる場合。</li>
+  <li><b>東京スター銀行</b>：日本語能力などの条件付き。</li></ul>
+  在日年数・勤続年数・在留期間の残りなどの審査が厳しくなり、頭金（10〜20%）を求められることもあります。フラット35は永住権がないと利用できません。</li>
+<li><b>永住権取得後（約2年以内の見込み）</b>：ほぼすべての金融機関が対象になり、メガバンクの低い変動金利（約1.2%）やフラット35も利用できます。</li>
+<li><b>今買うか、待つか</b>
+  <ul><li><b>今買う</b>：永住権なしで借りられる金融機関で借り、<b>永住権取得後に借り換え</b>を検討。借り換えには残高の約2〜3%（事務手数料・登記・司法書士報酬）がかかるため、金利差0.3〜0.5%以上かつ残高が大きい場合に有利になりやすいです。最初のローンに繰上返済の手数料がないかも確認を。</li>
+  <li><b>永住権を待つ</b>：選択肢が広がり金利も下がりますが、その間に金利や価格が上がる可能性があります（日銀は2024年から利上げを継続）。</li></ul></li>
+<li><b>外国籍の方の必要書類</b>（通常の書類に加えて）：在留カード、パスポート、国籍・在留資格が記載された住民票、2〜3年分の源泉徴収票・課税証明書。日本語能力の確認や日本語での連絡先を求められることもあります。</li>
+</ul></details>
+<details><summary>購入の流れ（中古マンション、約1.5〜3か月）</summary>
+<ol>
+<li><b>まず予算</b>をこの試算で決め、購入申込の前後に2〜3行で<b>事前審査</b>を受ける（無料、3〜7日程度）。</li>
+<li><b>購入申込（買付証明書）→ 売買契約。</b>手付金は通常、価格の5〜10%。<b>ローン特約</b>（期日までにローンが承認されなければ契約解除・手付金返還）を必ず付ける。</li>
+<li><b>本審査</b>：収入・納税証明、本人確認書類、在留カード、不動産会社からの物件資料。1〜3週間。団体信用生命保険（団信）の告知もここで行う。</li>
+<li><b>金銭消費貸借契約</b>（ローン契約）。適用金利は通常、申込時ではなく<b>融資実行時</b>の金利。</li>
+<li><b>決済・引渡し</b>：同じ日に融資実行、売主への支払い、登記、鍵の受け渡しを行う。諸費用もこの日に支払う。</li>
+<li><b>1年目は確定申告</b>で住宅ローン控除を開始。2年目以降は勤務先の年末調整で手続き。</li>
+</ol></details>
+<details><summary>金利タイプ</summary>
+<ul>
+<li><b>変動金利</b>：現在最も低い（約1.0〜2.0%）。各行の店頭金利（日銀の政策金利に連動）に連動し、金利上昇のリスクは借り手が負う。+1〜2%に耐えられる、または繰上返済できる人向け。</li>
+<li><b>固定期間選択型（3・5・10年）</b>：子どもが小さい時期に返済額が確定する安心感。終了後は優遇幅が縮小して切り替わるため、終了後の条件を必ず確認。</li>
+<li><b>全期間固定型（フラット35など）</b>：現在最も高い（約3.8〜4.4%）が金利リスクなし。フラット35は永住権が必要で、中古住宅は適合証明書が必要。</li>
+<li><b>ミックス</b>：例えば半分を変動、半分を固定にしてリスクを分散。事務手数料が2倍になることも。</li>
+<li><b>返済方法</b>：元利均等返済は返済額が一定。元金均等返済は当初の返済額が多い代わりに総利息が少ない。</li>
+<li><b>5年ルール・125%ルール</b>（変動金利の多くの銀行）：返済額の見直しは5年ごと、増加は前回の1.25倍まで。利息が免除されるわけではなく、払いきれない利息（未払利息）が最終回にまとめて残ることもある。ソニー銀行・PayPay銀行などにはこのルールがない。</li>
+</ul></details>
+<details><summary>夫婦の収入を合わせる</summary>
+<ul>
+<li><b>ペアローン</b>：2本のローン・2つの団信。2人とも住宅ローン控除の対象。事務手数料は2倍。一方が亡くなっても、返済が免除されるのはその人のローンのみ。</li>
+<li><b>連帯債務</b>：1本のローンを2人で負担。2人とも控除の対象。取り扱う金融機関は少なめ。</li>
+<li><b>連帯保証</b>：1人が借り、もう1人が保証人。控除と団信は借りた人のみ。</li>
+<li>育休、片方の収入が止まる場合、離婚なども想定を。永住権のない夫婦では、日本人・永住者の配偶者の収入のみを審査に使う金融機関もあります。</li>
+</ul></details>
+<details><summary>金融機関の審査項目</summary>
+<ul>
+<li>完済時年齢、健康状態（団信に加入できるか）、年収、勤続年数（通常1年以上）、物件の担保評価、<b>返済負担率</b>（すべての借入の年間返済額が税込年収の30〜40%以内、<b>審査金利は約3〜4%</b>）。</li>
+<li>多くは物件価格の100%まで融資。諸費用を含めて110〜150%まで融資するところもある。</li>
+<li>事前審査から融資実行までは、カードローンや自動車ローンを新たに組まない。審査前の転職も避ける。</li>
+</ul></details>
+<details><summary>金利以外の費用</summary>
+<ul>
+<li><b>諸費用</b>（中古・仲介で価格の約6〜9%）：仲介手数料（3%＋6万円＋消費税）、融資事務手数料（借入額の2.2%または定額3〜10万円。定額型は保証料〔約2%または金利+0.2%〕が別途かかることが多い）、登録免許税・司法書士報酬30〜60万円、火災保険・地震保険（5年分で10〜40万円）、印紙税、固定資産税・管理費等の日割り精算。</li>
+<li><b>団体信用生命保険（団信）</b>：基本保障は無料。がん50%保障は無料のことが多い。がん100%・3大／8大疾病保障は金利+0.1〜0.3%。夫婦連生団信は約+0.2%。</li>
+<li><b>ランニングコスト</b>：値上がりしていく管理費・修繕積立金（物件ディープ分析の§Bを参照）、固定資産税、保険の更新。</li>
+</ul></details>
+<details><summary>住宅ローン控除（2026年度改正）</summary>
+<ul>
+<li>年末残高の0.7%を所得税（と住民税の一部）から控除。期間は10年または13年。所得2,000万円以下、登記面積50㎡以上、1982年以降の建築（または耐震基準適合証明書あり）。</li>
+<li>中古住宅の借入限度額：省エネ証明なし2,000万円・10年／省エネ基準適合2,000万円（子育て世帯等3,000万円）・13年／ZEH水準・認定長期優良住宅3,500万円（子育て世帯等4,500万円）・13年。</li>
+<li>変動金利1.2〜1.5%なら、当初数年は利息の約半分が控除で戻る計算。売主に省エネ性能の証明書がないか確認を（控除期間が3年延びる可能性）。</li>
+</ul></details>
+<details><summary>現実的なアドバイス10か条</summary>
+<ol>
+<li>借入額は「貸してくれる額」（年収の約7倍）ではなく「返せる額」で決める。毎月の総額は手取りの25%以内、さらに+1.5〜2%の金利上昇に耐えられる余裕を。</li>
+<li>変動金利を選ぶなら、上昇時の対策（繰上返済用の貯蓄、固定への切り替え）を決めておく — 上の表で確認を。</li>
+<li>購入後も現金を残す：生活費6か月分以上、1年目の管理費等、家具・引越し費用。</li>
+<li>タイプの違う2〜3行（メガバンク・ネット銀行・地方銀行）で、同じ書類を使って事前審査を受ける。</li>
+<li>表面金利ではなく、10年間の総負担（金利＋事務手数料＋保証料＋団信）で比べる。</li>
+<li>ローン特約と、無理のない審査期限なしでは契約しない。</li>
+<li>事前審査から融資実行までは、新たなカード・自動車ローンを組まない。</li>
+<li>繰上返済は早めが効果的だが、手元資金を使い切らない。期間短縮型が最も利息を減らせる。</li>
+<li>2〜3年ごとに見直し、金利差0.3〜0.5%以上かつ残高が大きければ借り換えを検討 — 特に永住権取得後。</li>
+<li>ライフイベントに備える：育休、転職（ローン実行後に）、将来の共働き。</li>
+</ol></details>`,
 };
