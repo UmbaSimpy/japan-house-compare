@@ -207,6 +207,57 @@ function mpLRank(l = MP.layer) {
   return out;
 }
 
+// Visual centre of an area's shape (pole of inaccessibility, as in mapbox/polylabel): the point inside the
+// largest part that is farthest from its edges. a.lat/lng is the city office, often near a border.
+function mpLabelPt(a) {
+  MP.lblPt = MP.lblPt || {};
+  if (MP.lblPt[a.id]) return MP.lblPt[a.id];
+  let pt = [a.lat, a.lng];
+  const g = MP.polys[a.id]?.toGeoJSON?.().geometry;
+  if (!g) return pt;   // shape not drawn yet: don't cache
+  {
+    const polys = g.type === 'MultiPolygon' ? g.coordinates : g.type === 'Polygon' ? [g.coordinates] : [];
+    const kx = Math.cos(a.lat * Math.PI / 180);   // degrees of longitude are shorter: work in a flat frame
+    const area = r => r.reduce((s, p, i) => { const q = r[(i + 1) % r.length]; return s + p[0] * q[1] - q[0] * p[1]; }, 0) / 2;
+    const rings = polys.map(p => p.map(r => r.map(([x, y]) => [x * kx, y])))
+      .sort((p, q) => Math.abs(area(q[0])) - Math.abs(area(p[0])))[0];
+    if (rings) {
+      const segDist = (px, py, ax, ay, bx, by) => {
+        let dx = bx - ax, dy = by - ay;
+        const t = dx || dy ? Math.max(0, Math.min(1, ((px - ax) * dx + (py - ay) * dy) / (dx * dx + dy * dy))) : 0;
+        dx = ax + t * dx - px; dy = ay + t * dy - py; return dx * dx + dy * dy;
+      };
+      const dist = (x, y) => {   // signed: > 0 inside the outer ring and outside the holes
+        let inside = false, min = Infinity;
+        rings.forEach(r => r.forEach((p, i) => {
+          const q = r[(i + 1) % r.length];
+          if ((p[1] > y) !== (q[1] > y) && x < (q[0] - p[0]) * (y - p[1]) / (q[1] - p[1]) + p[0]) inside = !inside;
+          min = Math.min(min, segDist(x, y, p[0], p[1], q[0], q[1]));
+        }));
+        return (inside ? 1 : -1) * Math.sqrt(min);
+      };
+      const xs = rings[0].map(p => p[0]), ys = rings[0].map(p => p[1]);
+      const x0 = Math.min(...xs), y0 = Math.min(...ys), w = Math.max(...xs) - x0, h = Math.max(...ys) - y0;
+      const cell = (x, y, s) => { const d = dist(x, y); return { x, y, s, d, max: d + s * Math.SQRT2 }; };
+      let q = [], best = cell(x0 + w / 2, y0 + h / 2, 0);
+      const s0 = Math.min(w, h) / 2 || Math.max(w, h) / 2;
+      for (let x = x0; x < x0 + w; x += s0 * 2) for (let y = y0; y < y0 + h; y += s0 * 2) q.push(cell(x + s0, y + s0, s0));
+      const ax = cell(kx * a.lng, a.lat, 0); if (ax.d > best.d) best = ax;
+      const eps = Math.max(w, h) / 400;
+      while (q.length) {
+        q.sort((m, n) => n.max - m.max);
+        const c = q.shift();
+        if (c.d > best.d) best = c;
+        if (c.max - best.d <= eps) continue;
+        const s = c.s / 2;
+        q.push(cell(c.x - s, c.y - s, s), cell(c.x + s, c.y - s, s), cell(c.x - s, c.y + s, s), cell(c.x + s, c.y + s, s));
+      }
+      if (best.d > 0) pt = [best.y, best.x / kx];
+    }
+  }
+  return (MP.lblPt[a.id] = pt);
+}
+
 function mpRanks() {
   if (MP.rankLayer) MP.rankLayer.remove();
   MP.rankLayer = L.layerGroup();
@@ -215,7 +266,7 @@ function mpRanks() {
   if (MP.showRanks) mpAreas().filter(a => byLayer ? !(MP.shortOnly && !a.shortlisted) : a.shortlisted).forEach(a => {
     const sel = MP.sel === a.id, r = rk[a.id];
     if (r == null) return;
-    L.marker([a.lat, a.lng], {
+    L.marker(mpLabelPt(a), {
       interactive: false, keyboard: false, zIndexOffset: sel ? 1000 : 100 - r,
       icon: L.divIcon({ className: 'mp-rk' + (sel ? ' sel' : '') + (byLayer && r <= 3 ? ' top' : '') + (byLayer && r > 10 ? ' far' : ''),
         iconSize: [22, 22], html: `<span style="--c:${mpColor(mpVal(a, MP.layer))}">${r}</span>` }),
