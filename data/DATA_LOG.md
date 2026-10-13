@@ -841,3 +841,13 @@ Houses and new condos are not covered yet.
 - The guide and note now carry Tokyo Star's official スター住宅ローン conditions: full-time, 1+ year in the job, income ≥ ¥4M (≥ ¥3M if ≤ 40), no guarantee fee, rate can drop after PR. The earlier "Japanese ability" claim was not on the official page and was removed.
 - Notes that had fixed numbers in them (MUFG, Rakuten, Flat 35) now describe the product instead, so they can't go out of date.
 - Fixed: "Rates now (undefined)" heading.
+
+**Addendum (2026-10-13): manual lenders now automated through the browser:**
+- I looked for other official sources for Mizuho, AEON and SBI Shinsei that don't block scripts. None works:
+  - Mizuho: the page's own `kinri.csv` and the whole mizuhobank.co.jp host return 403; mizuho-fg.co.jp returns 403 too.
+  - AEON: every aeonbank.co.jp page returns 403, including the mobile and news pages.
+  - SBI Shinsei: www times out; corp.sbishinseibank.co.jp answers but has no loan rates.
+- The blocks are not circumvented (no header or TLS spoofing).
+- Instead, a scheduled Claude task on the user's PC, `loan-rates-manual`, runs at 12:30 on the 2nd of each month, after the Action. It opens the three official pages in the app's built-in browser, which is an ordinary visit. It records the figures with `python loan_rates.py --set mizuho v=… f10=… aeon … shinsei …`, which applies the same range and > 0.6-point checks and recomputes the presets. It then commits and pushes `data/loan_rates.json` only.
+- If the PC or app is off on the 2nd, the task runs at the next launch.
+- Task file: `C:\Users\dammi\.claude\scheduled-tasks\loan-rates-manual\SKILL.md`.

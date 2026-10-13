@@ -9,14 +9,16 @@ JSON / script file that page loads its figures from, and flat35.com (住宅金�
   python loan_rates.py --telegram   same, and send the summary to Telegram (monthly GitHub Action)
   python loan_rates.py --accept     also accept changes larger than MAX_JUMP (after checking them by hand)
   python loan_rates.py --dry        fetch and print only; write nothing
+  python loan_rates.py --set mizuho v=1.275 f10=3.6 aeon v=1.04 f10=3.73 shinsei v=1.34 f10=3.4
+                                    record the manual lenders' rates (read in a browser) and recompute presets
 
 Safety rules:
 - A source that fails, or a value outside 0.1–8%, keeps last month's value (status "stale").
 - A change of more than MAX_JUMP points in one month keeps last month's value (status "suspect") until
   someone checks the bank's page and re-runs with --accept (workflow input "accept").
 - Lenders that block automated requests (Mizuho, AEON: HTTP 403; SBI Shinsei: no answer) are "manual": their
-  values are carried forward and listed in the summary to check by hand in a browser; record the new values
-  in data/loan_rates.json (banks.<id>.v / f10 / asof).
+  values are carried forward. A scheduled Claude task on the user's PC ("loan-rates-manual", 2nd of each
+  month after the Action) opens their official pages in the app's browser and records them with --set.
 - Tokyo Star's server needs legacy TLS renegotiation; that option is enabled for that host only.
 """
 import html
@@ -276,7 +278,7 @@ def summary(prev, data, notes):
     if notes:
         lines.append("⚠ " + "\n⚠ ".join(notes))
     man = [k for k, b in data["banks"].items() if b["mode"] == "manual"]
-    lines.append("Check by hand (sites block automated requests): " + ", ".join(f"{k} (last {data['banks'][k].get('checked') or data['banks'][k].get('asof', '?')})" for k in man))
+    lines.append("Read by the monthly browser check on the PC (sites block scripts): " + ", ".join(f"{k} (last {data['banks'][k].get('checked') or data['banks'][k].get('asof', '?')})" for k in man))
     return "\n".join(lines)
 
 
@@ -289,7 +291,39 @@ def telegram(msg):
         print("sent", r.status)
 
 
+def set_manual(args, accept=False):
+    """Record rates read by hand / by the monthly browser check for the manual lenders, then recompute the
+    presets. args: ["mizuho", "v=1.275", "f10=3.60", "aeon", "v=1.04", …]. No fetching. Returns problems."""
+    data = json.loads(OUT.read_text(encoding="utf-8"))
+    today, bad, cur = date.today(), [], None
+    for a in args:
+        if "=" not in a:
+            cur = a
+            if cur not in data["banks"] or data["banks"][cur].get("mode") != "manual":
+                sys.exit(f"{cur}: not a manual lender ({', '.join(k for k, b in data['banks'].items() if b.get('mode') == 'manual')})")
+            data["banks"][cur].update(checked=today.isoformat(), asof=today.strftime("%Y-%m"), status="manual")
+            continue
+        f, v = a.split("=", 1)
+        b, x = data["banks"][cur], float(v)
+        if f not in ("v", "f10") or not LO <= x <= HI:
+            bad.append(f"{cur} {f}={v}: not a field (v, f10) or out of {LO}–{HI}%"); continue
+        if b.get(f) and abs(x - float(b[f])) > MAX_JUMP and not accept:
+            bad.append(f"{cur} {f}: {b[f]} → {x} is > {MAX_JUMP} pt — kept; re-run with --accept if the page really says so"); continue
+        b[f] = x
+    data["presets"] = presets(data["banks"])
+    OUT.write_text(json.dumps(data, ensure_ascii=False, indent=1) + "\n", encoding="utf-8")
+    print("presets:", data["presets"])
+    for k, b in data["banks"].items():
+        if b.get("mode") == "manual":
+            print(k, {f: b.get(f) for f in ("v", "f10", "asof", "checked")})
+    return bad
+
+
 def main():
+    if "--set" in sys.argv:   # python loan_rates.py --set mizuho v=1.275 f10=3.6 aeon v=1.04 f10=3.73 [--accept]
+        bad = set_manual([a for a in sys.argv[sys.argv.index("--set") + 1:] if a != "--accept"], "--accept" in sys.argv)
+        print("\n".join("⚠ " + x for x in bad) or "ok")
+        sys.exit(1 if bad else 0)
     prev, data, notes = run(accept="--accept" in sys.argv or os.environ.get("ACCEPT") == "true")
     msg = summary(prev, data, notes)
     print(msg)

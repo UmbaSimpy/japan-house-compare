@@ -222,7 +222,7 @@ Pros/cons thresholds (`map.js`): burglary ≤0.5/10k pro, ≥1.5 con; violent �
 | preset rules | v_np · v_low · v_net · f10 · flat35 | SMBC variable · lowest megabank variable · median online-bank variable · median 10-year fixed · JHF most-common Flat 35 |
 | rate checks | loan_rates.py | keep last value if a source fails, is outside 0.1–8%, or moves > 0.6 pt (needs `accept`) |
 | bank discounts kept by hand | loan_rates.py `MANUAL_DISCOUNT` | Yokohama 2.08 from its standard variable rate (re-check when the bank changes its plan) |
-| manual lenders | Mizuho, AEON, SBI Shinsei | their sites block automated reading; check in a browser monthly and update `banks.<id>` in the JSON |
+| manual lenders | Mizuho, AEON, SBI Shinsei | their sites block scripts; read monthly in the app browser by the scheduled task `loan-rates-manual` (2nd, 12:30) and recorded with `loan_rates.py --set` |
 
 ## Known gaps to fill on the next refresh
 - Deep look: MLIT 不動産情報ライブラリ API key (user to apply) → sale prices, zoning around the plot, planned roads, school districts, 大規模盛土, disaster history, 公示地価.
