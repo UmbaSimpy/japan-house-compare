@@ -5,45 +5,18 @@
 ════════════════════════════════════════════════ */
 
 /* ═══════════════════════════════════════════════
-   HOUSE SCORING  (100 pts, computed here — mirrored in notify.py)
-   VALUE 25     price per m², normalised within the visible set (cheaper wins)
+   HOUSES — scores pre-computed in inject.py (DATA_LOG item 24; notify.py reads the same)
+   VALUE 25     price vs similar houses (floor m², land m², age, walk, frame, station, area)
    ACCESS 20    walk: ≤5=20 ≤10=16 ≤15=12 ≤20=8 ≤30=4 else 0
-   CONDITION 20 age ≤5=12 ≤10=9 ≤20=6 ≤30=3 else 1 · RC 8 / Steel 6 / Wood 4 · reno +3
-   SPACE 20     floor area, normalised within the visible set (larger wins)
+   CONDITION 20 age ≤5=12 ≤10=9 ≤20=6 ≤30=3 else 1, pre-1982 0 · RC 8 / Steel 6 / Wood 4 · reno +3
+   SPACE 20     floor-area percentile 14 + land-area percentile 6
    EXTRAS 15    parking 1 car +5 / 2+ +8 · owned land +5 · city gas +2
-                liquefaction −4 high / −2 somewhat high (notify.py HOUSE_LIQ_PENALTY)
+                liquefaction −4 high / −2 somewhat high
 ═══════════════════════════════════════════════ */
 const SCORE_MAX = { value: 25, access: 20, condition: 20, space: 20, extras: 15 };
 const HOUSE_LIQ_PENALTY = { high: 4, mid: 2 };
+const H_PAGE = 60;
 
-function scoreSet(data) {
-  if (data.length === 0) return [];
-  const ppms = data.map(d => (d.price * 10000) / d.areaM2);
-  const areas = data.map(d => d.areaM2);
-  const minPPM = Math.min(...ppms), maxPPM = Math.max(...ppms);
-  const minA = Math.min(...areas), maxA = Math.max(...areas);
-
-  return data.map((d, i) => {
-    const value = Math.round((maxPPM === minPPM ? 1 : (maxPPM - ppms[i]) / (maxPPM - minPPM)) * SCORE_MAX.value);
-    const access = accessPts(d.walk);
-    const ageScore = d.age <= 5 ? 12 : d.age <= 10 ? 9 : d.age <= 20 ? 6 : d.age <= 30 ? 3 : 1;
-    const strScore = d.structure === 'RC' ? 8 : d.structure === 'Steel' ? 6 : 4;
-    const renoBonus = d.renovation ? 3 : 0;
-    const condition = Math.min(SCORE_MAX.condition, ageScore + strScore + renoBonus);
-    const space = Math.round((maxA === minA ? 1 : (d.areaM2 - minA) / (maxA - minA)) * SCORE_MAX.space);
-    const parkScore = d.parking === 0 ? 0 : d.parking === 1 ? 5 : 8;
-    const rightsScore = d.landRights === 'owned' ? 5 : 0;
-    const gasScore = d.cityGas ? 2 : 0;
-    const liqPenalty = HOUSE_LIQ_PENALTY[d.liq?.level] || 0;
-    const extras = Math.max(0, Math.min(SCORE_MAX.extras, parkScore + rightsScore + gasScore) - liqPenalty);
-    const total = value + access + condition + space + extras;
-    const why = { ppm: ppms[i], minPPM, maxPPM, minA, maxA, n: data.length,
-                  ageScore, strScore, renoBonus, parkScore, rightsScore, gasScore, liqPenalty };
-    return { ...d, scores: { value, access, condition, space, extras, total }, why };
-  });
-}
-
-const accessPts = w => w <= 5 ? 20 : w <= 10 ? 16 : w <= 15 ? 12 : w <= 20 ? 8 : w <= 30 ? 4 : 0;
 
 /* ═══════════════════════════════════════════════
    CONDOS — scores pre-computed in inject_mansion.py
@@ -101,7 +74,8 @@ const GRAD_MS = [
 ];
 
 /* Apartment sub-categories (areas.json "group") — colour + name per group */
-const groupOf = d => msGroups.find(g => g.key === d.group) || { key: d.areaKey, name: d.area, nameJa: d.areaJa, color: '#888888' };
+const groupOf = d => msGroups.find(g => g.key === d.group) || hsGroups.find(g => g.key === d.group)
+  || { key: d.areaKey, name: d.area, nameJa: d.areaJa, color: '#888888' };
 const groupName = g => (LANG === 'ja' && g.nameJa) || g.name;
 const areaStyle = d => `--area-c:${groupOf(d).color}`;
 const areaPill = d => `<span class="area-pill" style="${areaStyle(d)}">${escHTML(groupName(groupOf(d)))}</span>`;
@@ -182,12 +156,17 @@ function totalTip(s, max) {
 }
 
 function houseWhy(d, key) {
-  const w = d.why, s = d.scores, man = y => (y / 10000).toFixed(1) + '万';
+  const w = d.why, s = d.scores;
   switch (key) {
-    case 'value': return t('hValue', { s: s.value, ppm: man(w.ppm), n: w.n, min: man(w.minPPM), max: man(w.maxPPM) });
+    case 'value': {
+      const T = I18N[LANG].traits || I18N.en.traits;
+      return t('hValue', { s: s.value, price: fmtYen(d.price), exp: fmtYen(w.expectedPrice), v: d.vsExpected, beat: w.valueBeat, n: w.n,
+        traits: [escHTML(groupName(groupOf(d))), t('hTraitSize', Math.round(d.areaM2), d.landM2 ? Math.round(d.landM2) : '?'),
+                 d.builtYear ? T.built(d.builtYear) : '', T.walk(d.walk, escHTML(d.station), false)].filter(Boolean).join(LANG === 'ja' ? '・' : ', ') });
+    }
     case 'access': return t('hAccess', { s: s.access, walk: d.walk, station: escHTML(d.station), line: escHTML(d.line) });
-    case 'condition': return t('hCondition', { s: s.condition, age: d.age, ageS: w.ageScore, str: t('structure', d.structure), strS: w.strScore, reno: w.renoBonus });
-    case 'space': return t('hSpace', { s: s.space, m2: d.areaM2, tsubo: toTsubo(d.areaM2), n: w.n, min: w.minA, max: w.maxA });
+    case 'condition': return t('hCondition', { s: s.condition, age: d.age, year: d.builtYear, ageS: w.ageScore, str: t('structure', d.structure), strS: w.strScore, reno: w.renoBonus });
+    case 'space': return t('hSpace', { s: s.space, m2: d.areaM2, tsubo: toTsubo(d.areaM2), land: d.landM2, n: w.n, beat: w.sizeBeat, landBeat: w.landBeat });
     case 'extras': return t('hExtras', { s: s.extras, park: d.parking, parkS: w.parkScore, owned: d.landRights === 'owned', rightsS: w.rightsScore,
       gas: d.cityGas, gasS: w.gasScore, liq: d.liq ? t('liq.' + d.liq.level) : t('none'), liqP: w.liqPenalty });
   }
@@ -340,10 +319,9 @@ function initTips() {
 /* ═══════════════════════════════════════════════
    HOUSES
 ═══════════════════════════════════════════════ */
-let hs = null;                 // slider state (minM2, maxPrice)
-const hToggles = new Set();
-let activeLayout = 'all';
-let activeSort = 'score-desc';
+const ho = {                   // Houses tab state (sl = slider state)
+  area: 'all', layout: 'all', toggles: new Set(), q: '', sort: 'score-desc', shown: H_PAGE, sl: null,
+};
 const tabCounts = { listings: 0, apartments: 0 };
 
 /* House details from scraper.house_details (DATA_LOG item 21). Features are what the agent advertised:
@@ -363,6 +341,13 @@ function houseFeatTagsHTML(d) {
   return out.join('');
 }
 
+function hDealHTML(d) {
+  const v = d.vsExpected;
+  const verdict = v <= -3 ? `<span class="deal-good">${t('dealBelow', -v)}</span>`
+                : v >= 3 ? `<span class="deal-bad">${t('dealAbove', v)}</span>` : t('dealFair');
+  return `<div class="deal-line" data-tip="${escAttr(houseWhy(d, 'value'))}">${d.ppm}万/m² · ${verdict}</div>`;
+}
+
 function houseCardHTML(d) {
   const s = d.scores, grade = scoreGrade(s.total);
   const tags = [];
@@ -373,16 +358,24 @@ function houseCardHTML(d) {
   else if (d.parking === 1) tags.push(`<span class="tag tag-amber">${t('tagParkingN', 1)}</span>`);
   if (d.landRights === 'leased') tags.push(`<span class="tag tag-amber">${t('tagLeasehold')}</span>`);
   if (!d.cityGas) tags.push(`<span class="tag tag-muted">${t('tagNoGas')}</span>`);
+  if (d.builtYear && d.builtYear < 1982) tags.push(`<span class="tag tag-amber" title="${escAttr(t('tagOldSeismicTitle'))}">${t('tagOldSeismic')}</span>`);
   tags.push(houseFeatTagsHTML(d));
   tags.push(liqTagHTML(d, 'house'));
   tags.push(schoolTagHTML(d));
+  if (d.agents > 1) tags.push(`<span class="tag tag-muted">${t('tagAgents', d.agents)}</span>`);
+  if (d.daysListed != null) tags.push(`<span class="tag tag-muted">${t('tagListed', d.daysListed)}</span>`);
+  const isNew = d.daysListed != null && d.daysListed <= 3;
 
   return `
-  <div class="card">
+  <div class="card has-area" style="${areaStyle(d)}">
     <div class="card-photo">
       <div class="card-photo-bg" style="background:${d.grad}">${d.imageUrl ? '' : ICON.house}</div>
       ${d.imageUrl ? `<img class="card-photo-img" src="${d.imageUrl}" alt="${t('photoAlt')}" loading="lazy" onerror="this.style.display='none'">` : ''}
       <span class="badge-layout">${d.layout}</span>
+      <div class="badge-tr">
+        <span class="badge-area">${escHTML(groupName(groupOf(d)))}</span>
+        ${isNew ? `<span class="badge-new">${t('badgeNew')}</span>` : ''}
+      </div>
       <span class="badge-type">${t('structure', d.structure)} / ${t('storeys', d.floors)}</span>
       <div class="badge-score ${grade}" data-tip="${escAttr(totalTip(s, SCORE_MAX))}">
         <span class="badge-score-n">${s.total}</span><span class="badge-score-max">/100</span>
@@ -390,11 +383,11 @@ function houseCardHTML(d) {
     </div>
     <div class="card-body">
       <div class="card-price">${fmtYen(d.price)}</div>
-      <div class="card-price-note">${t('taxNote')}</div>
+      ${hDealHTML(d)}
       ${lnCardLine(d.price, 0)}
       <div class="card-addr">
         <span class="addr-pin">${ICON.pin}</span>
-        <div><div class="addr-area">${escHTML(areaName(d))}</div><div class="addr-street">${escHTML(d.address)}</div></div>
+        <div><div class="addr-area">${escHTML(areaName(d))}</div><div class="addr-street">${areaPill(d)} ${escHTML(d.address)}</div></div>
       </div>
       <div class="divider"></div>
       <div class="specs">
@@ -403,7 +396,7 @@ function houseCardHTML(d) {
         <div class="spec"><span class="spec-lbl">${t('landArea')}</span>
           <span class="spec-val">${d.landM2 ? `${d.landM2.toFixed(0)} m² <span class="spec-sub">(${t('tsubo', toTsubo(d.landM2))})</span>` : '—'}</span></div>
         <div class="spec"><span class="spec-lbl">${t('buildingAge')}</span>
-          <span class="spec-val">${d.age === 0 ? t('newBuild') : t('yearsOld', d.age)}</span></div>
+          <span class="spec-val">${d.builtYear ?? '?'} <span class="spec-sub">(${d.age === 0 ? t('newBuild') : t('yearsOld', d.age)})</span></span></div>
         <div class="spec"><span class="spec-lbl">${t('structureLbl')}</span>
           <span class="spec-val">${t('structure', d.structure)} / ${t('storeys', d.floors)}</span></div>
       </div>
@@ -421,56 +414,132 @@ function houseCardHTML(d) {
   </div>`;
 }
 
+const hMonthly = d => Math.round(lnAllIn(d.price, 0).total);
 const HOUSE_SORTS = {
-  'score-desc': (a, b) => b.scores.total - a.scores.total,
-  'default':    () => 0,
-  'price-asc':  (a, b) => a.price - b.price,
-  'price-desc': (a, b) => b.price - a.price,
-  'area-desc':  (a, b) => b.areaM2 - a.areaM2,
-  'age-asc':    (a, b) => a.age - b.age,
-  'walk-asc':   (a, b) => a.walk - b.walk,
-  'drop-asc':   (a, b) => (a.priceChange || 0) - (b.priceChange || 0),
+  'score-desc':  (a, b) => b.scores.total - a.scores.total,
+  'value-asc':   (a, b) => a.vsExpected - b.vsExpected,
+  'price-asc':   (a, b) => a.price - b.price,
+  'price-desc':  (a, b) => b.price - a.price,
+  'ppm-asc':     (a, b) => a.ppm - b.ppm,
+  'monthly-asc': (a, b) => hMonthly(a) - hMonthly(b),
+  'area-desc':   (a, b) => b.areaM2 - a.areaM2,
+  'land-desc':   (a, b) => (b.landM2 || 0) - (a.landM2 || 0),
+  'age-asc':     (a, b) => (a.age ?? 99) - (b.age ?? 99),
+  'walk-asc':    (a, b) => a.walk - b.walk,
+  'listed-desc': (a, b) => b.firstSeen.localeCompare(a.firstSeen) || b.scores.total - a.scores.total,
+  'drop-asc':    (a, b) => (a.priceChange || 0) - (b.priceChange || 0) || b.scores.total - a.scores.total,
 };
 
-function render() {
-  let data = listings.filter(d => d.areaM2 >= hs.minM2 && d.price <= hs.maxPrice);
-  if (hToggles.has('liqlow')) data = data.filter(d => d.liq && !['high', 'mid'].includes(d.liq.level));
-  if (hToggles.has('cut')) data = data.filter(d => d.priceChange < 0);
-  if (activeLayout !== 'all') {
-    data = activeLayout === '4LDK' ? data.filter(d => parseInt(d.layout) >= 4) : data.filter(d => d.layout === activeLayout);
-  }
-  data = scoreSet(data).sort(HOUSE_SORTS[activeSort]);   // scored on the visible set (normalisation)
+function hFiltered(ignoreArea = false) {
+  const q = ho.q.trim().toLowerCase(), tg = ho.toggles, sl = ho.sl;
+  return listings.filter(d => {
+    if (!ignoreArea && ho.area !== 'all' && d.group !== ho.area) return false;
+    if (d.areaM2 < sl.minM2 || d.price > sl.maxPrice || d.walk > sl.maxWalk || (d.landM2 || 0) < sl.minLand) return false;
+    if ((d.builtYear || 0) < sl.minYear) return false;
+    if (ho.layout !== 'all') {
+      const rooms = parseInt(d.layout) || 0, L = +ho.layout;
+      if (L === 2 ? rooms > 2 : L === 5 ? rooms < 5 : rooms !== L) return false;
+    }
+    if (tg.has('walk10') && d.walk > 10) return false;
+    if (tg.has('y2000') && !((d.builtYear || 0) >= 2000)) return false;
+    if (tg.has('park2') && !(d.parking >= 2)) return false;
+    if (tg.has('liqlow') && !(d.liq && !['high', 'mid'].includes(d.liq.level))) return false;
+    if (tg.has('cut') && !(d.priceChange < 0)) return false;
+    if (tg.has('new') && !(d.daysListed != null && d.daysListed <= 7)) return false;
+    if (q && !`${d.station} ${d.address} ${d.line} ${d.area} ${d.areaJa || ''} ${groupOf(d).name} ${groupOf(d).nameJa}`.toLowerCase().includes(q)) return false;
+    return true;
+  });
+}
 
+// Area pills shared by the Houses and Apartments tabs
+function subcatsHTML(groups, counts, active) {
+  const total = Object.values(counts).reduce((a, b) => a + b, 0);
+  const allVars = groups.slice(0, 4).map((g, i) => `--g${i + 1}:${g.color}`).join(';');
+  return `<button type="button" role="tab" class="subcat all${active === 'all' ? ' active' : ''}" data-v="all" style="${allVars}">
+      <span class="dot"></span>${t('allAreas')} <span class="n">${total}</span></button>` +
+    groups.map(g => `<button type="button" role="tab" class="subcat${active === g.key ? ' active' : ''}" data-v="${g.key}" style="--c:${g.color}">
+      <span class="dot"></span>${escHTML(groupName(g))} <span class="n">${counts[g.key] || 0}</span></button>`).join('');
+}
+
+function render() {
+  const box = document.getElementById('h-subcats');
+  box.hidden = hsGroups.length < 2;
+  if (!box.hidden) {
+    const counts = {};
+    hFiltered(true).forEach(d => { counts[d.group] = (counts[d.group] || 0) + 1; });
+    box.innerHTML = subcatsHTML(hsGroups, counts, ho.area);
+  }
+  const data = hFiltered().sort(HOUSE_SORTS[ho.sort]);
   const n = data.length;
   document.getElementById('grid').innerHTML = n === 0
     ? `<div class="empty"><p>${t('emptyHouses')}</p></div>`
-    : data.map(houseCardHTML).join('');
+    : data.slice(0, ho.shown).map(houseCardHTML).join('');
+  const more = document.getElementById('h-more');
+  const rest = n - ho.shown;
+  more.style.display = rest > 0 ? 'block' : 'none';
+  more.textContent = t('showMore', Math.min(rest, H_PAGE), rest);
   document.getElementById('res-count').textContent = n;
+  const mid = a => a.sort((x, y) => x - y)[Math.floor(a.length / 2)];
+  document.getElementById('h-res-note').textContent = n
+    ? t('hMedianNote', fmtYen(mid(data.map(d => d.price))), mid(data.map(d => d.ppm)), Math.round(mid(data.map(d => d.landM2).filter(Boolean)) || 0)) : '';
   tabCounts.listings = n;
   refreshHeader();
 }
 
+// Quick loan-rate box (Houses + Apartments); everything else is in the Loan tab
+function bindRate(id) {
+  const rate = document.getElementById(id);
+  rate.value = LN.rate;
+  rate.addEventListener('change', () => {
+    const v = parseFloat(rate.value);
+    if (!(v >= 0 && v <= 10)) { rate.value = LN.rate; return; }
+    const p = LN_PRESETS.find(x => x.rate === v);
+    lnSet({ rate: v, preset: p ? p.id : 'custom' });
+  });
+}
+
 function initHouses() {
+  const rerender = () => { ho.shown = H_PAGE; render(); };
+  try {
+    const saved = localStorage.getItem('hArea');
+    if (saved && (saved === 'all' || hsGroups.some(g => g.key === saved))) ho.area = saved;
+  } catch (e) {}
+  document.getElementById('h-subcats').addEventListener('click', e => {
+    const btn = e.target.closest('.subcat'); if (!btn) return;
+    ho.area = btn.dataset.v;
+    try { localStorage.setItem('hArea', ho.area); } catch (e) {}
+    rerender();
+  });
   document.getElementById('h-toggle-chips').addEventListener('click', e => {
     const btn = e.target.closest('.chip'); if (!btn) return;
-    btn.classList.toggle('active') ? hToggles.add(btn.dataset.v) : hToggles.delete(btn.dataset.v);
-    render();
+    btn.classList.toggle('active') ? ho.toggles.add(btn.dataset.v) : ho.toggles.delete(btn.dataset.v);
+    rerender();
   });
   document.getElementById('layout-chips').addEventListener('click', e => {
     const btn = e.target.closest('.chip'); if (!btn) return;
     document.querySelectorAll('#layout-chips .chip').forEach(c => c.classList.remove('active'));
     btn.classList.add('active');
-    activeLayout = btn.dataset.layout;
-    render();
+    ho.layout = btn.dataset.v;
+    rerender();
   });
-  document.getElementById('sort-sel').addEventListener('change', e => { activeSort = e.target.value; render(); });
+  document.getElementById('sort-sel').addEventListener('change', e => { ho.sort = e.target.value; rerender(); });
+  const search = document.getElementById('h-search');
+  search.addEventListener('input', () => { ho.q = search.value; rerender(); });
+  bindRate('h-rate');
+  document.getElementById('h-more').addEventListener('click', () => { ho.shown += H_PAGE; render(); });
 
   const areas = listings.map(d => d.areaM2), prices = listings.map(d => d.price);
+  const lands = listings.map(d => d.landM2).filter(Boolean), walks = listings.map(d => d.walk).filter(w => w < 99);
+  const years = listings.map(d => d.builtYear).filter(Boolean);
   const minA = Math.floor(Math.min(...areas)), maxP = Math.ceil(Math.max(...prices) / 100) * 100;
-  hs = makeSliders('h-sliders', 'hSliders', [
+  const maxW = Math.max(...walks, 99), minY = Math.min(...years);
+  ho.sl = makeSliders('h-sliders', 'hSliders2', [
     { key: 'minM2',    label: 'minSize',  min: minA, max: Math.ceil(Math.max(...areas)), step: 1, value: minA, fmt: 'fmtMinM2' },
+    { key: 'minLand',  label: 'minLand',  min: 0, max: Math.min(400, Math.ceil(Math.max(...lands))), step: 5, value: 0, fmt: 'fmtMinM2' },
     { key: 'maxPrice', label: 'maxPrice', min: Math.floor(Math.min(...prices) / 100) * 100, max: maxP, step: 100, value: maxP, fmt: 'fmtMaxPrice' },
-  ], render);
+    { key: 'maxWalk',  label: 'maxWalk',  min: 1, max: maxW, step: 1, value: maxW, fmt: 'fmtMaxWalk' },
+    { key: 'minYear',  label: 'builtFrom', min: minY, max: new Date().getFullYear(), step: 1, value: minY, fmt: 'fmtYearFrom' },
+  ], rerender);
 }
 
 /* ═══════════════════════════════════════════════
@@ -608,12 +677,7 @@ function renderSubcats() {
   if (msGroups.length < 2) { box.hidden = true; return; }
   const counts = {};
   (ms.cat === 'new' ? nwFiltered(true) : msFiltered(true)).forEach(d => { counts[d.group] = (counts[d.group] || 0) + 1; });
-  const total = Object.values(counts).reduce((a, b) => a + b, 0);
-  const allVars = msGroups.slice(0, 4).map((g, i) => `--g${i + 1}:${g.color}`).join(';');
-  box.innerHTML = `<button type="button" role="tab" class="subcat all${ms.area === 'all' ? ' active' : ''}" data-v="all" style="${allVars}">
-      <span class="dot"></span>${t('allAreas')} <span class="n">${total}</span></button>` +
-    msGroups.map(g => `<button type="button" role="tab" class="subcat${ms.area === g.key ? ' active' : ''}" data-v="${g.key}" style="--c:${g.color}">
-      <span class="dot"></span>${escHTML(groupName(g))} <span class="n">${counts[g.key] || 0}</span></button>`).join('');
+  box.innerHTML = subcatsHTML(msGroups, counts, ms.area);
 }
 
 function msRender() {
@@ -684,14 +748,7 @@ function initApartments() {
   });
   const search = document.getElementById('ms-search');
   search.addEventListener('input', () => { ms.q = search.value; ms.bldg = null; ms.shown = MS_PAGE; msRender(); });
-  const rate = document.getElementById('ms-rate');
-  rate.value = LN.rate;
-  rate.addEventListener('change', () => {   // quick rate box; everything else is in the Loan tab
-    const v = parseFloat(rate.value);
-    if (!(v >= 0 && v <= 10)) { rate.value = LN.rate; return; }
-    const p = LN_PRESETS.find(x => x.rate === v);
-    lnSet({ rate: v, preset: p ? p.id : 'custom' });
-  });
+  bindRate('ms-rate');
   document.getElementById('ms-sort-sel').addEventListener('change', e => { ms.sort = e.target.value; ms.shown = MS_PAGE; msRender(); });
   document.getElementById('ms-more').addEventListener('click', () => { ms.shown += MS_PAGE; msRender(); });
   // "+N in building" → show every unit in that building (clear the search box to undo)
@@ -724,10 +781,7 @@ const cmpKey = d => cmp.kind === 'ms' ? d.ncId : cmp.kind === 'new' ? d.key : ho
 function cmpItems() {
   if (cmp.kind === 'new') return cmp.ids.map(id => newMansions.find(d => d.key === id)).filter(Boolean);
   if (cmp.kind === 'ms') return cmp.ids.map(id => mansions.find(d => d.ncId === id)).filter(Boolean);
-  if (cmp.kind === 'house') {
-    const scored = scoreSet(listings);      // score against all houses for a stable comparison
-    return cmp.ids.map(id => scored.find(d => houseKey(d) === id)).filter(Boolean);
-  }
+  if (cmp.kind === 'house') return cmp.ids.map(id => listings.find(d => houseKey(d) === id)).filter(Boolean);
   return [];
 }
 
@@ -775,9 +829,9 @@ function renderTray() {
     <div class="cmp-tray-inner">
       <div class="cmp-tray-count">${t('cmpTray', items.length)}</div>
       <div class="cmp-tray-items">${items.map(d => `
-        <div class="cmp-chip${cmp.kind !== 'house' ? ' has-area' : ''}" style="${cmp.kind !== 'house' ? areaStyle(d) : ''}">
+        <div class="cmp-chip has-area" style="${areaStyle(d)}">
           ${d.imageUrl ? `<img src="${d.imageUrl}" alt="">` : `<span class="cmp-chip-ph"></span>`}
-          <div class="cmp-chip-txt"><b>${escHTML(itemTitle(d))}</b><span>${cmp.kind !== 'house' ? escHTML(groupName(groupOf(d))) + ' · ' : ''}${d.price ? fmtYen(d.price) : t('nwPriceTBD')}</span></div>
+          <div class="cmp-chip-txt"><b>${escHTML(itemTitle(d))}</b><span>${escHTML(groupName(groupOf(d)))} · ${d.price ? fmtYen(d.price) : t('nwPriceTBD')}</span></div>
           <button type="button" class="cmp-x" data-cmp-x="${escAttr(cmpKey(d))}" aria-label="${t('cmpRemove')}">×</button>
         </div>`).join('')}
       </div>
@@ -917,9 +971,12 @@ function cmpRows(kind) {
   ];
 
   return [
+    ['district', [R('district', d => d.group, d => areaPill(d))]],
     ['price', [
       R('price', d => d.price, d => fmtYen(d.price), 'low'),
-      R('ppm', d => d.price / d.areaM2, d => `${(d.price / d.areaM2).toFixed(1)}万/m²`, 'low'),
+      R('ppm', d => d.ppm, d => `${d.ppm}万/m²`, 'low'),
+      R('vsSimilar', d => d.vsExpected, d => Math.abs(d.vsExpected) < 3 ? t('dealFair') : d.vsExpected < 0 ? t('dealBelow', -d.vsExpected) : t('dealAbove', d.vsExpected), 'low'),
+      R('monthly', d => hMonthly(d), d => yen(hMonthly(d)), 'low'),
       R('priceChange', d => d.priceChange || 0, change, 'low'),
     ]],
     ['size', [
@@ -933,7 +990,7 @@ function cmpRows(kind) {
       R('bcrFar', d => d.far ?? null, d => d.bcr != null ? `${d.bcr}% / ${d.far ?? '—'}%` : '—'),
     ]],
     ['building', [
-      R('age', d => d.age, d => d.age === 0 ? t('newBuild') : t('yearsOld', d.age), 'low'),
+      R('built', d => d.builtYear, d => `${d.builtYear ?? '?'} (${t('ageY', d.age ?? '?')})`, 'high'),
       R('structure', d => ({ RC: 3, Steel: 2, Wood: 1 })[d.structure] ?? null, d => `${t('structure', d.structure)} / ${t('storeys', d.floors)}`, 'high'),
       R('reno', d => d.renovation, d => bool(d.renovation), 'yes'),
     ]],
@@ -959,6 +1016,7 @@ function cmpRows(kind) {
         d => [d.energyStars ? '★'.repeat(d.energyStars) : '', d.insulation ? t('insV', d.insulation) : '', d.utilityYen ? t('utilV', d.utilityYen) : '',
               ...(d.feat || []).filter(k => H_ECO.includes(k)).map(k => t('eco.' + k))].filter(Boolean).join(' · ') || (d.feat ? t('notAdv') : '—'), 'high'),
     ]],
+    ['listing', [R('listed', d => d.daysListed, listedShow), R('agents', d => d.agents, d => d.agents)]],
     ['scores', [
       R('total', d => d.scores.total, d => `<b>${d.scores.total}</b> / 100`, 'high'),
       ...Object.keys(SCORE_MAX).map(k => R('cat.' + k, d => d.scores[k], d => `${d.scores[k]} / ${SCORE_MAX[k]}`, 'high')),
@@ -998,12 +1056,12 @@ function renderCompare() {
   }).join('');
 
   const head = items.map((d, i) => `
-    <th class="cmp-col${cmp.kind !== 'house' ? ' has-area' : ''}" style="${cmp.kind !== 'house' ? areaStyle(d) : ''}">
+    <th class="cmp-col has-area" style="${areaStyle(d)}">
       <div class="cmp-photo" style="background:${cmp.kind === 'house' ? d.grad : GRAD_MS[(d.id || 0) % GRAD_MS.length]}">
         ${d.imageUrl ? `<img src="${d.imageUrl}" alt="" onerror="this.style.display='none'">` : ''}
         <span class="badge-score ${scoreGrade(d.scores.total)}"><span class="badge-score-n">${d.scores.total}</span><span class="badge-score-max">/100</span></span>
       </div>
-      <div class="cmp-name">${cmp.kind !== 'house' ? areaPill(d) + '<br>' : ''}${escHTML(itemTitle(d))}</div>
+      <div class="cmp-name">${areaPill(d)}<br>${escHTML(itemTitle(d))}</div>
       <div class="cmp-price">${d.price ? fmtYen(d.price) + (d.priceMax && d.priceMax !== d.price ? ' –' : '') : t('nwPriceTBD')}</div>
       <div class="cmp-wins">${t('cmpWins', wins[i])}</div>
       <div class="cmp-links">
@@ -1020,7 +1078,7 @@ function renderCompare() {
         <label class="cmp-diff"><input type="checkbox" id="cmp-diff" ${cmp.diffOnly ? 'checked' : ''}> ${t('cmpDiffOnly')}</label>
         <button type="button" class="cmp-close" id="cmp-close" aria-label="${t('cmpClose')}">×</button>
       </div>
-      <p class="cmp-legend">${t('cmpLegend')}${cmp.kind === 'house' ? ' ' + t('cmpHouseScoreNote') : ''}</p>
+      <p class="cmp-legend">${t('cmpLegend')}</p>
       <div class="cmp-scroll">
         <table class="cmp-table cols-${items.length}">
           <thead><tr><th></th>${head}</tr></thead>
@@ -1394,7 +1452,7 @@ function applyStaticText() {
 
 // Loan settings changed (loan.js) → every monthly figure on cards and in the comparison
 function loanChanged() {
-  const r = document.getElementById('ms-rate'); if (r && document.activeElement !== r) r.value = LN.rate;
+  ['ms-rate', 'h-rate'].forEach(id => { const r = document.getElementById(id); if (r && document.activeElement !== r) r.value = LN.rate; });
   render();
   renderApartments();
   if (!document.getElementById('cmp-modal').hidden) renderCompare();

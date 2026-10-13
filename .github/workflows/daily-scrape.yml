@@ -27,6 +27,7 @@ jobs:
         run: pip install requests beautifulsoup4 pillow
 
       - name: Run scraper
+        timeout-minutes: 45    # 13 areas since 2026-10-13 (DATA_LOG item 24); detail pages only for new listings (house_cache.json)
         run: python scraper.py
 
       - name: Run condo scraper
@@ -85,7 +86,7 @@ jobs:
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git add suumo-compare.html index.html known_nc_ids.json history.json \
                   mansion_cache.json known_ms_units.json mansion_history.json \
-                  hazard_cache.json house_price_history.json \
+                  hazard_cache.json house_price_history.json house_cache.json \
                   newms_cache.json known_new.json newms_track.json \
                   area-stats.js data/area_stats_history.json \
                   area-listings.js data/area_listings_state.json data/condo_peers.json \

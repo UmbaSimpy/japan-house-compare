@@ -1,14 +1,25 @@
 #!/usr/bin/env python3
 """
-SUUMO Property Scraper
-Target: used single-family homes (中古一戸建て) in every area listed in areas.json
+SUUMO used-house (中古一戸建て) scraper — every area in areas.json whose "types" include "house".
+An area may set "houseMinM2" (SUUMO hb= filter, building floor area): the 2026-10-12/13
+watchlist areas track 100 m²+ only, the same line as the Houses map (DATA_LOG item 24).
+
+Daily flow (same as scraper_mansion.py, cheap on SUUMO):
+  1. Crawl the index pages (100 listings/page) → current price, sizes, build year, station, photo.
+  2. Fetch the detail page ONLY for listings not yet in house_cache.json (structure, parking,
+     road, zoning, features …) and cache it. At most MAX_DETAILS per run; the rest come next run.
+  3. Track first-seen date in the cache (price history: inject.py → house_price_history.json).
+Output: listings.json (raw, merged) — cleaned & scored by inject.py.
 """
 
 import json
+import os
 import time
 import re
 import sys
-from datetime import datetime
+import unicodedata
+from datetime import date, datetime
+from pathlib import Path
 
 import requests
 from bs4 import BeautifulSoup
@@ -16,7 +27,8 @@ from bs4 import BeautifulSoup
 # ── CONFIG ────────────────────────────────────────────
 BASE_URL   = "https://suumo.jp"
 AREAS_FILE = "areas.json"
-INDEX_TMPL = "https://suumo.jp/jj/bukken/ichiran/JJ010FJ001/?ar={ar}&bs=021&ta={ta}&jspIdFlg=patternShikugun&sc={sc}&kb=1&kt=9999999&tb=0&tt=9999999&hb=0&ht=9999999&ekTjCd=&ekTjNm=&tj=0&cnb=0&cn=9999999&srch_navi=1"
+INDEX_TMPL = ("https://suumo.jp/jj/bukken/ichiran/JJ012FC001/?ar={ar}&bs=021&ta={ta}&sc={sc}"
+              "&kb=1&kt=9999999&tb=0&tt=9999999&hb={hb}&ht=9999999&cnb=0&cn=9999999&pc=100&pn={page}")
 HEADERS    = {
     "User-Agent": (
         "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
@@ -28,8 +40,10 @@ HEADERS    = {
     "Referer": "https://suumo.jp/",
 }
 DELAY      = 1.2   # seconds between requests
-MAX_PAGES  = 5     # index pages to crawl per area (30 listings/page)
+MAX_PAGES  = 20    # safety cap per area (100 listings/page)
+MAX_DETAILS = int(os.environ.get("HOUSE_MAX_DETAILS", 300))  # detail pages per run (a new area's first crawl is hundreds)
 OUT_JSON   = "listings.json"
+CACHE_FILE = Path("house_cache.json")
 
 # ── FETCH ─────────────────────────────────────────────
 session = requests.Session()
@@ -47,41 +61,6 @@ def fetch(url, retries=3):
             time.sleep(3 * (attempt + 1))
     print(f"  [err] Could not fetch {url}")
     return None
-
-# ── INDEX PAGE PARSING ────────────────────────────────
-# Match any prefecture/ward — /chukoikkodate/<pref>/sc_<ward>/nc_<id>/
-LISTING_RE = re.compile(r"/chukoikkodate/[^/]+/(sc_[^/]+)/nc_(\d+)/")
-
-def get_listing_urls(html, ward_filter=None):
-    soup = BeautifulSoup(html, "html.parser")
-    seen = set()
-    urls = []
-    for a in soup.find_all("a", href=True):
-        href = a["href"]
-        m = LISTING_RE.search(href)
-        if not m:
-            continue
-        ward = m.group(1)
-        if ward_filter and ward != ward_filter:
-            continue
-        full = BASE_URL + href if href.startswith("/") else href
-        clean = re.sub(r"\?.*", "", full)
-        if clean not in seen:
-            seen.add(clean)
-            urls.append(clean)
-    return urls
-
-def get_next_page_url(html, current_page, index_url):
-    soup = BeautifulSoup(html, "html.parser")
-    # Try explicit next link text
-    for a in soup.find_all("a", href=True):
-        text = a.get_text(strip=True)
-        if text in ("次へ", "次のページ", ">", "›"):
-            href = a["href"]
-            return (BASE_URL + href) if href.startswith("/") else href
-    # Fallback: append &page=N (index_url already has query params)
-    next_page = current_page + 1
-    return f"{index_url}&page={next_page}"
 
 # ── DETAIL PAGE PARSING ───────────────────────────────
 def build_data_dict(soup):
@@ -327,7 +306,9 @@ def scrape_detail(url, idx, area_name):
 
     floor_area = extract_m2(first_match(d, "建物面積", "専有面積", "床面積"))
     land_area  = extract_m2(first_match(d, "土地面積", "敷地面積"))
-    age        = extract_age(first_match(d, "完成時期（築年月）", "完成時期(築年月)", "築年月", "建築年月", "竣工年月", "築年数"))
+    built_txt  = first_match(d, "完成時期（築年月）", "完成時期(築年月)", "築年月", "建築年月", "竣工年月", "築年数")
+    age        = extract_age(built_txt)
+    by         = re.search(r"(\d{4})年", built_txt or "")
     layout     = extract_layout(first_match(d, "間取り", "間取")) or "?"
     line, sta, walk = extract_access(first_match(d, "交通", "アクセス", "沿線・駅"))
     structure, floors = extract_structure(first_match(d, "構造・工法", "構造", "建物構造", "建物の構造"))
@@ -354,6 +335,7 @@ def scrape_detail(url, idx, area_name):
         "areaM2":      floor_area,
         "landM2":      land_area,
         "age":         age,
+        "builtYear":   int(by.group(1)) if by else None,
         "station":     sta,
         "line":        line,
         "walk":        walk,
@@ -370,79 +352,128 @@ def scrape_detail(url, idx, area_name):
         **{k: v for k, v in extra.items() if k != "parkingText"},
     }
 
-def collect_area_urls(area):
-    """Crawl one area's index pages; return listing URLs in that ward only."""
-    index_url = INDEX_TMPL.format(**area)
-    urls = []
-    current_url = index_url
+CARD_RE = re.compile(r"/chukoikkodate/[^/]+/(sc_[^/]+)/nc_(\d+)/")
+
+
+def crawl_index(area):
+    """{nc_id: card dict} for every listing card of one area (cards of neighbouring wards dropped)."""
+    cards = {}
     for page in range(1, MAX_PAGES + 1):
-        print(f"\n[{area['key']} page {page}/{MAX_PAGES}] {current_url}")
-        html = fetch(current_url)
-        if not html:
+        url = INDEX_TMPL.format(**area, hb=area.get("houseMinM2", 0), page=page)
+        html = fetch(url)
+        if html is None:
+            raise RuntimeError(f"index page {page} failed")
+        units = BeautifulSoup(html, "html.parser").select("div.property_unit")
+        for u in units:
+            a = u.find("a", href=CARD_RE)
+            if not a:
+                continue
+            m = CARD_RE.search(a["href"])
+            if m.group(1) != area["slug"]:
+                continue
+            card = {dt.get_text(strip=True): dt.find_next_sibling("dd").get_text(" ", strip=True)
+                    for dt in u.find_all("dt") if dt.find_next_sibling("dd")}
+            img = u.find("img", rel=True)
+            card["_img"] = img["rel"] if img else None
+            card["_url"] = BASE_URL + m.group(0)
+            cards[m.group(2)] = card
+        print(f"  page {page}: {len(units)} cards (total {len(cards)})", flush=True)
+        if len(units) < 100:
             break
-        before = len(urls)
-        for u in get_listing_urls(html, ward_filter=area["slug"]):
-            if u not in urls:
-                urls.append(u)
-        new_count = len(urls) - before
-        print(f"  +{new_count} new URLs  (total {len(urls)})")
-        if new_count == 0:
-            print("  [stop] No new URLs on this page — reached end of results")
-            break
-        current_url = get_next_page_url(html, page, index_url)
         time.sleep(DELAY)
-    return urls
+    return cards
+
+
+def card_fields(c):
+    """Fields that change or are cheap to read from the index card (price is the daily truth)."""
+    y = re.search(r"(\d{4})年", c.get("築年月", ""))
+    return {
+        "price":     extract_price({"販売価格": unicodedata.normalize("NFKC", c.get("販売価格", ""))}),
+        "areaM2":    extract_m2(c.get("建物面積")),
+        "landM2":    extract_m2(c.get("土地面積")),
+        "builtYear": int(y.group(1)) if y else None,
+    }
+
+
+def row(nc, entry, area):
+    det, cf = entry["detail"], entry["card"]
+    return {
+        **det,
+        "price":     cf["price"],
+        "areaM2":    det.get("areaM2") or cf["areaM2"],
+        "landM2":    det.get("landM2") or cf["landM2"],
+        "builtYear": det.get("builtYear") or cf["builtYear"],
+        "imageUrl":  det.get("imageUrl") or cf["img"],
+        "suumoUrl":  cf["url"],
+        "ncId":      nc,
+        "areaKey":   area["key"],
+        "areaName":  area["name"],
+        "firstSeen": entry["firstSeen"],
+        "seeded":    entry.get("seeded", False),
+    }
+
 
 def main():
     with open(AREAS_FILE, encoding="utf-8") as f:
         areas = [a for a in json.load(f) if "house" in a.get("types", ["house"])]
-    print(f"[SUUMO] House scraper -- {', '.join(a['name'] for a in areas)}")
-    print(f"  Max pages : {MAX_PAGES} per area")
-    print(f"  Delay     : {DELAY}s between requests")
-    print("-" * 54)
+    cache = json.loads(CACHE_FILE.read_text(encoding="utf-8")) if CACHE_FILE.exists() else {}
+    today = date.today().isoformat()
+    known_areas = {e.get("area") for e in cache.values()}
+    print(f"[SUUMO houses] {len(areas)} areas, cache {len(cache)}")
+    results, keep, failed, budget = [], set(), [], MAX_DETAILS
 
-    # ── Collect all listing URLs ───────────────────
-    all_urls = []           # (url, area name)
     for area in areas:
-        all_urls += [(u, area["name"]) for u in collect_area_urls(area)]
+        print(f"[{area['key']}] {area['name']} (building >= {area.get('houseMinM2', 0)} m2)", flush=True)
+        try:
+            cards = crawl_index(area)
+        except RuntimeError as e:
+            print(f"  FAILED {e} — keeping yesterday's listings for this area")
+            failed.append(area["key"])
+            for nc, entry in cache.items():
+                if entry.get("area") == area["key"] and entry.get("card"):
+                    keep.add(nc)
+                    results.append(row(nc, entry, area))
+            continue
+        seeding = area["key"] not in known_areas      # area's first crawl: firstSeen dates are not real
+        todo = [nc for nc in cards if nc not in cache]
+        print(f"  {len(cards)} listings, {len(todo)} need detail pages", flush=True)
+        for i, nc in enumerate(todo, 1):
+            if budget <= 0:
+                break
+            budget -= 1
+            det = scrape_detail(cards[nc]["_url"], 0, area["name"])
+            ok = bool(det and det.get("areaM2"))
+            print(f"  [{i:>3}/{len(todo)}] nc_{nc} {'OK' if ok else 'FAIL'}", flush=True)
+            if ok:
+                for k in ("id", "grad", "isNew", "area"):
+                    det.pop(k, None)
+                cache[nc] = {"detail": det, "area": area["key"], "firstSeen": today, "seeded": seeding}
+            time.sleep(DELAY)
 
-    print(f"\n[OK] {len(all_urls)} unique listing URLs collected")
-    print("-" * 54)
-
-    # ── Scrape each detail page ────────────────────
-    results = []
-    for i, (url, area_name) in enumerate(all_urls):
-        nc = re.search(r"nc_(\d+)", url)
-        nc_id = nc.group(1) if nc else "?"
-        print(f"[{i+1:>3}/{len(all_urls)}] nc_{nc_id} ... ", end="", flush=True)
-        prop = scrape_detail(url, i + 1, area_name)
-        if prop and prop["areaM2"]:
-            results.append(prop)
-            print(f"OK  Y{prop['price']:,}man  {prop['layout']}  {prop['areaM2']}m2  {prop['walk']}min")
-        else:
-            print("SKIP (missing data)")
+        for nc, card in cards.items():
+            if nc not in cache:
+                continue            # detail failed or over budget — next run
+            entry = cache[nc]
+            cf = card_fields(card)
+            if not cf["price"]:
+                continue
+            entry["lastSeen"] = today
+            entry["card"] = {**cf, "url": card["_url"], "img": card["_img"]}
+            keep.add(nc)
+            results.append(row(nc, entry, area))
+        CACHE_FILE.write_text(json.dumps(cache, ensure_ascii=False, indent=1), encoding="utf-8")   # progress survives a crash
         time.sleep(DELAY)
 
-    print(f"\n[OK] Scraped {len(results)}/{len(all_urls)} properties")
-
-    # ── Save JSON ──────────────────────────────────
+    cache = {k: v for k, v in cache.items() if k in keep}      # drop sold/withdrawn
+    CACHE_FILE.write_text(json.dumps(cache, ensure_ascii=False, indent=1), encoding="utf-8")
     with open(OUT_JSON, "w", encoding="utf-8") as f:
         json.dump(results, f, ensure_ascii=False, indent=2)
-    print(f"[SAVED] {OUT_JSON}")
-
-    # ── Quick stats ────────────────────────────────
-    if results:
-        prices = [r["price"] for r in results]
-        areas  = [r["areaM2"] for r in results if r["areaM2"]]
-        walks  = [r["walk"] for r in results if r["walk"] < 99]
-        print(f"\nStats:")
-        print(f"  Price : Y{min(prices):,}man - Y{max(prices):,}man  (avg Y{sum(prices)//len(prices):,}man)")
-        if areas:
-            print(f"  Area  : {min(areas):.0f}-{max(areas):.0f} m2")
-        if walks:
-            print(f"  Walk  : {min(walks)}-{max(walks)} min  (avg {sum(walks)//len(walks)} min)")
-
+    print(f"[SAVED] {len(results)} houses -> {OUT_JSON}; cache {len(cache)}; failed areas {failed}; "
+          f"detail budget left {budget}")
+    if not results:
+        sys.exit("No houses scraped")
     return results
+
 
 if __name__ == "__main__":
     main()

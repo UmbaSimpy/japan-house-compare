@@ -265,6 +265,23 @@ Pros/cons thresholds (`map.js`): burglary ≤0.5/10k pro, ≥1.5 con; violent �
 | bank discounts kept by hand | loan_rates.py `MANUAL_DISCOUNT` | Yokohama 2.08 from its standard variable rate (re-check when the bank changes its plan) |
 | manual lenders | Mizuho, AEON, SBI Shinsei | their sites block scripts; read monthly in the app browser by the scheduled task `loan-rates-manual` (2nd, 12:30) and recorded with `loan_rates.py --set` |
 
+### Houses tab listings (`scraper.py` → `inject.py`, DATA_LOG item 24)
+Same model as the Apartments tab: scores are computed once in `inject.py`; the site and `notify.py` read them.
+
+| Item | Value |
+|---|---|
+| Areas | every `areas.json` entry with `"house"` in `types` (all 13 since 2026-10-13); pills = `group` (`hsGroups`) |
+| Size filter | `houseMinM2` → SUUMO `hb=` (building floor area): 100 m² for the 12 watchlist areas, none for Mihama |
+| Crawl | index pages (100/page, `JJ012FC001`, `bs=021`) daily; detail page only for nc ids not in `house_cache.json`, at most `MAX_DETAILS` = 300 per run (`HOUSE_MAX_DETAILS` env to override); an area whose index fails keeps yesterday's rows |
+| Dedup | same (area, price, floor m², land m²) from several agents → one card, `agents` = count |
+| Value 25 | regression of log(price) on log(floor m²), log(land m²; area median if missing), age, age², walk (cap 40), non-wood frame, station dummies (≥15 listings), area dummies; ridge 0.01 → residual `vsExpected` %, percentile across all houses, biggest discount = 25 |
+| Access 20 | walk ≤5 20 · ≤10 16 · ≤15 12 · ≤20 8 · ≤30 4 (bus = ride + 15) |
+| Condition 20 | age ≤5 12 · ≤10 9 · ≤20 6 · ≤30 3 · older 1 · built before 1982 0; RC 8 / Steel 6 / Wood 4; renovated +3; cap 20 |
+| Space 20 | floor-area percentile × 14 + land-area percentile × 6 (land missing = 3) |
+| Extras 15 | parking 1 car 5 / 2+ 8 · owned land 5 · city gas 2 · liquefaction high −4 / somewhat high −2; 0–15 |
+| Not scored | road, zoning, coverage, certificates, equipment (DATA_LOG 21), schools (DATA_LOG 20) |
+| New this week | `daysListed` from `firstSeen`; an area's first crawl is `seeded` (no date) |
+
 ## Known gaps to fill on the next refresh
 - Deep look: MLIT 不動産情報ライブラリ API key (user to apply) → sale prices, zoning around the plot, planned roads, school districts, 大規模盛土, disaster history, 公示地価.
 - Crime: Ibaraki police statistics pages are offline (Tsukuba total only; Moriya, Tsukubamirai none). Saitama publishes no violent-crime figures per city.
@@ -274,5 +291,5 @@ Pros/cons thresholds (`map.js`): burglary ≤0.5/10k pro, ≥1.5 con; violent �
 - ~~Hazard layers for all 77 areas~~ — done 2026-10-12 (`area_hazard.py`). Port the upland-fill rule to `hazard.py` (listings) on its next refresh.
 - School quality per school: no official source exists (DATA_LOG 20); city/prefecture test results are shown instead. Zone maps missing for Funabashi, Shinagawa, Arakawa, Moriya (nearest school used). School choice unknown outside Tokyo + 4 cities.
 - Nursery entry difficulty beyond 待機児童 (入所保留 counts, inconsistent publishing) — see DATA_LOG 6d.
-- Houses tab (DATA_LOG 21): energy ★ / 断熱等級 blank on used houses; covered parking and fibre only from agent text. New houses (新築一戸建て) are not in the Houses tab yet.
+- Houses tab (DATA_LOG 21, 24): energy ★ / 断熱等級 blank on used houses; covered parking and fibre only from agent text. New houses (新築一戸建て) are not in the Houses tab yet (the Houses map counts them). No Deep look for houses yet.
 - Per-ward aircraft-noise levels (Lden) — not available as open data.

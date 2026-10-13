@@ -4,7 +4,7 @@
    l.<kind>.<key> overrides l.<key> for one kind (house | ms | new).
    Each entry: what = what it is, why = why it matters, read = how to read it, tip = what to do. Each field is [English, 日本語].
    The popup title is the row label itself. Numbers here describe the scoring code; keep them in sync with
-   data/PARAMETERS.md, build_locations.py, inject_mansion.py, inject_newms.py and app.js → scoreSet. */
+   data/PARAMETERS.md, build_locations.py, inject.py (houses), inject_mansion.py and inject_newms.py. */
 window.CMPG = {
 /* ══════════════ AREA COMPARISON ══════════════ */
 'a.total': {
@@ -237,7 +237,7 @@ window.CMPG = {
   why: [`It lets you compare value between flats of different sizes.`, `広さの違う物件の割安・割高を比べられます。`],
   read: [`Compare it within the same area and similar ages; station distance and age move it a lot.`, `同じエリア・同じくらいの築年数で比べてください。駅距離や築年数で大きく変わります。`] },
 'l.vsSimilar': {
-  what: [`How the asking ¥/m² compares with what a statistical model expects for this flat, given its area or station, age, walk time, floor, tower or not, renovation and elevator, fitted on all tracked condos.`, `追跡中の全マンションから作った統計モデルで、エリア・駅・築年数・徒歩分・階数・タワーかどうか・リフォーム・エレベーターを考慮した「予想㎡単価」と比べた割安・割高。`],
+  what: [`How the asking ¥/m² compares with what a statistical model expects for this flat, given its area or station, age, walk time, floor, tower or not, renovation and elevator, fitted on all tracked condos. Houses: the whole asking price vs a model of floor area, land area, age, walk time, frame (wood or not), station and area, fitted on all tracked houses.`, `追跡中の全マンションから作った統計モデルで、エリア・駅・築年数・徒歩分・階数・タワーかどうか・リフォーム・エレベーターを考慮した「予想㎡単価」と比べた割安・割高。一戸建ては、建物面積・土地面積・築年数・徒歩分・構造（木造か否か）・駅・エリアによるモデルで、価格全体を比較します。`],
   why: [`It spots bargains and overpriced listings that raw ¥/m² hides.`, `単純な㎡単価では見えない割安物件・割高物件を見つけられます。`],
   read: [`Negative = cheaper than expected. A cheap flat can have reasons the model can't see: view, condition, high fees, leasehold, a noisy road.`, `マイナス＝予想より安い。ただし眺望・状態・高い管理費・借地権・騒音など、モデルに見えない理由で安いこともあります。`],
   tip: [`Request a Deep look before visiting a flat that looks unusually cheap.`, `特に安く見える物件は、見学前にDeep lookで確認してください。`] },
@@ -366,13 +366,13 @@ window.CMPG = {
   read: [`Some parts are ranked against all tracked listings (value, fees, space), so scores shift a little as listings come and go.`, `一部（割安度・管理費・広さ）は追跡中の全物件との比較なので、物件の増減で少し変わります。`] },
 /* listing score categories, per kind */
 'l.house.cat.value': {
-  what: [`Value 25: ¥/m² ranked between the cheapest (25) and the most expensive (0) tracked house.`, `割安度25：追跡中の戸建ての㎡単価で、最安＝25点〜最高＝0点。`] },
+  what: [`Value 25: asking price vs what similar houses cost (floor area, land area, age, walk, frame, station, area; regression over all tracked houses), ranked: the biggest discount gets 25.`, `割安度25：似た戸建て（建物面積・土地面積・築年数・駅徒歩・構造・駅・エリア、全追跡物件で回帰）と比べた価格の割安さの順位。最も割安な物件が25点。`] },
 'l.house.cat.access': {
   what: [`Access 20: walk to the station. ≤5 min 20 · ≤10 16 · ≤15 12 · ≤20 8 · ≤30 4.`, `交通20：駅徒歩。5分以内20・10分以内16・15分以内12・20分以内8・30分以内4。`] },
 'l.house.cat.condition': {
-  what: [`Condition 20: age (≤5 years 12 · ≤10 9 · ≤20 6 · ≤30 3 · older 1) + structure (RC 8 · steel 6 · wood 4) + renovated 3.`, `状態20：築年数（5年以内12・10年以内9・20年以内6・30年以内3・それ以上1）＋構造（RC 8・鉄骨6・木造4）＋リフォーム3。`] },
+  what: [`Condition 20: age (≤5 years 12 · ≤10 9 · ≤20 6 · ≤30 3 · older 1 · built before 1982 0) + structure (RC 8 · steel 6 · wood 4) + renovated 3.`, `状態20：築年数（5年以内12・10年以内9・20年以内6・30年以内3・それ以上1・1981年以前0）＋構造（RC 8・鉄骨6・木造4）＋リフォーム3。`] },
 'l.house.cat.space': {
-  what: [`Space 20: floor area ranked between the smallest (0) and the largest (20) tracked house.`, `広さ20：追跡中の戸建ての延床面積で、最小＝0点〜最大＝20点。`] },
+  what: [`Space 20: floor-area percentile among all tracked houses × 14 + land-area percentile × 6.`, `広さ20：全追跡物件の中での建物面積の順位×14＋土地面積の順位×6。`] },
 'l.house.cat.extras': {
   what: [`Extras 15: parking (1 car 5, 2+ cars 8) + owned land 5 + city gas 2, minus liquefaction (high 4, somewhat high 2).`, `設備15：駐車（1台5・2台以上8）＋所有権5＋都市ガス2、液状化で減点（高4・やや高2）。`] },
 'l.ms.cat.value': {

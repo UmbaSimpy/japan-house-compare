@@ -54,6 +54,10 @@ const I18N = {
     cat: { value: 'Value', access: 'Access', condition: 'Cond.', running: 'Fees', space: 'Space', extras: 'Extras', certainty: 'Certain', project: 'Project' },
     catLong: { value: 'Value', access: 'Access', condition: 'Condition', running: 'Fees', space: 'Space', extras: 'Extras', certainty: 'Certainty', project: 'Project', total: 'Total score' },
     dealBelow: v => `${v}% below similar`, dealAbove: v => `${v}% above similar`, dealFair: 'in line with similar',
+    tY2000: 'Built 2000+', tY2000Title: '2000 wood-frame code: ground survey, metal joints, balanced bracing walls',
+    tPark2: '2+ cars', sLand: 'Land: Largest First', hSearchPh: 'Station, address, area…', minLand: 'Min land',
+    hMedianNote: (p, m, l) => `Median ${p} · ${m}万/m² of floor area${l ? ` · land ${l} m²` : ''}`,
+    hTraitSize: (b, l) => `${b} m² on ${l} m² of land`,
 
     // ── tags ──
     tagReno: 'Renovated', tagParkingN: n => `${n} Parking`, tagLeasehold: 'Leasehold', tagNoGas: 'No City Gas',
@@ -139,21 +143,23 @@ const I18N = {
       liq: lv => `Liquefaction risk ${I18N.en.liq[lv]}`,
     },
 
-    hValue: c => `<div class="tip-h">Value ${c.s}/25 — price per m²</div>
-      This house: <b>${c.ppm}/m²</b> of floor area. Among the ${c.n} houses shown it ranges
-      ${c.min}–${c.max}/m²: cheapest gets 25, dearest 0, linear in between.
-      <div class="tip-note">Relative to the houses currently visible, so it shifts when you filter.</div>`,
+    hValue: c => `<div class="tip-h">Value ${c.s}/25 — price vs similar houses</div>
+      This house asks <b>${c.price}</b>. Houses like it (${c.traits}) typically ask <b>~${c.exp}</b>,
+      so it is <b>${Math.abs(c.v) < 3 ? 'about fair' : Math.abs(c.v) + '% ' + (c.v < 0 ? 'cheaper' : 'dearer')}</b>.<br>
+      ${c.beat}% of the ${c.n} tracked houses are a better deal → 25 × ${100 - c.beat}% ≈ ${c.s}.
+      <div class="tip-note">Model: regression of log(price) on log(floor area), log(land area), age, age², walk time, frame (wood or not), station and area, fitted on all tracked houses in every area. Land usually carries most of a used house's price. A big discount can also mean something the model can't see (road, slope, condition), so check why.</div>`,
     hAccess: c => `<div class="tip-h">Access ${c.s}/20 — station distance</div>
       ${c.walk} min walk to ${c.station} (${c.line}).<div class="tip-note">${I18N.en.accessScale}</div>`,
     hCondition: c => `<div class="tip-h">Condition ${c.s}/20 — age & build</div>
-      <ul class="tip-list"><li><span>Age ${c.age}y</span><span>${c.ageS}/12</span></li>
+      <ul class="tip-list"><li><span>Built ${c.year ?? '?'} (${c.age}y)</span><span>${c.ageS}/12</span></li>
       <li><span>Structure ${c.str}</span><span>${c.strS}/8</span></li>
       <li><span>Renovated</span><span>+${c.reno}</span></li></ul>
-      <div class="tip-note">Age: ≤5y 12 · ≤10 9 · ≤20 6 · ≤30 3 · older 1. Structure: RC 8 · Steel 6 · Wood 4. Renovation +3. Capped at 20.
+      <div class="tip-note">Age: ≤5y 12 · ≤10 9 · ≤20 6 · ≤30 3 · older 1 · built before 1982 (old seismic code) 0. Structure: RC 8 · Steel 6 · Wood 4. Renovation +3. Capped at 20.
       Wooden houses lose most of their building value in ~20–25 years in Japan; the land keeps its value.</div>`,
-    hSpace: c => `<div class="tip-h">Space ${c.s}/20 — floor area</div>
-      ${c.m2} m² (${c.tsubo} tsubo). Among the ${c.n} houses shown: ${c.min}–${c.max} m².
-      Largest 20, smallest 0, linear.<div class="tip-note">Relative to the houses currently visible.</div>`,
+    hSpace: c => `<div class="tip-h">Space ${c.s}/20 — floor area & land</div>
+      Floor ${c.m2} m² (${c.tsubo} tsubo): larger than ${c.beat}% of the ${c.n} tracked houses → 14 × ${c.beat}%.<br>
+      Land ${c.land ? Math.round(c.land) + ' m²' : 'not stated'}: ${c.landBeat != null ? 'larger than ' + c.landBeat + '% → 6 × ' + c.landBeat + '%' : 'counted as average (3)'}.
+      <div class="tip-note">Percentiles across all tracked houses, so the score does not change when you filter.</div>`,
     hExtras: c => `<div class="tip-h">Extras ${c.s}/15</div><ul class="tip-list">
       <li><span>Parking ${c.park} car${c.park === 1 ? '' : 's'}</span><span>+${c.parkS}</span></li>
       <li><span>Land ${c.owned ? 'owned (所有権)' : 'leasehold'}</span><span>+${c.rightsS}</span></li>
@@ -228,7 +234,6 @@ const I18N = {
     cmpSwitched: kind => `Compare list reset: ${kind === 'ms' ? 'apartments' : 'houses'} can't be compared with ${kind === 'ms' ? 'houses' : 'apartments'}.`,
     cmpLegend: '<b class="cmp-g">Green</b> = better, <b class="cmp-r">red</b> = worse among the selected. No colour = equal, not comparable or a matter of taste.',
     cmpDiffOnly: 'Differences only', cmpRemove: 'Remove', cmpClose: 'Close', cmpWins: n => `${n} better`,
-    cmpHouseScoreNote: 'House scores are computed against all tracked houses here, so they can differ slightly from the filtered grid.',
     sec: { district: 'Area', timing: 'Timing', demand: 'Demand', price: 'Price & value', size: 'Size & layout', building: 'Building', costs: 'Running costs', access: 'Location & access',
            risk: 'Risk', features: 'Features & extras', listing: 'Listing', scores: 'Scores' },
     row: {
@@ -238,7 +243,7 @@ const I18N = {
       nwPhase: 'Sales phase', nwPhaseChange: 'Price change vs previous phase', nwStock: 'Units still listed',
       nwSoldWeek: 'Sold in last 7 days', nwPace: 'Sales pace (per week)',
       nwKindRow: 'Listing type', nwUnits: 'Units on sale', nwParkingRatio: 'Parking per unit', nwDev: 'Developer', nwIso: 'Seismic isolation',
-      price: 'Price', ppm: '¥ per m²', vsSimilar: 'vs similar condos', monthly: 'All-in monthly (loan + fees + tax)', priceChange: 'Price change',
+      price: 'Price', ppm: '¥ per m²', vsSimilar: 'vs similar homes', monthly: 'All-in monthly (loan + fees + tax)', priceChange: 'Price change',
       area: 'Floor area', land: 'Land area', balcony: 'Balcony', layout: 'Layout', built: 'Built', age: 'Age', seismic: 'Seismic code',
       structure: 'Structure', floor: 'Floor', bldgFloors: 'Building height', units: 'Total units', facing: 'Facing',
       fees: 'Fees / month', mgmt: '管理費 (management)', repair: '修繕積立金 (repair fund)', feesM2: 'Fees per m²', repairM2: 'Repair fund per m²',
@@ -307,6 +312,10 @@ const I18N = {
     cat: { value: '割安度', access: '交通', condition: '状態', running: '管理費', space: '広さ', extras: 'その他', certainty: '確実性', project: '物件' },
     catLong: { value: '割安度', access: '交通', condition: '状態（築年・耐震）', running: '管理費等', space: '広さ', extras: '設備・その他', certainty: '確実性', project: 'プロジェクト', total: '総合スコア' },
     dealBelow: v => `相場より${v}%割安`, dealAbove: v => `相場より${v}%割高`, dealFair: '相場並み',
+    tY2000: '2000年以降築', tY2000Title: '2000年の木造住宅の基準改正（地盤調査・接合金物・耐力壁のバランス）以降',
+    tPark2: '駐車2台以上', sLand: '土地が広い順', hSearchPh: '駅・住所・エリア…', minLand: '土地面積',
+    hMedianNote: (p, m, l) => `中央値 ${p}・建物㎡単価 ${m}万円${l ? `・土地 ${l}m²` : ''}`,
+    hTraitSize: (b, l) => `建物${b}m²・土地${l}m²`,
 
     tagReno: 'リフォーム済', tagParkingN: n => `駐車${n}台`, tagLeasehold: '借地権', tagNoGas: '都市ガスなし',
     tagOldSeismic: '旧耐震', tagOldSeismicTitle: '1982年以前の建築：旧耐震基準、住宅ローン控除の対象外',
@@ -390,20 +399,23 @@ const I18N = {
       liq: lv => `液状化の危険度 ${I18N.ja.liq[lv]}`,
     },
 
-    hValue: c => `<div class="tip-h">割安度 ${c.s}/25 ― ㎡単価</div>
-      この物件は建物面積あたり <b>${c.ppm}/㎡</b>。表示中の${c.n}件では ${c.min}〜${c.max}/㎡：最安が25、最高が0、その間は比例。
-      <div class="tip-note">表示中の物件に対する相対値のため、絞り込むと変わります。</div>`,
+    hValue: c => `<div class="tip-h">割安度 ${c.s}/25 ― 似た一戸建てとの価格比較</div>
+      この物件は <b>${c.price}</b>。似た条件の一戸建て（${c.traits}）の相場は <b>約${c.exp}</b> なので、
+      <b>${Math.abs(c.v) < 3 ? 'ほぼ相場並み' : Math.abs(c.v) + '%' + (c.v < 0 ? '割安' : '割高')}</b>です。<br>
+      掲載中${c.n}件のうち、これより割安なのは${c.beat}% → 25 × ${100 - c.beat}% ≈ ${c.s}。
+      <div class="tip-note">モデル：全エリアの掲載物件を対象に、価格（対数）を建物面積（対数）・土地面積（対数）・築年数・築年数²・駅徒歩・構造（木造か否か）・駅・エリアで回帰。中古一戸建ての価格は多くが土地の価値です。大幅に割安な場合は、モデルでは分からない理由（接道・高低差・建物の状態など）がないか確認してください。</div>`,
     hAccess: c => `<div class="tip-h">交通 ${c.s}/20 ― 駅までの距離</div>
       ${c.station}（${c.line}）まで徒歩${c.walk}分。<div class="tip-note">${I18N.ja.accessScale}</div>`,
     hCondition: c => `<div class="tip-h">状態 ${c.s}/20 ― 築年数と構造</div>
-      <ul class="tip-list"><li><span>築${c.age}年</span><span>${c.ageS}/12</span></li>
+      <ul class="tip-list"><li><span>${c.year ?? '?'}年築（築${c.age}年）</span><span>${c.ageS}/12</span></li>
       <li><span>構造 ${c.str}</span><span>${c.strS}/8</span></li>
       <li><span>リフォーム</span><span>+${c.reno}</span></li></ul>
-      <div class="tip-note">築年数：5年以内 12・10年 9・20年 6・30年 3・それ以上 1。構造：RC 8・鉄骨 6・木造 4。リフォーム +3。上限20。
+      <div class="tip-note">築年数：5年以内 12・10年 9・20年 6・30年 3・それ以上 1・1981年以前（旧耐震）0。構造：RC 8・鉄骨 6・木造 4。リフォーム +3。上限20。
       日本の木造住宅は20〜25年ほどで建物の価値がほぼなくなり、土地の価値が残ります。</div>`,
-    hSpace: c => `<div class="tip-h">広さ ${c.s}/20 ― 建物面積</div>
-      ${c.m2}m²（${c.tsubo}坪）。表示中の${c.n}件では ${c.min}〜${c.max}m²。最も広い物件が20、最も狭い物件が0、その間は比例。
-      <div class="tip-note">表示中の物件に対する相対値です。</div>`,
+    hSpace: c => `<div class="tip-h">広さ ${c.s}/20 ― 建物と土地</div>
+      建物 ${c.m2}m²（${c.tsubo}坪）：掲載中${c.n}件の${c.beat}%より広い → 14 × ${c.beat}%。<br>
+      土地 ${c.land ? Math.round(c.land) + 'm²' : '記載なし'}：${c.landBeat != null ? c.landBeat + '%より広い → 6 × ' + c.landBeat + '%' : '平均扱い（3点）'}。
+      <div class="tip-note">全掲載物件に対する順位なので、絞り込んでも変わりません。</div>`,
     hExtras: c => `<div class="tip-h">設備・その他 ${c.s}/15</div><ul class="tip-list">
       <li><span>駐車場 ${c.park}台</span><span>+${c.parkS}</span></li>
       <li><span>${c.owned ? '所有権' : '借地権'}</span><span>+${c.rightsS}</span></li>
@@ -477,7 +489,6 @@ const I18N = {
     cmpSwitched: kind => `比較リストをリセットしました：${kind === 'ms' ? 'マンション' : '一戸建て'}と${kind === 'ms' ? '一戸建て' : 'マンション'}は比較できません。`,
     cmpLegend: '<b class="cmp-g">緑</b>＝選択中の中で有利、<b class="cmp-r">赤</b>＝不利。色なし＝同じ・比較不可・好みによる項目。',
     cmpDiffOnly: '違いのみ表示', cmpRemove: '外す', cmpClose: '閉じる', cmpWins: n => `有利 ${n}項目`,
-    cmpHouseScoreNote: '一戸建てのスコアはここでは全物件を基準に計算しているため、絞り込み中の一覧と少し異なる場合があります。',
     sec: { district: 'エリア', timing: '時期', demand: '需要', price: '価格・割安度', size: '広さ・間取り', building: '建物', costs: 'ランニングコスト', access: '立地・交通',
            risk: 'リスク', features: '設備・その他', listing: '掲載情報', scores: 'スコア' },
     row: {

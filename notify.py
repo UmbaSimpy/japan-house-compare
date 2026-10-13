@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """
 Sends a Telegram notification after each daily scrape.
-Houses:  compares against known_nc_ids.json; scores computed here
-         (mirrors the JS scoreSet() function).
+Houses:  compares against known_nc_ids.json; scores come pre-computed in
+         listings_clean.json (inject.py, DATA_LOG item 24).
 Condos:  compares unit keys against known_ms_units.json; scores come
          pre-computed in mansions_clean.json (inject_mansion.py).
 New:     compares projects/buildings against known_new.json (new, prices
@@ -42,48 +42,9 @@ def send(text, alert=False):
     print("Telegram: sent")
 
 
-# ── Scoring (mirrors JS scoreSet) ─────────────────────
-# Wooden houses on shallow foundations tilt when the ground liquefies (Mihama 2011)
-HOUSE_LIQ_PENALTY = {'high': 4, 'mid': 2}
-
+# ── Scores: pre-computed by inject.py (single source of truth, like condos) ──
 def score_listings(listings):
-    if not listings:
-        return []
-    ppms  = [(d['price'] * 10000) / d['areaM2'] for d in listings]
-    areas = [d['areaM2'] for d in listings]
-    lo_ppm, hi_ppm = min(ppms), max(ppms)
-    lo_a,   hi_a   = min(areas), max(areas)
-
-    result = []
-    for i, d in enumerate(listings):
-        # 1. VALUE /25 — lower price/m² wins
-        v_raw = 1.0 if hi_ppm == lo_ppm else (hi_ppm - ppms[i]) / (hi_ppm - lo_ppm)
-        value = round(v_raw * 25)
-
-        # 2. ACCESS /20 — station walk time
-        w = d['walk']
-        access = 20 if w <= 5 else 16 if w <= 10 else 12 if w <= 15 else 8 if w <= 20 else 4 if w <= 30 else 0
-
-        # 3. CONDITION /20 — age + structure + reno
-        age_sc  = 12 if d['age'] <= 5 else 9 if d['age'] <= 10 else 6 if d['age'] <= 20 else 3 if d['age'] <= 30 else 1
-        str_sc  = 8  if d['structure'] == 'RC' else 6 if d['structure'] == 'Steel' else 4
-        reno_sc = 3  if d['renovation'] else 0
-        condition = min(20, age_sc + str_sc + reno_sc)
-
-        # 4. SPACE /20 — larger floor area wins
-        s_raw = 1.0 if hi_a == lo_a else (d['areaM2'] - lo_a) / (hi_a - lo_a)
-        space = round(s_raw * 20)
-
-        # 5. EXTRAS /15 — parking, land rights, city gas, minus liquefaction risk
-        park_sc   = 0 if d['parking'] == 0 else 5 if d['parking'] == 1 else 8
-        rights_sc = 5 if d['landRights'] == 'owned' else 0
-        gas_sc    = 2 if d['cityGas'] else 0
-        liq_pen   = HOUSE_LIQ_PENALTY.get((d.get('liq') or {}).get('level'), 0)
-        extras    = max(0, min(15, park_sc + rights_sc + gas_sc) - liq_pen)
-
-        total = value + access + condition + space + extras
-        result.append({**d, 'score': total})
-    return result
+    return [{**d, 'score': d['scores']['total']} for d in listings]
 
 
 # ── Helpers ───────────────────────────────────────────
@@ -288,7 +249,8 @@ if __name__ == '__main__':
     known = set(json.loads(known_file.read_text()) if known_file.exists() else [])
 
     # Detect new listings
-    new = [d for d in scored if nc_id(d['suumoUrl']) not in known]
+    # an area's first crawl (seeded, daysListed None) is not "new" (13 areas since 2026-10-13)
+    new = [d for d in scored if nc_id(d['suumoUrl']) not in known and d.get('daysListed') is not None]
 
     # Build message
     lines = [
@@ -297,10 +259,11 @@ if __name__ == '__main__':
     ]
 
     if new:
-        lines.append(f"🆕 {len(new)} new listing{'s' if len(new) > 1 else ''}:")
-        for d in sorted(new, key=lambda x: -x['score']):
+        lines.append(f"🆕 {len(new)} new listing{'s' if len(new) > 1 else ''}"
+                     + (f" (top {MS_TOP_N} by score)" if len(new) > MS_TOP_N else "") + ":")
+        for d in sorted(new, key=lambda x: -x['score'])[:MS_TOP_N]:
             lines.append(
-                f"  • {d['layout']}  ¥{fmt_price(d['price'])}"
+                f"  • {d.get('area', '')}  {d['layout']}  ¥{fmt_price(d['price'])}"
                 f"  |  Score: {d['score']}/100"
                 f"  |  {d['walk']} min walk"
             )

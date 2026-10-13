@@ -1016,3 +1016,25 @@ Houses and new condos are not covered yet.
 **Front end:** "Listings now" in house mode reads `AREA_HOUSE_STATS` (fallback: the study value). The house list is cache-keyed by `AREA_HOUSE_STATS.generated`.
 
 **Checked:** a daily-mode run on Chiba-Mihama (34 suitable, features refreshed, history row written); `build_locations.py` output is unchanged (smoothing starts after 10 days); the house live layer shows Kisarazu 245 in the preview.
+
+## 24. Houses tab as in-depth as the Apartments tab, divided by area (2026-10-13, user: "the houses tab should be in depth as the mansions one / Divided by area etc")
+
+**Coverage:** every areas.json area now has the `"house"` type, so houses cover the same 13 areas as condos (12 area pills; Inzai + Shiroi = Chiba New Town). The 12 watchlist areas list used houses with **≥100 m² of building floor area** (`houseMinM2` → SUUMO `hb=100`), the same line as the Houses map. Mihama keeps all sizes, as before. Before this change: Mihama only (15 houses).
+
+**Crawl (`scraper.py`, same design as `scraper_mansion.py`):**
+- Index pages daily (`JJ012FC001`, 100 per page): price, sizes, build year, photo.
+- Detail page only for listings not yet in `house_cache.json` (structure, parking, road, zoning, features …), at most 300 per run. An area whose index fails keeps yesterday's listings.
+- First seed run locally: 1,290 listings, 0 failures, ~2.5 h. A new area's first crawl is marked `seeded` (no "new" dates, no Telegram "new" flood).
+
+**Scores (`inject.py`, computed once; the site and notify.py read them; the browser no longer scores within the visible set):**
+- Value 25: regression of log(price) on log(floor m²), log(land m²), age, age², walk, non-wood frame, **leasehold**, station (≥15 listings) and area → `vsExpected` %; percentile across all houses. Leasehold was added after the first run put 借地 houses at the top (they are 40–60% cheaper by nature). A stated plot over 1,000 m² is the development's whole site (one Narashino RC terrace said 8,791 m²) → area median land in the model.
+- Space 20: floor-area percentile × 14 + land-area percentile × 6.
+- Condition: houses built before 1982 now get 0 age points (as condos).
+- Access and Extras unchanged.
+- Duplicates (same area, price, floor m², land m²) from several agents → one card with an "N agents" tag: 1,290 → 863 houses.
+
+**Tab (app.js, suumo-compare.html):** area pills (shared `subcatsHTML`), sliders (min size, min land, max price, max walk, built from), layout chips, only-chips (built 2000+, walk ≤10, 2+ cars, low liquefaction, price dropped, new this week), search, loan-rate box, 12 sorts (best deal vs similar, ¥/m², all-in monthly, land, recently listed …), paging by 60, median line. Cards: area badge/pill, "% below/above similar" line with the model tooltip, old-seismic tag, days listed, agents. Compare: area, ¥/m², vs similar, all-in monthly, listing rows.
+
+**Result (2026-10-13):** 863 houses — Funabashi 184, Matsudo 127, Chiba New Town 102, Ichikawa 92, Midori 87, Chuo 75, Adachi 75, Narashino 38, Kawasaki 26, Urayasu 23, Arakawa 19, Mihama 15. vs-similar spread: p10 −30%, p90 +45%. Page size 3.3 → 4.9 MB.
+
+**Not yet:** new houses (新築一戸建て) in the tab; Deep look for houses. The Trends "houses tracked" line jumps from ~15 to ~860 on 2026-10-14.
