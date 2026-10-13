@@ -140,8 +140,26 @@ def used(ta, sc, name):
     }
 
 
+PRICE_RE = re.compile(r"(?:(\d+)億)?(\d+)万円|(\d+)億円")
+
+
+def project_row(href, nm, t):
+    """New-condo project card → [path, name, priceMin万, priceMax万, m²min, m²max, station, walk, bus, delivery, units].
+    Prices/areas span every phase and plan type on the card; None when SUUMO says 価格未定."""
+    pr = [int(m[2]) * 10000 if m[2] else int(m[0] or 0) * 10000 + int(m[1]) for m in PRICE_RE.findall(t)]
+    pr = [v for v in pr if 1000 <= v <= 100000]
+    m2 = [float(x) for x in re.findall(r"(\d+(?:\.\d+)?)m 2", t)]
+    m2 = [x for x in m2 if 15 <= x <= 300]
+    st = re.search(r"交通 (\S+)(?: (?:徒歩(\d+)分|(バス)))?", t)
+    dl = re.search(r"引渡時期 (\S+)", t)
+    un = re.search(r"総戸数\s*(\d+)", t)
+    return [href, nm, min(pr) if pr else None, max(pr) if pr else None, min(m2) if m2 else None, max(m2) if m2 else None,
+            st[1].split("/")[-1] if st else None, int(st[2]) if st and st[2] else None, bool(st and st[3]),
+            dl[1].replace("予定", "") if dl else None, int(un[1]) if un else None]
+
+
 def new(ta, sc, name):
-    projects, units = {}, 0
+    projects, units, rows = {}, 0, {}
     for p in range(1, 4):
         h = get(URL.format(bs="010", ta=ta, sc=sc, mb=0, page=p))
         if h is None:
@@ -154,12 +172,16 @@ def new(ta, sc, name):
                 continue
             if "間取りタイプ別価格" in t:
                 nm = u.select_one(".property_unit-title, h2")
-                projects[a["href"] if a else len(projects)] = nfkc(nm.get_text(" ", strip=True))[:60] if nm else ""
+                key = a["href"] if a else len(projects)
+                projects[key] = nfkc(nm.get_text(" ", strip=True))[:60] if nm else ""
+                if a and projects[key]:
+                    rows[key] = project_row(a["href"], projects[key], t)
             else:
                 units += 1
         if len(cards) < 100:
             break
-    return {"projects": len(projects), "projectNames": sorted(set(v for v in projects.values() if v))[:12], "newUnits": units}
+    return {"projects": len(projects), "projectNames": sorted(set(v for v in projects.values() if v))[:12], "newUnits": units,
+            "_new": sorted(rows.values(), key=lambda r: (r[2] is None, r[2] or 0))}
 
 
 def area_codes():
@@ -219,6 +241,17 @@ def light_list(units, state, aid, today):
     return {"base": base, "rows": rows}
 
 
+def new_projects(rows, state, aid, today):
+    """Append firstSeen (null on an area's first run) to each new-condo project row; state["proj"][path] = [first, last]."""
+    seeded = state.setdefault("_pseeded", {}).setdefault(aid, today)
+    out = []
+    for r in rows:
+        s = state.setdefault("proj", {}).setdefault(r[0], [today, today])
+        s[1] = today
+        out.append(r + [None if s[0] <= seeded else s[0]])
+    return out
+
+
 def main():
     prev = read_js(OUT_JS).get("areas", {})
     prev_list = read_js(OUT_LIST).get("areas", {})
@@ -237,6 +270,7 @@ def main():
         try:
             rec = {**used(ta, sc, name), **new(ta, sc, name), "date": today}
             lists[aid] = light_list(rec.pop("_units"), state, aid, today)
+            lists[aid]["newp"] = new_projects(rec.pop("_new"), state, aid, today)
             print(f"{aid:22} total {rec['total']:5}  ≥90m² {rec['n90']:4} (raw {rec['raw90']})  "
                   f"median {rec['median90'] and rec['median90'] // 10**6}M  <80M {rec['u80']:3}  new projects {rec['projects']}", flush=True)
         except Exception as e:
@@ -271,11 +305,12 @@ def main():
                       encoding="utf-8")
     HIST.write_text(json.dumps(hist, ensure_ascii=False, separators=(",", ":")), encoding="utf-8")
     OUT_LIST.write_text("/* generated daily by area_stats.py — do not edit. Per area {base: SUUMO path, rows}; row: [ncId (or path+ncId when not under base), name, price万, m², layout, year, station, "
-                        "walk, bus, firstSeen|null, was万|null] */\nconst AREA_LISTINGS = " +
+                        "walk, bus, firstSeen|null, was万|null]; newp = new-condo projects [path, name, priceMin万, priceMax万, m²min, m²max, station, walk, bus, delivery, units, firstSeen|null] */\nconst AREA_LISTINGS = " +
                         json.dumps({"generated": today, "under": UNDER, "areas": lists}, ensure_ascii=False, separators=(",", ":")) + ";\n",
                         encoding="utf-8")
     cutoff = (date.fromisoformat(today) - timedelta(days=30)).isoformat()   # forget ids unseen for 30 days
     state["ids"] = {k: v for k, v in state["ids"].items() if v[2] >= cutoff}
+    state["proj"] = {k: v for k, v in state.get("proj", {}).items() if v[1] >= cutoff}
     STATE.write_text(json.dumps(state, ensure_ascii=False, separators=(",", ":")), encoding="utf-8")
     print(f"wrote {OUT_JS}: {len(out)} areas, {len(failed)} failed; {OUT_LIST}: {sum(len(v['rows']) for v in lists.values())} units")
 

@@ -11,7 +11,9 @@ This file lists every input behind the **Area map** tab: what each field means, 
 
 Track B data changes slowly (yearly policies, annual statistics). The suggested cadence is in the last column of each table.
 
-**Exception: the pipeline register (`data/pipeline.json`) is swept every month** (user decision 2026-10-13), using the fixed method in DATA_LOG item 13 and `python pipeline_check.py`. It is still manual: Claude runs it when the user asks, or from a monthly reminder the user sets up.
+**Exception: the pipeline register (`data/pipeline.json`) is swept every month** (user decision 2026-10-13), using the fixed method in DATA_LOG item 13 and `python pipeline_check.py`. Two automations (user chose both, 2026-10-13):
+- GitHub Action `.github/workflows/monthly-pipeline.yml` runs on the 1st at 09:00 JST. It sends a Telegram summary of due rows and new-condo projects (`pipeline_check.py --telegram`) and changes nothing.
+- The Claude desktop scheduled task `japan-house-pipeline-sweep` runs on the 1st at 11:00. It does the full sweep, rebuilds and commits locally, and never pushes. It runs only while the app is open, or at the next launch.
 
 ## Pipeline (track B)
 
@@ -147,6 +149,7 @@ Caveat: these are asking prices. In the 23 wards, 80–100 m² asking prices run
 | total, n90, raw90, median90, median90to105, n90to105, m2price90, u80, u80modern | used-condo listings, de-duplicated (name+m²+price) | SUUMO 中古マンション search per municipality | `area_stats.py` (daily Action) | daily |
 | projects, projectNames, newUnits | new-condo projects on sale vs 新築未入居 resales | SUUMO 新築マンション search | same | daily |
 | d7, d30 | change in [n90, u80, projects] vs the latest snapshot ≥7/30 days old | `data/area_stats_history.json` (180 days) | same | daily |
+| `area-listings.js` → areas[id].newp | every new-condo (分譲) project on sale: [path, name, priceMin万, priceMax万, m²min, m²max, station, walk, bus, delivery, units, firstSeen]; ranges span all phases/plan types, null price = 価格未定; firstSeen in `area_listings_state.json` → `proj` (null on an area's first run) | same SUUMO 新築 cards as `projects` (no extra requests) | `area_stats.py → project_row()` | daily |
 | fees {n, monthly, perM2, nAll, monthlyAll, perM2All} | median 管理費+修繕積立金 per month and per m² of watchlist used condos ≥90 m² built 2000+ (`All` = any age, used when no modern listing) | `mansions.json` (detail pages, watchlist areas only) | `area_stats.py → fees()` | daily |
 | history rows (`area_stats_history.json`) | [n90, median90, u80, projects, u80modern, n90modern, m2price90modern]; the last three since 2026-10-13 | same | same | daily (180 days kept) |
 | `area-listings.js` → areas[id] = {base, rows} | light list: every de-duplicated 90 m²+ unit, all prices (flag vs ¥80M); row = [ncId, name, price万, m², layout, year, station, walk, bus, firstSeen, was万] | same SUUMO cards (no extra requests) + `data/area_listings_state.json` (first seen / first price per id) | same | daily |

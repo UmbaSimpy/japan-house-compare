@@ -578,3 +578,34 @@ Central wards (千代田, 中央, 港, 新宿, 渋谷, 豊島): commercial redev
 3. Add new rows: news items, watch items that reached a scoring status, and new-condo projects with ≥300 homes or a station-front tower. Anything that is not yet scoring goes on `watch`.
 4. Set the top-level `checked`. Run `build_locations.py` and then `build_map.py`. Compare the shortlist and the top-10 shortlisted set, and apply the watchlist rule (item 10) if they changed. Bump `?v=` and copy to index.html.
 5. Log a dated entry under this item: rows changed, new rows, area totals that moved, and any rank or shortlist change. Then run `python pipeline_check.py --mark`. Commit; push only with the user's OK.
+
+## 14. New developments list per area + monthly automation (2026-10-13, user: "is there anywhere to see the new condos on sale from the map?" / "both")
+
+**Before:** new-condo projects showed only as a count plus up to 4 names in one pros row, and the first 3 names in Compare. Full details were only in the Apartments tab → New, for the 12 watchlist areas. `projectNames` was also capped at 12 per area, so the monthly check could miss projects.
+
+**Now:**
+- `area_stats.py → project_row()` parses each SUUMO 新築 project card it already downloads (no extra requests):
+  - price range over all phases and plan types (`(億)万円` patterns, 1,000–100,000万 kept; none = 価格未定)
+  - m² range
+  - station, walk or bus
+  - 引渡時期
+  - 総戸数 (only when the catch copy states it)
+- The results go to `area-listings.js → areas[id].newp`. firstSeen is tracked in `data/area_listings_state.json → proj`, forgotten after 30 days unseen.
+- The map's area panel shows a **🏗 New developments on sale** list under the used 90 m²+ list:
+  - projects with 90 m²+ plans first, then by lowest price
+  - badges "90 m²+" and NEW (first seen ≤30 days)
+  - delivery date and unit count
+  - a link to each project and to the area's SUUMO new-condo list
+  - a count of 新築未入居 units
+- Checked on Mihama: 3 projects, e.g. エクセレントシティ稲毛海岸 THE STATION GRAN, 3,900–8,900万, 38–83 m², 2028-03, 263 homes. Koto: 9 projects, 2 with 90 m²+ plans.
+- `pipeline_check.py` now diffs against the full `newp` names, with the old 12-name `projectNames` as fallback. The baseline in `data/pipeline_seen.json` was re-marked on 2026-10-13 with the full lists.
+- Caveat: the ranges are what SUUMO shows on the card. Plan-type prices are often 未定, so a "90 m²+" badge can sit on a project whose large plans have no price yet.
+
+**Monthly automation** (user chose both options):
+- **GitHub Action `monthly-pipeline.yml`** runs on the 1st at 09:00 JST and needs no AI.
+  - It runs `pipeline_check.py --telegram`, which sends a short Telegram message: rows due for a status check, and new-condo projects since the last sweep.
+  - It reads only, changes nothing, and never marks projects as seen.
+- **Claude scheduled task `japan-house-pipeline-sweep`** runs on the 1st at 11:00 local, only while the desktop app is open; otherwise at the next launch.
+  - It does the full item-13 sweep, rebuilds, logs and marks, then commits locally.
+  - It never pushes, and it reports watchlist changes instead of applying them.
+  - Prompt: `C:\Users\dammi\.claude\scheduled-tasks\japan-house-pipeline-sweep\SKILL.md`.

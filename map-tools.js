@@ -379,7 +379,38 @@ function mpLsHTML(a) {
       <span class="mp-lb">${isNew(r) ? `<i class="new">${t('map.ls.new')}</i>` : ''}${r[10] ? `<i class="cut" title="${t('map.ls.wasTip', yenM(r[10]))}">↓ ${yenM(r[10])}</i>` : ''}</span>
       </a></li>`).join('')}</ul>` : `<p class="mp-ls-note">${mpB(t('map.ls.noneUnder'))}</p>`}
     ${rows.length > 12 ? `<button type="button" class="mp-ls-more" data-lsall>${MP.lsAll ? t('map.ls.less') : t('map.ls.more', rows.length)}</button>` : ''}
-    <p class="mp-ls-note">${mpB(t('map.ls.note', AREA_LISTINGS.generated))}${a.tracked ? ' ' + t('map.ls.watch') : ''}</p>`;
+    <p class="mp-ls-note">${mpB(t('map.ls.note', AREA_LISTINGS.generated))}${a.tracked ? ' ' + t('map.ls.watch') : ''}</p>
+    ${mpNpHTML(a, d)}`;
+}
+
+/* New-condo projects on sale (area-listings.js → areas[id].newp, same daily SUUMO pages as the counts).
+   row = [path, name, priceMin万, priceMax万, m²min, m²max, station, walk, bus, delivery, units, firstSeen|null] */
+const MP_NP_NEW_DAYS = 30;
+function mpNpHTML(a, d) {
+  const ps = d?.newp;
+  if (!ps) return '';                                   // area not refreshed since the field was added
+  const today = new Date(AREA_LISTINGS.generated);
+  const isNew = r => r[11] && (today - new Date(r[11])) / 864e5 < MP_NP_NEW_DAYS;
+  const big = r => (r[5] || 0) >= 90;
+  const rows = ps.slice().sort((x, y) => big(y) - big(x) || (x[2] ?? 1e9) - (y[2] ?? 1e9));
+  const shown = MP.npAll ? rows : rows.slice(0, 8);
+  const yenM = man => t('map.yenM', man * 1e4);
+  const price = r => r[2] == null ? t('map.np.tba') : r[2] === r[3] ? yenM(r[2]) : `${yenM(r[2])}–${yenM(r[3])}`;
+  const m2 = r => r[4] == null ? '' : r[4] === r[5] ? `${r[4]} m²` : `${r[4]}–${r[5]} m²`;
+  const list = ps[0] ? 'https://suumo.jp' + ps[0][0].replace(/nc_\d+\/?$/, '') : null;
+  const lv = mpLive(a);
+  return `<div class="mp-np">
+    <div class="mp-ls-h"><h3>🏗 ${t('map.np.title')} <span>${ps.length}</span></h3>
+      <div class="mp-ls-sum">${t('map.np.sum', ps.filter(big).length, ps.filter(isNew).length)}</div></div>
+    ${shown.length ? `<ul class="mp-ls">${shown.map(r => `<li><a href="${mpEsc('https://suumo.jp' + r[0])}" target="_blank" rel="noopener">
+      <span class="mp-lp${r[2] == null ? ' tba' : ''}">${price(r)}</span>
+      <span class="mp-ln"><b>${mpEsc(r[1])}</b>
+        <small>${[m2(r), r[6] ? `${mpEsc(r[6])} ${r[8] ? t('map.ls.bus') : r[7] != null ? t('map.ls.walk', r[7]) : ''}` : '', r[9] ? t('map.np.deliv', mpEsc(r[9])) : '', r[10] ? t('map.np.units', r[10]) : ''].filter(Boolean).join(' · ')}</small></span>
+      <span class="mp-lb">${big(r) ? `<i class="big">${t('map.np.big')}</i>` : ''}${isNew(r) ? `<i class="new">${t('map.ls.new')}</i>` : ''}</span>
+      </a></li>`).join('')}</ul>` : `<p class="mp-ls-note">${t('map.np.none')}</p>`}
+    ${rows.length > 8 ? `<button type="button" class="mp-ls-more" data-npall>${MP.npAll ? t('map.ls.less') : t('map.ls.more', rows.length)}</button>` : ''}
+    <p class="mp-ls-note">${t('map.np.note', lv?.newUnits ?? 0)}${list ? ` <a href="${mpEsc(list)}" target="_blank" rel="noopener">${t('map.np.suumo')} ↗</a>` : ''}</p>
+  </div>`;
 }
 
 function mpCmpClose() {

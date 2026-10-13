@@ -598,6 +598,12 @@ I18N.en.map = {
       water: 'Residents in flood/surge/tsunami zones', deep: 'Residents in ≥3 m zones', liq: 'Liquefaction-prone ground', slide: 'Landslide zones',
       quake: '30-yr P(震度6弱+)', noise: 'Aircraft noise', burg: 'Home burglaries / 10k residents', viol: 'Violent crime / 10k residents', crimeAll: 'All recorded crime / 1k residents', pop: 'Population 2020→25', ipss: 'IPSS 2050', kids: 'Share aged 0–14', costco: 'Costco drive' },
   },
+  np: {
+    title: 'New developments on sale', sum: (b, n) => `${b} with plans of 90 m²+ · ${n} new this month`,
+    tba: 'Price TBA', big: '90 m²+', deliv: d => `ready ${d.replace(/(\d{4})年(\d{1,2})月(上旬|中旬|下旬|末)?/, (m, y, mo, p) => (p === '上旬' ? 'early ' : p === '中旬' ? 'mid ' : p ? 'late ' : '') + new Date(y, mo - 1).toLocaleString('en', { month: 'short' }) + ' ' + y)}`, units: n => `${n} homes`, none: 'No new-condo projects on sale right now.',
+    note: u => `Developer projects on SUUMO, all phases (prices and sizes span every plan; refreshed daily).${u ? ` Plus ${u} completed-but-unsold new unit${u === 1 ? '' : 's'} (新築未入居).` : ''}`,
+    suumo: 'All on SUUMO',
+  },
   ls: {
     title: 'For sale now · 90 m²+', sum: (u, n, c) => `${u} under ¥80M · ${n} new this week · ${c} price cuts`,
     all: 'All prices', under: 'Under ¥80M', sort: 'Sort', sorts: { price: 'Price ↑', size: 'Size ↓', ppm: '¥/m² ↑', year: 'Newest building', new: 'Newly listed' },
@@ -778,6 +784,12 @@ I18N.ja.map = {
       liveN: '90㎡以上・8,000万円未満（現在）／90㎡以上全体', liveMedian: '90〜105㎡ 中央値（現在）', projects: '販売中の新築プロジェクト', fees: '管理費＋修繕積立金（ウォッチ対象）',
       water: '洪水・高潮・津波区域の住民', deep: '浸水3m以上の住民', liq: '液状化しやすい地盤', slide: '土砂災害警戒区域',
       quake: '30年 震度6弱以上', noise: '航空機騒音', burg: '住宅侵入／人口1万', viol: '凶悪犯・粗暴犯／人口1万', crimeAll: '刑法犯総数／人口千', pop: '人口 2020→25', ipss: '社人研 2050', kids: '年少人口割合', costco: 'コストコまで車' },
+  },
+  np: {
+    title: '販売中の新築マンション', sum: (b, n) => `90㎡以上の間取りあり ${b}件・今月の新着 ${n}件`,
+    tba: '価格未定', big: '90㎡+', deliv: d => `引渡 ${d}`, units: n => `総戸数${n}`, none: '現在販売中の新築プロジェクトはありません。',
+    note: u => `SUUMO掲載の分譲プロジェクト（全期・全タイプの価格と面積の幅、毎日更新）。${u ? `ほかに新築未入居 ${u}戸。` : ''}`,
+    suumo: 'SUUMOで一覧',
   },
   ls: {
     title: '販売中・90㎡以上', sum: (u, n, c) => `8,000万円未満 ${u}件・今週の新着 ${n}件・値下げ ${c}件`,

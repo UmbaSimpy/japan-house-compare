@@ -398,10 +398,10 @@ function mpSelect(id, opts = {}) {
 }
 
 function mpPanelClick(e) {
-  const el = e.target.closest('[data-cmp],[data-cmpx],[data-cmpgo],[data-pick],[data-back],[data-mtab],[data-mcat],[data-open],[data-lsu],[data-lsall]');
+  const el = e.target.closest('[data-cmp],[data-cmpx],[data-cmpgo],[data-pick],[data-back],[data-mtab],[data-mcat],[data-open],[data-lsu],[data-lsall],[data-npall]');
   if (!el) return;
-  if (el.dataset.lsu !== undefined || el.dataset.lsall !== undefined) {   // light listing controls: re-render that section only
-    if (el.dataset.lsu !== undefined) MP.lsUnder = el.dataset.lsu === '1'; else MP.lsAll = !MP.lsAll;
+  if (el.dataset.lsu !== undefined || el.dataset.lsall !== undefined || el.dataset.npall !== undefined) {   // light listing controls: re-render that section only
+    if (el.dataset.lsu !== undefined) MP.lsUnder = el.dataset.lsu === '1'; else if (el.dataset.npall !== undefined) MP.npAll = !MP.npAll; else MP.lsAll = !MP.lsAll;
     const box = document.getElementById('mp-ls'); if (box) box.innerHTML = mpLsHTML(mpById(MP.sel));
     return;
   }
