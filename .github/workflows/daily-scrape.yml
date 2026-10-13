@@ -50,6 +50,10 @@ jobs:
       - name: Inject listings into HTML
         run: python inject.py
 
+      - name: Condo peer table for Deep look (fees/m² etc.; mansions.json is not committed)
+        continue-on-error: true
+        run: python deeplook.py --peers
+
       - name: Inject condos into HTML
         run: python inject_mansion.py
 
@@ -79,9 +83,14 @@ jobs:
                   hazard_cache.json house_price_history.json \
                   newms_cache.json known_new.json newms_track.json \
                   area-stats.js data/area_stats_history.json \
-                  area-listings.js data/area_listings_state.json
+                  area-listings.js data/area_listings_state.json data/condo_peers.json
           git diff --staged --quiet && echo "No changes to commit" || \
             git commit -m "chore: auto-update listings $(date -u +'%Y-%m-%d')"
 
       - name: Push
-        run: git push
+        run: |   # a Deep look run may have pushed meanwhile → rebase and retry
+          for i in 1 2 3 4 5; do
+            git pull --rebase -q && git push && exit 0
+            sleep $((i * 10))
+          done
+          exit 1

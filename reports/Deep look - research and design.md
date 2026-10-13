@@ -303,7 +303,15 @@ None of this is visible on the card. Several items, the repair fund and the pric
 - Fill-in fields depend on the agent.
 - The documents in the A list can only be judged once you have them. A later step could read the PDFs you receive and check them.
 
-## 6. Decisions needed
+## 6. Status (2026-10-13)
+
+Built as version 1, for used condos:
+- **Deep look tab** on the site, plus a 🔍 button on every used-condo card. You paste a link and it opens a pre-filled GitHub issue.
+- **GitHub Action** `deep-look.yml` runs `deeplook.py`, commits a printable report under `deeplook/` and notifies Telegram.
+
+See DATA_LOG item 15 for the method and PARAMETERS.md for thresholds.
+
+## 7. Decisions (answered 2026-10-13: condos only, printable page, site + GitHub flow; API key: explained, pending)
 
 1. **MLIT 不動産情報ライブラリ API key.**
    - Free. Apply with name, email and purpose at reinfolib.mlit.go.jp; issued within ~5 business days.

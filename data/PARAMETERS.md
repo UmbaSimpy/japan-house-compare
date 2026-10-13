@@ -190,7 +190,25 @@ Pros/cons thresholds (`map.js`): burglary ≤0.5/10k pro, ≥1.5 con; violent �
 | SMOOTH_DAYS | window: median of the daily history values for u80modern, n90modern and m2price90modern | 30 days |
 | SMOOTH_MIN_DAYS | below this many days with the new fields, the study crawl values are used (flag in `dataFlags` when smoothing applies) | 10 |
 
+### Deep look (`deeplook.py`, DATA_LOG item 15)
+| Parameter | Meaning | Value / source |
+|---|---|---|
+| GUIDE | MLIT 修繕積立金ガイドライン R6 (¥/m²/month avg, ⅔ range) by size | <20F & <5,000 m² 335 (235–430) · 5,000–10,000 m² 252 (170–320) · 10,000–20,000 m² 271 (200–330) · ≥20,000 m² 255 (190–325) · 20F+ 338 (240–410) |
+| floor-area estimate | units × this unit's m² × 1.25 | rough; note when 4,000–6,500 m² |
+| price peers | 90 m²+ listings in the same area built ±5 years | `area-listings.js` |
+| fee peers | watchlist condos built ±5 years (管理費 also by units ≤60 / 61–150 / 151+) | `data/condo_peers.json` (daily, from mansions.json) |
+| repair-fund level | ≥ guideline low = good · ≥ 0.6× low = watch · below = risk | |
+| seismic standard | completion ≥1983-04 new · 1981-06–1983-03 check permit · earlier old | 建築基準法 1981-06-01 |
+| shaking | J-SHIS Y2024 AVR TTL_MTTL T30_I45/50/55/60_PS; ≥6弱 ≥70% risk, ≥50% watch | ranked vs study `hazard.quake30` |
+| ground | J-SHIS sstrct V4 ARV: ≥1.6 risk, ≥1.4 watch | |
+| hazard radius | centre point + worst of a 5×5 grid over ±100 m | SUUMO point is approximate |
+| commute | Yahoo next Wednesday arrive 08:45, IC, no paid express; door = access + train + 5 min; bus adds 3 min wait | vs study areas with 10 min home walk |
+| loan example | 100% of price, 35 years, rate from the Apartments tab (default 1.0%) | |
+| buying costs | 仲介: (3% + ¥60k) × 1.1 + 3–5% other; 売主: 3–5% | |
+| registered area | 壁芯 × 0.94 | tax-credit ≥50 m² check |
+
 ## Known gaps to fill on the next refresh
+- Deep look: MLIT 不動産情報ライブラリ API key (user to apply) → sale prices, zoning around the plot, planned roads, school districts, 大規模盛土, disaster history, 公示地価.
 - Crime: Ibaraki police statistics pages are offline (Tsukuba total only; Moriya, Tsukubamirai none). Saitama publishes no violent-crime figures per city.
 - 0–2 fees for 13 suburbs (imputed): Kashiwa, Inzai, Matsudo, Narashino, Shiroi, Yachiyo, Sakura, Kisarazu, Sodegaura, Ichihara, Kamagaya, Moriya, Toda, Koshigaya, Misato, Yashio.
 - Saitama cities' medical copay; つくば号 weekday timetable; 東名江田 bus timetable.

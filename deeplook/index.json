@@ -1,0 +1,65 @@
+{
+ "items": [
+  {
+   "id": "21658849",
+   "name": "ヴィークコート検見川浜",
+   "area": "Chiba Mihama",
+   "areaId": "chiba-mihama",
+   "price": 4880,
+   "m2": 91.56,
+   "year": 2010,
+   "date": "2026-10-13",
+   "office": "tokyo",
+   "url": "https://suumo.jp/ms/chuko/chiba/sc_chibashimihama/nc_21658849/",
+   "counts": {
+    "risk": 3,
+    "watch": 3,
+    "ask": 12,
+    "good": 15
+   },
+   "commute": 50,
+   "ts": "2026-10-13T04:27:58Z"
+  },
+  {
+   "id": "21709728",
+   "name": "アルシオン北綾瀬",
+   "area": "Adachi",
+   "areaId": "adachi",
+   "price": 5980,
+   "m2": 80.3,
+   "year": 1999,
+   "date": "2026-10-13",
+   "office": "tokyo",
+   "url": "https://suumo.jp/ms/chuko/tokyo/sc_adachi/nc_21709728/",
+   "counts": {
+    "risk": 5,
+    "watch": 5,
+    "ask": 12,
+    "good": 10
+   },
+   "commute": 50,
+   "ts": "2026-10-13T04:26:15Z"
+  },
+  {
+   "id": "21721029",
+   "name": "稲毛パイロットホーム7号棟",
+   "area": "Chiba Mihama",
+   "areaId": "chiba-mihama",
+   "price": 1780,
+   "m2": 77.41,
+   "year": 1972,
+   "date": "2026-10-13",
+   "office": "tokyo",
+   "url": "https://suumo.jp/ms/chuko/chiba/sc_chibashimihama/nc_21721029/",
+   "counts": {
+    "risk": 5,
+    "watch": 8,
+    "ask": 8,
+    "good": 11
+   },
+   "commute": 51,
+   "ts": "2026-10-13T04:26:06Z"
+  }
+ ],
+ "generated": "2026-10-13"
+}

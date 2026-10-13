@@ -1,0 +1,75 @@
+name: Deep look
+# One-listing analysis (deeplook.py). Started from the site's Deep look tab, which opens a pre-filled
+# issue titled "Deep look <id>" — only issues opened by the repo owner run. Can also be started by hand.
+on:
+  issues:
+    types: [opened]
+  workflow_dispatch:
+    inputs:
+      url:
+        description: SUUMO used-condo URL (https://suumo.jp/ms/chuko/…/nc_…/)
+        required: true
+      office:
+        description: Office id for the commute (see data/commute_matrix.json)
+        default: tokyo
+      rate:
+        description: Loan rate % for the monthly-cost example
+        default: '1.0'
+
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+
+concurrency:
+  group: deep-look
+  cancel-in-progress: false
+
+jobs:
+  analyse:
+    if: github.event_name == 'workflow_dispatch' || (startsWith(github.event.issue.title, 'Deep look') && github.event.issue.user.login == github.repository_owner)
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    permissions:
+      contents: write
+      issues: write
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - run: pip install requests beautifulsoup4 pillow
+
+      - name: Analyse listing
+        id: dl
+        env:
+          ISSUE_BODY: ${{ github.event.issue.body }}
+          IN_URL: ${{ inputs.url }}
+          IN_OFFICE: ${{ inputs.office }}
+          IN_RATE: ${{ inputs.rate }}
+          TELEGRAM_TOKEN: ${{ secrets.TELEGRAM_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+        run: python deeplook.py --ci
+
+      - name: Commit report
+        if: steps.dl.outputs.id != ''
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add deeplook
+          git commit -m "deep look: ${{ steps.dl.outputs.id }}"
+          for i in 1 2 3 4 5; do
+            git pull --rebase -q && git push && exit 0
+            sleep $((i * 10))
+          done
+          exit 1
+
+      - name: Reply and close issue
+        if: always() && github.event_name == 'issues'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          MSG: ${{ steps.dl.outputs.msg }}
+          NUM: ${{ github.event.issue.number }}
+        run: |
+          gh issue comment "$NUM" --repo "$GITHUB_REPOSITORY" --body "${MSG:-Deep look did not finish — see the workflow run.} (The page can take ~1 min to appear while GitHub Pages rebuilds.)"
+          gh issue close "$NUM" --repo "$GITHUB_REPOSITORY"

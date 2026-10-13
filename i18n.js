@@ -896,3 +896,39 @@ I18N.ja.map = {
     noNewProjects: u => `販売中の新築プロジェクトなし` + (u ? `（新築未入居の再販 ${u}件）` : ''),
   },
 };
+
+/* ── Deep look (deeplook.js) ── */
+I18N.en.tabDeep = 'Deep look';
+I18N.ja.tabDeep = '物件ディープ分析';
+I18N.en.dl = {
+  title: 'Deep look — one listing, in depth',
+  lead: 'Paste a SUUMO used-condo link. GitHub then analyses it in about 3 minutes: price and fees against similar flats and the MLIT repair-fund guideline, total monthly and buying costs, land rights, seismic standard, shaking, ground, flood and liquefaction at the address, the real door-to-door commute, building management, energy and windows, parking, the neighbourhood and contract terms. It ends with the questions to ask the agent and the documents to request. Every report is printable.',
+  office: 'Commute to', go: 'Analyse',
+  how: repo => `Opens a pre-filled issue on GitHub (${repo}) — tap <b>Create</b> while signed in as the repo owner. The issue is public but only contains the link; it closes itself when done and Telegram gets the result. Your loan rate from the Apartments tab is used.`,
+  issueNote: '(Created from the Deep look tab. The analysis runs automatically; this issue closes itself.)',
+  done: 'Reports', none: 'No reports yet.',
+  bad: 'That is not a SUUMO used-condo link (https://suumo.jp/ms/chuko/…/nc_…/). Houses and new condos come later.',
+  waiting: (m, s) => `Waiting for GitHub — ${m}:${s}. Tap "Create" on the GitHub page if you have not yet.`,
+  progress: 'progress', ready: 'Report ready:', slow: 'No report after 15 minutes — check the run:',
+  open: 'Open report', rerun: 'Run again',
+  min: (n, o) => `${n} min to ${o}`,
+  risk: n => `${n} risk`, watch: n => `${n} to check`, ask: n => `${n} to ask`, good: n => `${n} good`,
+  hdr: n => `<strong>${n}</strong> deep-look report${n === 1 ? '' : 's'}`,
+  btn: 'Deep look',
+};
+I18N.ja.dl = {
+  title: '物件ディープ分析',
+  lead: 'SUUMOの中古マンションのURLを貼り付けると、GitHubが約3分で分析します：類似物件・国交省ガイドラインと比べた価格と管理費・修繕積立金、毎月と購入時の総費用、権利、耐震基準、地震動・地盤・浸水・液状化（所在地点）、実際のドアtoドア通勤、管理、省エネ・窓、駐車場、周辺環境、契約条件。最後に仲介会社への質問と取り寄せる書類の一覧。印刷できます。',
+  office: '通勤先', go: '分析する',
+  how: repo => `GitHub（${repo}）に入力済みのIssueが開きます。リポジトリ所有者でログインして<b>Create</b>を押してください。Issueは公開ですがURLのみ。完了すると自動で閉じ、Telegramに通知します。金利は中古マンションタブの設定を使用。`,
+  issueNote: '（物件ディープ分析タブから作成。分析は自動で実行され、このIssueは自動で閉じます。）',
+  done: 'レポート', none: 'まだレポートはありません。',
+  bad: 'SUUMO中古マンションのURL（https://suumo.jp/ms/chuko/…/nc_…/）ではありません。戸建て・新築は今後対応。',
+  waiting: (m, s) => `GitHubの処理待ち — ${m}:${s}。まだの場合はGitHubの画面で「Create」を押してください。`,
+  progress: '進行状況', ready: 'レポート完成：', slow: '15分経ってもレポートがありません。実行状況を確認：',
+  open: 'レポートを開く', rerun: '再分析',
+  min: (n, o) => `${o}まで${n}分`,
+  risk: n => `リスク${n}`, watch: n => `要確認${n}`, ask: n => `質問${n}`, good: n => `良い点${n}`,
+  hdr: n => `ディープ分析レポート <strong>${n}</strong>件`,
+  btn: 'ディープ分析',
+};

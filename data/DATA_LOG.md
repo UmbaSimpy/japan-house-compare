@@ -609,3 +609,97 @@ Central wards (千代田, 中央, 港, 新宿, 渋谷, 豊島): commercial redev
   - It does the full item-13 sweep, rebuilds, logs and marks, then commits locally.
   - It never pushes, and it reports watchlist changes instead of applying them.
   - Prompt: `C:\Users\dammi\.claude\scheduled-tasks\japan-house-pipeline-sweep\SKILL.md`.
+
+## 15. Deep look: one-listing analysis (2026-10-13, user: "a super in depth look function" → v1 used condos, printable, "in the site there is a area where i paste the suumo link and github runs the analysis")
+
+**Research:** see `reports/Deep look - research and design.md` (SUUMO field inventory, fill rates on 52 pages, buyer checklist A–M, worked example).
+
+**What the user does:**
+1. Open the **Deep look** tab, or tap **🔍 Deep look** on any used-condo card.
+2. Paste the SUUMO link, pick the office and tap **Analyse**.
+3. This opens a pre-filled GitHub issue "Deep look <id>". Tap **Create** while signed in as the repo owner.
+
+**What happens next:**
+- `.github/workflows/deep-look.yml` runs `deeplook.py --ci`.
+  - Only issues opened by the repo owner run it. The body is passed through an env var, never interpolated into the script.
+- The report is written to `deeplook/<id>.html` (plus `.json` and `deeplook/index.json`) and committed, with a rebase-and-retry push.
+- The bot comments on the issue, closes it and sends a Telegram message.
+- The tab polls `deeplook/index.json` until the new report (`ts` newer than the click) appears; it times out after 15 minutes.
+- A run can also be started by hand from GitHub Actions (workflow_dispatch, with url / office / rate inputs).
+
+**`deeplook.py` method (all public data, no API key):**
+
+*Inputs*
+- SUUMO main, 物件概要 and 周辺環境 pages: fields, 特徴ピックアップ tags, free text, lat/lng and nearby facilities.
+
+*Price*
+- ¥/m² against the area's 90 m²+ listings built ±5 years (`area-listings.js`) and against all ages.
+- Other units in the same building. Price history from `data/condo_peers.json` or `data/area_listings_state.json`.
+- Walk-time percentile within the area.
+
+*Fees*
+- 修繕積立金/m² against the MLIT guideline (R6 table by building size).
+  - Floor area is estimated as units × this unit's m² × 1.25.
+  - A note is added when the estimate is near the 5,000 m² boundary.
+- 修繕積立金/m² and 管理費/m² against watchlist condos built ±5 years (`data/condo_peers.json`). 管理費 is also compared by unit-count band: ≤60, 61–150, 151+.
+
+*Costs*
+- Loan payment: 100% of the price, 35 years, the rate from the Apartments tab (default 1.0%).
+- Fees and fixed extras.
+- Agent fee: (3% + ¥60k) × 1.1 when sold through an agent (仲介).
+- Other buying costs: 3–5% of the price.
+
+*Legal and building*
+- Land rights; 用途地域 (commercial or industrial = watch); other restrictions.
+- Seismic standard by completion date: from 1983-04 = new; 1981-06 to 1983-03 = check the permit date; earlier = old.
+
+*Shaking and ground (J-SHIS)*
+- 30-year probability of ≥5強, ≥6弱 and ≥6強 (Y2024).
+- The ≥6弱 value is ranked against the study areas' population-weighted `hazard.quake30`.
+- Surface ground: landform, ARV and AVS30 (V4). ARV ≥1.6 = risk, ≥1.4 = watch.
+
+*Water and landslide*
+- Flood, storm surge, tsunami and landslide from the hazard portal tiles (`area_hazard.py`).
+  - Values are taken at the point and as the worst within ±100 m, because SUUMO's point is approximate.
+  - They are judged against the floor: risk when the flat itself could be wet at the point.
+- Liquefaction from 国土地理院 landform (`liq_at`), with both landform layers shown.
+
+*Commute*
+- Yahoo, next Wednesday, arrive by 08:45, from each of up to 3 listed stations.
+- Door-to-door = walk (or bus + walk + 3 min wait) + train + 5 min at the office end.
+- Compared with the 77 study areas' door-to-door values (10 min walk at home).
+- Area crowding, commuter bus and the number of lines.
+
+*Management, unit and energy*
+- Management type (自主 = risk, 巡回 = watch); fewer than 30 units = watch.
+- Major-repair cycle by building age; builder.
+- Floor (top or ground floor = watch); orientation; corner unit; 壁芯 → registered area (× 0.94).
+- Energy label fields; insulation era by build year; glazing tags or text; gas type; equipment tags.
+- Tax-credit tier: built 1982 or later, registered area ≥50 m², basic or energy tiers.
+
+*Parking, family, resale and contract*
+- Parking: the 空無 "full" text; mechanical parking; the area median fee from watchlist listings.
+- Family: nearest school, daycare, park, supermarket, clinic and station (周辺環境); area waitlist, fee and medical subsidy; crime rank; paediatrics; noise flags.
+- Resale: population trend and the 社人研 2050 projection; area listing count; area projects; walk >15 min; old seismic standard.
+- Contract: 売主 vs 仲介, liability waiver, inspection or defect insurance, 告知事項, handover date.
+
+*Output*
+- Each finding has a level: Risk / Check / Ask / OK / Good / Info.
+- The page ends with a list of questions for the agent, 10 documents to request and a visit checklist.
+- It prints on A4 (print CSS, coloured level labels kept); checked as PDF: 9 pages for the example.
+
+**Data added for CI:** `mansions.json` is not committed, so the daily workflow now writes `data/condo_peers.json` (`deeplook.py --peers`) and commits it. The daily push now also rebases and retries.
+
+**Checked on 3 listings (2026-10-13):**
+- **ヴィークコート検見川浜 (2010):** the cheapest of 15 peers; repair fund ¥165/m² (38th percentile, below the guideline); ≥6弱 73%; ARV 1.80; flood and storm surge 0.5–3 m (3rd floor, so the flat stays dry); liquefaction high; 50 min to Tokyo.
+- **稲毛パイロットホーム7号棟 (1972):** old seismic standard, ground floor, parking full (空無).
+- **アルシオン北綾瀬 (Adachi, 1999):** ground floor with flood and storm surge 3 m+; ARV 2.68; visiting-only management (巡回).
+
+**Not yet included:** these need the MLIT 不動産情報ライブラリ API key, which the user may apply for:
+- actual sale prices nearby
+- zoning of the neighbouring blocks, planned roads, 地区計画
+- school districts
+- 大規模盛土 and disaster history
+- 公示地価 trend
+
+Houses and new condos are not covered yet.

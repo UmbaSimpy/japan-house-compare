@@ -235,6 +235,7 @@ function cardFoot(kind, key, url) {
   const on = cmp.kind === kind && cmp.ids.includes(key);
   return `<div class="card-foot">
     <button class="cmp-btn${on ? ' on' : ''}" type="button" data-cmp="${kind}:${escAttr(key)}">${t(on ? 'cmpAdded' : 'cmpAdd')}</button>
+    ${kind === 'ms' && /\/ms\/chuko\//.test(url) ? `<a class="dl-btn" href="#deeplook" data-dl="${escAttr(url)}" title="${escAttr(t('dl.btn'))}">🔍<span class="dl-t"> ${t('dl.btn')}</span></a>` : ''}
     <a class="suumo-btn" href="${url}" target="_blank" rel="noopener"><span class="s-mark">S</span>${t('viewSuumo')} ${ICON.out}</a>
   </div>`;
 }
@@ -1324,6 +1325,7 @@ function refreshHeader() {
       t('map.analysed', MAP_DATA.areas.length, MAP_DATA.areas.filter(a => a.shortlisted).length);
     return;
   }
+  if (tab === 'deeplook' && typeof dlHeader === 'function') { document.getElementById('hdr-count').innerHTML = dlHeader(); return; }
   document.getElementById('hdr-count').innerHTML = tab === 'apartments'
     ? t('hdrCount', tabCounts.apartments, 'ms') : t('hdrCount', tabCounts.listings, 'house');
 }
@@ -1352,6 +1354,7 @@ function setLang(lang) {
   if (!document.getElementById('cmp-modal').hidden) renderCompare();
   resetCharts();
   if (typeof mapSetLang === 'function') mapSetLang();
+  if (typeof dlSetLang === 'function') dlSetLang();
   refreshHeader();
 }
 
@@ -1393,4 +1396,5 @@ initCompare();
 render();
 renderApartments();
 if (typeof initMap === 'function') initMap();
+if (typeof initDeepLook === 'function') initDeepLook();
 refreshHeader();
