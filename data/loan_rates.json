@@ -1,0 +1,134 @@
+{
+ "month": "2026-10",
+ "checked": "2026-10-13",
+ "presets": {
+  "v_np": 1.525,
+  "v_low": 1.195,
+  "v_net": 1.747,
+  "f10": 3.6,
+  "flat35": 3.83
+ },
+ "banks": {
+  "mufg": {
+   "v": 1.195,
+   "f10": 3.75,
+   "full": "4.18–4.35",
+   "asof": "2026-10",
+   "src": "https://www.bk.mufg.jp/kariru/jutaku/yuuguu/index.html",
+   "mode": "auto",
+   "status": "ok"
+  },
+  "smbc": {
+   "v": 1.525,
+   "f10": 4.75,
+   "asof": "2026-10",
+   "src": "https://www.smbc.co.jp/kojin/jutaku_loan/kinri/",
+   "mode": "auto",
+   "status": "ok"
+  },
+  "resona": {
+   "v": 1.25,
+   "f10": 4.205,
+   "asof": "2026-10",
+   "src": "https://www.resonabank.co.jp/kojin/loan_kinri.html",
+   "mode": "auto",
+   "status": "ok"
+  },
+  "chiba": {
+   "v": 1.5,
+   "f10": 3.56,
+   "asof": "2026-10",
+   "src": "https://www.chibabank.co.jp/kojin/services/loan/housing/housing_new",
+   "mode": "auto",
+   "status": "ok"
+  },
+  "yokohama": {
+   "v": 1.295,
+   "asof": "2026-10",
+   "src": "https://www.boy.co.jp/kojin/jutaku-loan/kariire/kinri/hendo.html",
+   "mode": "auto",
+   "status": "ok"
+  },
+  "paypay": {
+   "v": 1.63,
+   "f10": 3.57,
+   "asof": "2026-10",
+   "src": "https://www.paypay-bank.co.jp/mortgage/",
+   "mode": "auto",
+   "status": "ok"
+  },
+  "jibun": {
+   "v": 1.734,
+   "f10": 3.47,
+   "asof": "2026-10",
+   "src": "https://www.jibunbank.co.jp/products/homeloan/rate/",
+   "mode": "auto",
+   "status": "ok"
+  },
+  "rakuten": {
+   "v": 1.747,
+   "f10": 4.074,
+   "asof": "2026-10",
+   "src": "https://www.rakuten-bank.co.jp/home-loan/rate/",
+   "mode": "auto",
+   "status": "ok"
+  },
+  "sony": {
+   "v": 1.847,
+   "asof": "2026-10",
+   "src": "https://sonybank.jp/rate/hl02.html",
+   "mode": "auto",
+   "status": "ok"
+  },
+  "docomo": {
+   "v": 2.0,
+   "f10": 3.379,
+   "asof": "2026-10",
+   "src": "https://www.netbk.co.jp/contents/lineup/home-loan/",
+   "mode": "auto",
+   "status": "ok"
+  },
+  "flat35": {
+   "full": "3.83",
+   "asof": "2026-10",
+   "src": "https://www.flat35.com/",
+   "mode": "auto",
+   "status": "ok"
+  },
+  "tokyostar": {
+   "src": "https://www.tokyostarbank.co.jp/products/loan/homeloan/homeloan_star/",
+   "mode": "auto",
+   "status": "ok",
+   "v": 2.4,
+   "asof": "2026-10"
+  },
+  "aeon": {
+   "v": 1.04,
+   "f10": 3.73,
+   "asof": "2026-10",
+   "checked": "2026-10-13",
+   "src": "https://www.aeonbank.co.jp/housing-loan/",
+   "mode": "manual",
+   "status": "manual"
+  },
+  "mizuho": {
+   "v": 1.275,
+   "f10": 3.6,
+   "asof": "2026-10",
+   "checked": "2026-10-13",
+   "src": "https://www.mizuhobank.co.jp/retail/products/loan/housing/",
+   "mode": "manual",
+   "status": "manual"
+  },
+  "shinsei": {
+   "v": 1.34,
+   "f10": 3.4,
+   "asof": "2026-10",
+   "checked": "2026-10-13",
+   "src": "https://www.sbishinseibank.co.jp/retail/housing/",
+   "mode": "manual",
+   "status": "manual"
+  }
+ },
+ "rules": "official sources only; keep old value if a source fails, is out of 0.1–8.0%, or moves > 0.6 pt"
+}

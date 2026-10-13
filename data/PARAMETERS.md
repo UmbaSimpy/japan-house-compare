@@ -218,7 +218,11 @@ Pros/cons thresholds (`map.js`): burglary ≤0.5/10k pro, ≥1.5 con; violent �
 | comfortable price | Loan tab | the price where all-in ≤ that limit at today's rate + 1.5 points |
 | bank limit | Loan tab | all loan payments ≤ 30 / 35% of gross at a screening rate of 3.0 / 3.5 / 4.0% |
 | tax credit | 0.7% × min(year-end balance, cap) | used home: no certificate ¥20M / 10 years; energy ¥20M (child ¥30M) / 13 years; ZEH / long-life ¥35M (child ¥45M) / 13 years |
-| rate snapshot | presets and lender table | October 2026 (`LN_RATES_DATE`), from the research report; refresh monthly |
+| rate update | presets and lender table | `data/loan_rates.json`, written on the 2nd of each month by `loan_rates.py` from official lender pages (DATA_LOG item 17) |
+| preset rules | v_np · v_low · v_net · f10 · flat35 | SMBC variable · lowest megabank variable · median online-bank variable · median 10-year fixed · JHF most-common Flat 35 |
+| rate checks | loan_rates.py | keep last value if a source fails, is outside 0.1–8%, or moves > 0.6 pt (needs `accept`) |
+| bank discounts kept by hand | loan_rates.py `MANUAL_DISCOUNT` | Yokohama 2.08 from its standard variable rate (re-check when the bank changes its plan) |
+| manual lenders | Mizuho, AEON, SBI Shinsei | their sites block automated reading; check in a browser monthly and update `banks.<id>` in the JSON |
 
 ## Known gaps to fill on the next refresh
 - Deep look: MLIT 不動産情報ライブラリ API key (user to apply) → sale prices, zoning around the plot, planned roads, school districts, 大規模盛土, disaster history, 公示地価.

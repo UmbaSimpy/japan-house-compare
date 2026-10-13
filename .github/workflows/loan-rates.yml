@@ -1,0 +1,47 @@
+name: Monthly loan rates
+# Reads this month's home-loan rates from the lenders' official pages / data files and updates
+# data/loan_rates.json (Loan tab presets + lender table, Deep look default rate). See loan_rates.py
+# and DATA_LOG item 17. Banks publish new rates on the 1st, so this runs on the 2nd.
+on:
+  schedule:
+    - cron: '0 1 2 * *'   # 10:00 JST on the 2nd of each month
+  workflow_dispatch:
+    inputs:
+      accept:
+        description: 'Accept changes larger than 0.6 points (after checking the bank pages)'
+        type: boolean
+        default: false
+
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+
+jobs:
+  rates:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Fetch rates and send summary
+        env:
+          TELEGRAM_TOKEN:   ${{ secrets.TELEGRAM_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+          ACCEPT: ${{ inputs.accept }}
+        run: python loan_rates.py --telegram
+      - name: Commit
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add data/loan_rates.json
+          git diff --staged --quiet && echo "No changes to commit" || \
+            git commit -m "chore: monthly loan rates $(date -u +'%Y-%m')"
+      - name: Push
+        run: |   # another workflow may have pushed meanwhile → rebase and retry
+          for i in 1 2 3 4 5; do
+            git pull --rebase -q && git push && exit 0
+            sleep $((i * 10))
+          done
+          exit 1

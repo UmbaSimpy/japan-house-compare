@@ -774,3 +774,70 @@ Houses and new condos are not covered yet.
 - Every finding, section header, key figure, the label legend and the three end lists now have an **ⓘ** button. Hover shows a one-line summary; click opens a popup with four parts: What it is / Why it matters / How to read this result / What to do. The popup closes with ×, Esc or a click outside, and is hidden in print.
 - The text lives in **`deeplook/glossary.js`** (70 entries, each in EN and JA), shared by all reports, so editing it updates every report without regenerating.
 - `deeplook.py` assigns a key to each finding (`GKEY`: per section, by regex on the English heading). All 4 regenerated reports were checked: every finding has a key and every key exists.
+
+## 17. Monthly loan rates from official sources (2026-10-13, user: "proceed / use official sources / Automate where possible")
+
+**What:**
+- `loan_rates.py` reads this month's rates from each lender's own site and writes `data/loan_rates.json`.
+- `.github/workflows/loan-rates.yml` runs it at 10:00 JST on the **2nd of each month** (banks publish on the 1st). It also has a manual trigger.
+- It commits the JSON and sends a Telegram summary: preset changes, lender changes, warnings, and the lenders to check by hand.
+- `loan.js` loads the JSON at start-up and updates:
+  - the presets
+  - the lender table, sorted by variable rate; each name links to its official page
+  - the "Rates now (YYYY-MM)" heading
+- A preset the user picked follows the new rate; a custom rate stays.
+- `deeplook.py` takes its default rate from `presets.v_np`.
+- The hard-coded values in `loan.js` are only the fallback if the JSON can't be loaded.
+- No aggregator sites (kakaku.com etc.) are used.
+
+**Sources (official only):**
+
+| Lender | Source | What is read |
+|---|---|---|
+| MUFG | yuuguu page (static HTML) | variable, 10-year fixed, full-term 21–35 years |
+| SMBC | `/kojin/cmn/scripts/kinri.json` (feeds its rate page) | list rates − the "最大▲" discount on the kinri page (1.85) |
+| Resona | `/common/kinri/json/jutaku.json` | 新規① applied variable / 10-year fixed |
+| Chiba Bank | housing_new page (static HTML) | 割引後金利 variable / 10-year fixed |
+| Yokohama Bank | `/master/include/rate/jyutaku/hendo_tekiyo.html` | standard variable − discount 2.08 (published only in a JS-built page; `MANUAL_DISCOUNT` in loan_rates.py) |
+| PayPay Bank | `login.paypay-bank.co.jp/wctx/MortgageRates.do` (JSON that feeds its page) | new-loan 変動 / 10年固定, applied rate |
+| au Jibun Bank | rate page (static HTML) | 全期間引下げ variable; 当初期間引下げ 10-year fixed |
+| Rakuten Bank | `/shared/integrate/rate/home-loan.json` | this month's variable / 10-year fixed after discount |
+| Sony Bank | `/data/009.json` base rate − the 変動セレクト discount on `rate/hl02.html` (1.41) | variable |
+| Docomo SMTB | `/contents/data/csv/kinri_hl_mr.js` | 通期引下げ variable; 当初引下げ 10-year fixed |
+| Tokyo Star | `/common2016/xml/loan.xml` (スター住宅ローン, for non-PR foreign residents) | lowest variable. Its server needs legacy TLS renegotiation, which is enabled for that host only |
+| Flat 35 | flat35.com top page (住宅金融支援機構) | this month's 最頻金利, 21–35 years, ≤90% |
+| **Mizuho, AEON, SBI Shinsei** | **manual**: their sites return 403 or don't answer automated requests | checked by hand in a browser; values recorded in the JSON with a `checked` date |
+
+**Checks:**
+- A failed source, or a value outside 0.1–8%, keeps last month's value with status `stale`.
+- A move larger than 0.6 points keeps the old value with status `suspect` until someone checks the page and re-runs with the workflow input `accept`.
+- ✱ in the table marks manual, stale or suspect lenders; the tooltip gives the last check.
+
+**Presets (derived each month):**
+
+| Preset | Rule |
+|---|---|
+| v_np | SMBC variable |
+| v_low | lowest of MUFG / Mizuho / Resona |
+| v_net | median of PayPay / au Jibun / Rakuten / Sony / Docomo SMTB |
+| f10 | median 10-year fixed of all lenders |
+| flat35 | the JHF most-common rate |
+
+**Hand check on 2026-10-13:**
+- Mizuho 1.275 / 3.60 (as of 10/1) ✓
+- AEON 1.04 (≤80% of price; 1.12 above) / 3.73. The old 0.99 was out of date.
+- SBI Shinsei 1.34 (with its deposit-account discount; 1.41 without) / 3.40 (was 3.38)
+
+**Corrections found by the first run:**
+
+| Lender | Change |
+|---|---|
+| PayPay | 1.58 → 1.63 (new base rate 3.53 from 10/1) |
+| au Jibun | 1.68 → 1.734 |
+| Chiba / PayPay / au Jibun / Rakuten | 10-year fixed added (3.56 / 3.57 / 3.47 / 4.074) |
+| Tokyo Star | now has a rate (2.40–3.50) |
+
+**Other changes:**
+- The guide and note now carry Tokyo Star's official スター住宅ローン conditions: full-time, 1+ year in the job, income ≥ ¥4M (≥ ¥3M if ≤ 40), no guarantee fee, rate can drop after PR. The earlier "Japanese ability" claim was not on the official page and was removed.
+- Notes that had fixed numbers in them (MUFG, Rakuten, Flat 35) now describe the product instead, so they can't go out of date.
+- Fixed: "Rates now (undefined)" heading.

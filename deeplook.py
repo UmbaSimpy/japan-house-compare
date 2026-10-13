@@ -49,6 +49,10 @@ GUIDE = [("under 20 floors, floor area < 5,000 m²", 335, 235, 430),
          ("under 20 floors, ≥ 20,000 m²", 255, 190, 325),
          ("20 floors or more", 338, 240, 410)]
 LOAN = {"rate": 1.525, "down": 10.0, "years": 35, "tax": 0.25}   # Loan tab defaults (loan.js); the issue body overrides them
+try:   # default rate = this month's "variable · without PR" preset (data/loan_rates.json, loan_rates.py)
+    LOAN["rate"] = json.loads((Path(__file__).parent / "data" / "loan_rates.json").read_text(encoding="utf-8"))["presets"]["v_np"]
+except Exception:
+    pass
 
 SRC = {
     "guide": ("MLIT 修繕積立金ガイドライン (2024)", "https://www.mlit.go.jp/jutakukentiku/house/content/001747009.pdf"),

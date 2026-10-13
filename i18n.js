@@ -938,7 +938,7 @@ I18N.en.tabLoan = 'Loan';
 I18N.ja.tabLoan = '住宅ローン';
 I18N.en.ln = {
   title: 'Home loan', print: 'Print / save as PDF',
-  lead: 'One set of loan settings for the whole site: the monthly figures on every card, the comparison and Deep look reports use what you set here. Rates are an October 2026 snapshot; banks change them every month.',
+  lead: 'One set of loan settings for the whole site: the monthly figures on every card, the comparison and Deep look reports use what you set here. Rates are read from the lenders’ official sites on the 2nd of each month; a preset you picked follows the new rate.',
   gHome: 'The home', price: 'Price', man: '万円', priceHint: 'or tap 💴 on any listing',
   down: 'Down payment', costs: 'Buying costs', costsHint: 'used flat via an agent ≈ 6–9%, from a developer ≈ 4%', costsInLoan: 'Add buying costs to the loan (諸費用ローン)',
   gLoan: 'The loan', preset: 'Loan type', rate: 'Rate', rate2: 'Rate after the fixed period', rate2Hint: 'switches to variable with a smaller discount',
@@ -953,7 +953,8 @@ I18N.en.ln = {
   hShock: 'If the rate rises', shockNote: 'Monthly loan payment (without bonus) if the variable rate goes up. Payments are recalculated on what is left, as at banks without the 5-year / 125% rules; with those rules the payment rises more slowly but the unpaid interest piles up.',
   hTypes: 'Loan types side by side', typesNote: 'Same price, down payment and years at each preset rate.',
   hBorrow: 'What can we borrow?', hBal: 'Balance over time', hRates: d => `Rates now (${d})`,
-  ratesNote: 'Lowest advertised rates for new loans. They need the bank\'s conditions (salary account, fee type, share of the price borrowed, screening). The real cost is rate + fees + guarantee + insurance add-ons. Check each bank before applying.',
+  ratesNote: 'Lowest advertised rates for new loans, read automatically on the 2nd of each month from each lender\'s official site (click a name to open it). ✱ = that site blocks automated reading, so the figure is from the last check by hand. The rates need the bank\'s conditions (salary account, fee type, share of the price borrowed, screening). The real cost is rate + fees + guarantee + insurance add-ons. Check each bank before applying.',
+  manualT: d => `Checked by hand (last: ${d}); the bank's site blocks automated reading`,
   hGuide: 'Guide for first-time buyers',
   allIn: 'All-in per month', perMonth: 'loan + fees + parking + property tax',
   warnPR: 'This loan type usually needs permanent residency or Japanese nationality. With a work visa, use "Variable · without PR" or check the lenders marked in the rate table.',
@@ -978,12 +979,12 @@ I18N.en.ln = {
   tLender: 'Lender', tVar: 'Variable', tF10: '10-year fixed', tFull: 'Full-term fixed', tNP: 'Without PR?', tNote: 'Note',
   np: { yes: 'Yes (valid status)', cond: 'With conditions', spouse: 'With a Japanese / PR spouse', no: 'PR needed', ask: 'Ask' },
   bn: {
-    aeon: 'Has a product for residents without PR (conditions apply)', mufg: 'List rate 3.375% − 2.18% discount; fee 2.2%, no guarantee fee',
+    aeon: 'Has a product for residents without PR (conditions apply); rate shown is for borrowing ≤ 80% of the price', mufg: 'Same discount from the list rate for the whole loan; fee 2.2%, no guarantee fee',
     mizuho: 'Rate for the fee-type product', yokohama: 'Screening at 4.0%, ≤35% of income', shinsei: 'Japanese / PR spouse can be the joint guarantor',
     chiba: 'Main local bank for the Chiba areas', smbc: 'Residents without PR can apply with a valid status',
     no125: 'No 5-year / 125% rules: payments follow rates directly', jibun: 'Screening rate ≈ 3.83%',
-    rakuten: 'Fixed fee; cancer-50% and all-illness cover included; Flat 35 3.83%', tokyostar: 'Non-PR possible with conditions (incl. Japanese ability)',
-    flat35: '≤90% of price; 3.94% above 90%; 子育てプラス −0.25%/child for 5 years',
+    rakuten: 'Fixed fee; cancer-50% and all-illness cover included; also offers Flat 35', tokyostar: 'スター住宅ローン for non-PR residents: 1+ year in the job, income ≥ ¥4M (≥ ¥3M if ≤ 40); rate range shown is the lowest',
+    flat35: 'Most common rate, 21–35 years, ≤90% of price (higher above 90%); 子育てプラス −0.25%/child for 5 years',
   },
   p: { v_np: 'Variable · without PR (SMBC)', v_low: 'Variable · lowest (megabanks, PR)', v_net: 'Variable · online banks', f10: '10-year fixed', flat35: 'Flat 35 full-term fixed', custom: 'Custom' },
   cardLine: v => `≈ ${v}/month all-in`, up1: v => `+1%: +${v}`, fixedTag: '(fixed rate)', btn: 'Loan', btnTitle: 'Open this price in the loan simulator',
@@ -1003,10 +1004,10 @@ I18N.en.ln = {
 <details open><summary>Your situation: work visa now, permanent residency later</summary>
 <ul>
 <li><b>Now (work visa):</b> most banks require permanent residency (PR) or Japanese nationality. In the MLIT survey, 621 of 1,008 lenders accept PR holders, but only 38 accept other foreign residents. Realistic options now:
-  <ul><li><b>SMBC</b>: a valid residence status is enough (variable 1.525%).</li>
+  <ul><li><b>SMBC</b>: a valid residence status is enough (its variable rate is the default here).</li>
   <li><b>AEON Bank</b>: a product for residents without PR, with conditions.</li>
   <li><b>SBI Shinsei</b>: if a Japanese or PR spouse is the joint guarantor.</li>
-  <li><b>Tokyo Star Bank</b>: with conditions, including Japanese ability.</li></ul>
+  <li><b>Tokyo Star Bank</b> — スター住宅ローン, made for foreign residents without PR: full-time, 1+ year in the job in Japan, income ≥ ¥4M (or ≥ ¥3M and age ≤ 40). Variable rate from about 2.4% with your salary paid into the account; no guarantee fee; free prepayment; fee 2.2–3.3%. The rate can be lowered once you get PR.</li></ul>
   Expect stricter checks: years in Japan and in the job, the time left on your visa, sometimes a larger down payment (10–20%). Flat 35 is not available without PR.</li>
 <li><b>After PR (expected within ~2 years):</b> almost every bank opens up, including the cheapest megabank variable rates (~1.2%) and Flat 35.</li>
 <li><b>Buy now or wait?</b>
@@ -1073,7 +1074,7 @@ I18N.en.ln = {
 };
 I18N.ja.ln = {
   title: '住宅ローン', print: '印刷・PDF保存',
-  lead: 'サイト全体で共通のローン設定です。各物件カードの月々の金額、比較表、物件ディープ分析は、ここでの設定を使います。金利は2026年10月時点のもので、各行が毎月見直します。',
+  lead: 'サイト全体で共通のローン設定です。各物件カードの月々の金額、比較表、物件ディープ分析は、ここでの設定を使います。金利は毎月2日に各金融機関の公式サイトから更新され、選んだプリセットの金利も自動で追従します。',
   gHome: '物件', price: '物件価格', man: '万円', priceHint: '各物件の💴ボタンからも入力できます',
   down: '頭金', costs: '諸費用', costsHint: '中古・仲介で約6〜9%、売主物件で約4%', costsInLoan: '諸費用もローンに含める（諸費用ローン）',
   gLoan: 'ローン', preset: '金利タイプ', rate: '金利', rate2: '固定期間終了後の金利', rate2Hint: '終了後は変動金利（優遇幅は縮小）',
@@ -1088,7 +1089,8 @@ I18N.ja.ln = {
   hShock: '金利が上がったら', shockNote: '変動金利が上昇した場合の毎月のローン返済額（ボーナス返済を除く）。残高と残り期間で返済額を再計算しています（5年ルール・125%ルールのない銀行と同じ）。これらのルールがある場合、返済額の上昇は緩やかですが、払いきれない利息（未払利息）が残ることがあります。',
   hTypes: '金利タイプの比較', typesNote: '同じ価格・頭金・返済期間で、各金利タイプを比べたものです。',
   hBorrow: 'いくら借りられる？', hBal: 'ローン残高の推移', hRates: d => `現在の金利（${d}）`,
-  ratesNote: '新規借入の最優遇金利です。適用には各行の条件（給与振込、手数料型、借入割合、審査結果など）があります。実際の負担は金利＋事務手数料＋保証料＋団信の上乗せで比べてください。申込前に各行で必ず確認を。',
+  ratesNote: '新規借入の最優遇金利です。毎月2日に各金融機関の公式サイトから自動で取得しています（名前をクリックすると公式ページが開きます）。✱ は自動取得ができないサイトのため、最後に手作業で確認した値です。適用には各行の条件（給与振込、手数料型、借入割合、審査結果など）があります。実際の負担は金利＋事務手数料＋保証料＋団信の上乗せで比べてください。申込前に各行で必ず確認を。',
+  manualT: d => `手作業で確認（最終：${d}）。公式サイトが自動取得に対応していません`,
   hGuide: 'はじめての住宅購入ガイド',
   allIn: '毎月の総額', perMonth: 'ローン返済＋管理費等＋駐車場＋固定資産税等',
   warnPR: 'この金利タイプは通常、永住権または日本国籍が必要です。就労ビザの場合は「変動・永住権なし可（三井住友銀行）」を選ぶか、金利表で利用可能な金融機関を確認してください。',
@@ -1113,12 +1115,12 @@ I18N.ja.ln = {
   tLender: '金融機関', tVar: '変動', tF10: '10年固定', tFull: '全期間固定', tNP: '永住権なし', tNote: '備考',
   np: { yes: '可（在留資格があれば）', cond: '条件付きで可', spouse: '日本人・永住者の配偶者が連帯保証人なら可', no: '永住権が必要', ask: '要確認' },
   bn: {
-    aeon: '永住権がなくても利用できる商品あり（条件付き）', mufg: '店頭金利3.375%−優遇幅2.18%、事務手数料2.2%、保証料なし',
+    aeon: '永住権がなくても利用できる商品あり（条件付き）。表示は借入が物件価格の80%以内の場合', mufg: '完済まで店頭金利から同じ優遇幅、事務手数料2.2%、保証料なし',
     mizuho: '手数料型の金利', yokohama: '審査金利4.0%、返済負担率35%以内', shinsei: '日本人・永住者の配偶者を連帯保証人にできる',
     chiba: '千葉エリアの主な地方銀行', smbc: '有効な在留資格があれば永住権なしでも申込可',
     no125: '5年ルール・125%ルールなし（金利変動がそのまま返済額に反映）', jibun: '審査金利は約3.83%',
-    rakuten: '定額の事務手数料、がん50%保障・全疾病保障付き、フラット35は3.83%', tokyostar: '条件付きで永住権なしでも可（日本語能力など）',
-    flat35: '融資率9割以下、9割超は3.94%、子育てプラスで子1人につき当初5年間0.25%引下げ',
+    rakuten: '定額の事務手数料、がん50%保障・全疾病保障付き、フラット35も取扱い', tokyostar: '永住権のない外国籍の方向け「スター住宅ローン」：勤続1年以上、年収400万円以上（40歳以下は300万円以上）。表示は最低金利',
+    flat35: '最頻金利（21〜35年・融資率9割以下、9割超は高め）、子育てプラスで子1人につき当初5年間0.25%引下げ',
   },
   p: { v_np: '変動・永住権なし可（三井住友銀行）', v_low: '変動・最低水準（メガバンク、永住権要）', v_net: '変動・ネット銀行', f10: '10年固定', flat35: '全期間固定（フラット35）', custom: 'カスタム' },
   cardLine: v => `毎月の総額 約${v}`, up1: v => `+1%で+${v}`, fixedTag: '（固定金利）', btn: 'ローン', btnTitle: 'この価格でローンを試算',
@@ -1138,10 +1140,10 @@ I18N.ja.ln = {
 <details open><summary>あなたの状況：今は就労ビザ、いずれ永住権</summary>
 <ul>
 <li><b>現在（就労ビザ）</b>：多くの金融機関は永住権または日本国籍を条件にしています。国交省の調査では、1,008機関のうち永住者に融資するのは621機関、それ以外の外国籍の方に融資するのは38機関のみです。現実的な選択肢：
-  <ul><li><b>三井住友銀行</b>：有効な在留資格があれば申込可（変動1.525%）。</li>
+  <ul><li><b>三井住友銀行</b>：有効な在留資格があれば申込可（このサイトの初期設定の金利）。</li>
   <li><b>イオン銀行</b>：永住権がなくても利用できる商品あり（条件付き）。</li>
   <li><b>SBI新生銀行</b>：日本人または永住者の配偶者が連帯保証人になる場合。</li>
-  <li><b>東京スター銀行</b>：日本語能力などの条件付き。</li></ul>
+  <li><b>東京スター銀行</b>：永住権のない外国籍の方向けの「スター住宅ローン」。正社員で日本での勤続1年以上、年収400万円以上（または300万円以上かつ40歳以下）。給与振込指定で変動金利は約2.4%から、保証料なし、繰上返済手数料無料、事務手数料2.2〜3.3%。永住許可後は金利優遇の可能性あり。</li></ul>
   在日年数・勤続年数・在留期間の残りなどの審査が厳しくなり、頭金（10〜20%）を求められることもあります。フラット35は永住権がないと利用できません。</li>
 <li><b>永住権取得後（約2年以内の見込み）</b>：ほぼすべての金融機関が対象になり、メガバンクの低い変動金利（約1.2%）やフラット35も利用できます。</li>
 <li><b>今買うか、待つか</b>

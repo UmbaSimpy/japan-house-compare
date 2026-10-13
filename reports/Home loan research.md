@@ -236,7 +236,9 @@ Built:
 - **3. "+1%" rate-rise figure** on cards and in Deep look.
 - **Default rate:** 1.525% (SMBC variable, no PR needed), with 10% down and 35 years.
 
-See DATA_LOG item 16 and PARAMETERS.md "Loan". Still open: proposals 4–9.
+- **5. Monthly rate update (2026-10-13):** `loan_rates.py` + GitHub Action on the 2nd of each month, official sources only. 12 lenders and Flat 35 are automatic; Mizuho, AEON and SBI Shinsei are checked by hand (see DATA_LOG item 17).
+
+See DATA_LOG items 16–17 and PARAMETERS.md "Loan". Still open: proposals 4 and 6–9.
 
 ## Sources
 - Mogecheck, [住宅ローン金利2026年10月の最新動向](https://mogecheck.jp/articles/show/51rzNy7XEJ5o4mQ6ZkVv) (bank rates, indices, BOJ timeline, prime-rate change)

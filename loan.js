@@ -2,35 +2,38 @@
    LOAN — one set of loan settings for the whole site (cards, compare, Deep look) + the Loan tab
    (simulator, rate-rise table, borrowing estimate, rate snapshot, guide).
    Settings: localStorage 'loanCfg' (JSON). 'loanRate' is kept in sync for older code.
-   Rates: snapshot of October 2026 from reports/Home loan research.md — refresh monthly.
+   Rates: data/loan_rates.json, updated on the 2nd of each month from the lenders' official pages
+   (loan_rates.py + .github/workflows/loan-rates.yml, DATA_LOG item 17). The values below are the
+   fallback if that file can't be loaded (October 2026).
 ════════════════════════════════════════════════ */
-const LN_RATES_DATE = '2026-10';
+let LN_RATES_DATE = '2026-10';
 // pr: true = these rates usually need Japanese nationality or permanent residency
 const LN_PRESETS = [
   { id: 'v_np',   rate: 1.525, pr: false },              // SMBC variable — a valid residence status is enough
-  { id: 'v_low',  rate: 1.2,   pr: true },               // MUFG 1.195 · Mizuho 1.275 · Resona 1.25
-  { id: 'v_net',  rate: 1.7,   pr: true },               // online banks 1.58–2.0
-  { id: 'f10',    rate: 3.6,   pr: true, fix: 10, rate2: 2.0 },   // 10-year fixed, then variable with a smaller discount
+  { id: 'v_low',  rate: 1.195, pr: true },               // lowest of MUFG · Mizuho · Resona
+  { id: 'v_net',  rate: 1.747, pr: true },               // median of the online banks
+  { id: 'f10',    rate: 3.6,   pr: true, fix: 10, rate2: 2.0 },   // median 10-year fixed; then variable with a smaller discount
   { id: 'flat35', rate: 3.83,  pr: true, fix: 99 },      // full-term fixed (Flat 35, ≤90% of price)
   { id: 'custom' },
 ];
 // np: can a resident WITHOUT permanent residency apply? yes · cond · spouse · no · ask
+// mode: auto = read monthly from the official source · manual = the site blocks automated reading, checked by hand
 const LN_BANKS = [
-  { en: 'AEON Bank', ja: 'イオン銀行', v: 0.99, f10: 3.73, np: 'cond', note: 'aeon' },
-  { en: 'MUFG', ja: '三菱UFJ銀行', v: 1.195, f10: 3.75, full: '4.18–4.35', np: 'no', note: 'mufg' },
-  { en: 'Resona', ja: 'りそな銀行', v: 1.25, f10: 4.205, np: 'ask' },
-  { en: 'Mizuho', ja: 'みずほ銀行', v: 1.275, f10: 3.60, np: 'ask', note: 'mizuho' },
-  { en: 'Yokohama Bank', ja: '横浜銀行', v: 1.295, np: 'ask', note: 'yokohama' },
-  { en: 'SBI Shinsei', ja: 'SBI新生銀行', v: 1.34, f10: 3.38, np: 'spouse', note: 'shinsei' },
-  { en: 'Chiba Bank', ja: '千葉銀行', v: 1.50, np: 'ask', note: 'chiba' },
-  { en: 'SMBC', ja: '三井住友銀行', v: 1.525, f10: 4.75, np: 'yes', note: 'smbc' },
-  { en: 'PayPay Bank', ja: 'PayPay銀行', v: 1.58, np: 'ask', note: 'no125' },
-  { en: 'au Jibun Bank', ja: 'auじぶん銀行', v: 1.68, np: 'ask', note: 'jibun' },
-  { en: 'Rakuten Bank', ja: '楽天銀行', v: 1.747, full: '3.83', np: 'ask', note: 'rakuten' },
-  { en: 'Sony Bank', ja: 'ソニー銀行', v: 1.847, np: 'ask', note: 'no125' },
-  { en: 'Docomo SMTB Net Bank', ja: 'ドコモSMTBネット銀行', v: 2.00, f10: 3.379, np: 'ask' },
-  { en: 'Tokyo Star Bank', ja: '東京スター銀行', np: 'cond', note: 'tokyostar' },
-  { en: 'Flat 35 (JHF)', ja: 'フラット35（住宅金融支援機構）', full: '3.83', np: 'no', note: 'flat35' },
+  { id: 'aeon', en: 'AEON Bank', ja: 'イオン銀行', v: 1.04, f10: 3.73, np: 'cond', note: 'aeon', mode: 'manual' },
+  { id: 'mufg', en: 'MUFG', ja: '三菱UFJ銀行', v: 1.195, f10: 3.75, full: '4.18–4.35', np: 'no', note: 'mufg' },
+  { id: 'resona', en: 'Resona', ja: 'りそな銀行', v: 1.25, f10: 4.205, np: 'ask' },
+  { id: 'mizuho', en: 'Mizuho', ja: 'みずほ銀行', v: 1.275, f10: 3.60, np: 'ask', note: 'mizuho', mode: 'manual' },
+  { id: 'yokohama', en: 'Yokohama Bank', ja: '横浜銀行', v: 1.295, np: 'ask', note: 'yokohama' },
+  { id: 'shinsei', en: 'SBI Shinsei', ja: 'SBI新生銀行', v: 1.34, f10: 3.40, np: 'spouse', note: 'shinsei', mode: 'manual' },
+  { id: 'chiba', en: 'Chiba Bank', ja: '千葉銀行', v: 1.50, f10: 3.56, np: 'ask', note: 'chiba' },
+  { id: 'smbc', en: 'SMBC', ja: '三井住友銀行', v: 1.525, f10: 4.75, np: 'yes', note: 'smbc' },
+  { id: 'paypay', en: 'PayPay Bank', ja: 'PayPay銀行', v: 1.63, f10: 3.57, np: 'ask', note: 'no125' },
+  { id: 'jibun', en: 'au Jibun Bank', ja: 'auじぶん銀行', v: 1.734, f10: 3.47, np: 'ask', note: 'jibun' },
+  { id: 'rakuten', en: 'Rakuten Bank', ja: '楽天銀行', v: 1.747, f10: 4.074, np: 'ask', note: 'rakuten' },
+  { id: 'sony', en: 'Sony Bank', ja: 'ソニー銀行', v: 1.847, np: 'ask', note: 'no125' },
+  { id: 'docomo', en: 'Docomo SMTB Net Bank', ja: 'ドコモSMTBネット銀行', v: 2.00, f10: 3.379, np: 'ask' },
+  { id: 'tokyostar', en: 'Tokyo Star Bank', ja: '東京スター銀行', v: 2.40, np: 'cond', note: 'tokyostar' },
+  { id: 'flat35', en: 'Flat 35 (JHF)', ja: 'フラット35（住宅金融支援機構）', full: '3.83', np: 'no', note: 'flat35' },
 ];
 // 住宅ローン控除 for a used home (2026 reform): cap ¥万 [normal, child household] and years
 const LN_CREDIT = { basic: { cap: [2000, 2000], yrs: 10 }, energy: { cap: [2000, 3000], yrs: 13 }, zeh: { cap: [3500, 4500], yrs: 13 } };
@@ -49,6 +52,28 @@ let LN = (() => {
   }
   return Object.assign({}, LN_DEFAULT, c);
 })();
+// Load this month's rates (data/loan_rates.json). Presets the user picked follow the new rate; a custom rate stays.
+async function lnRatesLoad() {
+  let d;
+  try { d = await (await fetch('data/loan_rates.json?t=' + Date.now(), { cache: 'no-store' })).json(); } catch (e) { return; }
+  if (!d || !d.banks) return;
+  LN_RATES_DATE = d.month || LN_RATES_DATE;
+  LN_BANKS.forEach(b => {
+    const x = d.banks[b.id]; if (!x) return;
+    ['v', 'f10', 'full'].forEach(f => { b[f] = x[f] != null ? x[f] : undefined; });
+    Object.assign(b, { mode: x.mode, status: x.status, asof: x.asof, src: x.src });
+  });
+  const flat = LN_BANKS.find(b => b.id === 'flat35'); LN_BANKS.splice(LN_BANKS.indexOf(flat), 1);
+  LN_BANKS.sort((a, b) => (a.v || 99) - (b.v || 99)); LN_BANKS.push(flat);
+  let follow = null;
+  LN_PRESETS.forEach(p => {
+    const r = d.presets && d.presets[p.id]; if (!r) return;
+    if (LN.preset === p.id && LN.rate !== r) follow = r;
+    p.rate = r;
+  });
+  if (follow != null) lnSet({ rate: follow });
+  else { lnShell(); if (typeof loanChanged === 'function') loanChanged(); }
+}
 const lnPreset = id => LN_PRESETS.find(p => p.id === (id || LN.preset)) || LN_PRESETS[LN_PRESETS.length - 1];
 const lnFix = () => lnPreset().fix || 0;
 
@@ -159,7 +184,7 @@ const lnRow = (label, field, unit = '', hint = '') =>
 function lnShell() {
   const root = document.getElementById('ln-root');
   if (!root) return;
-  const P = k => t('ln.' + k);
+  const P = (k, ...a) => t('ln.' + k, ...a);
   root.innerHTML = `
   <div class="ln-top"><h2 class="ln-h">${P('title')}</h2><button type="button" class="ln-print" id="ln-print">${P('print')}</button></div>
   <p class="ln-lead">${P('lead')}</p>
@@ -357,7 +382,8 @@ function lnRender() {
   const np = LN.residency === 'visa';
   document.getElementById('ln-rates').innerHTML = `<div class="ln-tw"><table class="ln-t ln-rt"><thead><tr><th>${P('tLender')}</th><th>${P('tVar')}</th><th>${P('tF10')}</th><th>${P('tFull')}</th><th>${P('tNP')}</th><th>${P('tNote')}</th></tr></thead><tbody>${
     LN_BANKS.map(b => `<tr class="${np && b.np === 'no' ? 'dim' : ''}${np && (b.np === 'yes' || b.np === 'cond' || b.np === 'spouse') ? ' hi' : ''}">
-      <th>${lnEsc(LANG === 'ja' ? b.ja : b.en)}</th><td>${b.v ? b.v + '%' : '–'}</td><td>${b.f10 ? b.f10 + '%' : '–'}</td><td>${b.full ? b.full + '%' : '–'}</td>
+      <th>${b.src ? `<a href="${lnEsc(b.src)}" target="_blank" rel="noopener">${lnEsc(LANG === 'ja' ? b.ja : b.en)}</a>` : lnEsc(LANG === 'ja' ? b.ja : b.en)}${
+        b.mode === 'manual' || b.status === 'stale' || b.status === 'suspect' ? ` <span class="ln-man" title="${lnEsc(P('manualT', b.asof || LN_RATES_DATE))}">✱</span>` : ''}</th><td>${b.v ? b.v + '%' : '–'}</td><td>${b.f10 ? b.f10 + '%' : '–'}</td><td>${b.full ? b.full + '%' : '–'}</td>
       <td class="np-${b.np}">${P('np.' + b.np)}</td><td>${b.note ? P('bn.' + b.note) : ''}</td></tr>`).join('')}</tbody></table></div>`;
 }
 
@@ -371,6 +397,7 @@ function lnOpenTab(priceMan, fees) {
 function lnSetLang() { lnShell(); }
 function initLoan() {
   lnShell();
+  lnRatesLoad();
   document.addEventListener('click', e => {
     const b = e.target.closest('[data-ln]'); if (!b) return;
     e.preventDefault();
