@@ -1,0 +1,698 @@
+{
+ "source": "P29 2023 public schools; A27/A32 2023 zone coverage; 2020 census 500 m mesh (0–14, straight-line distance)",
+ "areas": {
+  "urayasu": {
+   "es": 17,
+   "jhs": 9,
+   "combined": 0,
+   "kidsPerES": 1273,
+   "kidsNearES800": 97.2,
+   "kidsNearES1200": 100.0,
+   "zoneData": true
+  },
+  "matsudo": {
+   "es": 45,
+   "jhs": 21,
+   "combined": 0,
+   "kidsPerES": 1256,
+   "kidsNearES800": 91.0,
+   "kidsNearES1200": 99.8,
+   "zoneData": true
+  },
+  "funabashi": {
+   "es": 55,
+   "jhs": 26,
+   "combined": 0,
+   "kidsPerES": 1454,
+   "kidsNearES800": 90.2,
+   "kidsNearES1200": 99.8,
+   "zoneData": false
+  },
+  "minato": {
+   "es": 19,
+   "jhs": 10,
+   "combined": 0,
+   "kidsPerES": 1662,
+   "kidsNearES800": 97.1,
+   "kidsNearES1200": 100.0,
+   "zoneData": true
+  },
+  "chiba-mihama": {
+   "es": 18,
+   "jhs": 11,
+   "combined": 0,
+   "kidsPerES": 1025,
+   "kidsNearES800": 99.5,
+   "kidsNearES1200": 100.0,
+   "zoneData": true
+  },
+  "shinagawa": {
+   "es": 37,
+   "jhs": 15,
+   "combined": 6,
+   "kidsPerES": 1278,
+   "kidsNearES800": 99.8,
+   "kidsNearES1200": 100.0,
+   "zoneData": false
+  },
+  "arakawa": {
+   "es": 24,
+   "jhs": 10,
+   "combined": 0,
+   "kidsPerES": 969,
+   "kidsNearES800": 100.0,
+   "kidsNearES1200": 100.0,
+   "zoneData": false
+  },
+  "ichikawa": {
+   "es": 39,
+   "jhs": 16,
+   "combined": 1,
+   "kidsPerES": 1477,
+   "kidsNearES800": 91.6,
+   "kidsNearES1200": 99.7,
+   "zoneData": true
+  },
+  "toshima": {
+   "es": 22,
+   "jhs": 8,
+   "combined": 0,
+   "kidsPerES": 1239,
+   "kidsNearES800": 100.0,
+   "kidsNearES1200": 100.0,
+   "zoneData": true
+  },
+  "bunkyo": {
+   "es": 20,
+   "jhs": 10,
+   "combined": 0,
+   "kidsPerES": 1358,
+   "kidsNearES800": 100.0,
+   "kidsNearES1200": 100.0,
+   "zoneData": true
+  },
+  "narashino": {
+   "es": 16,
+   "jhs": 7,
+   "combined": 0,
+   "kidsPerES": 1386,
+   "kidsNearES800": 84.0,
+   "kidsNearES1200": 100.0,
+   "zoneData": true
+  },
+  "kawasaki-kawasaki": {
+   "es": 20,
+   "jhs": 11,
+   "combined": 0,
+   "kidsPerES": 1256,
+   "kidsNearES800": 99.9,
+   "kidsNearES1200": 100.0,
+   "zoneData": true
+  },
+  "chiyoda": {
+   "es": 10,
+   "jhs": 2,
+   "combined": 0,
+   "kidsPerES": 852,
+   "kidsNearES800": 94.3,
+   "kidsNearES1200": 100.0,
+   "zoneData": true
+  },
+  "nakano": {
+   "es": 21,
+   "jhs": 9,
+   "combined": 0,
+   "kidsPerES": 1359,
+   "kidsNearES800": 100.0,
+   "kidsNearES1200": 100.0,
+   "zoneData": true
+  },
+  "adachi": {
+   "es": 67,
+   "jhs": 35,
+   "combined": 0,
+   "kidsPerES": 1108,
+   "kidsNearES800": 99.2,
+   "kidsNearES1200": 100.0,
+   "zoneData": true
+  },
+  "chiba-chuo": {
+   "es": 19,
+   "jhs": 9,
+   "combined": 0,
+   "kidsPerES": 1168,
+   "kidsNearES800": 83.5,
+   "kidsNearES1200": 99.8,
+   "zoneData": true
+  },
+  "shinjuku": {
+   "es": 29,
+   "jhs": 10,
+   "combined": 0,
+   "kidsPerES": 968,
+   "kidsNearES800": 99.8,
+   "kidsNearES1200": 100.0,
+   "zoneData": true
+  },
+  "chiba-inage": {
+   "es": 16,
+   "jhs": 7,
+   "combined": 0,
+   "kidsPerES": 1181,
+   "kidsNearES800": 97.4,
+   "kidsNearES1200": 99.3,
+   "zoneData": true
+  },
+  "mitaka": {
+   "es": 15,
+   "jhs": 7,
+   "combined": 0,
+   "kidsPerES": 1635,
+   "kidsNearES800": 93.3,
+   "kidsNearES1200": 100.0,
+   "zoneData": true
+  },
+  "koto": {
+   "es": 46,
+   "jhs": 24,
+   "combined": 1,
+   "kidsPerES": 1421,
+   "kidsNearES800": 99.6,
+   "kidsNearES1200": 100.0,
+   "zoneData": true
+  },
+  "chuo": {
+   "es": 14,
+   "jhs": 4,
+   "combined": 0,
+   "kidsPerES": 1639,
+   "kidsNearES800": 98.0,
+   "kidsNearES1200": 100.0,
+   "zoneData": true
+  },
+  "taito": {
+   "es": 19,
+   "jhs": 7,
+   "combined": 0,
+   "kidsPerES": 1009,
+   "kidsNearES800": 100.0,
+   "kidsNearES1200": 100.0,
+   "zoneData": true
+  },
+  "inzai": {
+   "es": 18,
+   "jhs": 9,
+   "combined": 0,
+   "kidsPerES": 934,
+   "kidsNearES800": 67.6,
+   "kidsNearES1200": 90.9,
+   "zoneData": true
+  },
+  "suginami": {
+   "es": 40,
+   "jhs": 23,
+   "combined": 0,
+   "kidsPerES": 1477,
+   "kidsNearES800": 100.0,
+   "kidsNearES1200": 100.0,
+   "zoneData": true
+  },
+  "tachikawa": {
+   "es": 19,
+   "jhs": 9,
+   "combined": 0,
+   "kidsPerES": 1114,
+   "kidsNearES800": 89.7,
+   "kidsNearES1200": 100.0,
+   "zoneData": true
+  },
+  "setagaya": {
+   "es": 60,
+   "jhs": 29,
+   "combined": 0,
+   "kidsPerES": 1807,
+   "kidsNearES800": 96.9,
+   "kidsNearES1200": 100.0,
+   "zoneData": true
+  },
+  "yokohama-aoba": {
+   "es": 30,
+   "jhs": 13,
+   "combined": 0,
+   "kidsPerES": 1313,
+   "kidsNearES800": 94.3,
+   "kidsNearES1200": 100.0,
+   "zoneData": true
+  },
+  "ota": {
+   "es": 60,
+   "jhs": 28,
+   "combined": 0,
+   "kidsPerES": 1278,
+   "kidsNearES800": 99.6,
+   "kidsNearES1200": 100.0,
+   "zoneData": true
+  },
+  "machida": {
+   "es": 42,
+   "jhs": 20,
+   "combined": 0,
+   "kidsPerES": 1250,
+   "kidsNearES800": 87.0,
+   "kidsNearES1200": 99.0,
+   "zoneData": true
+  },
+  "nerima": {
+   "es": 65,
+   "jhs": 33,
+   "combined": 0,
+   "kidsPerES": 1391,
+   "kidsNearES800": 100.0,
+   "kidsNearES1200": 100.0,
+   "zoneData": true
+  },
+  "shibuya": {
+   "es": 18,
+   "jhs": 8,
+   "combined": 0,
+   "kidsPerES": 1261,
+   "kidsNearES800": 100.0,
+   "kidsNearES1200": 100.0,
+   "zoneData": true
+  },
+  "kita": {
+   "es": 34,
+   "jhs": 12,
+   "combined": 0,
+   "kidsPerES": 1051,
+   "kidsNearES800": 98.6,
+   "kidsNearES1200": 100.0,
+   "zoneData": true
+  },
+  "musashino": {
+   "es": 12,
+   "jhs": 6,
+   "combined": 0,
+   "kidsPerES": 1489,
+   "kidsNearES800": 96.5,
+   "kidsNearES1200": 100.0,
+   "zoneData": true
+  },
+  "chiba-hanamigawa": {
+   "es": 21,
+   "jhs": 10,
+   "combined": 0,
+   "kidsPerES": 917,
+   "kidsNearES800": 86.3,
+   "kidsNearES1200": 98.5,
+   "zoneData": true
+  },
+  "edogawa": {
+   "es": 66,
+   "jhs": 32,
+   "combined": 0,
+   "kidsPerES": 1332,
+   "kidsNearES800": 99.8,
+   "kidsNearES1200": 100.0,
+   "zoneData": true
+  },
+  "kawasaki-nakahara": {
+   "es": 19,
+   "jhs": 8,
+   "combined": 0,
+   "kidsPerES": 1791,
+   "kidsNearES800": 100.0,
+   "kidsNearES1200": 100.0,
+   "zoneData": true
+  },
+  "meguro": {
+   "es": 22,
+   "jhs": 9,
+   "combined": 0,
+   "kidsPerES": 1448,
+   "kidsNearES800": 98.5,
+   "kidsNearES1200": 100.0,
+   "zoneData": true
+  },
+  "chiba-wakaba": {
+   "es": 18,
+   "jhs": 10,
+   "combined": 0,
+   "kidsPerES": 893,
+   "kidsNearES800": 78.4,
+   "kidsNearES1200": 97.6,
+   "zoneData": true
+  },
+  "toda": {
+   "es": 12,
+   "jhs": 6,
+   "combined": 0,
+   "kidsPerES": 1752,
+   "kidsNearES800": 95.6,
+   "kidsNearES1200": 99.9,
+   "zoneData": true
+  },
+  "koganei": {
+   "es": 9,
+   "jhs": 5,
+   "combined": 0,
+   "kidsPerES": 1584,
+   "kidsNearES800": 98.0,
+   "kidsNearES1200": 100.0,
+   "zoneData": true
+  },
+  "inagi": {
+   "es": 12,
+   "jhs": 6,
+   "combined": 0,
+   "kidsPerES": 1080,
+   "kidsNearES800": 95.1,
+   "kidsNearES1200": 100.0,
+   "zoneData": true
+  },
+  "yachiyo": {
+   "es": 20,
+   "jhs": 11,
+   "combined": 1,
+   "kidsPerES": 1231,
+   "kidsNearES800": 84.3,
+   "kidsNearES1200": 96.0,
+   "zoneData": true
+  },
+  "kawasaki-saiwai": {
+   "es": 13,
+   "jhs": 5,
+   "combined": 0,
+   "kidsPerES": 1641,
+   "kidsNearES800": 99.4,
+   "kidsNearES1200": 100.0,
+   "zoneData": true
+  },
+  "itabashi": {
+   "es": 51,
+   "jhs": 22,
+   "combined": 0,
+   "kidsPerES": 1162,
+   "kidsNearES800": 100.0,
+   "kidsNearES1200": 100.0,
+   "zoneData": true
+  },
+  "katsushika": {
+   "es": 49,
+   "jhs": 24,
+   "combined": 0,
+   "kidsPerES": 1060,
+   "kidsNearES800": 100.0,
+   "kidsNearES1200": 100.0,
+   "zoneData": true
+  },
+  "yashio": {
+   "es": 10,
+   "jhs": 5,
+   "combined": 0,
+   "kidsPerES": 1166,
+   "kidsNearES800": 85.8,
+   "kidsNearES1200": 99.3,
+   "zoneData": true
+  },
+  "yokohama-kohoku": {
+   "es": 26,
+   "jhs": 9,
+   "combined": 0,
+   "kidsPerES": 1660,
+   "kidsNearES800": 99.0,
+   "kidsNearES1200": 100.0,
+   "zoneData": true
+  },
+  "sumida": {
+   "es": 25,
+   "jhs": 10,
+   "combined": 0,
+   "kidsPerES": 1124,
+   "kidsNearES800": 100.0,
+   "kidsNearES1200": 100.0,
+   "zoneData": true
+  },
+  "kashiwa": {
+   "es": 41,
+   "jhs": 21,
+   "combined": 0,
+   "kidsPerES": 1319,
+   "kidsNearES800": 79.9,
+   "kidsNearES1200": 95.3,
+   "zoneData": true
+  },
+  "saitama-urawa": {
+   "es": 11,
+   "jhs": 5,
+   "combined": 0,
+   "kidsPerES": 2252,
+   "kidsNearES800": 94.0,
+   "kidsNearES1200": 100.0,
+   "zoneData": true
+  },
+  "saitama-minami": {
+   "es": 16,
+   "jhs": 6,
+   "combined": 0,
+   "kidsPerES": 1458,
+   "kidsNearES800": 89.7,
+   "kidsNearES1200": 100.0,
+   "zoneData": true
+  },
+  "kawaguchi": {
+   "es": 52,
+   "jhs": 28,
+   "combined": 0,
+   "kidsPerES": 1401,
+   "kidsNearES800": 96.0,
+   "kidsNearES1200": 100.0,
+   "zoneData": true
+  },
+  "tsukuba": {
+   "es": 35,
+   "jhs": 17,
+   "combined": 4,
+   "kidsPerES": 982,
+   "kidsNearES800": 56.2,
+   "kidsNearES1200": 77.3,
+   "zoneData": true
+  },
+  "nagareyama": {
+   "es": 18,
+   "jhs": 10,
+   "combined": 0,
+   "kidsPerES": 1723,
+   "kidsNearES800": 82.0,
+   "kidsNearES1200": 100.0,
+   "zoneData": true
+  },
+  "misato": {
+   "es": 19,
+   "jhs": 8,
+   "combined": 0,
+   "kidsPerES": 948,
+   "kidsNearES800": 80.1,
+   "kidsNearES1200": 98.1,
+   "zoneData": true
+  },
+  "kawasaki-miyamae": {
+   "es": 18,
+   "jhs": 8,
+   "combined": 0,
+   "kidsPerES": 1760,
+   "kidsNearES800": 97.1,
+   "kidsNearES1200": 100.0,
+   "zoneData": true
+  },
+  "kawasaki-takatsu": {
+   "es": 15,
+   "jhs": 5,
+   "combined": 0,
+   "kidsPerES": 1934,
+   "kidsNearES800": 98.3,
+   "kidsNearES1200": 100.0,
+   "zoneData": true
+  },
+  "sakura": {
+   "es": 23,
+   "jhs": 11,
+   "combined": 0,
+   "kidsPerES": 824,
+   "kidsNearES800": 71.1,
+   "kidsNearES1200": 97.4,
+   "zoneData": true
+  },
+  "fuchu": {
+   "es": 22,
+   "jhs": 11,
+   "combined": 0,
+   "kidsPerES": 1470,
+   "kidsNearES800": 95.4,
+   "kidsNearES1200": 100.0,
+   "zoneData": true
+  },
+  "moriya": {
+   "es": 9,
+   "jhs": 4,
+   "combined": 0,
+   "kidsPerES": 1136,
+   "kidsNearES800": 77.2,
+   "kidsNearES1200": 95.1,
+   "zoneData": false
+  },
+  "tsukubamirai": {
+   "es": 9,
+   "jhs": 4,
+   "combined": 0,
+   "kidsPerES": 852,
+   "kidsNearES800": 52.6,
+   "kidsNearES1200": 77.8,
+   "zoneData": true
+  },
+  "soka": {
+   "es": 21,
+   "jhs": 11,
+   "combined": 0,
+   "kidsPerES": 1455,
+   "kidsNearES800": 95.9,
+   "kidsNearES1200": 100.0,
+   "zoneData": true
+  },
+  "saitama-midori": {
+   "es": 11,
+   "jhs": 6,
+   "combined": 0,
+   "kidsPerES": 1701,
+   "kidsNearES800": 88.7,
+   "kidsNearES1200": 97.8,
+   "zoneData": true
+  },
+  "saitama-omiya": {
+   "es": 10,
+   "jhs": 7,
+   "combined": 0,
+   "kidsPerES": 1660,
+   "kidsNearES800": 95.8,
+   "kidsNearES1200": 100.0,
+   "zoneData": true
+  },
+  "tama": {
+   "es": 17,
+   "jhs": 9,
+   "combined": 0,
+   "kidsPerES": 981,
+   "kidsNearES800": 93.5,
+   "kidsNearES1200": 99.9,
+   "zoneData": true
+  },
+  "yokohama-nishi": {
+   "es": 9,
+   "jhs": 4,
+   "combined": 0,
+   "kidsPerES": 1159,
+   "kidsNearES800": 91.3,
+   "kidsNearES1200": 100.0,
+   "zoneData": true
+  },
+  "yokohama-tsuzuki": {
+   "es": 22,
+   "jhs": 8,
+   "combined": 0,
+   "kidsPerES": 1462,
+   "kidsNearES800": 92.3,
+   "kidsNearES1200": 99.8,
+   "zoneData": true
+  },
+  "saitama-chuo": {
+   "es": 7,
+   "jhs": 3,
+   "combined": 0,
+   "kidsPerES": 1434,
+   "kidsNearES800": 95.5,
+   "kidsNearES1200": 100.0,
+   "zoneData": true
+  },
+  "yokohama-kanagawa": {
+   "es": 18,
+   "jhs": 7,
+   "combined": 0,
+   "kidsPerES": 1460,
+   "kidsNearES800": 93.9,
+   "kidsNearES1200": 100.0,
+   "zoneData": true
+  },
+  "koshigaya": {
+   "es": 29,
+   "jhs": 15,
+   "combined": 0,
+   "kidsPerES": 1502,
+   "kidsNearES800": 85.0,
+   "kidsNearES1200": 96.7,
+   "zoneData": true
+  },
+  "ichihara": {
+   "es": 40,
+   "jhs": 21,
+   "combined": 0,
+   "kidsPerES": 739,
+   "kidsNearES800": 72.1,
+   "kidsNearES1200": 89.2,
+   "zoneData": true
+  },
+  "chofu": {
+   "es": 20,
+   "jhs": 8,
+   "combined": 0,
+   "kidsPerES": 1423,
+   "kidsNearES800": 98.5,
+   "kidsNearES1200": 99.5,
+   "zoneData": true
+  },
+  "chiba-midori": {
+   "es": 16,
+   "jhs": 8,
+   "combined": 0,
+   "kidsPerES": 1104,
+   "kidsNearES800": 77.9,
+   "kidsNearES1200": 95.9,
+   "zoneData": true
+  },
+  "kamagaya": {
+   "es": 9,
+   "jhs": 5,
+   "combined": 0,
+   "kidsPerES": 1346,
+   "kidsNearES800": 78.5,
+   "kidsNearES1200": 100.0,
+   "zoneData": true
+  },
+  "shiroi": {
+   "es": 9,
+   "jhs": 5,
+   "combined": 0,
+   "kidsPerES": 886,
+   "kidsNearES800": 87.1,
+   "kidsNearES1200": 98.0,
+   "zoneData": true
+  },
+  "sodegaura": {
+   "es": 7,
+   "jhs": 5,
+   "combined": 0,
+   "kidsPerES": 1233,
+   "kidsNearES800": 51.1,
+   "kidsNearES1200": 76.6,
+   "zoneData": true
+  },
+  "kisarazu": {
+   "es": 18,
+   "jhs": 12,
+   "combined": 0,
+   "kidsPerES": 944,
+   "kidsNearES800": 66.2,
+   "kidsNearES1200": 89.8,
+   "zoneData": true
+  }
+ }
+}

@@ -878,3 +878,120 @@ Houses and new condos are not covered yet.
 - Area compare: 42/42 parameter rows have an ⓘ.
 - Listings compare: used condos 42/42, new condos 42/42, houses 22/22.
 - EN and JA text verified; Escape behaviour verified.
+
+## 19. Houses area map: second map for detached houses (2026-10-13, user: "i want to add a Area map for detatched houses … so there will be 2 area map, 1 for apartments … and one for houses (realistically the scores will bedifferent)")
+
+**User decisions (2026-10-13):** a suitable house is **≥100 m² building, built 2000+** (new and used both count); budget line **¥80M**, same as condos.
+
+**Data: `house_stats.py` (new) → `data/house_stats.json` + `area-house-listings.js`.**
+- SUUMO list pages, same area codes as `area_stats.py`. Used houses `bs=021` (≥100 m², ≤30 years old) and new houses `bs=020` (≥100 m²), every page (max 20).
+- New-build cards that list several homes are split into one row per home when the price/land/building lists have the same length; otherwise the card counts once (lowest price, largest building).
+- Features are counted with SUUMO's own search filters (building ≥100 m²): 2-car parking `cj=031`, 3+ cars `cj=032`, solar `ksg=202`, 長期優良住宅 `ksg=141`, 低炭素住宅 `ksg=298`, 住宅性能評価書 `kka=313`, inspection `kka=301`, 瑕疵保険 `kha=304`, low-rise residential zone `rt=139`, 3+ storeys `ks=122`. Shares mean "listings that advertise X": agents fill these in, so they are lower bounds.
+- Covered parking, internet/fibre, energy ★ and 断熱等級 are not filterable on SUUMO list pages; they live on detail pages (see `research_notes/Houses and schools/suumo_house_fields.md`) and belong to the Houses listings tab (next phase), not the area map.
+- Track: manual (track B), ~25 min for 77 areas at 1 s/request. Re-run with `python house_stats.py [id,…]`; areas not named are kept.
+
+**Score (`build_locations.py → HOUSE_WEIGHTS`, separate rank and shortlist):**
+
+| Sub-score | Weight | House rule (condo rule unchanged) |
+|---|---|---|
+| space | 25 | ½ Price: median price of 100–130 m² homes (all suitable if fewer than 3), log ¥30M=100 … ¥150M=0 · ½ Choice: suitable homes under ¥80M, 100·ln(1+n)/ln 61 |
+| commute | 20 | condo commute score − 1.5 per minute of median station walk above 10 (cap −15): houses sit further from stations |
+| childcare | 20 | same as condos |
+| hazard | 15 | water 40 · ground 30 · landslide 10 · earthquake 20. A house has no upper floors, so shallow water counts (0.5 / 0.85 / 1.0 for <0.5 m / 0.5–3 m / 3 m+) and liquefaction weighs more (high + 0.4·mid + 0.5·upland fill) |
+| growth | 10 | same |
+| bus | 5 | same |
+| costco | 5 | same |
+
+- Shortlist: top 28 by house total among areas with house space ≥ 10.
+- Flags in `house.dataFlags`: missing crawl, fewer than 3 homes at 100–130 m², no suitable home, thin sample (<10).
+- Condo scores are unchanged: every condo `totalScore` was compared before/after.
+
+**Front end:**
+- `map-house.js` (new): Apartments / Houses toggle at the top of the map controls. The choice, weights and budget are stored per mode in the browser.
+- House mode swaps: the weights, the housing card (house list from `area-house-listings.js`, sortable by price/size/land/year/walk), the pros/cons, the layer descriptions, the budget slider (Choice recomputed from house rows) and the Compare housing rows (`hPrice … hStorey3`).
+- Office commute in house mode subtracts the same walk penalty.
+- ⓘ entries for every new Compare row in `cmp-glossary.js`.
+
+**Checked in the preview:** mode switch, weights swap, house list, Compare house rows, budget slider in house mode, prefs per mode, switching back restores condo values.
+
+## 20. Schools: assigned school per listing + area schools card (info only, not scored) (2026-10-13, user: "based on the area, understand whether there is an assigned school and what is their score based on national ranking … first do an in depth check/research on how schools are ranked/chosen … not be part of the score but like crime should be flagged clearly as info")
+
+**Research (`research_notes/Houses and schools/schools_japan.md`):**
+- The address decides the school (通学区域 → 指定校). Exceptions (指定校変更, 区域外就学) are by application only. Some Tokyo wards run 学校選択制.
+- **There is no official ranking of public elementary/junior-high schools.** The national test (全国学力・学習状況調査, every grade 6 and 9 each April) is published per prefecture and, at each city's discretion, per city — never per school. Commercial "school rankings" are excluded (aggregators, no official basis).
+- What parents actually use and has official data: the city test result, the share of children leaving for private junior high (Tokyo), whether school choice exists, school size, the high-school entrance district.
+
+**Data:**
+
+| Item | Source | Script |
+|---|---|---|
+| School zones + school points | 国土数値情報 A27 小学校区 / A32 中学校区 (2023), P29 学校 | `schools.py build` → `data/schools.json` (4.5 MB) + `data/area_schools.json` (school counts, children per school, % of children within 800 m / 1.2 km) |
+| National test 2025 | Saitama prefecture per-city PDFs; MEXT designated-city and prefecture tables (R7) | `school_info.py` → `data/school_info.json` (PDFs cached in `data/cache/schools/pdf`) |
+| Private junior-high share | 東京都 R7 公立学校統計調査報告書 進路状況調査編, 第1表 | `school_info.py` |
+| School choice | 東京都教育委員会 R8 学校選択制 table + city pages (Toda, Matsudo, Urayasu, Yokohama) | hand-curated `CHOICE` in `school_info.py` |
+| High-school district | Chiba prefecture board of education (districts 1–4, 9); Tokyo, Kanagawa, Saitama and Ibaraki 普通科 are prefecture-wide | hand-curated `CHIBA_HS` |
+
+- **Test metric:** mean of (city − national) correct-answer rate over the subjects. Grade 6: 国語, 算数, 理科. Grade 9: 国語, 数学 (grade-9 science is an IRT score, not comparable). Where the city publishes nothing comparable, the prefecture value is shown and labelled "prefecture".
+- **Zone maps missing** in the national data for Funabashi, Shinagawa, Arakawa and Moriya. There the listing shows the nearest public school, marked "nearest; zone map not published".
+- **Per listing** (`hazard.annotate` now stores `d.geo`; `schools.annotate` in all three inject scripts): `d.school = {e, j}` with name, distance, `src` zone/nearest and up to 2 alternative zones within ~150 m (SUUMO's point is approximate).
+- **Shown:**
+  - Listing cards: a 🏫 tag (`*` = nearest, `±` = near a zone boundary).
+  - Listing Compare: schools rows.
+  - Area map: a Schools card on every area (test bars, private share, choice, school counts, high-school district, note) and Compare schools rows.
+  - Deep look section K: the assigned schools, the area's test result and the private-share line.
+  - Every view says "information only, not scored" and asks to confirm the school with the city's 学務課.
+- **Refresh:** yearly. MEXT publishes the April test in late July (prefecture) and late September (designated cities). Cities publish in the autumn. Re-run `python school_info.py`, then `python build_map.py`. Re-run `schools.py build` when MLIT publishes a new A27/A32 edition.
+
+**Checked:**
+- Inject run (local test): all 17 houses, 1,987 used condos and 62 new condos were matched to a school.
+- Tags and Compare rows render.
+- Deep look tested on two saved reports (Mihama: zone match and Chiba city result; a second Chiba-prefecture listing: zone match and the labelled prefecture value).
+
+## 21. Houses tab: plot, zoning, certificates and equipment per listing (2026-10-13, same request as 19: "whether there is parking, whether it's covered, wheteher there are solar panels, whether there is internet, the efficiency ratings etc")
+
+**What SUUMO gives on a house detail page (checked on 24 Mihama listings):**
+- Always filled: 私道負担・道路 (road width, direction, frontage), 建ぺい率・容積率, 用途地域.
+- 特徴ピックアップ tags that the agent ticks (solar, 長期優良住宅, 性能評価書, 地盤調査, 検査済証, 瑕疵保険, Flat 35S, eco water heater, double glazing, corner lot, 2-car parking…).
+- エネルギー消費性能 (★), 断熱性能 (等級) and 目安光熱費 were blank ("-") on every used house. They are filled only on recent new builds; parsed anyway.
+- Covered parking and internet have no field. They are read from the agent's PR text with strict patterns (carport/garage + 付/有/あり/完備/設置, built-in garage; fibre/光回線/internet + 対応/無料/完備…). A first loose pattern matched an advert ("『エクステリア』カーポートや…") and was tightened. 0 of 24 Mihama listings mention either today.
+
+**Code:**
+- `scraper.py → house_details()` adds roadM, roads, frontM, privateRoad, bcr, far, zoning, energyStars, insulation, utilityYen, feat[], covered, fibre. Parking now also takes "2台駐車可" from the PR text and the 駐車２台可 tag.
+- `inject.py` passes them through (`HOUSE_EXTRA`).
+- `app.js`:
+  - Card tags: Solar, 長期優良住宅 / Performance cert, Carport, Fibre, Corner lot, and "Road <4 m" (setback warning).
+  - Compare: a new "Plot & zoning" section (road/frontage, zoning, coverage/FAR) and Features rows (covered parking, fibre, solar, certificates, energy).
+  - ⓘ entries `l.road … l.energy`.
+- **The house listing score is unchanged** (mirrored in notify.py). These fields are shown, not scored: they depend on what the agent chose to tick, so "not advertised" ≠ "absent".
+
+**Checked:** local scrape + inject (24 listings → 15 unique). Tags and Compare rows render in EN; road filled for 14/15, zoning and coverage for 13/15.
+
+## 22. Space v3: age-weighted stock + three shortlist labels (2026-10-13, user on Sakura: "it is ranked 58 but the space gate make it it doesnt show the ranking … there are like 21 and quite cheap … Maybe it's the age of the building?" → "do 1 and 2")
+
+**Finding:** Sakura was never below the space gate (space 78, gate 10). It was outside the shortlist only because it ranked #58 and the shortlist is the top 28. The map labelled every non-shortlisted area "Below space gate", with the "almost no 90 m²+ stock" tooltip. That was a labelling bug.
+
+**1. Labels (map.js, map-tools.js `mpStatus`), condo and house mode:**
+- "✓ Shortlisted": in the top 28 and space ≥ 10.
+- "Outside top 28": a neutral badge with a tooltip saying space passes the gate and the other parts keep it lower. The list row is not dimmed and the polygon outline is solid.
+- "Below space gate" (warn badge, dimmed row, dashed outline): only when space < 10.
+
+**2. Space v3, age-weighted (build_locations.py `AGE_W`, area_stats.py, map-tools.js `MP_AGE_W`):**
+- Before (v2), only listings ≥90 m² built 2000+ counted, all or nothing. A 1995 flat counted the same as a 1972 one (zero).
+- Now each listing ≥90 m² counts by build year: **2000+ = 1 · 1990–99 = 0.6 · 1983–89 = 0.3 · 1982 or older / unknown = 0**. 1983 is the first year in which the new seismic code (permits from 1981-06) is certain; Deep look uses the same line.
+- Choice = 100·ln(1+n)/ln 61, where n is the **weighted** count under ¥80M (or the user's budget).
+- Price = **weighted median** ¥/m² × 100 m². Scale unchanged.
+- Smoothing: `area_stats.py` now also stores u80w, n90w and m2price90w (history indices 7–9). `smoothed()` reads those, so the 30-day median starts once 10 days of the new fields exist. Until then the study crawl is used, as before (only 1 day of v2 fields existed, so nothing was lost).
+- The browser budget slider uses the same weights.
+- The house map is unchanged (suitable = built 2000+ or new). For wood-frame houses 2000 is the code line (ground survey, metal joints), and the house crawl only covers homes up to 30 years old.
+
+**Effect (condo map, default weights):**
+- 34 areas moved ≥5 space points, and none fell more than 2.
+- Biggest gains: areas whose large stock is 1990s: Shiroi 0 → 81, Chiba-Midori 0 → 67, Kamagaya 0 → 56, Kashiwa 23 → 72, Katsushika 0 → 44, Tama 37 → 79.
+- Shortlist in: Kashiwa #49 → #6, Katsushika #45 → #9, Koto #20 → #17, Tama #65 → #37, Musashino #33 → #36.
+- Shortlist out: Yokohama-Aoba #27 → #38, Kawasaki-Nakahara #36 → #41, Chiba-Wakaba #38 → #39, Yachiyo #42 → #46, Toda #39 → #48.
+- Sakura: space 78 → 84, rank #58 → #61 (others gained more). Now labelled "outside top 28".
+- Still below the gate (16): the central wards, plus Sumida, Yokohama-Nishi, Chofu, Sodegaura, Kisarazu.
+
+**Texts updated:** map layer description, the Space breakdown tooltip, pros/cons, budget note, ⓘ entries `a.sub.space`, `a.scorePrice`, `a.pool`, `a.poolAll` (EN + JA), the RUBRIC in locations.json and PARAMETERS.md.
+
+**Checked in the preview:** Sakura shows "#61 of 77 · outside top 28" with the tooltip; Minato shows "Below space gate" (dimmed); the budget slider at ¥60M gives Sakura n = 14.6 (weighted).

@@ -270,6 +270,7 @@ def annotate(listings, areas, area_of):
                      "kind": used.get("kind", "scenario"), "landforms": rec.get("landforms"),
                      "verify": used["verify"].format(lat=rec["lat"], lon=rec["lon"])}
                     if rec and rec.get("level") else None)
+        d["geo"] = {"lat": rec["lat"], "lon": rec["lon"]} if rec and "lat" in rec else None   # schools.annotate
     CACHE_FILE.write_text(json.dumps(cache, ensure_ascii=False, indent=1), encoding="utf-8")
     rated = sum(1 for d in listings if d["liq"])
     print(f"Liquefaction: {rated}/{len(listings)} listings rated "

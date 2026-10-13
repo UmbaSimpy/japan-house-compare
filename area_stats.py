@@ -12,7 +12,7 @@ Writes  area-stats.js                 const AREA_STATS = {generated, areas:{id:{
         area-listings.js              const AREA_LISTINGS — every de-duplicated ≥90 m² unit per area (light list in
                                       the map panel; all prices, flagged against UNDER), lazy-loaded by the map
         data/area_listings_state.json first-seen date + first price per SUUMO id → "new" / "price cut" badges
-        data/area_stats_history.json  {id: {date: [n90, median90, u80, projects, u80modern, n90modern, m2price90modern]}}
+        data/area_stats_history.json  {id: {date: [n90, median90, u80, projects, u80modern, n90modern, m2price90modern, u80w, n90w, m2price90w]}}
                                       (last 180 days; the last three since 2026-10-13)
   • monthly fees (管理費 + 修繕積立金) for the watchlist areas only, from today's mansions.json (the
     condo scraper reads each listing's detail page; runs before this step): AREA_STATS.areas[id].fees
@@ -126,6 +126,7 @@ def used(ta, sc, name):
             break
     v = list(units.values())
     mod = [x for x in v if (x[2] or 0) >= 2000]
+    wv = [(x, age_w(x[2])) for x in v if age_w(x[2]) > 0]      # space v3: age-weighted stock
     return {
         "total": total, "raw90": raw, "n90": len(v),
         "median90": int(statistics.median(x[0] for x in v) * 10000) if v else None,
@@ -136,8 +137,29 @@ def used(ta, sc, name):
         "u80modern": sum(x[0] < UNDER and (x[2] or 0) >= 2000 for x in v),
         "n90modern": len(mod),                # scored stock (space v2): ≥90 m², built 2000+
         "m2price90modern": int(statistics.median(x[0] / x[1] for x in mod) * 10000) if mod else None,
+        "u80w": round(sum(w for x, w in wv if x[0] < UNDER), 1),     # scored (v3): weighted count under ¥80M
+        "n90w": round(sum(w for _, w in wv), 1),
+        "m2price90w": int(wmedian([(x[0] / x[1], w) for x, w in wv]) * 10000) if wv else None,
         "_units": v,                          # popped by main() → area-listings.js
     }
+
+
+# Space v3 (build_locations.AGE_W): 2000+ = 1 · 1990s = 0.6 · 1983–89 = 0.3 · older/unknown = 0
+AGE_W = ((2000, 1.0), (1990, 0.6), (1983, 0.3))
+
+
+def age_w(y):
+    return next((w for y0, w in AGE_W if y and y >= y0), 0.0)
+
+
+def wmedian(pairs):
+    pairs = sorted(p for p in pairs if p[1] > 0)
+    tot, acc = sum(w for _, w in pairs), 0.0
+    for val, w in pairs:
+        acc += w
+        if acc >= tot / 2:
+            return val
+    return None
 
 
 PRICE_RE = re.compile(r"(?:(\d+)億)?(\d+)万円|(\d+)億円")
@@ -281,10 +303,10 @@ def main():
                 lists[aid] = prev_list[aid]
             continue
         h = hist.setdefault(aid, {})
-        # [n90, median90, u80, projects, u80modern, n90modern, m2price90modern] — the last three feed the
-        # 30-day smoothing of the space score at the next study refresh (DATA_LOG item 12)
+        # [n90, median90, u80, projects, u80modern, n90modern, m2price90modern, u80w, n90w, m2price90w] — the last
+        # three (age-weighted, space v3) feed the 30-day smoothing of the space score (DATA_LOG items 12, 22)
         h[today] = [rec["n90"], rec["median90"], rec["u80"], rec["projects"],
-                    rec["u80modern"], rec["n90modern"], rec["m2price90modern"]]
+                    rec["u80modern"], rec["n90modern"], rec["m2price90modern"], rec["u80w"], rec["n90w"], rec["m2price90w"]]
         for d in sorted(h)[:-180]:
             del h[d]
         # change vs the latest snapshot at least 7 / 30 days old: [Δ n90, Δ u80, Δ projects]

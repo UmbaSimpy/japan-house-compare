@@ -7,7 +7,7 @@ This file lists every input behind the **Area map** tab: what each field means, 
 | Track | What | How it updates | Who triggers |
 |---|---|---|---|
 | **A. Listings** (automatic) | SUUMO used/new condos and houses, price history, Telegram, **and the map's live area counts** (`area_stats.py` → `area-stats.js`) | GitHub Actions `.github/workflows/daily-scrape.yml`, daily 05:00 UTC | Automatic |
-| **B. Area study** (manual) | Everything else on the Area map (this file): study, area hazard (`area_hazard.py`), office commute matrix (`commute_matrix.py`), paediatrics (`area_health.py`), aircraft noise (`data/area_noise.json`), crime (`area_crime.py`) + listing liquefaction (`hazard.py`, `hazard_cache.json`) | Re-research + rebuild locally, then commit | **The user asks for it** (e.g. "refresh the area study"). Never run on a schedule. |
+| **B. Area study** (manual) | Everything else on the Area map (this file): study, area hazard (`area_hazard.py`), office commute matrix (`commute_matrix.py`), paediatrics (`area_health.py`), aircraft noise (`data/area_noise.json`), crime (`area_crime.py`), house snapshot (`house_stats.py`), schools (`schools.py build`, `school_info.py`) + listing liquefaction (`hazard.py`, `hazard_cache.json`) | Re-research + rebuild locally, then commit | **The user asks for it** (e.g. "refresh the area study"). Never run on a schedule. |
 
 Track B data changes slowly (yearly policies, annual statistics). The suggested cadence is in the last column of each table.
 
@@ -32,6 +32,10 @@ data/area_noise.json   (hand-curated)                          ← aircraft nois
 data/area_crime.json   (area_crime.py)                         ← police crime counts 2025 (info only)
 data/pipeline.json     (hand-curated, monthly sweep)           ← rail/redevelopment register → read by build_locations.py (growth)
 data/area_stats_history.json (track A)                         ← 30-day median of space inputs → read by build_locations.py
+data/house_stats.json  (house_stats.py)                        ← detached-house snapshot → read by build_locations.py (Houses map score)
+area-house-listings.js (house_stats.py)                        ← light list of suitable homes per area (Houses map list + budget slider)
+data/schools.json, data/area_schools.json (schools.py build)   ← school zones/points + per-area counts (info only)
+data/school_info.json (school_info.py)                         ← national test, private JHS share, school choice, HS district (info only)
         │  python build_map.py
         ▼
 map-data.js  → loaded by suumo-compare.html / index.html → map.js + map-tools.js render it
@@ -51,7 +55,7 @@ Refresh steps:
 
 | Sub-score | Weight | Formula (full text in `locations.json` → `rubric`) |
 |---|---|---|
-| space | 25 | **v2 (2026-10-13):** only listings ≥90 m² built 2000+ count. 0.5·Price (median ¥/m² of those × 100 m²; log ¥30M=100 … ¥150M=0; none → 0) + 0.5·Choice (those under ¥80M; 100·ln(1+n)/ln 61, 60+=100). Constants `SPACE_*` in build_locations.py. v1 (0.4 blended price + 0.3 count/40 + 0.3 share) retired, DATA_LOG item 9 |
+| space | 25 | **v3 (2026-10-13, DATA_LOG 22):** listings ≥90 m² weighted by build year (`AGE_W`: 2000+ 1 · 1990s 0.6 · 1983–89 0.3 · older 0). 0.5·Price (weighted median ¥/m² × 100 m²; log ¥30M=100 … ¥150M=0; none → 0) + 0.5·Choice (weighted count under ¥80M; 100·ln(1+n)/ln 61, 60+=100). Constants `SPACE_*`, `AGE_W` in build_locations.py. v2 (2000+ only, all-or-nothing) and v1 retired, DATA_LOG items 9, 22 |
 | commute | 25 | E = minutes + 5/transfer; 100·(80−E)/65; crowding ±5; pass >¥30k −5, >¥45k −10 |
 | childcare | 20 | fee 35 + Tokyo cash 10 + daycare waitlist 30 + 学童 15 + medical 5 + lunch 5 |
 | growth | 10 | population 2020→25 (35) + IPSS 2050 (30) + land 5y (20) + child share (10) ± pipeline |
@@ -61,11 +65,44 @@ Refresh steps:
 
 Weights changed 2026-10-12 (user choice "Hazard 10, trim space"): space 30→25, childcare 25→20, hazard 0→10. Users can override weights and choose an office on the map (⚙ Personalise, stored in their browser only); the stored study values are what everyone sees by default.
 
-Shortlist = top 28 by total among areas with space ≥ 10. Missing data is imputed and the substitution is written to each area's `dataFlags`; it is never silently scored 0.
+Shortlist = top 28 by total among areas with space ≥ 10. Map labels (DATA_LOG 22): Shortlisted · Outside top 28 (neutral) · Below space gate (only when space < 10). Missing data is imputed and the substitution is written to each area's `dataFlags`; it is never silently scored 0.
 
 The ⓘ explanations in both compare views (`cmp-glossary.js`, DATA_LOG item 18) quote the formulas above and the listing-score rules: change them together.
 
 Pros/cons/info on the map are **derived in `map.js` → `mpPoints()`** from the fields below with fixed thresholds (e.g. commute ≤30 min = pro, ≥50 = con). Change the thresholds there, not in the data.
+
+## Houses map scoring (`data/locations.json` → `houseWeights`, `areas[].house`; DATA_LOG item 19)
+
+| Sub-score | Weight | House formula (condo formula above unless stated) |
+|---|---|---|
+| space | 25 | suitable = building ≥100 m², built 2000+ (new builds included). 0.5·Price (median price of 100–130 m² homes; all suitable if fewer than 3; log ¥30M=100 … ¥150M=0) + 0.5·Choice (suitable under ¥80M; 100·ln(1+n)/ln 61) |
+| commute | 20 | condo commute − 1.5 × (median station walk − 10 min), cap −15 (`HOUSE_WALK_*`) |
+| childcare | 20 | same as condos |
+| hazard | 15 | water 40·(1 − (0.5·<0.5 m + 0.85·0.5–3 m + 1.0·3 m+)/100) + ground 30·(1 − (liqHigh + 0.4·liqMid + 0.5·fillUpland)/100) + landslide 10 + earthquake 20 (lin quake30 40→20 … 85→0) |
+| growth | 10 | same |
+| bus | 5 | same |
+| costco | 5 | same |
+
+Shortlist = top 28 by house total among areas with house space ≥ 10. The map toggle (Apartments / Houses) keeps separate weights and budget per mode in the browser.
+
+### house (`data/house_stats.json`, scored on the Houses map)
+| Field | Meaning | Source | Fetch method | Refresh |
+|---|---|---|---|---|
+| nUsed, nNew, nSuit | suitable homes (≥100 m², built 2000+) that are used / new / total | SUUMO 中古一戸建て bs=021 / 新築一戸建て bs=020 | `house_stats.py` (all pages, max 20) | monthly or when asked |
+| u80 | suitable homes under ¥80M (Choice) | same | same | same |
+| medianPrice, median100to130, n100to130 | median price (¥) of suitable homes / of 100–130 m² ones, and that count | same | same | same |
+| medianLand, medianLandU80, landUnder100, medianBldg, medianWalk, walk15Share, busShare | median land m² (all / under ¥80M), % with land <100 m², median building m², median station walk, % walk ≥15 min, % bus access | same | same | same |
+| featureShare.{park2, park3, solar, longLife, lowCarbon, perfCert, inspected, defectIns, lowRise, storey3} | % of ≥100 m² listings (featureBase) advertising the feature (SUUMO filters; lower bounds) | SUUMO search filters | same | same |
+
+### schools (`data/area_schools.json` + `data/school_info.json`, info only, not scored; DATA_LOG item 20)
+| Field | Meaning | Source | Fetch method | Refresh |
+|---|---|---|---|---|
+| es, jhs, kidsPerES, kidsNearES800/1200, zoneData | public school counts, children 6–11 per elementary, % of children within 800 m / 1.2 km of an elementary, zone map present | 国土数値情報 A27/A32 (2023), P29, 2020 census mesh | `schools.py build` | new A27/A32 edition |
+| test.es / test.jhs, level | 2025 national test: mean (city − national) correct-answer points; grade 6 国算理, grade 9 国数; level city or prefecture fallback | Saitama pref. per-city PDFs; MEXT R7 designated-city and prefecture tables | `school_info.py` | yearly (Jul–Sep) |
+| privateJHS | % of public elementary graduates entering private/national JHS (Tokyo only; Tokyo 19.9%) | 東京都 R7 公立学校統計調査 進路状況調査編 第1表 | `school_info.py` | yearly |
+| choice.e / choice.j | 学校選択制: none / free / block / adjacent / special / unknown | 東京都教育委員会 R8 table; city pages | hand-curated `CHOICE` | yearly |
+| hsDistrict | Chiba 普通科 high-school district (0 = prefecture-wide) | Chiba board of education | hand-curated `CHIBA_HS` | when changed |
+| listing `school.e/j` | assigned school (zone at the SUUMO point), distance, alt zones within ~150 m; `src` nearest where no zone map (Funabashi, Shinagawa, Arakawa, Moriya) | A27/A32 + P29 | `schools.annotate` in inject*.py (daily) | daily with listings |
 
 ## Field reference (`data/locations.json` → `areas[]`)
 
@@ -184,12 +221,12 @@ Pros/cons thresholds (`map.js`): burglary ≤0.5/10k pro, ≥1.5 con; violent �
 ### Personalise: budget slider (browser only, DATA_LOG item 12)
 | Setting | Meaning | Default / range |
 |---|---|---|
-| budget (万円) | Re-computes **Choice** live from `area-listings.js`: n = rows with m² ≥90, built ≥2000, price < budget; Choice = 100·ln(1+n)/ln 61; space = ½ study Price + ½ new Choice | 8,000 (= study `SPACE_BUDGET`); 5,000–15,000, step 500; stored in the browser only |
+| budget (万円) | Re-computes **Choice** live from `area-listings.js`: n = age-weighted rows with m² ≥90, price < budget (`MP_AGE_W`); Choice = 100·ln(1+n)/ln 61; space = ½ study Price + ½ new Choice | 8,000 (= study `SPACE_BUDGET`); 5,000–15,000, step 500; stored in the browser only |
 
 ### Space smoothing (build_locations.py, DATA_LOG item 12)
 | Constant | Meaning | Value |
 |---|---|---|
-| SMOOTH_DAYS | window: median of the daily history values for u80modern, n90modern and m2price90modern | 30 days |
+| SMOOTH_DAYS | window: median of the daily history values for u80w, n90w and m2price90w (age-weighted, history indices 7–9; v2 used u80modern/n90modern/m2price90modern) | 30 days |
 | SMOOTH_MIN_DAYS | below this many days with the new fields, the study crawl values are used (flag in `dataFlags` when smoothing applies) | 10 |
 
 ### Deep look (`deeplook.py`, DATA_LOG item 15)
@@ -233,5 +270,7 @@ Pros/cons thresholds (`map.js`): burglary ≤0.5/10k pro, ≥1.5 con; violent �
 - Saitama cities' medical copay; つくば号 weekday timetable; 東名江田 bus timetable.
 - City-level new-condo supply (paid 不動産経済研究所 data); 2025-census child share.
 - ~~Hazard layers for all 77 areas~~ — done 2026-10-12 (`area_hazard.py`). Port the upland-fill rule to `hazard.py` (listings) on its next refresh.
-- School quality (no comparable public source) and nursery entry difficulty beyond 待機児童 (入所保留 counts, inconsistent publishing) — see DATA_LOG 6d.
+- School quality per school: no official source exists (DATA_LOG 20); city/prefecture test results are shown instead. Zone maps missing for Funabashi, Shinagawa, Arakawa, Moriya (nearest school used). School choice unknown outside Tokyo + 4 cities.
+- Nursery entry difficulty beyond 待機児童 (入所保留 counts, inconsistent publishing) — see DATA_LOG 6d.
+- Houses tab (DATA_LOG 21): energy ★ / 断熱等級 blank on used houses; covered parking and fibre only from agent text. New houses (新築一戸建て) are not in the Houses tab yet.
 - Per-ward aircraft-noise levels (Lden) — not available as open data.

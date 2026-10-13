@@ -14,6 +14,7 @@ from datetime import date
 from pathlib import Path
 
 import hazard
+import schools
 
 # ── Load ─────────────────────────────────────────────
 with open("listings.json", encoding="utf-8") as f:
@@ -116,6 +117,10 @@ GRAD_POOL = [
     "linear-gradient(140deg,#5a1a6a 0%,#a060c0 100%)",
 ]
 
+# House details from scraper.house_details (DATA_LOG item 21); None until the next scrape
+HOUSE_EXTRA = ("roadM", "roads", "frontM", "privateRoad", "bcr", "far", "zoning", "energyStars", "insulation",
+               "utilityYen", "feat", "covered", "fibre")
+
 # ── Clean each listing ────────────────────────────────
 cleaned = []
 for i, d in enumerate(data):
@@ -137,6 +142,7 @@ for i, d in enumerate(data):
         "renovation": d.get("renovation", False),
         "landRights": d.get("landRights", "owned"),
         "cityGas":    d.get("cityGas", True),
+        **{k: d.get(k) for k in HOUSE_EXTRA},
         "isNew":      False,
         "suumoUrl":   d.get("suumoUrl", "https://suumo.jp"),
         "imageUrl":   _normalize_img(d.get("imageUrl")),
@@ -155,6 +161,7 @@ for c in cleaned:
     c["areaJa"] = ja_by_slug.get((re.search(r"/(sc_[^/]+)/", c["suumoUrl"]) or [None, None])[1])
 hazard.annotate(cleaned, AREAS,
                 lambda d: key_by_slug.get((re.search(r"/(sc_[^/]+)/", d["suumoUrl"]) or [None, None])[1]))
+schools.annotate(cleaned)          # assigned public ES / JHS (info only, DATA_LOG item 20)
 
 # Save cleaned version too
 with open("listings_clean.json", "w", encoding="utf-8") as f:

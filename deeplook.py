@@ -407,7 +407,7 @@ GKEY = {
     "I": [("[Ee]nergy label", "energy"), ("designed to", "era"), ("glazing|Window type", "glazing"), ("Energy supply|Gas type", "gas"),
           ("^Equipment", "equip"), ("tax credit", "taxcredit")],
     "J": [("^Parking", "parking"), ("[Bb]icycle", "bike")],
-    "K": [("school district", "school"), ("^(Elementary|Junior|Kindergarten|Daycare:|Park|Supermarket|Clinic|Station)", "near"),
+    "K": [("school district|^Assigned (elementary|junior)", "school"), ("^National test", "schtest"), ("private junior high", "schpriv"), ("^(Elementary|Junior|Kindergarten|Daycare:|Park|Supermarket|Clinic|Station)", "near"),
           ("Daycare waitlist", "daycare"), ("^Crime", "crime"), ("Paediatrics", "peds"), ("^Noise", "noise"), ("Main roads", "roads")],
     "L": [("^Population", "population"), ("flats for sale in the area", "supply"), ("Area projects", "projects"), ("Long walk", "farwalk"),
           ("Old-standard", "oldstd"), ("Land-price", "landprice")],
@@ -933,9 +933,43 @@ def analyse(raw, office_id="tokyo", rate=None):
         if xs:
             x = xs[0]
             R.add("info", T(f"{label}: {x['name']} — {x['walk']} min ({x['m']} m)", f"{lj}：{x['name']} — 徒歩{x['walk']}分（{x['m']}m）"))
+    SC = {}
+    if lat and lon:
+        try:
+            import schools
+            SC = schools.lookup(lat, lon)
+        except Exception as e:
+            print("schools.lookup failed:", e)
+    for kk, le, lj2 in (("e", "Assigned elementary", "指定の小学校"), ("j", "Assigned junior high", "指定の中学校")):
+        sc = SC.get(kk)
+        if not sc:
+            continue
+        near = sc["src"] == "nearest"
+        dist = f" — {sc['m']} m" if sc.get("m") is not None else ""
+        R.add("info", T(f"{le}{' (nearest; zone map not published)' if near else ''}: {sc['name']}{dist}",
+                        f"{lj2}{'（通学区域図が未公開のため最寄り校）' if near else ''}：{sc['name']}{dist}"),
+              T(("Alternative zone(s) within ~150 m: " + "、".join(sc["alt"]) + ". The point is approximate, so the zone may differ.") if sc.get("alt") else
+                "From 国土数値情報 school zones (A27/A32, 2023); boundaries can change.",
+                ("半径約150m内に別の通学区域：" + "、".join(sc["alt"]) + "。地図位置は概略のため、学区が異なる可能性があります。") if sc.get("alt") else
+                "国土数値情報 小学校区・中学校区（A27/A32、2023年）より。区域は変更されることがあります。"))
     R.add("ask", T("Assigned school district", "通学区域（学区）"),
-          T("The school you are assigned to (学区) is not always the nearest one.", "指定される学校は、最寄りの学校とは限りません。"),
-          ask=T("Which elementary and junior-high school is this address assigned to (通学区域)?", "この住所の通学区域の小学校・中学校はどこですか？"))
+          T("Information only, not scored. Japan publishes national test results by city or prefecture, never by school.",
+            "参考情報（スコアには含めません）。全国学力テストの結果は市区町村・都道府県単位で公表され、学校別の順位はありません。"),
+          ask=T("Confirm the assigned elementary and junior-high school (通学区域) with the city's 学務課 for this exact address.",
+                "この住所の指定校（小学校・中学校）を市区町村の学務課で確認してください。"))
+    sch = (A or {}).get("schools") or {}
+    st = sch.get("test") or {}
+    if st.get("es") is not None:
+        pref = st.get("level") != "city"
+        lvl_en, lvl_ja = ("prefecture figure", "都道府県の値") if pref else ("city", "市区町村")
+        sg = lambda v: "–" if v is None else f"{v:+.1f}"
+        R.add("info", T(f"National test 2025 ({lvl_en}): grade 6 {sg(st.get('es'))}, grade 9 {sg(st.get('jhs'))} points vs national",
+                        f"全国学力・学習状況調査 2025（{lvl_ja}）：小6 全国比{sg(st.get('es'))}、中3 全国比{sg(st.get('jhs'))}ポイント"),
+              T("Mean gap in correct-answer rate over the subjects (Japanese, maths; science for grade 6)." + (" The city does not publish comparable results." if pref else ""),
+                "各教科の平均正答率と全国平均との差の平均（国語・算数/数学、小6は理科も）。" + ("市は比較可能な結果を公表していません。" if pref else "")))
+    if sch.get("privateJHS") is not None:
+        R.add("info", T(f"{sch['privateJHS']:.0f}% of local 6th-graders go on to a private junior high", f"区市内の小学校卒業生の{sch['privateJHS']:.0f}%が私立中学校へ進学"),
+              T("東京都 公立学校統計調査 2025 (Tokyo average 19.9%).", "東京都 公立学校統計調査 2025（都平均19.9%）。"))
     if A:
         cc, cr, hl = (A.get("childcare") or {}), A.get("crime"), A.get("health")
         if cc:

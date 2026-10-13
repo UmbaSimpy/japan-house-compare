@@ -137,6 +137,26 @@ function liqTagHTML(d, kind) {
     data-tip="${escAttr(liqTip(d, kind))}">${t('liqTag', d.liq.level)}</a>`;
 }
 
+/* Assigned public schools at the listing's 丁目 point (schools.py → d.school; info only, never scored — DATA_LOG item 20).
+   x = {name, code, src: 'zone' | 'nearest', m: straight-line metres, alt: other zones within 150 m} */
+const schDist = m => m == null ? '' : m < 1000 ? `${Math.round(m / 10) * 10} m` : `${(m / 1000).toFixed(1)} km`;
+const schShort = n => String(n).replace(/(小学校|中学校|義務教育学校)$/, m => ({ 小学校: '小', 中学校: '中', 義務教育学校: '義務' }[m]));
+function schoolTip(d) {
+  const s = d.school;
+  if (!s || (!s.e && !s.j)) return t('schTipNA');
+  const near = (s.e || s.j).src === 'nearest';
+  const li = k => s[k] ? `<li><span>${t(k === 'e' ? 'schES' : 'schJHS')}</span><span>${escHTML(s[k].name)} · ${schDist(s[k].m)}</span></li>` +
+    (s[k].alt?.length ? `<li class="tip-note">${t('schAlt', escHTML(s[k].alt.join('、')))}</li>` : '') : '';
+  return `<div class="tip-h">${t(near ? 'schTipNear' : 'schTipH')}</div><ul class="tip-list">${li('e')}${li('j')}</ul>
+    <div class="tip-note">${t(near ? 'schNoteNear' : 'schNote')}</div>`;
+}
+function schoolTagHTML(d) {
+  const e = d.school?.e;
+  if (!e) return '';
+  return `<span class="tag tag-muted" data-tip="${escAttr(schoolTip(d))}">🏫 ${escHTML(schShort(e.name))}${e.m != null ? ' ' + schDist(e.m) : ''}${e.src === 'nearest' ? '*' : e.alt?.length ? ' ±' : ''}</span>`;
+}
+const schCell = k => d => { const x = d.school?.[k]; return x ? `${escHTML(x.name)}<div class="cmp-sub">${schDist(x.m)}${x.src === 'nearest' ? ' · ' + t('schNearestShort') : ''}${x.alt?.length ? ' · ' + t('schAltShort', escHTML(x.alt.join('、'))) : ''}</div>` : '—'; };
+
 function priceTip(d) {
   const hist = d.priceHistory || [];
   const rows = hist.map(([date, p], i) => {
@@ -326,6 +346,23 @@ let activeLayout = 'all';
 let activeSort = 'score-desc';
 const tabCounts = { listings: 0, apartments: 0 };
 
+/* House details from scraper.house_details (DATA_LOG item 21). Features are what the agent advertised:
+   a missing tag means "not advertised", not "absent". d.feat is undefined until the next scrape. */
+const hasF = (d, k) => d.feat ? d.feat.includes(k) : null;
+const H_CERTS = ['longLife', 'perfCert', 'groundSurvey', 'inspCert', 'defectIns', 'flat35s'];
+const H_ECO = ['ecoHeater', 'doubleGlaze', 'allElectric', 'ecoMeasures'];
+function houseFeatTagsHTML(d) {
+  const out = [];
+  if (hasF(d, 'solar')) out.push(`<span class="tag tag-green">${t('tagSolar')}</span>`);
+  if (hasF(d, 'longLife')) out.push(`<span class="tag tag-green">${t('tagLongLife')}</span>`);
+  else if (hasF(d, 'perfCert')) out.push(`<span class="tag tag-green">${t('tagPerfCert')}</span>`);
+  if (d.covered) out.push(`<span class="tag tag-green">${t('tagCovered')}</span>`);
+  if (d.fibre) out.push(`<span class="tag tag-green">${t('tagFibre')}</span>`);
+  if (hasF(d, 'corner') || d.roads >= 2) out.push(`<span class="tag tag-muted">${t('tagCorner')}</span>`);
+  if (d.roadM != null && d.roadM < 4) out.push(`<span class="tag tag-amber" title="${escAttr(t('tagNarrowRoadTitle'))}">${t('tagNarrowRoad', d.roadM)}</span>`);
+  return out.join('');
+}
+
 function houseCardHTML(d) {
   const s = d.scores, grade = scoreGrade(s.total);
   const tags = [];
@@ -336,7 +373,9 @@ function houseCardHTML(d) {
   else if (d.parking === 1) tags.push(`<span class="tag tag-amber">${t('tagParkingN', 1)}</span>`);
   if (d.landRights === 'leased') tags.push(`<span class="tag tag-amber">${t('tagLeasehold')}</span>`);
   if (!d.cityGas) tags.push(`<span class="tag tag-muted">${t('tagNoGas')}</span>`);
+  tags.push(houseFeatTagsHTML(d));
   tags.push(liqTagHTML(d, 'house'));
+  tags.push(schoolTagHTML(d));
 
   return `
   <div class="card">
@@ -455,6 +494,7 @@ function msCardHTML(d) {
   const priceTag = priceTagHTML(d);
   if (priceTag) tags.push(priceTag);
   tags.push(liqTagHTML(d, 'condo'));
+  tags.push(schoolTagHTML(d));
   if (d.renovation) tags.push(`<span class="tag tag-green" title="${escAttr(d.renoNote || '')}">${t('tagReno')}</span>`);
   if (!d.shinTaishin) tags.push(`<span class="tag tag-amber" title="${escAttr(t('tagOldSeismicTitle'))}">${t('tagOldSeismic')}</span>`);
   if (d.repairPerM2 !== null && d.repairPerM2 < LOW_REPAIR_PER_M2)
@@ -808,6 +848,7 @@ function cmpRows(kind) {
       R('address', d => d.address, d => escHTML(d.address)),
     ]],
     ['risk', [R('liq', liqVal, liqShow, 'low')]],
+    ['schools', [R('schES', d => d.school?.e?.m ?? null, schCell('e'), 'low'), R('schJHS', d => d.school?.j?.m ?? null, schCell('j'), 'low')]],
     ['scores', [
       R('total', d => d.scores.total, d => `<b>${d.scores.total}</b> / 100`, 'high'),
       ...Object.keys(NW_SCORE_MAX).map(k => R('cat.' + k, d => d.scores[k], d => `${d.scores[k]} / ${NW_SCORE_MAX[k]}`, 'high')),
@@ -856,6 +897,7 @@ function cmpRows(kind) {
     ['risk', [
       R('liq', liqVal, liqShow, 'low'),
     ]],
+    ['schools', [R('schES', d => d.school?.e?.m ?? null, schCell('e'), 'low'), R('schJHS', d => d.school?.j?.m ?? null, schCell('j'), 'low')]],
     ['features', [
       R('elev', d => d.elevator, d => bool(d.elevator), 'yes'),
       R('pet', d => d.pet, d => bool(d.pet), 'yes'),
@@ -885,6 +927,11 @@ function cmpRows(kind) {
       R('land', d => d.landM2, d => d.landM2 ? `${d.landM2} m² (${t('tsubo', toTsubo(d.landM2))})` : '—', 'high'),
       R('layout', d => parseInt(d.layout) || null, d => d.layout, 'high'),
     ]],
+    ['plot', [
+      R('road', d => d.roadM ?? null, d => d.roadM == null ? '—' : t('roadV', d.roadM, d.frontM, d.roads), 'high'),
+      R('zoning', d => d.zoning ?? null, d => d.zoning ? escHTML(d.zoning) : '—'),
+      R('bcrFar', d => d.far ?? null, d => d.bcr != null ? `${d.bcr}% / ${d.far ?? '—'}%` : '—'),
+    ]],
     ['building', [
       R('age', d => d.age, d => d.age === 0 ? t('newBuild') : t('yearsOld', d.age), 'low'),
       R('structure', d => ({ RC: 3, Steel: 2, Wood: 1 })[d.structure] ?? null, d => `${t('structure', d.structure)} / ${t('storeys', d.floors)}`, 'high'),
@@ -898,10 +945,19 @@ function cmpRows(kind) {
     ['risk', [
       R('liq', liqVal, liqShow, 'low'),
     ]],
+    ['schools', [R('schES', d => d.school?.e?.m ?? null, schCell('e'), 'low'), R('schJHS', d => d.school?.j?.m ?? null, schCell('j'), 'low')]],
     ['features', [
       R('parking', d => d.parking, d => t('parkingCars', d.parking), 'high'),
       R('rights', d => d.landRights === 'owned', d => t(d.landRights === 'owned' ? 'rightsOwned' : 'rightsLeased'), 'yes'),
       R('gas', d => d.cityGas, d => bool(d.cityGas), 'yes'),
+      R('covered', d => d.feat ? !!d.covered : null, d => d.feat ? (d.covered ? t('yes') : t('notAdv')) : '—', 'yes'),
+      R('fibre', d => d.feat ? !!d.fibre : null, d => d.feat ? (d.fibre ? t('yes') : t('notAdv')) : '—', 'yes'),
+      R('solar', d => hasF(d, 'solar'), d => d.feat ? (hasF(d, 'solar') ? t('yes') : t('notAdv')) : '—', 'yes'),
+      R('certs', d => d.feat ? H_CERTS.filter(k => d.feat.includes(k)).length : null,
+        d => d.feat ? (H_CERTS.filter(k => d.feat.includes(k)).map(k => t('cert.' + k)).join(' · ') || t('notAdv')) : '—', 'high'),
+      R('energy', d => d.energyStars ?? d.insulation ?? (d.feat ? H_ECO.filter(k => d.feat.includes(k)).length : null),
+        d => [d.energyStars ? '★'.repeat(d.energyStars) : '', d.insulation ? t('insV', d.insulation) : '', d.utilityYen ? t('utilV', d.utilityYen) : '',
+              ...(d.feat || []).filter(k => H_ECO.includes(k)).map(k => t('eco.' + k))].filter(Boolean).join(' · ') || (d.feat ? t('notAdv') : '—'), 'high'),
     ]],
     ['scores', [
       R('total', d => d.scores.total, d => `<b>${d.scores.total}</b> / 100`, 'high'),
@@ -1169,6 +1225,7 @@ function nwCardHTML(d) {
   const pt = nwPriceTagHTML(d);
   if (pt) tags.push(pt);
   tags.push(liqTagHTML(d, 'condo'));
+  tags.push(schoolTagHTML(d));
   if (d.major.length) tags.push(`<span class="tag tag-green" title="${escAttr(d.major.join(', '))}">${t('nwMajorTag')}</span>`);
   if (d.repairPerM2 != null && d.repairPerM2 < LOW_REPAIR_PER_M2)
     tags.push(`<span class="tag tag-amber" data-tip="${escAttr(t('nwLowRepairTip', d.repairPerM2))}">${t('nwLowRepair')}</span>`);

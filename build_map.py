@@ -6,7 +6,8 @@ Inputs (all committed):
   data/map_extras.json  – Costco warehouses, Tokyo Station, commuter-bus origins
   areas.json            – areas the daily SUUMO scrape tracks (to link map → listings)
   optional (track B):   data/commute_matrix.json (office picker), data/area_health.json (paediatrics),
-                        data/area_noise.json (aircraft noise) — info only, not part of the score
+                        data/area_noise.json (aircraft noise), data/area_crime.json, data/area_schools.json +
+                        data/school_info.json (schools) — info only, not part of the score
 
 Run:  python build_map.py                 (rebuild map-data.js)
       python build_map.py --fetch-boundaries   (one-off: refresh data/boundaries.json)
@@ -59,6 +60,13 @@ def build():
     info = {key: json.load(open(f, encoding="utf-8")) for key, f in
             (("health", "data/area_health.json"), ("noise", "data/area_noise.json"), ("crime", "data/area_crime.json")) if os.path.exists(f)}
 
+    # schools (info only, never scored): data/area_schools.json (schools.py) + data/school_info.json (school_info.py)
+    sch = {}
+    if os.path.exists("data/area_schools.json") and os.path.exists("data/school_info.json"):
+        s1 = json.load(open("data/area_schools.json", encoding="utf-8"))["areas"]
+        sinfo = json.load(open("data/school_info.json", encoding="utf-8"))
+        sch = {k: {**s1.get(k, {}), **v} for k, v in sinfo["areas"].items()}
+
     areas, used = [], set()
     for a in loc["areas"]:
         fs = by_name.get(a["nameJa"])
@@ -70,6 +78,8 @@ def build():
         for key, data in info.items():                       # info-only extras (not scored)
             if a["id"] in data["areas"]:
                 a[key] = data["areas"][a["id"]]
+        if a["id"] in sch:
+            a["schools"] = sch[a["id"]]
         areas.append(a)
 
     context = [{"code": f["code"], "name": f["name"], "poly": f["poly"]}
@@ -79,7 +89,10 @@ def build():
            "referenceFamily": loc.get("referenceFamily"), "areas": areas, "context": context,
            "costco": extras["costco"], "tokyoStation": extras["tokyoStation"], "busOrigins": extras["busOrigins"],
            "boundarySource": bnd["source"],
-           "info": {k: {"generated": v["generated"], "source": v["source"]} for k, v in info.items()}}
+           "info": {k: {"generated": v["generated"], "source": v["source"]} for k, v in info.items()},
+           "houseWeights": loc.get("houseWeights"), "houseGenerated": loc.get("houseGenerated")}
+    if sch:
+        out["schoolInfo"] = {k: sinfo[k] for k in ("generated", "sources", "tokyoPrivateJHS", "chibaHS")}
     if os.path.exists("data/commute_matrix.json"):          # office picker (commute_matrix.py, track B)
         cm = json.load(open("data/commute_matrix.json", encoding="utf-8"))
         out["commute"] = {k: cm[k] for k in ("generated", "searchDate", "offices", "matrix")}

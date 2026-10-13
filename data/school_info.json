@@ -1,0 +1,1255 @@
+{
+ "generated": "2026-10-13",
+ "sources": {
+  "test": [
+   "https://www.mext.go.jp/content/20250930-mxt_chousa02-000043165-07.pdf",
+   "https://www.mext.go.jp/content/20250930-mxt_chousa02-000043165-04.pdf",
+   "https://www.pref.saitama.lg.jp/f2214/gakutyou/r7shichousonkekka.html"
+  ],
+  "privateJHS": "https://www.kyoiku.metro.tokyo.lg.jp/documents/d/kyoiku/r7-houkokusho-sotsugo",
+  "choice": "https://www.kyoiku.metro.tokyo.lg.jp/documents/d/kyoiku/2026-02-27-132752-298",
+  "hs": "https://www.pref.chiba.lg.jp/kyouiku/seisaku/miryoku/gakku/"
+ },
+ "tokyoPrivateJHS": 19.9,
+ "chibaHS": {
+  "1": "Chiba city",
+  "2": "Ichikawa, Funabashi, Matsudo, Narashino, Yachiyo, Urayasu",
+  "3": "Noda, Kashiwa, Nagareyama, Abiko, Kamagaya",
+  "4": "Narita, Sakura, Yotsukaido, Yachimata, Inzai, Shiroi, Tomisato, Shisui, Sakae",
+  "9": "Kisarazu, Ichihara, Kimitsu, Futtsu, Sodegaura"
+ },
+ "areas": {
+  "urayasu": {
+   "test": {
+    "es": -0.3,
+    "jhs": -0.8,
+    "src": "mext",
+    "level": "pref"
+   },
+   "privateJHS": null,
+   "choice": {
+    "e": "partial",
+    "j": "none",
+    "note": "特定地域選択制 for the 南小 zone only",
+    "src": "https://www.city.urayasu.lg.jp/"
+   },
+   "hsDistrict": 2
+  },
+  "matsudo": {
+   "test": {
+    "es": -0.3,
+    "jhs": -0.8,
+    "src": "mext",
+    "level": "pref"
+   },
+   "privateJHS": null,
+   "choice": {
+    "e": "adjacent",
+    "j": "adjacent",
+    "note": "adjacent zone within walking distance (since 2004; R7 guide)",
+    "src": "https://www.city.matsudo.chiba.jp/kosodate/gakkou/"
+   },
+   "hsDistrict": 2
+  },
+  "funabashi": {
+   "test": {
+    "es": -0.3,
+    "jhs": -0.8,
+    "src": "mext",
+    "level": "pref"
+   },
+   "privateJHS": null,
+   "choice": {
+    "e": "unknown",
+    "j": "unknown",
+    "note": "",
+    "src": null
+   },
+   "hsDistrict": 2
+  },
+  "minato": {
+   "test": {
+    "es": 4.0,
+    "jhs": 3.7,
+    "src": "mext",
+    "level": "pref"
+   },
+   "privateJHS": 41.9,
+   "choice": {
+    "e": "adjacent",
+    "j": "free",
+    "note": "",
+    "src": "https://www.kyoiku.metro.tokyo.lg.jp/documents/d/kyoiku/2026-02-27-132752-298"
+   },
+   "hsDistrict": 0
+  },
+  "chiba-mihama": {
+   "test": {
+    "es": 0.0,
+    "jhs": 0.7,
+    "src": "mext",
+    "level": "city"
+   },
+   "privateJHS": null,
+   "choice": {
+    "e": "unknown",
+    "j": "unknown",
+    "note": "",
+    "src": null
+   },
+   "hsDistrict": 1
+  },
+  "shinagawa": {
+   "test": {
+    "es": 4.0,
+    "jhs": 3.7,
+    "src": "mext",
+    "level": "pref"
+   },
+   "privateJHS": 34.9,
+   "choice": {
+    "e": "adjacent",
+    "j": "free",
+    "note": "義務教育学校 also free",
+    "src": "https://www.kyoiku.metro.tokyo.lg.jp/documents/d/kyoiku/2026-02-27-132752-298"
+   },
+   "hsDistrict": 0
+  },
+  "arakawa": {
+   "test": {
+    "es": 4.0,
+    "jhs": 3.7,
+    "src": "mext",
+    "level": "pref"
+   },
+   "privateJHS": 21.2,
+   "choice": {
+    "e": "adjacent",
+    "j": "free",
+    "note": "",
+    "src": "https://www.kyoiku.metro.tokyo.lg.jp/documents/d/kyoiku/2026-02-27-132752-298"
+   },
+   "hsDistrict": 0
+  },
+  "ichikawa": {
+   "test": {
+    "es": -0.3,
+    "jhs": -0.8,
+    "src": "mext",
+    "level": "pref"
+   },
+   "privateJHS": null,
+   "choice": {
+    "e": "unknown",
+    "j": "unknown",
+    "note": "",
+    "src": null
+   },
+   "hsDistrict": 2
+  },
+  "toshima": {
+   "test": {
+    "es": 4.0,
+    "jhs": 3.7,
+    "src": "mext",
+    "level": "pref"
+   },
+   "privateJHS": 32.3,
+   "choice": {
+    "e": "adjacent",
+    "j": "adjacent",
+    "note": "",
+    "src": "https://www.kyoiku.metro.tokyo.lg.jp/documents/d/kyoiku/2026-02-27-132752-298"
+   },
+   "hsDistrict": 0
+  },
+  "bunkyo": {
+   "test": {
+    "es": 4.0,
+    "jhs": 3.7,
+    "src": "mext",
+    "level": "pref"
+   },
+   "privateJHS": 48.5,
+   "choice": {
+    "e": "none",
+    "j": "free",
+    "note": "",
+    "src": "https://www.kyoiku.metro.tokyo.lg.jp/documents/d/kyoiku/2026-02-27-132752-298"
+   },
+   "hsDistrict": 0
+  },
+  "narashino": {
+   "test": {
+    "es": -0.3,
+    "jhs": -0.8,
+    "src": "mext",
+    "level": "pref"
+   },
+   "privateJHS": null,
+   "choice": {
+    "e": "unknown",
+    "j": "unknown",
+    "note": "",
+    "src": null
+   },
+   "hsDistrict": 2
+  },
+  "kawasaki-kawasaki": {
+   "test": {
+    "es": 3.0,
+    "jhs": 2.2,
+    "src": "mext",
+    "level": "city"
+   },
+   "privateJHS": null,
+   "choice": {
+    "e": "unknown",
+    "j": "unknown",
+    "note": "",
+    "src": null
+   },
+   "hsDistrict": 0
+  },
+  "chiyoda": {
+   "test": {
+    "es": 4.0,
+    "jhs": 3.7,
+    "src": "mext",
+    "level": "pref"
+   },
+   "privateJHS": 44.1,
+   "choice": {
+    "e": "none",
+    "j": "free",
+    "note": "",
+    "src": "https://www.kyoiku.metro.tokyo.lg.jp/documents/d/kyoiku/2026-02-27-132752-298"
+   },
+   "hsDistrict": 0
+  },
+  "nakano": {
+   "test": {
+    "es": 4.0,
+    "jhs": 3.7,
+    "src": "mext",
+    "level": "pref"
+   },
+   "privateJHS": 26.8,
+   "choice": {
+    "e": "none",
+    "j": "none",
+    "note": "",
+    "src": "https://www.kyoiku.metro.tokyo.lg.jp/documents/d/kyoiku/2026-02-27-132752-298"
+   },
+   "hsDistrict": 0
+  },
+  "adachi": {
+   "test": {
+    "es": 4.0,
+    "jhs": 3.7,
+    "src": "mext",
+    "level": "pref"
+   },
+   "privateJHS": 11.8,
+   "choice": {
+    "e": "adjacent",
+    "j": "free",
+    "note": "",
+    "src": "https://www.kyoiku.metro.tokyo.lg.jp/documents/d/kyoiku/2026-02-27-132752-298"
+   },
+   "hsDistrict": 0
+  },
+  "chiba-chuo": {
+   "test": {
+    "es": 0.0,
+    "jhs": 0.7,
+    "src": "mext",
+    "level": "city"
+   },
+   "privateJHS": null,
+   "choice": {
+    "e": "unknown",
+    "j": "unknown",
+    "note": "",
+    "src": null
+   },
+   "hsDistrict": 1
+  },
+  "shinjuku": {
+   "test": {
+    "es": 4.0,
+    "jhs": 3.7,
+    "src": "mext",
+    "level": "pref"
+   },
+   "privateJHS": 36.0,
+   "choice": {
+    "e": "none",
+    "j": "free",
+    "note": "",
+    "src": "https://www.kyoiku.metro.tokyo.lg.jp/documents/d/kyoiku/2026-02-27-132752-298"
+   },
+   "hsDistrict": 0
+  },
+  "chiba-inage": {
+   "test": {
+    "es": 0.0,
+    "jhs": 0.7,
+    "src": "mext",
+    "level": "city"
+   },
+   "privateJHS": null,
+   "choice": {
+    "e": "unknown",
+    "j": "unknown",
+    "note": "",
+    "src": null
+   },
+   "hsDistrict": 1
+  },
+  "mitaka": {
+   "test": {
+    "es": 4.0,
+    "jhs": 3.7,
+    "src": "mext",
+    "level": "pref"
+   },
+   "privateJHS": 20.0,
+   "choice": {
+    "e": "none",
+    "j": "none",
+    "note": "",
+    "src": "https://www.kyoiku.metro.tokyo.lg.jp/documents/d/kyoiku/2026-02-27-132752-298"
+   },
+   "hsDistrict": 0
+  },
+  "koto": {
+   "test": {
+    "es": 4.0,
+    "jhs": 3.7,
+    "src": "mext",
+    "level": "pref"
+   },
+   "privateJHS": 28.7,
+   "choice": {
+    "e": "free",
+    "j": "free",
+    "note": "ES: within ~2 km walk",
+    "src": "https://www.kyoiku.metro.tokyo.lg.jp/documents/d/kyoiku/2026-02-27-132752-298"
+   },
+   "hsDistrict": 0
+  },
+  "chuo": {
+   "test": {
+    "es": 4.0,
+    "jhs": 3.7,
+    "src": "mext",
+    "level": "pref"
+   },
+   "privateJHS": 39.6,
+   "choice": {
+    "e": "partial",
+    "j": "free",
+    "note": "ES: 特認校 5 + 特定地域選択制",
+    "src": "https://www.kyoiku.metro.tokyo.lg.jp/documents/d/kyoiku/2026-02-27-132752-298"
+   },
+   "hsDistrict": 0
+  },
+  "taito": {
+   "test": {
+    "es": 4.0,
+    "jhs": 3.7,
+    "src": "mext",
+    "level": "pref"
+   },
+   "privateJHS": 30.9,
+   "choice": {
+    "e": "none",
+    "j": "free",
+    "note": "",
+    "src": "https://www.kyoiku.metro.tokyo.lg.jp/documents/d/kyoiku/2026-02-27-132752-298"
+   },
+   "hsDistrict": 0
+  },
+  "inzai": {
+   "test": {
+    "es": -0.3,
+    "jhs": -0.8,
+    "src": "mext",
+    "level": "pref"
+   },
+   "privateJHS": null,
+   "choice": {
+    "e": "unknown",
+    "j": "unknown",
+    "note": "",
+    "src": null
+   },
+   "hsDistrict": 4
+  },
+  "suginami": {
+   "test": {
+    "es": 4.0,
+    "jhs": 3.7,
+    "src": "mext",
+    "level": "pref"
+   },
+   "privateJHS": 32.0,
+   "choice": {
+    "e": "none",
+    "j": "none",
+    "note": "",
+    "src": "https://www.kyoiku.metro.tokyo.lg.jp/documents/d/kyoiku/2026-02-27-132752-298"
+   },
+   "hsDistrict": 0
+  },
+  "tachikawa": {
+   "test": {
+    "es": 4.0,
+    "jhs": 3.7,
+    "src": "mext",
+    "level": "pref"
+   },
+   "privateJHS": 8.7,
+   "choice": {
+    "e": "adjacent",
+    "j": "adjacent",
+    "note": "only if the chosen school is closer",
+    "src": "https://www.kyoiku.metro.tokyo.lg.jp/documents/d/kyoiku/2026-02-27-132752-298"
+   },
+   "hsDistrict": 0
+  },
+  "setagaya": {
+   "test": {
+    "es": 4.0,
+    "jhs": 3.7,
+    "src": "mext",
+    "level": "pref"
+   },
+   "privateJHS": 35.1,
+   "choice": {
+    "e": "none",
+    "j": "none",
+    "note": "",
+    "src": "https://www.kyoiku.metro.tokyo.lg.jp/documents/d/kyoiku/2026-02-27-132752-298"
+   },
+   "hsDistrict": 0
+  },
+  "yokohama-aoba": {
+   "test": {
+    "es": 0.7,
+    "jhs": 2.2,
+    "src": "mext",
+    "level": "city"
+   },
+   "privateJHS": null,
+   "choice": {
+    "e": "partial",
+    "j": "partial",
+    "note": "only 特別調整通学区域 (border streets) and 通学区域特認校",
+    "src": "https://www.city.yokohama.lg.jp/kosodate-kyoiku/kyoiku/sesaku/tsugaku/"
+   },
+   "hsDistrict": 0
+  },
+  "ota": {
+   "test": {
+    "es": 4.0,
+    "jhs": 3.7,
+    "src": "mext",
+    "level": "pref"
+   },
+   "privateJHS": 21.1,
+   "choice": {
+    "e": "none",
+    "j": "none",
+    "note": "",
+    "src": "https://www.kyoiku.metro.tokyo.lg.jp/documents/d/kyoiku/2026-02-27-132752-298"
+   },
+   "hsDistrict": 0
+  },
+  "machida": {
+   "test": {
+    "es": 4.0,
+    "jhs": 3.7,
+    "src": "mext",
+    "level": "pref"
+   },
+   "privateJHS": 6.0,
+   "choice": {
+    "e": "adjacent",
+    "j": "free",
+    "note": "ES: free within 1.5 km",
+    "src": "https://www.kyoiku.metro.tokyo.lg.jp/documents/d/kyoiku/2026-02-27-132752-298"
+   },
+   "hsDistrict": 0
+  },
+  "nerima": {
+   "test": {
+    "es": 4.0,
+    "jhs": 3.7,
+    "src": "mext",
+    "level": "pref"
+   },
+   "privateJHS": 16.8,
+   "choice": {
+    "e": "none",
+    "j": "free",
+    "note": "",
+    "src": "https://www.kyoiku.metro.tokyo.lg.jp/documents/d/kyoiku/2026-02-27-132752-298"
+   },
+   "hsDistrict": 0
+  },
+  "shibuya": {
+   "test": {
+    "es": 4.0,
+    "jhs": 3.7,
+    "src": "mext",
+    "level": "pref"
+   },
+   "privateJHS": 36.3,
+   "choice": {
+    "e": "none",
+    "j": "free",
+    "note": "",
+    "src": "https://www.kyoiku.metro.tokyo.lg.jp/documents/d/kyoiku/2026-02-27-132752-298"
+   },
+   "hsDistrict": 0
+  },
+  "kita": {
+   "test": {
+    "es": 4.0,
+    "jhs": 3.7,
+    "src": "mext",
+    "level": "pref"
+   },
+   "privateJHS": 24.8,
+   "choice": {
+    "e": "none",
+    "j": "none",
+    "note": "",
+    "src": "https://www.kyoiku.metro.tokyo.lg.jp/documents/d/kyoiku/2026-02-27-132752-298"
+   },
+   "hsDistrict": 0
+  },
+  "musashino": {
+   "test": {
+    "es": 4.0,
+    "jhs": 3.7,
+    "src": "mext",
+    "level": "pref"
+   },
+   "privateJHS": 31.7,
+   "choice": {
+    "e": "none",
+    "j": "none",
+    "note": "",
+    "src": "https://www.kyoiku.metro.tokyo.lg.jp/documents/d/kyoiku/2026-02-27-132752-298"
+   },
+   "hsDistrict": 0
+  },
+  "chiba-hanamigawa": {
+   "test": {
+    "es": 0.0,
+    "jhs": 0.7,
+    "src": "mext",
+    "level": "city"
+   },
+   "privateJHS": null,
+   "choice": {
+    "e": "unknown",
+    "j": "unknown",
+    "note": "",
+    "src": null
+   },
+   "hsDistrict": 1
+  },
+  "edogawa": {
+   "test": {
+    "es": 4.0,
+    "jhs": 3.7,
+    "src": "mext",
+    "level": "pref"
+   },
+   "privateJHS": 10.6,
+   "choice": {
+    "e": "free",
+    "j": "free",
+    "note": "ES: within ~1.2 km walk",
+    "src": "https://www.kyoiku.metro.tokyo.lg.jp/documents/d/kyoiku/2026-02-27-132752-298"
+   },
+   "hsDistrict": 0
+  },
+  "kawasaki-nakahara": {
+   "test": {
+    "es": 3.0,
+    "jhs": 2.2,
+    "src": "mext",
+    "level": "city"
+   },
+   "privateJHS": null,
+   "choice": {
+    "e": "unknown",
+    "j": "unknown",
+    "note": "",
+    "src": null
+   },
+   "hsDistrict": 0
+  },
+  "meguro": {
+   "test": {
+    "es": 4.0,
+    "jhs": 3.7,
+    "src": "mext",
+    "level": "pref"
+   },
+   "privateJHS": 41.8,
+   "choice": {
+    "e": "none",
+    "j": "adjacent",
+    "note": "ES adjacent choice suspended since 2019",
+    "src": "https://www.kyoiku.metro.tokyo.lg.jp/documents/d/kyoiku/2026-02-27-132752-298"
+   },
+   "hsDistrict": 0
+  },
+  "chiba-wakaba": {
+   "test": {
+    "es": 0.0,
+    "jhs": 0.7,
+    "src": "mext",
+    "level": "city"
+   },
+   "privateJHS": null,
+   "choice": {
+    "e": "unknown",
+    "j": "unknown",
+    "note": "",
+    "src": null
+   },
+   "hsDistrict": 1
+  },
+  "toda": {
+   "test": {
+    "es": -0.6,
+    "jhs": 2.2,
+    "src": "saitama",
+    "level": "city"
+   },
+   "privateJHS": null,
+   "choice": {
+    "e": "none",
+    "j": "free",
+    "note": "JHS free choice (MEXT case study; 2024 intake, no lotteries)",
+    "src": "https://www.mext.go.jp/a_menu/shotou/gakko-sentaku/index.htm"
+   },
+   "hsDistrict": 0
+  },
+  "koganei": {
+   "test": {
+    "es": 4.0,
+    "jhs": 3.7,
+    "src": "mext",
+    "level": "pref"
+   },
+   "privateJHS": 15.1,
+   "choice": {
+    "e": "none",
+    "j": "none",
+    "note": "",
+    "src": "https://www.kyoiku.metro.tokyo.lg.jp/documents/d/kyoiku/2026-02-27-132752-298"
+   },
+   "hsDistrict": 0
+  },
+  "inagi": {
+   "test": {
+    "es": 4.0,
+    "jhs": 3.7,
+    "src": "mext",
+    "level": "pref"
+   },
+   "privateJHS": 13.4,
+   "choice": {
+    "e": "none",
+    "j": "none",
+    "note": "",
+    "src": "https://www.kyoiku.metro.tokyo.lg.jp/documents/d/kyoiku/2026-02-27-132752-298"
+   },
+   "hsDistrict": 0
+  },
+  "yachiyo": {
+   "test": {
+    "es": -0.3,
+    "jhs": -0.8,
+    "src": "mext",
+    "level": "pref"
+   },
+   "privateJHS": null,
+   "choice": {
+    "e": "unknown",
+    "j": "unknown",
+    "note": "",
+    "src": null
+   },
+   "hsDistrict": 2
+  },
+  "kawasaki-saiwai": {
+   "test": {
+    "es": 3.0,
+    "jhs": 2.2,
+    "src": "mext",
+    "level": "city"
+   },
+   "privateJHS": null,
+   "choice": {
+    "e": "unknown",
+    "j": "unknown",
+    "note": "",
+    "src": null
+   },
+   "hsDistrict": 0
+  },
+  "itabashi": {
+   "test": {
+    "es": 4.0,
+    "jhs": 3.7,
+    "src": "mext",
+    "level": "pref"
+   },
+   "privateJHS": 17.8,
+   "choice": {
+    "e": "adjacent",
+    "j": "free",
+    "note": "",
+    "src": "https://www.kyoiku.metro.tokyo.lg.jp/documents/d/kyoiku/2026-02-27-132752-298"
+   },
+   "hsDistrict": 0
+  },
+  "katsushika": {
+   "test": {
+    "es": 4.0,
+    "jhs": 3.7,
+    "src": "mext",
+    "level": "pref"
+   },
+   "privateJHS": 12.0,
+   "choice": {
+    "e": "none",
+    "j": "none",
+    "note": "",
+    "src": "https://www.kyoiku.metro.tokyo.lg.jp/documents/d/kyoiku/2026-02-27-132752-298"
+   },
+   "hsDistrict": 0
+  },
+  "yashio": {
+   "test": {
+    "es": -1.3,
+    "jhs": -2.3,
+    "src": "saitama",
+    "level": "city"
+   },
+   "privateJHS": null,
+   "choice": {
+    "e": "unknown",
+    "j": "unknown",
+    "note": "",
+    "src": null
+   },
+   "hsDistrict": 0
+  },
+  "yokohama-kohoku": {
+   "test": {
+    "es": 0.7,
+    "jhs": 2.2,
+    "src": "mext",
+    "level": "city"
+   },
+   "privateJHS": null,
+   "choice": {
+    "e": "partial",
+    "j": "partial",
+    "note": "only 特別調整通学区域 (border streets) and 通学区域特認校",
+    "src": "https://www.city.yokohama.lg.jp/kosodate-kyoiku/kyoiku/sesaku/tsugaku/"
+   },
+   "hsDistrict": 0
+  },
+  "sumida": {
+   "test": {
+    "es": 4.0,
+    "jhs": 3.7,
+    "src": "mext",
+    "level": "pref"
+   },
+   "privateJHS": 17.7,
+   "choice": {
+    "e": "adjacent",
+    "j": "free",
+    "note": "",
+    "src": "https://www.kyoiku.metro.tokyo.lg.jp/documents/d/kyoiku/2026-02-27-132752-298"
+   },
+   "hsDistrict": 0
+  },
+  "kashiwa": {
+   "test": {
+    "es": -0.3,
+    "jhs": -0.8,
+    "src": "mext",
+    "level": "pref"
+   },
+   "privateJHS": null,
+   "choice": {
+    "e": "unknown",
+    "j": "unknown",
+    "note": "",
+    "src": null
+   },
+   "hsDistrict": 3
+  },
+  "saitama-urawa": {
+   "test": {
+    "es": 4.4,
+    "jhs": 4.2,
+    "src": "saitama",
+    "level": "city"
+   },
+   "privateJHS": null,
+   "choice": {
+    "e": "unknown",
+    "j": "unknown",
+    "note": "",
+    "src": null
+   },
+   "hsDistrict": 0
+  },
+  "saitama-minami": {
+   "test": {
+    "es": 4.4,
+    "jhs": 4.2,
+    "src": "saitama",
+    "level": "city"
+   },
+   "privateJHS": null,
+   "choice": {
+    "e": "unknown",
+    "j": "unknown",
+    "note": "",
+    "src": null
+   },
+   "hsDistrict": 0
+  },
+  "kawaguchi": {
+   "test": {
+    "es": -0.3,
+    "jhs": -0.8,
+    "src": "saitama",
+    "level": "city"
+   },
+   "privateJHS": null,
+   "choice": {
+    "e": "unknown",
+    "j": "unknown",
+    "note": "",
+    "src": null
+   },
+   "hsDistrict": 0
+  },
+  "tsukuba": {
+   "test": {
+    "es": 0.4,
+    "jhs": 1.2,
+    "src": "mext",
+    "level": "pref"
+   },
+   "privateJHS": null,
+   "choice": {
+    "e": "unknown",
+    "j": "unknown",
+    "note": "",
+    "src": null
+   },
+   "hsDistrict": 0
+  },
+  "nagareyama": {
+   "test": {
+    "es": -0.3,
+    "jhs": -0.8,
+    "src": "mext",
+    "level": "pref"
+   },
+   "privateJHS": null,
+   "choice": {
+    "e": "unknown",
+    "j": "unknown",
+    "note": "",
+    "src": null
+   },
+   "hsDistrict": 3
+  },
+  "misato": {
+   "test": {
+    "es": 2.7,
+    "jhs": -0.3,
+    "src": "saitama",
+    "level": "city"
+   },
+   "privateJHS": null,
+   "choice": {
+    "e": "unknown",
+    "j": "unknown",
+    "note": "",
+    "src": null
+   },
+   "hsDistrict": 0
+  },
+  "kawasaki-miyamae": {
+   "test": {
+    "es": 3.0,
+    "jhs": 2.2,
+    "src": "mext",
+    "level": "city"
+   },
+   "privateJHS": null,
+   "choice": {
+    "e": "unknown",
+    "j": "unknown",
+    "note": "",
+    "src": null
+   },
+   "hsDistrict": 0
+  },
+  "kawasaki-takatsu": {
+   "test": {
+    "es": 3.0,
+    "jhs": 2.2,
+    "src": "mext",
+    "level": "city"
+   },
+   "privateJHS": null,
+   "choice": {
+    "e": "unknown",
+    "j": "unknown",
+    "note": "",
+    "src": null
+   },
+   "hsDistrict": 0
+  },
+  "sakura": {
+   "test": {
+    "es": -0.3,
+    "jhs": -0.8,
+    "src": "mext",
+    "level": "pref"
+   },
+   "privateJHS": null,
+   "choice": {
+    "e": "unknown",
+    "j": "unknown",
+    "note": "",
+    "src": null
+   },
+   "hsDistrict": 4
+  },
+  "fuchu": {
+   "test": {
+    "es": 4.0,
+    "jhs": 3.7,
+    "src": "mext",
+    "level": "pref"
+   },
+   "privateJHS": 10.0,
+   "choice": {
+    "e": "none",
+    "j": "none",
+    "note": "",
+    "src": "https://www.kyoiku.metro.tokyo.lg.jp/documents/d/kyoiku/2026-02-27-132752-298"
+   },
+   "hsDistrict": 0
+  },
+  "moriya": {
+   "test": {
+    "es": 0.4,
+    "jhs": 1.2,
+    "src": "mext",
+    "level": "pref"
+   },
+   "privateJHS": null,
+   "choice": {
+    "e": "unknown",
+    "j": "unknown",
+    "note": "",
+    "src": null
+   },
+   "hsDistrict": 0
+  },
+  "tsukubamirai": {
+   "test": {
+    "es": 0.4,
+    "jhs": 1.2,
+    "src": "mext",
+    "level": "pref"
+   },
+   "privateJHS": null,
+   "choice": {
+    "e": "unknown",
+    "j": "unknown",
+    "note": "",
+    "src": null
+   },
+   "hsDistrict": 0
+  },
+  "soka": {
+   "test": {
+    "es": -0.6,
+    "jhs": -0.3,
+    "src": "saitama",
+    "level": "city"
+   },
+   "privateJHS": null,
+   "choice": {
+    "e": "unknown",
+    "j": "unknown",
+    "note": "",
+    "src": null
+   },
+   "hsDistrict": 0
+  },
+  "saitama-midori": {
+   "test": {
+    "es": 4.4,
+    "jhs": 4.2,
+    "src": "saitama",
+    "level": "city"
+   },
+   "privateJHS": null,
+   "choice": {
+    "e": "unknown",
+    "j": "unknown",
+    "note": "",
+    "src": null
+   },
+   "hsDistrict": 0
+  },
+  "saitama-omiya": {
+   "test": {
+    "es": 4.4,
+    "jhs": 4.2,
+    "src": "saitama",
+    "level": "city"
+   },
+   "privateJHS": null,
+   "choice": {
+    "e": "unknown",
+    "j": "unknown",
+    "note": "",
+    "src": null
+   },
+   "hsDistrict": 0
+  },
+  "tama": {
+   "test": {
+    "es": 4.0,
+    "jhs": 3.7,
+    "src": "mext",
+    "level": "pref"
+   },
+   "privateJHS": 12.2,
+   "choice": {
+    "e": "none",
+    "j": "none",
+    "note": "",
+    "src": "https://www.kyoiku.metro.tokyo.lg.jp/documents/d/kyoiku/2026-02-27-132752-298"
+   },
+   "hsDistrict": 0
+  },
+  "yokohama-nishi": {
+   "test": {
+    "es": 0.7,
+    "jhs": 2.2,
+    "src": "mext",
+    "level": "city"
+   },
+   "privateJHS": null,
+   "choice": {
+    "e": "partial",
+    "j": "partial",
+    "note": "only 特別調整通学区域 (border streets) and 通学区域特認校",
+    "src": "https://www.city.yokohama.lg.jp/kosodate-kyoiku/kyoiku/sesaku/tsugaku/"
+   },
+   "hsDistrict": 0
+  },
+  "yokohama-tsuzuki": {
+   "test": {
+    "es": 0.7,
+    "jhs": 2.2,
+    "src": "mext",
+    "level": "city"
+   },
+   "privateJHS": null,
+   "choice": {
+    "e": "partial",
+    "j": "partial",
+    "note": "only 特別調整通学区域 (border streets) and 通学区域特認校",
+    "src": "https://www.city.yokohama.lg.jp/kosodate-kyoiku/kyoiku/sesaku/tsugaku/"
+   },
+   "hsDistrict": 0
+  },
+  "saitama-chuo": {
+   "test": {
+    "es": 4.4,
+    "jhs": 4.2,
+    "src": "saitama",
+    "level": "city"
+   },
+   "privateJHS": null,
+   "choice": {
+    "e": "unknown",
+    "j": "unknown",
+    "note": "",
+    "src": null
+   },
+   "hsDistrict": 0
+  },
+  "yokohama-kanagawa": {
+   "test": {
+    "es": 0.7,
+    "jhs": 2.2,
+    "src": "mext",
+    "level": "city"
+   },
+   "privateJHS": null,
+   "choice": {
+    "e": "partial",
+    "j": "partial",
+    "note": "only 特別調整通学区域 (border streets) and 通学区域特認校",
+    "src": "https://www.city.yokohama.lg.jp/kosodate-kyoiku/kyoiku/sesaku/tsugaku/"
+   },
+   "hsDistrict": 0
+  },
+  "koshigaya": {
+   "test": {
+    "es": 3.4,
+    "jhs": 3.2,
+    "src": "saitama",
+    "level": "city"
+   },
+   "privateJHS": null,
+   "choice": {
+    "e": "unknown",
+    "j": "unknown",
+    "note": "",
+    "src": null
+   },
+   "hsDistrict": 0
+  },
+  "ichihara": {
+   "test": {
+    "es": -0.3,
+    "jhs": -0.8,
+    "src": "mext",
+    "level": "pref"
+   },
+   "privateJHS": null,
+   "choice": {
+    "e": "unknown",
+    "j": "unknown",
+    "note": "",
+    "src": null
+   },
+   "hsDistrict": 9
+  },
+  "chofu": {
+   "test": {
+    "es": 4.0,
+    "jhs": 3.7,
+    "src": "mext",
+    "level": "pref"
+   },
+   "privateJHS": 17.6,
+   "choice": {
+    "e": "none",
+    "j": "free",
+    "note": "",
+    "src": "https://www.kyoiku.metro.tokyo.lg.jp/documents/d/kyoiku/2026-02-27-132752-298"
+   },
+   "hsDistrict": 0
+  },
+  "chiba-midori": {
+   "test": {
+    "es": 0.0,
+    "jhs": 0.7,
+    "src": "mext",
+    "level": "city"
+   },
+   "privateJHS": null,
+   "choice": {
+    "e": "unknown",
+    "j": "unknown",
+    "note": "",
+    "src": null
+   },
+   "hsDistrict": 1
+  },
+  "kamagaya": {
+   "test": {
+    "es": -0.3,
+    "jhs": -0.8,
+    "src": "mext",
+    "level": "pref"
+   },
+   "privateJHS": null,
+   "choice": {
+    "e": "unknown",
+    "j": "unknown",
+    "note": "",
+    "src": null
+   },
+   "hsDistrict": 3
+  },
+  "shiroi": {
+   "test": {
+    "es": -0.3,
+    "jhs": -0.8,
+    "src": "mext",
+    "level": "pref"
+   },
+   "privateJHS": null,
+   "choice": {
+    "e": "unknown",
+    "j": "unknown",
+    "note": "",
+    "src": null
+   },
+   "hsDistrict": 4
+  },
+  "sodegaura": {
+   "test": {
+    "es": -0.3,
+    "jhs": -0.8,
+    "src": "mext",
+    "level": "pref"
+   },
+   "privateJHS": null,
+   "choice": {
+    "e": "unknown",
+    "j": "unknown",
+    "note": "",
+    "src": null
+   },
+   "hsDistrict": 9
+  },
+  "kisarazu": {
+   "test": {
+    "es": -0.3,
+    "jhs": -0.8,
+    "src": "mext",
+    "level": "pref"
+   },
+   "privateJHS": null,
+   "choice": {
+    "e": "unknown",
+    "j": "unknown",
+    "note": "",
+    "src": null
+   },
+   "hsDistrict": 9
+  }
+ }
+}

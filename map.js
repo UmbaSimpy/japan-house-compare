@@ -4,21 +4,21 @@
    Strings: I18N.*.map in i18n.js
 ════════════════════════════════════════════════ */
 const MP = {
-  layer: 'total', sel: null, shortOnly: false, showCostco: true, showBus: true, showRanks: true,
+  mode: 'condo', layer: 'total', sel: null, shortOnly: false, showCostco: true, showBus: true, showRanks: true,
   tab: 'pros', cat: 'all', map: null, base: null, labels: null, polys: {}, edges: {}, rankLayer: null,
   costcoLayer: null, busLayer: null, domains: {},
 };
 const MP_LAYERS = ['total', 'space', 'commute', 'childcare', 'hazard', 'growth', 'bus', 'costco', 'crime', 'live'];
 const MP_SUBS = ['space', 'commute', 'childcare', 'hazard', 'growth', 'bus', 'costco'];
 const MP_CATS = ['commute', 'bus', 'childcare', 'housing', 'hazard', 'crime', 'growth', 'costco', 'data'];
-const MP_CAT_ICON = { commute: '🚆', bus: '🚌', childcare: '👶', housing: '🏢', hazard: '🌊', growth: '📈', costco: '🛒', crime: '🚓', data: 'ⓘ' };
+const MP_CAT_ICON = { commute: '🚆', bus: '🚌', childcare: '👶', housing: '🏢', hazard: '🌊', growth: '📈', costco: '🛒', crime: '🚓', schools: '🏫', data: 'ⓘ' };
 const MP_SCORE_CAT = { space: 'housing', commute: 'commute', childcare: 'childcare', hazard: 'hazard', growth: 'growth', bus: 'bus', costco: 'costco' };
 const mpAreas = () => MAP_DATA.areas;
 const mpById = id => MAP_DATA.areas.find(a => a.id === id);
 const mpName = a => LANG === 'ja' ? a.nameJa : a.nameEn;
 const mpAlt = a => LANG === 'ja' ? a.nameEn : a.nameJa;
 const mpLive = a => (typeof AREA_STATS !== 'undefined' && AREA_STATS.areas?.[a.id]) || null;   // daily area-stats.js (track A)
-const mpVal = (a, l) => l === 'total' ? a.totalScore : l === 'live' ? (mpLive(a)?.u80 ?? null) : l === 'crime' ? (a.crime?.safetyIndex ?? null) : a.scores[l];
+const mpVal = (a, l) => l === 'total' ? a.totalScore : l === 'live' ? (MP.mode === 'house' ? a.housing?.u80 ?? null : mpLive(a)?.u80 ?? null) : l === 'crime' ? (a.crime?.safetyIndex ?? null) : a.scores[l];
 const mpLight = () => document.documentElement.classList.contains('light');
 const mpEsc = s => String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
 const mpLL = poly => poly.map(p => p.map(r => r.map(([x, y]) => [y, x])));
@@ -104,28 +104,31 @@ function mpPoints(a) {
     add(near >= 90 ? 'pros' : near < 50 ? 'cons' : 'info', 'childcare', R('peds', near, hl.pedsDedicated, hl.peds, hl.per10k));
   }
 
-  // space v2 (2026-10-13): scored = listings ≥90 m² built 2000+; everything else is info
-  const bg = a.budget;                      // your budget (Personalise) → today's listings; else the study snapshot
-  const q = bg ? bg.q : h.modern90Count ?? 0, u = bg ? bg.n : h.modern90Under ?? 0, P = h.priceUsedForScore;
-  if (!q) add('cons', 'housing', R('spNone'));
+  if (MP.mode === 'house') mpHousePoints(a, add);           // map-house.js
   else {
-    add(u >= 20 ? 'pros' : u <= 3 ? 'cons' : 'info', 'housing', mpB(R(u >= 20 ? 'spChoiceBig' : u <= 3 ? 'spChoiceSmall' : 'spChoice', u, q)));
-    if (P) add(P <= 50e6 ? 'pros' : P >= 90e6 ? 'cons' : 'info', 'housing', R(P <= 50e6 ? 'spPriceLow' : P >= 90e6 ? 'spPriceHigh' : 'spPrice', yenM(P)));
-  }
-  if (h.count90under80M) add('info', 'housing', R('spOld', h.count90under80M, h.count90under80MBuilt2000 ?? 0));
-  else if (!h.share90plus) add('info', 'housing', R('noLarge'));
-  if (h.share90plus != null) add('info', 'housing', R('shareHigh', h.share90plus));
-  if (h.median90to105) add('info', 'housing', R('price', yenM(h.median90to105)));
-  if (h.landPrice) add('info', 'housing', R('land', yen(h.landPrice), h.landChange5y));
-  const lv = mpLive(a);
-  const fe = lv?.fees;                      // watchlist only: 管理費 + 修繕積立金 from the condo detail pages (area_stats.py)
-  if (fe && (fe.n || fe.nAll)) add('info', 'housing', fe.n ? R('fees', yen(fe.monthly), fe.perM2, fe.n) : R('feesAll', yen(fe.monthlyAll), fe.perM2All, fe.nAll));
-  if (lv && !lv.stale) {
-    add('info', 'housing', R('liveNow', lv.date, lv.n90, lv.u80, lv.median90to105 ? yenM(lv.median90to105) : null, lv.n90to105));
-    if (lv.d7 && (lv.d7[0] || lv.d7[1])) add('info', 'housing', R('liveTrend', 7, lv.d7[0], lv.d7[1]));
-    if (lv.d30 && (lv.d30[0] || lv.d30[1])) add('info', 'housing', R('liveTrend', 30, lv.d30[0], lv.d30[1]));
-    if (lv.projects) add(lv.projects >= 3 ? 'pros' : 'info', 'housing', R('newProjects', lv.projects, lv.projectNames.slice(0, 4).join(' · ')));
-    else add('info', 'housing', R('noNewProjects', lv.newUnits));
+    // space v3 (2026-10-13): scored = listings ≥90 m², weighted by build year (2000+ 1 · 1990s 0.6 · 1983–89 0.3); everything else is info
+    const bg = a.budget;                      // your budget (Personalise) → today's listings; else the study snapshot
+    const q = bg ? bg.q : h.modern90Count ?? 0, u = bg ? bg.n : h.modern90Under ?? 0, P = h.priceUsedForScore;
+    if (!q) add('cons', 'housing', R('spNone'));
+    else {
+      add(u >= 20 ? 'pros' : u <= 3 ? 'cons' : 'info', 'housing', mpB(R(u >= 20 ? 'spChoiceBig' : u <= 3 ? 'spChoiceSmall' : 'spChoice', u, q)));
+      if (P) add(P <= 50e6 ? 'pros' : P >= 90e6 ? 'cons' : 'info', 'housing', R(P <= 50e6 ? 'spPriceLow' : P >= 90e6 ? 'spPriceHigh' : 'spPrice', yenM(P)));
+    }
+    if (h.count90under80M) add('info', 'housing', R('spOld', h.count90under80M, h.count90under80MBuilt2000 ?? 0));
+    else if (!h.share90plus) add('info', 'housing', R('noLarge'));
+    if (h.share90plus != null) add('info', 'housing', R('shareHigh', h.share90plus));
+    if (h.median90to105) add('info', 'housing', R('price', yenM(h.median90to105)));
+    if (h.landPrice) add('info', 'housing', R('land', yen(h.landPrice), h.landChange5y));
+    const lv = mpLive(a);
+    const fe = lv?.fees;                      // watchlist only: 管理費 + 修繕積立金 from the condo detail pages (area_stats.py)
+    if (fe && (fe.n || fe.nAll)) add('info', 'housing', fe.n ? R('fees', yen(fe.monthly), fe.perM2, fe.n) : R('feesAll', yen(fe.monthlyAll), fe.perM2All, fe.nAll));
+    if (lv && !lv.stale) {
+      add('info', 'housing', R('liveNow', lv.date, lv.n90, lv.u80, lv.median90to105 ? yenM(lv.median90to105) : null, lv.n90to105));
+      if (lv.d7 && (lv.d7[0] || lv.d7[1])) add('info', 'housing', R('liveTrend', 7, lv.d7[0], lv.d7[1]));
+      if (lv.d30 && (lv.d30[0] || lv.d30[1])) add('info', 'housing', R('liveTrend', 30, lv.d30[0], lv.d30[1]));
+      if (lv.projects) add(lv.projects >= 3 ? 'pros' : 'info', 'housing', R('newProjects', lv.projects, lv.projectNames.slice(0, 4).join(' · ')));
+      else add('info', 'housing', R('noNewProjects', lv.newUnits));
+    }
   }
 
   if (hz) {   // thresholds: see data/DATA_LOG.md (hazard)
@@ -187,7 +190,7 @@ function mpEdgeStyle(a) {
   return {
     pane: 'mpEdges', interactive: false, fill: false,
     color: mpLight() ? 'rgba(25,25,35,.78)' : 'rgba(235,235,245,.7)',
-    weight: a.shortlisted ? 1.3 : 1, dashArray: a.shortlisted ? null : '5 3',
+    weight: a.shortlisted ? 1.3 : 1, dashArray: mpStatus(a) === 'gate' ? '5 3' : null,
     opacity: MP.shortOnly && !a.shortlisted ? .35 : 1,
   };
 }
@@ -322,6 +325,7 @@ function mpLegend() {
 
 // Plain-language breakdown of one area's Space score (tooltip, detail bar, list). Mirrors build_locations.space_points.
 function mpSpaceWhy(a) {
+  if (MP.mode === 'house') return mpHouseSpaceWhy(a);
   const h = a.housing || {}, n = h.modern90Count ?? 0, P = h.priceUsedForScore, ym = v => t('map.yenM', v);
   const bg = a.budget, u = bg ? bg.n : h.modern90Under ?? 0;
   const pp = Math.round(h.spacePricePts ?? 0), cp = Math.round(bg ? bg.cp : h.spaceChoicePts ?? 0);
@@ -337,6 +341,7 @@ function mpSpaceWhy(a) {
 }
 
 function mpLayerDesc(l) {
+  if (MP.mode === 'house' && ['space', 'live', 'hazard', 'commute'].includes(l) && !(l === 'commute' && MP.office)) return t('map.layerDescH.' + l);
   if (l === 'total') return t('map.layerDesc.total', MP_SUBS.map(k => `${t('map.layers.' + k)} ${mpWPct(k)}`).join(' · '), mpCustomW());
   if (l === 'commute' && MP.office) return t('map.layerDesc.commuteOffice', mpOfficeName(mpOfficeInfo(MP.office)));
   return t('map.layerDesc.' + l);
@@ -344,7 +349,7 @@ function mpLayerDesc(l) {
 
 function mpControls() {
   const el = document.getElementById('mp-controls');
-  el.innerHTML = `<div class="mp-layers" role="tablist">${MP_LAYERS.map(l =>
+  el.innerHTML = `${mpModeHTML()}<div class="mp-layers" role="tablist">${MP_LAYERS.map(l =>
       `<button type="button" class="mp-chip${MP.layer === l ? ' active' : ''}" data-layer="${l}" title="${mpEsc(mpLayerDesc(l))}">${t('map.layers.' + l)}</button>`).join('')}</div>
     <div class="mp-toggles">
       <button type="button" class="mp-chip mp-persb${MP.persOpen ? ' active' : ''}${mpCustom() ? ' custom' : ''}" data-pers>⚙ ${t('map.pers.button')}</button>
@@ -369,7 +374,7 @@ function initMap() {
     className: 'mp-ctx', weight: 1, fill: true, fillOpacity: 0, interactive: true,
   }).bindTooltip(`${c.name} · ${t('map.notAnalysed')}`, { sticky: true, className: 'mp-tip ctx' }).addTo(map));
 
-  mpLoadPrefs(); mpRescore();
+  mpModeInit(); mpLoadPrefs(); mpRescore();
   const all = L.featureGroup();
   mpAreas().forEach(a => {
     const p = L.polygon(mpLL(a.poly), mpStyle(a));
@@ -378,7 +383,7 @@ function initMap() {
     p.on('click', () => mpSelect(a.id));
     p.bindTooltip(() => `<b>${mpEsc(mpName(a))}</b> <span class="mp-tip-alt">${mpEsc(mpAlt(a))}</span><br>
       ${t('map.layers.' + MP.layer)} <b>${mpVal(a, MP.layer)?.toFixed(1) ?? '—'}</b> · ${MP.layer === 'total' ? '#' + a.rank
-        : `<b>${t('map.layerRank', mpLRank()[a.id] ?? '—', t('map.layers.' + MP.layer))}</b> · ${t('map.overallRank', a.rank)}`}${a.shortlisted ? '' : ` · <i>${t('map.belowGate')}</i>`}${MP.layer === 'space' ? `<br><span class="mp-tip-alt">${mpEsc(mpSpaceWhy(a).short)}</span>` : ''}`,
+        : `<b>${t('map.layerRank', mpLRank()[a.id] ?? '—', t('map.layers.' + MP.layer))}</b> · ${t('map.overallRank', a.rank)}`}${a.shortlisted ? '' : ` · <i>${mpGated(a) ? t('map.belowGate') : t('map.outsideTop', MAP_DATA.shortlistSize ?? 28)}</i>`}${MP.layer === 'space' ? `<br><span class="mp-tip-alt">${mpEsc(mpSpaceWhy(a).short)}</span>` : ''}`,
       { sticky: true, className: 'mp-tip' });
     MP.polys[a.id] = p.addTo(all);
     MP.edges[a.id] = L.polygon(mpLL(a.poly), mpEdgeStyle(a)).addTo(map);
@@ -398,6 +403,8 @@ function initMap() {
   L.DomEvent.disableClickPropagation(ctl); L.DomEvent.disableScrollPropagation(ctl);
   mpPersBind(ctl);
   ctl.addEventListener('click', e => {
+    const md = e.target.closest('[data-mode]');
+    if (md) return mpSetMode(md.dataset.mode);
     const b = e.target.closest('[data-layer]');
     if (!b) return;
     MP.layer = b.dataset.layer; mpControls(); mpRestyle(); mpPanel(true);
@@ -413,6 +420,7 @@ function initMap() {
   document.getElementById('mp-panel').addEventListener('click', mpPanelClick);
   document.getElementById('mp-panel').addEventListener('change', e => {     // light listing sort
     if (e.target.matches('[data-lss]')) { MP.lsSort = e.target.value; const box = document.getElementById('mp-ls'); if (box) box.innerHTML = mpLsHTML(mpById(MP.sel)); }
+    if (e.target.matches('[data-hss]')) { MP.hsSort = e.target.value; const box = document.getElementById('mp-ls'); if (box) box.innerHTML = mpHsHTML(mpById(MP.sel)); }
   });
   document.getElementById('mp-panel').addEventListener('mouseover', e => {
     const r = e.target.closest('[data-pick]'); if (r && MP.polys[r.dataset.pick]) MP.polys[r.dataset.pick].fire('mouseover');
@@ -453,7 +461,7 @@ function mpPanelClick(e) {
   if (!el) return;
   if (el.dataset.lsu !== undefined || el.dataset.lsall !== undefined || el.dataset.npall !== undefined) {   // light listing controls: re-render that section only
     if (el.dataset.lsu !== undefined) MP.lsUnder = el.dataset.lsu === '1'; else if (el.dataset.npall !== undefined) MP.npAll = !MP.npAll; else MP.lsAll = !MP.lsAll;
-    const box = document.getElementById('mp-ls'); if (box) box.innerHTML = mpLsHTML(mpById(MP.sel));
+    const box = document.getElementById('mp-ls'); if (box) box.innerHTML = (MP.mode === 'house' ? mpHsHTML : mpLsHTML)(mpById(MP.sel));
     return;
   }
   if (el.dataset.cmp) mpToggleCmp(el.dataset.cmp);
@@ -491,16 +499,16 @@ function mpListHTML() {
   const short = mpAreas().filter(a => a.shortlisted).length;
   const rk = mpLRank(), byLayer = MP.layer !== 'total';
   return `<div class="mp-head">
-      <h2 class="mp-title">${t('map.title')}</h2>
-      <p class="mp-sub">${t('map.sub')}</p>
+      <h2 class="mp-title">${t(MP.mode === 'house' ? 'map.titleH' : 'map.title')}</h2>
+      <p class="mp-sub">${t(MP.mode === 'house' ? 'map.subH' : 'map.sub')}</p>
       <p class="mp-count">${t('map.analysed', mpAreas().length, short)}</p>
     </div>
     <div class="mp-desc"><b>${t('map.layers.' + MP.layer)}</b> — ${mpLayerDesc(MP.layer)}</div>
     <ol class="mp-rank">${list.map((a, i) => {
       const v = mpVal(a, MP.layer);
-      return `<li class="mp-row${a.shortlisted ? '' : ' gated'}" data-pick="${a.id}" style="animation-delay:${Math.min(i, 30) * 14}ms"${MP.layer === 'space' ? ` title="${mpEsc(mpSpaceWhy(a).lines.join('\n'))}"` : ''}>
+      return `<li class="mp-row${mpStatus(a) === 'gate' ? ' gated' : ''}" data-pick="${a.id}" style="animation-delay:${Math.min(i, 30) * 14}ms"${MP.layer === 'space' ? ` title="${mpEsc(mpSpaceWhy(a).lines.join('\n'))}"` : ''}>
         <span class="mp-rnum">${rk[a.id] ?? '—'}</span>
-        <span class="mp-rname">${MP.cmp.includes(a.id) ? '<i class="mp-incmp" title="compare">⇄</i>' : ''}${mpEsc(mpName(a))}<small>${t('map.prefs.' + a.pref)}${byLayer ? ` · ${t('map.overallRank', a.rank)}` : ''}${MP.layer === 'space' ? ` · ${mpEsc(mpSpaceWhy(a).row)}` : ''}${a.shortlisted ? '' : ` · ${t('map.belowGate')}`}</small></span>
+        <span class="mp-rname">${MP.cmp.includes(a.id) ? '<i class="mp-incmp" title="compare">⇄</i>' : ''}${mpEsc(mpName(a))}<small>${t('map.prefs.' + a.pref)}${byLayer ? ` · ${t('map.overallRank', a.rank)}` : ''}${MP.layer === 'space' ? ` · ${mpEsc(mpSpaceWhy(a).row)}` : ''}${a.shortlisted ? '' : ` · ${mpGated(a) ? t('map.belowGate') : t('map.outsideTop', MAP_DATA.shortlistSize ?? 28)}`}</small></span>
         <span class="mp-rbar"><i style="width:${Math.max(3, MP.layer === 'live' ? (v ?? 0) / (mpDomain('live')[1] || 1) * 100 : v ?? 0)}%;background:${mpColor(v)}"></i></span>
         <b class="mp-rval">${v?.toFixed(0) ?? '—'}</b>
       </li>`;
@@ -524,7 +532,7 @@ function mpKpis(a) {
   const k = [
     MP.office ? ['office', mpOffice(a) ? `${mpOffice(a).min}<small>${t('map.min')}</small>` : t('map.unknown'), mpOfficeName(mpOfficeInfo(MP.office))]
       : ['commute', c.minToTokyo != null ? `${c.minToTokyo}<small>${t('map.min')}</small>` : t('map.unknown')],
-    ['large', h.priceUsedForScore ? t('map.yenM', h.priceUsedForScore) : t('map.unknown')],
+    [MP.mode === 'house' ? 'house' : 'large', h.priceUsedForScore ? t('map.yenM', h.priceUsedForScore) : t('map.unknown')],
     ['daycare', fee === 0 ? t('map.free') : fee != null ? `${t('map.yen', fee)}<small>${t('map.perMonth')}${ch.daycare0to2Monthly == null ? '*' : ''}</small>` : t('map.unknown')],
     ['costco', co.driveMin != null ? `${Math.round(co.driveMin)}<small>${t('map.min')}</small>` : t('map.unknown')],
   ];
@@ -582,7 +590,8 @@ function mpDetailHTML(a) {
           <span class="mp-badge">${t('map.rankOf', a.rank, mpAreas().length)}</span>
           ${MP.layer !== 'total' ? `<span class="mp-badge lr" style="--c:${mpColor(mpVal(a, MP.layer))}">${MP_CAT_ICON[MP_SCORE_CAT[MP.layer] || MP.layer] || ''} ${t('map.layerRank', mpLRank()[a.id] ?? '—', t('map.layers.' + MP.layer))}</span>` : ''}
           ${a.shortlisted ? `<span class="mp-badge ok">✓ ${t('map.shortlisted')}</span>`
-            : `<span class="mp-badge warn" title="${mpEsc(t('map.gatedTip'))}">${t('map.gated')}</span>`}
+            : mpGated(a) ? `<span class="mp-badge warn" title="${mpEsc(t(MP.mode === 'house' ? 'map.gatedTipH' : 'map.gatedTip'))}">${t('map.gated')}</span>`
+            : `<span class="mp-badge" title="${mpEsc(t('map.outsideTopTip', MAP_DATA.shortlistSize ?? 28))}">${t('map.outsideTop', MAP_DATA.shortlistSize ?? 28)}</span>`}
           ${mpCmpBtn(a)}
         </div>
       </div>
@@ -598,6 +607,7 @@ function mpDetailHTML(a) {
         <b>${v.toFixed(0)}</b><small class="mp-brk" title="${mpEsc(t('map.layerRank', r ?? '—', t('map.layers.' + s)))}">#${r ?? '—'}</small></div>`;
     }).join('')}</div>
     ${mpCrimeHTML(a)}
+    ${mpSchoolHTML(a)}
     <div class="mp-tabs" role="tablist">${['pros', 'cons', 'info'].map(k =>
       `<button type="button" role="tab" class="mp-tab ${k}${MP.tab === k ? ' active' : ''}" data-mtab="${k}">
         ${t('map.' + k)} <span>${pts[k].length}</span></button>`).join('')}</div>
@@ -606,13 +616,13 @@ function mpDetailHTML(a) {
     <ul class="mp-items ${MP.tab}">${shown.length ? shown.map((i, n) =>
       `<li style="animation-delay:${n * 35}ms"><span class="mp-ic c-${i.cat}" title="${t('map.cats.' + i.cat)}">${MP_CAT_ICON[i.cat]}</span><span>${mpEsc(i.text)}</span></li>`).join('')
       : `<li class="empty">${t('map.nothing')}</li>`}</ul>
-    ${MP.cat === 'all' || MP.cat === 'housing' ? `<section class="mp-lsw" id="mp-ls">${mpLsHTML(a)}</section>` : ''}
-    ${a.tracked ? `<button type="button" class="mp-open" data-open="${a.tracked}">🏢 ${t('map.openListings')} →</button>` : ''}
+    ${MP.cat === 'all' || MP.cat === 'housing' ? `<section class="mp-lsw" id="mp-ls">${MP.mode === 'house' ? mpHsHTML(a) : mpLsHTML(a)}</section>` : ''}
+    ${a.tracked && MP.mode !== 'house' ? `<button type="button" class="mp-open" data-open="${a.tracked}">🏢 ${t('map.openListings')} →</button>` : ''}
     ${a.hazard && (MP.cat === 'all' || MP.cat === 'hazard') ? `<a class="mp-open" target="_blank" rel="noopener" href="${mpHazardURL(a)}">🌊 ${t('map.r.hazardMap')} ↗</a>` : ''}
     ${a.noise && (MP.cat === 'all' || MP.cat === 'hazard') ? [...new Set(a.noise.flags.map(f => f.url))].map(u => `<a class="mp-open" target="_blank" rel="noopener" href="${mpEsc(u)}">✈ ${t('map.r.noiseSrc')} ↗</a>`).join('') : ''}
     ${MP.cat === 'all' || MP.cat === 'commute' ? `<a class="mp-open" target="_blank" rel="noopener" href="${mpYahooURL(a, MP.office ? mpOfficeInfo(MP.office).query : '東京')}">🚆 ${t('map.r.yahoo', MP.office ? mpOfficeName(mpOfficeInfo(MP.office)) : t('map.dest.Tokyo'))} ↗</a>` : ''}
-    <details class="mp-src"><summary>${t('map.sources')} (${a.sources.length})</summary>
-      <ul>${a.sources.map(u => { let host = u; try { host = new URL(u).hostname.replace(/^www\./, ''); } catch (e) {}
+    <details class="mp-src"><summary>${t('map.sources')} (${a.sources.length + (MP.mode === 'house' ? a.house?.sources?.length || 0 : 0)})</summary>
+      <ul>${[...a.sources, ...(MP.mode === 'house' ? a.house?.sources || [] : [])].map(u => { let host = u; try { host = new URL(u).hostname.replace(/^www\./, ''); } catch (e) {}
         return `<li><a href="${mpEsc(u)}" target="_blank" rel="noopener">${mpEsc(host)}</a></li>`; }).join('')}</ul>
     </details>
     ${mpTrayHTML()}`;

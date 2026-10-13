@@ -24,25 +24,37 @@ const mpB = s => mpBudgetCustom() ? String(s).replace(/¥80M/g, mpBudgetStr()).r
 const mpOfficeInfo = id => (MAP_DATA.commute?.offices || []).find(o => o.id === id);
 const mpOfficeName = o => o ? (LANG === 'ja' ? o.ja : o.en) : '';
 
+// weights + budget are kept per map mode (apartments / houses, map-house.js); office, walking minutes and the
+// compare list are shared. Stored shape: {weights, budget, house: {weights, budget}, office, walkHome, walkOffice, cmp}
 function mpLoadPrefs() {
-  MP.weights = { ...MAP_DATA.weights };
-  MP.office = null; MP.walkHome = 10; MP.walkOffice = 5; MP.cmp = []; MP.budget = MP_BUDGET0;
+  const W0 = MAP_DATA.wByMode || { condo: MAP_DATA.weights, house: MAP_DATA.weights };
+  MP.wBy = { condo: { ...W0.condo }, house: { ...W0.house } }; MP.bBy = { condo: MP_BUDGET0, house: MP_BUDGET0 };
+  MP.office = null; MP.walkHome = 10; MP.walkOffice = 5; MP.cmp = [];
+  const okW = w => w && MP_SUBS.every(k => Number.isFinite(w[k]) && w[k] >= 0);
+  const okB = b => Number.isFinite(b) && b >= 3000 && b <= 20000;
   try {
     const p = JSON.parse(localStorage.getItem(MP_PREF_KEY) || 'null');
     if (p) {
-      if (p.weights && MP_SUBS.every(k => Number.isFinite(p.weights[k]) && p.weights[k] >= 0)) MP.weights = p.weights;
+      if (okW(p.weights)) MP.wBy.condo = p.weights;
+      if (okB(p.budget)) MP.bBy.condo = p.budget;
+      if (okW(p.house?.weights)) MP.wBy.house = p.house.weights;
+      if (okB(p.house?.budget)) MP.bBy.house = p.house.budget;
       if (p.office && mpOfficeInfo(p.office)) MP.office = p.office;
       if (Number.isFinite(p.walkHome)) MP.walkHome = p.walkHome;
       if (Number.isFinite(p.walkOffice)) MP.walkOffice = p.walkOffice;
-      if (Number.isFinite(p.budget) && p.budget >= 3000 && p.budget <= 20000) MP.budget = p.budget;
       if (Array.isArray(p.cmp)) MP.cmp = p.cmp.filter(id => mpById(id)).slice(0, 3);
     }
   } catch (e) {}
+  const m = MP.mode || 'condo';
+  MP.weights = { ...MP.wBy[m] }; MP.budget = MP.bBy[m];
 }
 function mpSavePrefs() {
+  const m = MP.mode || 'condo';
+  MP.wBy[m] = { ...MP.weights }; MP.bBy[m] = MP.budget;
   try {
-    localStorage.setItem(MP_PREF_KEY, JSON.stringify({ weights: MP.weights, office: MP.office,
-      walkHome: MP.walkHome, walkOffice: MP.walkOffice, cmp: MP.cmp, budget: MP.budget }));
+    localStorage.setItem(MP_PREF_KEY, JSON.stringify({ weights: MP.wBy.condo, budget: MP.bBy.condo,
+      house: { weights: MP.wBy.house, budget: MP.bBy.house }, office: MP.office,
+      walkHome: MP.walkHome, walkOffice: MP.walkOffice, cmp: MP.cmp }));
   } catch (e) {}
 }
 
@@ -63,25 +75,32 @@ function mpOfficeScore(a) {            // same formula as build_locations.commut
 }
 
 /* ── budget: space = ½ price (study, unchanged) + ½ choice, choice = 100·ln(1+n)/ln(61) where n = today's
-      de-duplicated listings ≥90 m², built 2000+, priced under the budget (same rule as build_locations.space_points) ── */
+      de-duplicated listings ≥90 m² priced under the budget, each weighted by build year (build_locations.AGE_W, space v3) ── */
+const MP_AGE_W = y => !y ? 0 : y >= 2000 ? 1 : y >= 1990 ? 0.6 : y >= 1983 ? 0.3 : 0;
+const mpR1 = v => Math.round(v * 10) / 10;
 function mpBudgetSpace(a) {
   const d = typeof AREA_LISTINGS !== 'undefined' ? AREA_LISTINGS.areas?.[a.id] : null;
-  const rows = d ? d.rows.filter(r => r[3] >= 90 && r[5] >= 2000) : [];
-  const n = rows.filter(r => r[2] < MP.budget).length;
+  const rows = d ? d.rows.filter(r => r[3] >= 90 && MP_AGE_W(r[5]) > 0) : [];
+  const n = mpR1(rows.filter(r => r[2] < MP.budget).reduce((s, r) => s + MP_AGE_W(r[5]), 0));
   const cp = 100 * Math.min(1, Math.log1p(n) / Math.log1p(60));
-  return { n, q: rows.length, cp, space: 0.5 * (a.housing.spacePricePts ?? 0) + 0.5 * cp };
+  return { n, q: mpR1(rows.reduce((s, r) => s + MP_AGE_W(r[5]), 0)), cp, space: 0.5 * (a.housing.spacePricePts ?? 0) + 0.5 * cp };
 }
+
+/* ── shortlist status: 'short' (in the top N) · 'gate' (space below the gate) · 'out' (passes the gate, ranked below N) ── */
+const mpGated = a => (a.scores?.space ?? 0) < (MAP_DATA.spaceGate ?? 10);
+const mpStatus = a => a.shortlisted ? 'short' : mpGated(a) ? 'gate' : 'out';
 
 /* ── re-score everything from the current weights / office / budget ── */
 function mpRescore() {
-  const budgetLive = mpBudgetCustom() && typeof AREA_LISTINGS !== 'undefined';
-  if (mpBudgetCustom() && !budgetLive) mpLsLoad();   // re-applied when the list arrives
+  const house = MP.mode === 'house';
+  const budgetLive = mpBudgetCustom() && (house ? typeof AREA_HOUSES !== 'undefined' : typeof AREA_LISTINGS !== 'undefined');
+  if (mpBudgetCustom() && !budgetLive) house ? mpHsLoad() : mpLsLoad();   // re-applied when the list arrives
   mpAreas().forEach(a => {
     if (!a._0) a._0 = { totalScore: a.totalScore, rank: a.rank, shortlisted: a.shortlisted, commute: a.scores.commute, space: a.scores.space };
     const oc = MP.office ? mpOfficeScore(a) : null;
-    a.scores.commute = oc ?? a._0.commute;
+    a.scores.commute = oc == null ? a._0.commute : house ? mpClamp(oc - (a.house?.walkPenalty || 0)) : oc;   // houses: same station-walk penalty as the study
     a.officeMissing = !!MP.office && oc == null;
-    const b = budgetLive ? mpBudgetSpace(a) : null;
+    const b = budgetLive ? (house ? mpHouseBudgetSpace(a) : mpBudgetSpace(a)) : null;
     a.scores.space = b ? b.space : a._0.space;
     a.budget = b;                              // null = study values (¥80M snapshot)
   });
@@ -131,7 +150,7 @@ function mpPersHTML() {
         <span>${t('map.pers.budgetLbl')}</span>
         <input type="range" min="5000" max="15000" step="500" value="${MP.budget}" data-budget>
         <b data-bv>${mpBudgetStr()}</b></label>
-      <p class="mp-pnote">${t('map.pers.budgetNote')}</p>
+      <p class="mp-pnote">${t(MP.mode === 'house' ? 'map.pers.budgetNoteH' : 'map.pers.budgetNote')}</p>
     </div>
     <div class="mp-ps">
       <div class="mp-ph"><b>⚖ ${t('map.pers.weights')}</b>
@@ -224,9 +243,9 @@ function mpCmpRows() {
   const L = (k, ...x) => t('map.cmp.r.' + k, ...x) + cgI('a.' + k);   // ⓘ explanation (cmp-glossary.js); '' when no entry
   const out = [
     sec('scores', [
-      [t('map.total') + cgI('a.total'), a => a.totalScore, a => a.totalScore.toFixed(1), 'hi'],
+      [t('map.total') + cgI(...(MP.mode === 'house' ? ['aH.total'] : []), 'a.total'), a => a.totalScore, a => a.totalScore.toFixed(1), 'hi'],
       [L('rank'), a => a.rank, a => '#' + a.rank, 'lo'],
-      ...MP_SUBS.map(k => [`${MP_CAT_ICON[MP_SCORE_CAT[k]]} ${t('map.layers.' + k)} <small>${mpWPct(k)}%</small>${cgI('a.sub.' + k)}`, a => a.scores[k],
+      ...MP_SUBS.map(k => [`${MP_CAT_ICON[MP_SCORE_CAT[k]]} ${t('map.layers.' + k)} <small>${mpWPct(k)}%</small>${cgI(...(MP.mode === 'house' ? ['aH.sub.' + k] : []), 'a.sub.' + k)}`, a => a.scores[k],
         a => `<span class="mp-cbar"><i style="width:${Math.max(2, a.scores[k])}%;background:${mpColor(a.scores[k], k)}"></i></span>${a.scores[k].toFixed(0)}`, 'hi']),
     ]),
     sec('commute', [
@@ -247,6 +266,7 @@ function mpCmpRows() {
       [L('pedsPer10k'), a => a.health?.per10k ?? null, a => a.health?.per10k != null ? String(a.health.per10k) : '—', 'hi'],
       [L('medical'), a => a.childcare.medicalAge, a => a.childcare.medicalAge != null ? `≤${a.childcare.medicalAge} · ¥${a.childcare.medicalCopay ?? '?'}` : '—', 'hi'],
     ]),
+    MP.mode === 'house' ? sec('housing', mpHouseCmpRows(L)) :
     sec('housing', [
       [L('median'), a => a.housing.median90to105, a => `${yenM(a.housing.median90to105)}<div class="cmp-sub">n=${a.housing.n90to105 ?? '?'}</div>`, 'lo'],
       [L('scorePrice'), a => a.housing.priceUsedForScore, a => `${yenM(a.housing.priceUsedForScore)}<div class="cmp-sub">n=${a.housing.modern90Count ?? '?'} · ${Math.round(a.housing.spacePricePts ?? 0)} pts</div>`, 'lo'],
@@ -273,6 +293,7 @@ function mpCmpRows() {
       [L('viol'), a => a.crime?.violentPer10k ?? null, a => a.crime?.violentPer10k != null ? `${a.crime.violentPer10k}<div class="cmp-sub">${a.crime.violent} · 2025</div>` : '—', 'lo'],
       [L('crimeAll'), a => a.crime?.totalPer1k ?? null, a => a.crime?.totalPer1k != null ? `${a.crime.totalPer1k}<div class="cmp-sub">${a.crime.total} · 2025</div>` : '—', 'lo'],
     ]),
+    sec('schools', mpSchoolCmpRows(L)),
     sec('growth', [
       [L('pop'), a => a.demographics.change2020to2025, a => `${a.demographics.change2020to2025 > 0 ? '+' : ''}${a.demographics.change2020to2025}%`, 'hi'],
       [L('ipss'), a => a.demographics.ipss2050, a => `${a.demographics.ipss2050 > 0 ? '+' : ''}${a.demographics.ipss2050}%`, 'hi'],
@@ -298,7 +319,7 @@ function mpCmpHTML() {
   };
   const list = (i, k) => `<ul class="mp-cl ${k}">${pts[i][k].map(p => `<li>${MP_CAT_ICON[p.cat]} ${mpEsc(p.text)}</li>`).join('') || `<li class="none">—</li>`}</ul>`;
   return `<div class="cmp-dialog mp-cmpd" role="dialog" aria-modal="true">
-    <div class="cmp-top"><h2>${t('map.cmp.title')}</h2>
+    <div class="cmp-top"><h2>${t('map.cmp.title')} · ${MP.mode === 'house' ? '🏠' : '🏢'} ${t('map.mode.' + (MP.mode || 'condo'))}</h2>
       ${mpCustom() ? `<span class="mp-badge warn">${t('map.cmp.custom')}</span>` : ''}
       <button type="button" class="cmp-close" data-cmpclose aria-label="close">×</button></div>
     <p class="cmp-legend"><span class="cmp-g">■</span> ${t('map.cmp.best')} · <span class="cmp-r">■</span> ${t('map.cmp.worst')}</p>

@@ -22,8 +22,8 @@ window.CMPG = {
   read: [`Ranks exaggerate small differences: #5 and #9 may be only 1–2 points apart. Compare the totals, not the ranks.`,
          `順位は小さな差を大きく見せます。5位と9位の差が1〜2点しかないこともあるので、順位より合計点を比べてください。`] },
 'a.sub.space': {
-  what: [`Large modern condos you could actually buy. Only listings ≥90 m² built 2000 or later count. 50% Price: median ¥/m² of those × 100 m², on a log scale (¥30M = 100 … ¥150M = 0). 50% Choice: how many of them are under ¥80M (or your budget): 100·ln(1+n)/ln 61, so 60+ listings = 100.`,
-         `実際に買える広くて新しめのマンションの評価です。90㎡以上・2000年以降築の物件だけを数えます。50%は価格：それらの㎡単価中央値×100㎡（対数目盛り、3,000万円＝100…1億5,000万円＝0）。50%は選択肢：8,000万円（または設定した予算）未満の件数、100·ln(1+n)/ln61で60件以上＝100。`],
+  what: [`Large condos you could actually buy. Listings ≥90 m² count by build year: 2000+ = 1, 1990s = 0.6, 1983–89 = 0.3, older = 0. 50% Price: weighted median ¥/m² of those × 100 m², on a log scale (¥30M = 100 … ¥150M = 0). 50% Choice: how many of them are under ¥80M (or your budget): 100·ln(1+n)/ln 61, so 60+ listings = 100.`,
+         `実際に買える広いマンションの評価です。90㎡以上の物件を築年で重み付けして数えます（2000年以降＝1、1990年代＝0.6、1983〜89年＝0.3、それ以前＝0）。50%は価格：それらの重み付き㎡単価中央値×100㎡（対数目盛り、3,000万円＝100…1億5,000万円＝0）。50%は選択肢：8,000万円（または設定した予算）未満の件数、100·ln(1+n)/ln61で60件以上＝100。`],
   why: [`For a family needing 90–100 m², the question is not the average price but whether suitable flats exist in your budget, and how many you can choose from.`,
         `90〜100㎡が必要な家族にとって大事なのは平均価格ではなく、予算内に条件に合う物件があるか、何件から選べるかです。`],
   read: [`The count is smoothed over 30 days of daily SUUMO data, so one day's swings don't move it. A low Choice part with a good Price part means few large flats are listed, not that they're expensive.`,
@@ -148,17 +148,17 @@ window.CMPG = {
   why: [`The typical price of a family-size flat in the area.`, `エリアのファミリー向け住戸の典型的な価格です。`],
   read: [`These are asking prices. Contract prices are usually lower, and the gap is large in the 23 wards. A small n makes the median unreliable.`, `売出価格です。成約価格は通常これより低く、23区では差が大きいです。nが小さいと中央値は不安定です。`] },
 'a.scorePrice': {
-  what: [`The Price half of the Space score: median ¥/m² of listings ≥90 m² built 2000 or later, × 100 m². Below: number of listings · points.`, `広さスコアの「価格」部分：90㎡以上・2000年以降築の物件の㎡単価中央値×100㎡。下段：件数・点数。`],
-  why: [`Built 2000+ means the current seismic code, better insulation and a longer remaining life, so it is what you'd actually want to buy.`, `2000年以降築は新耐震基準・断熱性能・残りの寿命の点で、実際に買いたい物件の基準になります。`],
+  what: [`The Price half of the Space score: weighted median ¥/m² of listings ≥90 m², × 100 m². Weights by build year: 2000+ = 1, 1990s = 0.6, 1983–89 = 0.3, older = 0. Below: total weight (n) · points.`, `広さスコアの「価格」部分：90㎡以上の物件の重み付き㎡単価中央値×100㎡。重みは築年で、2000年以降＝1、1990年代＝0.6、1983〜89年＝0.3、それ以前＝0。下段：重みの合計（n）・点数。`],
+  why: [`Newer means better insulation, sound-proofing and a longer remaining life; 1983+ guarantees the new seismic code. A 1990s flat is a real option, so it counts, but less than a 2000s one.`, `新しいほど断熱・遮音・残りの寿命の点で有利で、1983年以降築なら新耐震基準です。1990年代の物件も現実的な選択肢なので数えますが、2000年代より軽く扱います。`],
   read: [`Log scale: ¥30M = 100 pts … ¥150M = 0. Fewer than 3 listings is flagged as a thin sample.`, `対数目盛り：3,000万円＝100点…1億5,000万円＝0点。3件未満はサンプル不足として表示されます。`] },
 'a.pool': {
-  what: [`The Choice half of the Space score: listings ≥90 m², built 2000+, under ¥80M (or your budget). Below: points (60+ listings = 100), and the date when the live budget count is used.`,
-         `広さスコアの「選択肢」部分：90㎡以上・2000年以降築・8,000万円（または予算）未満の件数。下段：点数（60件以上＝100）と、予算設定時は件数の日付。`],
+  what: [`The Choice half of the Space score: listings ≥90 m² under ¥80M (or your budget), age-weighted (2000+ = 1, 1990s = 0.6, 1983–89 = 0.3, older = 0). Below: points (60+ listings = 100), and the date when the live budget count is used.`,
+         `広さスコアの「選択肢」部分：90㎡以上・8,000万円（または予算）未満の件数（築年で重み付け：2000年以降＝1、1990年代＝0.6、1983〜89年＝0.3、それ以前＝0）。下段：点数（60件以上＝100）と、予算設定時は件数の日付。`],
   why: [`It tells you how many realistic options you'd have today, and so how much choice and bargaining power.`, `今日現実に選べる物件数、つまり選択の幅と交渉力を示します。`],
   read: [`Smoothed over 30 days of SUUMO data. One building with several units can inflate it.`, `SUUMOデータの30日中央値です。1棟で複数戸が出ていると件数が膨らむことがあります。`] },
 'a.poolAll': {
   what: [`90 m²+ listings under ¥80M of any age, including buildings before 2000 (and some before 1982, old seismic code).`, `築年数を問わない90㎡以上・8,000万円未満の件数。2000年以前（一部は1982年以前の旧耐震）を含みます。`],
-  read: [`A big gap from the modern count means much of the cheap stock is old: lower price, but higher repair costs and loan/tax-credit limits for pre-1982 buildings.`, `新しめの件数との差が大きいと、安い物件の多くが古いということです。価格は安くても修繕費が高く、1982年以前築はローン控除などに制限があります。`] },
+  read: [`A big gap from the scored count means much of the cheap stock is old. Pre-1983 flats count 0 in the score: lower price, but higher repair costs and loan/tax-credit limits for the old seismic code.`, `新しめの件数との差が大きいと、安い物件の多くが古いということです。価格は安くても修繕費が高く、1982年以前築はローン控除などに制限があります。`] },
 'a.share': {
   what: [`Share of all used-condo listings in the area that are 90 m² or larger.`, `エリアの中古マンション掲載のうち90㎡以上の割合。`],
   read: [`Shows whether large flats are normal here or rare. It is information only and isn't scored any more.`, `広い住戸が一般的か珍しいかを示します。参考値で、現在はスコアに含みません。`] },
@@ -460,6 +460,142 @@ window.CMPG = {
   what: [`Seismic isolation (免震): rubber bearings under the building reduce shaking inside.`, `免震構造：建物の下の積層ゴムなどで室内の揺れを小さくします。`],
   read: [`Much safer for people and furniture than a standard earthquake-resistant (耐震) building, but the bearings add maintenance cost.`, `一般的な耐震構造より人や家具の安全性はずっと高いですが、免震装置の維持費がかかります。`] },
 };
+
+/* ══════════════ AREA COMPARISON — detached houses (aH.* overrides a.* in house mode) + schools ══════════════
+   Numbers mirror build_locations.py (HOUSE_WEIGHTS, hazard_score_house), house_stats.py, school_info.py, schools.py. */
+Object.assign(window.CMPG, {
+'aH.total': {
+  what: [`House-mode total of the seven sub-scores. Default weights: Space 25, Commute 20, Childcare 20, Natural hazards 15, Growth 10, Bus 5, Costco 5. Hazards weigh more than for apartments because a house sits on its own lot.`,
+         `一戸建てモードの7つのサブスコアの加重合計。標準の重み：広さ25・通勤20・子育て20・災害15・成長性10・バス5・コストコ5。一戸建ては土地の上に直接建つため、マンションより災害の比重を高くしています。`],
+  read: [`Apartment and house totals are separate rankings; don't compare a house total with an apartment total.`,
+         `マンションと一戸建ての合計点は別々のランキングです。両者を直接比べないでください。`] },
+'aH.sub.space': {
+  what: [`Detached houses you could actually buy: floor ≥100 m², built 2000 or later, or new. 50% Price: median asking price of such houses with 100–130 m² floor (log scale ¥30M = 100 … ¥150M = 0). 50% Choice: how many suitable houses are under ¥80M (or your budget): 100·ln(1+n)/ln 61.`,
+         `実際に買える一戸建て：延床100㎡以上で2000年以降築、または新築。50%は価格：延床100〜130㎡の物件の売出価格中央値（対数目盛り、3,000万円＝100…1億5,000万円＝0）。50%は選択肢：8,000万円（または設定予算）未満の件数、100·ln(1+n)/ln61。`],
+  why: [`Plot size is not filtered: in Tokyo many houses sit on 60–90 m² plots as 3-storey homes, which is shown separately.`,
+        `土地面積では絞り込んでいません。東京では60〜90㎡の土地に3階建てが多く、その割合は別に表示します。`],
+  tip: [`New builds (建売) dominate the counts in the suburbs; check the plot and the road width on each listing.`,
+        `郊外では新築（建売）が件数の大半を占めます。物件ごとに土地面積と前面道路の幅を確認してください。`] },
+'aH.sub.commute': {
+  what: [`The apartment commute score minus 1.5 points for every minute the median suitable house is beyond a 10-minute walk from a station (at most −15).`,
+         `マンションの通勤スコアから、条件に合う一戸建ての駅徒歩中央値が10分を超える1分ごとに1.5点を引きます（最大−15）。`],
+  why: [`Houses are usually further from stations than condos; 20 minutes of walking each way adds up like a longer train ride.`,
+        `一戸建てはマンションより駅から遠いのが普通です。片道20分の徒歩は電車が長いのと同じように効いてきます。`] },
+'aH.sub.hazard': {
+  what: [`House version of the hazard score: water 40 × (1 − (0.5·shallow + 0.85·0.5–3 m + 1.0·≥3 m)/100); ground 30 × (1 − (liquefaction high + 0.4·mid + 0.5·upland fill)/100); landslide 10; earthquake 20 (J-SHIS 40% → 20 … 85% → 0).`,
+         `一戸建て版の災害スコア：浸水40×(1−(0.5·浅い＋0.85·0.5〜3m＋1.0·3m以上)/100)、地盤30×(1−(液状化高＋0.4·中＋0.5·台地の盛土)/100)、土砂10、地震20（J-SHIS 40%→20…85%→0）。`],
+  why: [`A ground floor floods even in shallow water, and liquefaction tilts a house on its own foundation; condo upper floors avoid both.`,
+        `1階は浅い浸水でも被害を受け、液状化では基礎ごと傾きます。マンションの上階はどちらも避けられます。`],
+  tip: [`On each listing check the 重ねるハザードマップ at the exact address and ask for the ground survey (地盤調査) result.`,
+        `物件ごとに住所で「重ねるハザードマップ」を確認し、地盤調査の結果を尋ねてください。`] },
+'a.hPrice': {
+  what: [`Median asking price of suitable houses (floor ≥100 m², built 2000+ or new) with 100–130 m² of floor. Falls back to all suitable sizes when fewer than 3 such houses are listed.`,
+         `条件に合う一戸建て（延床100㎡以上・2000年以降築または新築）のうち延床100〜130㎡の売出価格中央値。該当が3件未満なら全サイズの中央値を使います。`],
+  read: [`It is a typical family-size house, not the cheapest one. Asking prices; new builds often sell 2–5% below asking.`,
+         `最安値ではなく標準的な家族向けサイズの価格です。売出価格で、新築は2〜5%程度値引きされることがよくあります。`] },
+'a.hPool': {
+  what: [`Number of suitable houses under ¥80M (or your budget) — the Choice half of Space.`, `8,000万円（または設定予算）未満の条件に合う一戸建ての件数。広さスコアの「選択肢」部分です。`] },
+'a.hAll': {
+  what: [`All suitable houses listed (any price), with the number that are new builds.`, `価格を問わず条件に合う一戸建ての掲載件数（うち新築）。`] },
+'a.hLand': {
+  what: [`Median plot (土地面積) of suitable houses, and the share on plots under 100 m².`, `条件に合う一戸建ての土地面積の中央値と、土地100㎡未満の割合。`],
+  why: [`Plot size decides parking, garden, sunlight and future resale/rebuild options. Under ~100 m² usually means a narrow 3-storey house.`,
+        `土地の広さは駐車場・庭・日当たり、将来の売却や建て替えに影響します。100㎡未満はたいてい狭小の3階建てです。`] },
+'a.hBldg': { what: [`Median floor area (延床面積) of suitable houses.`, `条件に合う一戸建ての延床面積の中央値。`] },
+'a.hWalk': {
+  what: [`Median walking time to the nearest station of suitable houses (bus-only listings excluded), with the share that SUUMO lists as bus access.`,
+         `条件に合う一戸建ての最寄り駅までの徒歩時間の中央値（バス便は除く）と、バス便の割合。`] },
+'a.hPark2': {
+  what: [`Share of ≥100 m² houses that SUUMO tags as having parking for 2 cars (駐車2台以上).`, `100㎡以上の一戸建てのうち、SUUMOで「駐車2台以上」のもの割合。`],
+  read: [`Whether the space is covered (carport / built-in garage) is not a SUUMO filter; check each listing's photos and 設備 text.`,
+         `屋根付き（カーポート・ビルトインガレージ）かどうかはSUUMOの条件にないため、写真や設備欄で確認してください。`] },
+'a.hSolar': {
+  what: [`Share of ≥100 m² houses with solar panels (太陽光発電システム).`, `100㎡以上の一戸建てのうち太陽光発電ありの割合。`],
+  why: [`Tokyo requires solar on most new houses from April 2025, so central-Tokyo shares are rising.`, `東京都は2025年4月から多くの新築住宅に太陽光設置を義務化しており、都内の割合は上がっています。`] },
+'a.hLongLife': {
+  what: [`Share of ≥100 m² houses certified 長期優良住宅 (long-life quality housing: insulation, quake resistance, maintenance plan).`,
+         `100㎡以上の一戸建てのうち長期優良住宅（断熱・耐震・維持保全計画などの認定）の割合。`],
+  why: [`Gives a larger mortgage tax deduction limit and lower property tax for some years; usually a sign of better build quality.`,
+        `住宅ローン控除の限度額が大きく、固定資産税の減額期間も長くなります。品質の目安にもなります。`] },
+'a.hPerfCert': {
+  what: [`Share with a 住宅性能評価書 (third-party performance evaluation: quake grade, insulation grade, etc.).`, `住宅性能評価書（耐震等級・断熱等級などの第三者評価）がある割合。`] },
+'a.hLowRise': {
+  what: [`Share of houses in a 低層住居専用地域 (category 1/2 low-rise residential zone).`, `第一種・第二種低層住居専用地域にある割合。`],
+  why: [`These zones ban tall buildings and most shops: quieter streets and protected sunlight, but fewer shops within walking distance.`,
+        `高い建物や多くの店舗が建てられないため静かで日当たりが守られますが、徒歩圏の店は少なめです。`] },
+'a.hStorey3': {
+  what: [`Share of ≥100 m² houses with 3 or more storeys.`, `100㎡以上の一戸建てのうち3階建て以上の割合。`],
+  read: [`High shares mean small plots: more stairs with toddlers, often a 1st-floor garage and no garden.`, `割合が高いほど敷地が狭いということです。小さな子との階段の上り下りが増え、1階が車庫で庭がないことが多いです。`] },
+'a.schTest': {
+  what: [`2025 national achievement test (全国学力・学習状況調査, grade 6 and grade 9): the city's average correct-answer rate minus the national average, averaged over subjects (grade 6: Japanese, maths, science; grade 9: Japanese, maths). Source: Saitama prefecture's per-city summaries, MEXT designated-city notes; prefecture value when the city publishes nothing comparable.`,
+         `2025年度全国学力・学習状況調査（小6・中3）：市の平均正答率と全国平均の差を教科で平均したもの（小6は国語・算数・理科、中3は国語・数学）。出典は埼玉県の市町村別概要、文科省の指定都市別ノート。市の値がない場合は都道府県の値。`],
+  why: [`It is the only official, comparable academic signal. There is no official ranking of individual public schools.`, `公式で比較できる唯一の学力の指標です。個々の公立校の公式ランキングはありません。`],
+  read: [`±2 points is small. City averages hide large differences between schools, and family background explains much of the gap.`, `±2ポイントは小さな差です。市の平均は学校間の大きな差を隠しており、差の多くは家庭環境で説明されます。`],
+  tip: [`Visit the assigned school (学校公開) and ask the city for that school's own results if it publishes them.`, `指定校の学校公開に行き、学校別の結果を公表していれば市に確認してください。`] },
+'a.schPriv': {
+  what: [`Tokyo only: share of March 2025 public-elementary graduates who entered a private junior high (東京都 公立学校統計調査 進路状況調査編).`, `東京都のみ：2025年3月の公立小卒業者のうち私立中学に進学した割合（東京都 公立学校統計調査 進路状況調査編）。`],
+  read: [`Above ~30% means many classmates sit entrance exams (中学受験) and use cram schools from grade 4; the local junior high has fewer high achievers.`, `30%程度を超えると、多くの同級生が中学受験をして4年生頃から塾に通います。地元の公立中には成績上位層が少なくなります。`] },
+'a.schChoice': {
+  what: [`Whether families may pick a public school other than the zoned one when entering (学校選択制): free choice, adjacent zones, or none. Tokyo: Tokyo board table for April 2026 entry; elsewhere city pages.`,
+         `入学時に指定校以外の公立校を選べるか（学校選択制）：自由選択・隣接校・なし。東京都は令和8年度の都教委の一覧、その他は市のページ。`],
+  read: [`Popular schools hold lotteries. 'Not found' means we found no system — the zoned school applies, with 指定校変更 only for specific reasons.`, `人気校は抽選になります。「確認できず」は制度が見つからないという意味で、指定校に通い、特別な理由があれば指定校変更を申請します。`] },
+'a.schKids': {
+  what: [`Children aged 0–14 (2020 census) per public elementary school in the area.`, `エリア内の公立小学校1校あたりの0〜14歳人口（2020年国勢調査）。`],
+  read: [`High values point to big schools; fast-growing areas can still have prefab classrooms. It is not a class-size figure.`, `値が大きいほど大規模校の傾向です。人口急増地ではプレハブ教室のこともあります。学級人数ではありません。`] },
+'a.schNear': {
+  what: [`Share of children 0–14 living within 800 m (straight line) of a public elementary school.`, `公立小学校から直線800m以内に住む0〜14歳の割合。`],
+  why: [`Children walk to school alone from age 6; there are no school buses in these cities.`, `6歳から一人で歩いて通学し、これらの市にスクールバスはありません。`] },
+'a.schHS': {
+  what: [`Where public high-school applications are allowed. Chiba has 9 districts (apply in your own and adjacent ones); Tokyo, Kanagawa, Saitama and Ibaraki 普通科 are prefecture-wide.`,
+         `公立高校に出願できる範囲。千葉県は9学区（自分と隣接学区に出願可）、東京・神奈川・埼玉・茨城の普通科は県（都）内全域です。`] },
+'a.schZone': {
+  what: [`Whether the city's school-zone map is in the national open data (国土数値情報 A27/A32, 2023). If yes, listing pages show the assigned elementary and junior high; if not (Funabashi, Shinagawa, Arakawa, Moriya), the nearest school is shown instead.`,
+         `市の通学区域が国の公開データ（国土数値情報 A27/A32、2023年）にあるか。あれば物件ページに指定の小・中学校を表示し、ない場合（船橋・品川・荒川・守谷）は最寄り校を表示します。`] },
+});
+
+Object.assign(window.CMPG, {
+'l.schES': {
+  what: [`The public elementary school whose zone (通学区域) contains the listing's 丁目 centre, from the national school-zone data (国土数値情報 A27, 2023), with the straight-line distance. Where the city's zones are not in the data (Funabashi, Shinagawa, Arakawa, Moriya) the nearest school is shown and marked.`,
+         `物件の丁目の中心が含まれる通学区域の公立小学校（国土数値情報 A27、2023年）と直線距離。通学区域がデータにない市（船橋・品川・荒川・守谷）は最寄り校を表示し、その旨を示します。`],
+  why: [`From age 6 children walk to school alone, and the zone decides the school unless the city has a choice system.`, `6歳から一人で歩いて通学し、学校選択制がなければ通学区域で学校が決まります。`],
+  read: [`'or …' means another zone boundary is within 150 m: SUUMO addresses stop at the 丁目, so the exact lot can fall in either zone. Walking distance is usually 1.2–1.4× the straight line.`,
+         `「または…」は150m以内に別の学区の境界があるという意味です。SUUMOの住所は丁目までなので、実際の敷地はどちらの学区にもなり得ます。徒歩距離は直線の1.2〜1.4倍程度です。`],
+  tip: [`Before signing, give the full address to the city's 学務課 (or check its 通学区域 page) and walk the route at 8 am.`, `契約前に正確な住所を市区町村の学務課に伝えて確認し（または通学区域のページ）、朝8時に通学路を歩いてみてください。`] },
+'l.schJHS': {
+  what: [`The public junior high school for the listing's zone (国土数値情報 A32, 2023), with the straight-line distance. Many Tokyo wards let you choose another junior high (see the area map's Schools card).`,
+         `物件の通学区域の公立中学校（国土数値情報 A32、2023年）と直線距離。東京の多くの区では他の中学校を選べます（エリアマップの「公立学校」カード参照）。`] },
+});
+
+/* ── House listing details (DATA_LOG item 21) ── */
+Object.assign(window.CMPG, {
+'l.road': {
+  what: [`Width of the road in front of the plot, and the frontage (接道: how many metres of the plot touch that road). "2 roads" = corner or two-sided plot.`, `敷地が接する道路の幅と、その道路に接する長さ（接道）。「2方向」は角地または二方向道路。`],
+  why: [`By law a house must touch a road at least 4 m wide for at least 2 m. A narrower road means a setback (セットバック) when rebuilding; a frontage under 2 m means no rebuild at all (再建築不可). Wider roads also mean easier parking and more light.`, `建築基準法では幅4m以上の道路に2m以上接する必要があります。4m未満ならセットバック、接道2m未満は再建築不可。道路が広いほど駐車しやすく採光も良くなります。`],
+  read: [`6 m is a typical new-town road. Under 4 m is flagged on the card.`, `6mはニュータウンの一般的な道路幅。4m未満はカードに表示します。`],
+  tip: [`Ask whether the road is public (公道) or private (私道) and whether a setback is needed.`, `公道か私道か、セットバックの要否を確認しましょう。`] },
+'l.zoning': {
+  what: [`The city-planning zone (用途地域) of the plot, e.g. 1種低層 = Category 1 low-rise residential.`, `敷地の用途地域（例：1種低層＝第一種低層住居専用地域）。`],
+  why: [`It decides what can be built next door. Low-rise residential zones (1種/2種低層) keep neighbours to about 10 m high and ban shops and apartment blocks; 中高 and 住居 zones allow mid-rise flats; 準工業 allows small factories.`, `隣に何が建つかが決まります。低層住居専用地域は高さ約10mまでで、店舗やマンションは建ちません。中高層・住居地域では中層マンション、準工業地域では小規模な工場も建てられます。`] },
+'l.bcrFar': {
+  what: [`建ぺい率 (building coverage: the largest share of the plot the building may cover) / 容積率 (floor-area ratio: the largest total floor area as a share of the plot).`, `建ぺい率（敷地に対する建築面積の上限）／容積率（敷地に対する延床面積の上限）。`],
+  read: [`50% / 100% on a 150 m² plot = up to 75 m² footprint and 150 m² total floor area. It limits how big a future rebuild or extension can be.`, `150㎡の敷地で50%／100%なら、建築面積75㎡・延床150㎡まで。将来の建て替えや増築の大きさを決めます。`] },
+'l.covered': {
+  what: [`Whether the agent mentions a carport, garage or built-in garage in the listing text.`, `掲載文にカーポート・ガレージ・ビルトインガレージの記載があるか。`],
+  read: [`Read from the agent's free text, so "not advertised" may still have one: check the photos. A carport can usually be added later (about ¥300–600k).`, `掲載文から読み取るため、「記載なし」でもある場合があります。写真で確認を。カーポートは後付けも可能（約30〜60万円）。`] },
+'l.fibre': {
+  what: [`Whether the listing text mentions fibre (光回線 / 光ファイバー) or free internet.`, `掲載文に光回線・光ファイバー・インターネット無料の記載があるか。`],
+  read: [`Rarely advertised for houses. Almost every street in the Tokyo area has fibre (NTT フレッツ光 and others); check the address on the provider's coverage page.`, `一戸建てではほとんど記載されません。首都圏ではほぼ全域で光回線が使えます。住所で提供エリアを確認しましょう。`] },
+'l.solar': {
+  what: [`Solar panels advertised (特徴: 太陽光発電システム).`, `太陽光発電システムの記載。`],
+  read: [`A 4–5 kW system saves roughly ¥80–120k a year. Ask the panel age (inverters last about 15 years) and whether the FIT sale contract transfers to you.`, `4〜5kWで年8〜12万円程度の効果。パネルの設置年（パワコンは約15年）とFIT売電契約の引継ぎを確認しましょう。`] },
+'l.certs': {
+  what: [`Quality papers the agent lists: 長期優良住宅 (long-life certified), 住宅性能評価書 (official performance report), ground survey, completion certificate (検査済証), defect insurance, Flat 35S.`, `長期優良住宅・住宅性能評価書・地盤調査・検査済証・瑕疵保険・フラット35Sなど、掲載されている書類。`],
+  why: [`They prove the house was built and inspected to a standard, raise the mortgage tax-credit cap (長期優良: ¥45M for families with children) and help resale. A missing 検査済証 can block some loans.`, `基準どおりに建てられ検査されたことの証明になり、住宅ローン減税の上限（長期優良は子育て世帯で4,500万円）や売却にも有利です。検査済証がないとローンが組めない場合もあります。`],
+  tip: [`Ask for copies of every certificate and the design drawings before signing.`, `契約前にすべての証明書と設計図書のコピーをもらいましょう。`] },
+'l.energy': {
+  what: [`Energy label (★, shown for new builds since 2024), insulation grade (断熱等級 1–7) and estimated energy cost when given; otherwise the eco features the agent ticked.`, `省エネ性能ラベル（★、2024年以降の新築）、断熱等級（1〜7）、目安光熱費。記載がなければ掲載された省エネ設備。`],
+  read: [`Used houses almost never show a label. Grade 4 = 1999 standard, 5 = ZEH level, 6–7 = much warmer. Double glazing and an eco water heater are the minimum to expect from a 2000s house.`, `中古住宅ではほぼ表示されません。等級4＝1999年基準、5＝ZEH水準、6〜7＝さらに高断熱。2000年代の住宅なら複層ガラスと省エネ給湯器が最低限の目安です。`] },
+});
 
 /* ── ⓘ button + popup ──
    cgI('a.pool') → button HTML, or '' if there's no entry. Several keys = first one found. */

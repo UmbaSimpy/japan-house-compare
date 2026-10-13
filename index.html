@@ -1046,6 +1046,17 @@
     .mp-crow .mp-bt { background: var(--bg); }
     .mp-crow.na { grid-template-columns: 7.5rem 1fr; }
     .mp-crow.na em { color: var(--text-3); font-size: .72rem; }
+    /* schools card (map-house.js) — text rows */
+    .mp-crow.txt { grid-template-columns: 7.5rem minmax(0,1fr); }
+    .mp-crow.txt .mp-sv { font-style: normal; font-weight: 600; }
+    .mp-crow.txt .mp-sv .mp-brk { display: block; font-weight: 400; color: var(--text-3); font-size: .68rem; }
+    /* apartments / houses switch (map-house.js) */
+    .mp-mode { display: flex; gap: 3px; padding: 4px; border-radius: 22px; background: var(--glass-bg); backdrop-filter: blur(10px);
+      border: 1px solid var(--border); box-shadow: var(--sh-sm); }
+    .mp-mode-b { border: none; background: none; color: var(--text-2); font: 600 .8rem var(--ff-body); padding: .38rem .9rem; border-radius: 18px; cursor: pointer; white-space: nowrap; transition: background .2s, color .2s; }
+    .mp-mode-b:hover { color: var(--text-1); }
+    .mp-mode-b.active { background: var(--text-1); color: var(--bg); }
+    .mp-lb i.yr { background: var(--surface); color: var(--text-2); font-weight: 500; }
     .mp-cnote { margin: .15rem 0 0; font-size: .68rem; color: var(--text-2); line-height: 1.35; }
     .mp-cnote a { white-space: nowrap; }
     .mp-kpis { display: grid; grid-template-columns: repeat(4, 1fr); gap: .4rem; margin-bottom: .9rem; }
@@ -1205,6 +1216,9 @@
       .mp-bar { grid-template-columns: 8.2rem minmax(0,1fr) 1.8rem 1.9rem; }
       .mp-crow { grid-template-columns: 6.6rem minmax(0,1fr) 3.4rem; row-gap: 0; }
       .mp-crow .mp-brk { grid-column: 2 / -1; text-align: right; }
+      .mp-crow.txt { grid-template-columns: 6.6rem minmax(0,1fr); }
+      .mp-crow.txt .mp-brk { text-align: left; }
+      .mp-mode-b { padding: .32rem .7rem; font-size: .74rem; }
     }
     /* ── Deep look tab (deeplook.js) ── */
     .dl-root { max-width: 900px; margin: 0 auto; padding: 20px 16px 40px; }
@@ -1605,6 +1619,21 @@ const listings = [
     "renovation": false,
     "landRights": "owned",
     "cityGas": true,
+    "roadM": 6.0,
+    "roads": 1,
+    "frontM": null,
+    "privateRoad": false,
+    "bcr": 60,
+    "far": 200,
+    "zoning": "1種中高",
+    "energyStars": null,
+    "insulation": null,
+    "utilityYen": null,
+    "feat": [
+      "flatLand"
+    ],
+    "covered": false,
+    "fibre": false,
     "isNew": false,
     "suumoUrl": "https://suumo.jp/chukoikkodate/chiba/sc_chibashimihama/nc_20822036/",
     "imageUrl": "https://img01.suumo.com/jj/resizeImage?src=gazo%2Fbukken%2F030%2FN010000%2Fimg%2F036%2F20822036%2F20822036_0011.jpg&w=640&h=480",
@@ -1631,6 +1660,26 @@ const listings = [
       "kind": "scenario",
       "landforms": null,
       "verify": "https://www.city.chiba.jp/other/jf_hazardmap/map.html?lay=saigai-02&lat=35.63855&lng=140.074478&zoom=16"
+    },
+    "geo": {
+      "lat": 35.63855,
+      "lon": 140.074478
+    },
+    "school": {
+      "e": {
+        "name": "稲毛第二小学校",
+        "code": "B112210000435",
+        "src": "zone",
+        "m": 183,
+        "alt": []
+      },
+      "j": {
+        "name": "稲浜中学校",
+        "code": "C112210000415",
+        "src": "zone",
+        "m": 922,
+        "alt": []
+      }
     }
   },
   {
@@ -1651,6 +1700,23 @@ const listings = [
     "renovation": false,
     "landRights": "owned",
     "cityGas": true,
+    "roadM": 6.0,
+    "roads": 1,
+    "frontM": null,
+    "privateRoad": false,
+    "bcr": 50,
+    "far": 100,
+    "zoning": "1種低層",
+    "energyStars": null,
+    "insulation": null,
+    "utilityYen": null,
+    "feat": [
+      "land50",
+      "garden",
+      "quiet"
+    ],
+    "covered": false,
+    "fibre": false,
     "isNew": false,
     "suumoUrl": "https://suumo.jp/chukoikkodate/chiba/sc_chibashimihama/nc_21256295/",
     "imageUrl": "https://img01.suumo.com/jj/resizeImage?src=gazo%2Fbukken%2F030%2FN010000%2Fimg%2F295%2F21256295%2F21256295_0032.jpg&w=640&h=480",
@@ -1678,6 +1744,26 @@ const listings = [
       "kind": "scenario",
       "landforms": null,
       "verify": "https://www.city.chiba.jp/other/jf_hazardmap/map.html?lay=saigai-02&lat=35.628517&lng=140.054901&zoom=16"
+    },
+    "geo": {
+      "lat": 35.628517,
+      "lon": 140.054901
+    },
+    "school": {
+      "e": {
+        "name": "磯辺小学校",
+        "code": "B112210007571",
+        "src": "zone",
+        "m": 481,
+        "alt": []
+      },
+      "j": {
+        "name": "磯辺中学校",
+        "code": "C112210003653",
+        "src": "zone",
+        "m": 470,
+        "alt": []
+      }
     }
   },
   {
@@ -1698,6 +1784,19 @@ const listings = [
     "renovation": false,
     "landRights": "owned",
     "cityGas": true,
+    "roadM": 13.0,
+    "roads": 1,
+    "frontM": 4.0,
+    "privateRoad": false,
+    "bcr": 60,
+    "far": 200,
+    "zoning": "1種中高",
+    "energyStars": null,
+    "insulation": null,
+    "utilityYen": null,
+    "feat": [],
+    "covered": false,
+    "fibre": false,
     "isNew": false,
     "suumoUrl": "https://suumo.jp/chukoikkodate/chiba/sc_chibashimihama/nc_20435748/",
     "imageUrl": "https://img01.suumo.com/jj/resizeImage?src=gazo%2Fbukken%2F030%2FN010000%2Fimg%2F748%2F20435748%2F20435748_0001.jpg&w=640&h=480",
@@ -1724,6 +1823,30 @@ const listings = [
       "kind": "scenario",
       "landforms": null,
       "verify": "https://www.city.chiba.jp/other/jf_hazardmap/map.html?lay=saigai-02&lat=35.628426&lng=140.086166&zoom=16"
+    },
+    "geo": {
+      "lat": 35.628426,
+      "lon": 140.086166
+    },
+    "school": {
+      "e": {
+        "name": "稲浜小学校",
+        "code": "B112210000738",
+        "src": "zone",
+        "m": 254,
+        "alt": [
+          "幸町小学校"
+        ]
+      },
+      "j": {
+        "name": "稲浜中学校",
+        "code": "C112210000415",
+        "src": "zone",
+        "m": 625,
+        "alt": [
+          "幸町第一中学校"
+        ]
+      }
     }
   },
   {
@@ -1744,6 +1867,21 @@ const listings = [
     "renovation": false,
     "landRights": "owned",
     "cityGas": true,
+    "roadM": 6.0,
+    "roads": 1,
+    "frontM": null,
+    "privateRoad": false,
+    "bcr": 60,
+    "far": 200,
+    "zoning": "1種中高",
+    "energyStars": null,
+    "insulation": null,
+    "utilityYen": null,
+    "feat": [
+      "floorHeat"
+    ],
+    "covered": false,
+    "fibre": false,
     "isNew": false,
     "suumoUrl": "https://suumo.jp/chukoikkodate/chiba/sc_chibashimihama/nc_21461159/",
     "imageUrl": "https://img01.suumo.com/jj/resizeImage?src=gazo%2Fbukken%2F030%2FN010000%2Fimg%2F159%2F21461159%2F21461159_0001.jpg&w=640&h=480",
@@ -1770,6 +1908,30 @@ const listings = [
       "kind": "scenario",
       "landforms": null,
       "verify": "https://www.city.chiba.jp/other/jf_hazardmap/map.html?lay=saigai-02&lat=35.628426&lng=140.086166&zoom=16"
+    },
+    "geo": {
+      "lat": 35.628426,
+      "lon": 140.086166
+    },
+    "school": {
+      "e": {
+        "name": "稲浜小学校",
+        "code": "B112210000738",
+        "src": "zone",
+        "m": 254,
+        "alt": [
+          "幸町小学校"
+        ]
+      },
+      "j": {
+        "name": "稲浜中学校",
+        "code": "C112210000415",
+        "src": "zone",
+        "m": 625,
+        "alt": [
+          "幸町第一中学校"
+        ]
+      }
     }
   },
   {
@@ -1790,6 +1952,23 @@ const listings = [
     "renovation": false,
     "landRights": "owned",
     "cityGas": true,
+    "roadM": 6.0,
+    "roads": 1,
+    "frontM": 6.5,
+    "privateRoad": false,
+    "bcr": 50,
+    "far": 100,
+    "zoning": "1種低層、1種住居",
+    "energyStars": null,
+    "insulation": null,
+    "utilityYen": null,
+    "feat": [
+      "flat35s",
+      "road6",
+      "quiet"
+    ],
+    "covered": false,
+    "fibre": false,
     "isNew": false,
     "suumoUrl": "https://suumo.jp/chukoikkodate/chiba/sc_chibashimihama/nc_20658269/",
     "imageUrl": "https://img01.suumo.com/jj/resizeImage?src=gazo%2Fbukken%2F030%2FN010000%2Fimg%2F269%2F20658269%2F20658269_0001.jpg&w=640&h=480",
@@ -1817,6 +1996,26 @@ const listings = [
       "kind": "scenario",
       "landforms": null,
       "verify": "https://www.city.chiba.jp/other/jf_hazardmap/map.html?lay=saigai-02&lat=35.628517&lng=140.054901&zoom=16"
+    },
+    "geo": {
+      "lat": 35.628517,
+      "lon": 140.054901
+    },
+    "school": {
+      "e": {
+        "name": "磯辺小学校",
+        "code": "B112210007571",
+        "src": "zone",
+        "m": 481,
+        "alt": []
+      },
+      "j": {
+        "name": "磯辺中学校",
+        "code": "C112210003653",
+        "src": "zone",
+        "m": 470,
+        "alt": []
+      }
     }
   },
   {
@@ -1837,6 +2036,34 @@ const listings = [
     "renovation": false,
     "landRights": "owned",
     "cityGas": true,
+    "roadM": 6.0,
+    "roads": 1,
+    "frontM": 9.3,
+    "privateRoad": false,
+    "bcr": null,
+    "far": null,
+    "zoning": null,
+    "energyStars": null,
+    "insulation": null,
+    "utilityYen": null,
+    "feat": [
+      "longLife",
+      "perfCert",
+      "flat35s",
+      "ecoHeater",
+      "doubleGlaze",
+      "allElectric",
+      "floorHeat",
+      "park2",
+      "rectLot",
+      "flatLand",
+      "road6",
+      "repairLog",
+      "plans",
+      "quiet"
+    ],
+    "covered": false,
+    "fibre": false,
     "isNew": false,
     "suumoUrl": "https://suumo.jp/chukoikkodate/chiba/sc_chibashimihama/nc_20207472/",
     "imageUrl": "https://img01.suumo.com/jj/resizeImage?src=gazo%2Fbukken%2F030%2FN010000%2Fimg%2F472%2F20207472%2F20207472_0014.jpg&w=640&h=480",
@@ -1863,6 +2090,26 @@ const listings = [
       "kind": "scenario",
       "landforms": null,
       "verify": "https://www.city.chiba.jp/other/jf_hazardmap/map.html?lay=saigai-02&lat=35.625793&lng=140.080139&zoom=16"
+    },
+    "geo": {
+      "lat": 35.625793,
+      "lon": 140.080139
+    },
+    "school": {
+      "e": {
+        "name": "高洲小学校",
+        "code": "B112210007544",
+        "src": "zone",
+        "m": 91,
+        "alt": []
+      },
+      "j": {
+        "name": "高洲第二中学校",
+        "code": "C112210000335",
+        "src": "zone",
+        "m": null,
+        "alt": []
+      }
     }
   },
   {
@@ -1883,6 +2130,19 @@ const listings = [
     "renovation": false,
     "landRights": "owned",
     "cityGas": true,
+    "roadM": 16.0,
+    "roads": 2,
+    "frontM": 7.5,
+    "privateRoad": false,
+    "bcr": 50,
+    "far": 100,
+    "zoning": "1種低層",
+    "energyStars": null,
+    "insulation": null,
+    "utilityYen": null,
+    "feat": [],
+    "covered": false,
+    "fibre": false,
     "isNew": false,
     "suumoUrl": "https://suumo.jp/chukoikkodate/chiba/sc_chibashimihama/nc_74028527/",
     "imageUrl": "https://img01.suumo.com/jj/resizeImage?src=gazo%2Fbukken%2F030%2FN010000%2Fimg%2F527%2F74028527%2F74028527_0074.jpg&w=640&h=480",
@@ -1909,6 +2169,26 @@ const listings = [
       "kind": "scenario",
       "landforms": null,
       "verify": "https://www.city.chiba.jp/other/jf_hazardmap/map.html?lay=saigai-02&lat=35.662613&lng=140.031464&zoom=16"
+    },
+    "geo": {
+      "lat": 35.662613,
+      "lon": 140.031464
+    },
+    "school": {
+      "e": {
+        "name": "幕張西小学校",
+        "code": "B112210000649",
+        "src": "zone",
+        "m": 632,
+        "alt": []
+      },
+      "j": {
+        "name": "幕張西中学校",
+        "code": "C112210000308",
+        "src": "zone",
+        "m": 549,
+        "alt": []
+      }
     }
   },
   {
@@ -1929,6 +2209,24 @@ const listings = [
     "renovation": false,
     "landRights": "owned",
     "cityGas": true,
+    "roadM": 6.0,
+    "roads": 2,
+    "frontM": 11.3,
+    "privateRoad": false,
+    "bcr": 60,
+    "far": 200,
+    "zoning": "1種中高",
+    "energyStars": null,
+    "insulation": null,
+    "utilityYen": null,
+    "feat": [
+      "doubleGlaze",
+      "corner",
+      "road6",
+      "garden"
+    ],
+    "covered": false,
+    "fibre": false,
     "isNew": false,
     "suumoUrl": "https://suumo.jp/chukoikkodate/chiba/sc_chibashimihama/nc_20839199/",
     "imageUrl": "https://img01.suumo.com/jj/resizeImage?src=gazo%2Fbukken%2F030%2FN010000%2Fimg%2F199%2F20839199%2F20839199_0030.jpg&w=640&h=480",
@@ -1956,6 +2254,26 @@ const listings = [
       "kind": "scenario",
       "landforms": null,
       "verify": "https://www.city.chiba.jp/other/jf_hazardmap/map.html?lay=saigai-02&lat=35.631126&lng=140.083115&zoom=16"
+    },
+    "geo": {
+      "lat": 35.631126,
+      "lon": 140.083115
+    },
+    "school": {
+      "e": {
+        "name": "稲浜小学校",
+        "code": "B112210000738",
+        "src": "zone",
+        "m": 153,
+        "alt": []
+      },
+      "j": {
+        "name": "稲浜中学校",
+        "code": "C112210000415",
+        "src": "zone",
+        "m": 219,
+        "alt": []
+      }
     }
   },
   {
@@ -1976,6 +2294,25 @@ const listings = [
     "renovation": false,
     "landRights": "owned",
     "cityGas": true,
+    "roadM": 5.0,
+    "roads": 1,
+    "frontM": 9.6,
+    "privateRoad": false,
+    "bcr": 60,
+    "far": 200,
+    "zoning": "1種中高",
+    "energyStars": null,
+    "insulation": null,
+    "utilityYen": null,
+    "feat": [
+      "solar",
+      "doubleGlaze",
+      "allElectric",
+      "catv",
+      "quiet"
+    ],
+    "covered": false,
+    "fibre": false,
     "isNew": false,
     "suumoUrl": "https://suumo.jp/chukoikkodate/chiba/sc_chibashimihama/nc_21237331/",
     "imageUrl": "https://img01.suumo.com/jj/resizeImage?src=gazo%2Fbukken%2F030%2FN010000%2Fimg%2F331%2F21237331%2F21237331_0030.jpg&w=640&h=480",
@@ -2002,6 +2339,26 @@ const listings = [
       "kind": "scenario",
       "landforms": null,
       "verify": "https://www.city.chiba.jp/other/jf_hazardmap/map.html?lay=saigai-02&lat=35.63855&lng=140.074478&zoom=16"
+    },
+    "geo": {
+      "lat": 35.63855,
+      "lon": 140.074478
+    },
+    "school": {
+      "e": {
+        "name": "稲毛第二小学校",
+        "code": "B112210000435",
+        "src": "zone",
+        "m": 183,
+        "alt": []
+      },
+      "j": {
+        "name": "稲浜中学校",
+        "code": "C112210000415",
+        "src": "zone",
+        "m": 922,
+        "alt": []
+      }
     }
   },
   {
@@ -2022,6 +2379,28 @@ const listings = [
     "renovation": true,
     "landRights": "owned",
     "cityGas": true,
+    "roadM": 6.0,
+    "roads": 1,
+    "frontM": null,
+    "privateRoad": false,
+    "bcr": 50,
+    "far": 100,
+    "zoning": "1種低層",
+    "energyStars": null,
+    "insulation": null,
+    "utilityYen": null,
+    "feat": [
+      "doubleGlaze",
+      "floorHeat",
+      "highRoof",
+      "flatLand",
+      "road6",
+      "southGarden",
+      "garden",
+      "quiet"
+    ],
+    "covered": false,
+    "fibre": false,
     "isNew": false,
     "suumoUrl": "https://suumo.jp/chukoikkodate/chiba/sc_chibashimihama/nc_21643618/",
     "imageUrl": "https://img01.suumo.com/jj/resizeImage?src=gazo%2Fbukken%2F030%2FN010000%2Fimg%2F618%2F21643618%2F21643618_0007.jpg&w=640&h=480",
@@ -2047,6 +2426,26 @@ const listings = [
       "kind": "scenario",
       "landforms": null,
       "verify": "https://www.city.chiba.jp/other/jf_hazardmap/map.html?lay=saigai-02&lat=35.631474&lng=140.05809&zoom=16"
+    },
+    "geo": {
+      "lat": 35.631474,
+      "lon": 140.05809
+    },
+    "school": {
+      "e": {
+        "name": "磯辺小学校",
+        "code": "B112210007571",
+        "src": "zone",
+        "m": 62,
+        "alt": []
+      },
+      "j": {
+        "name": "磯辺中学校",
+        "code": "C112210003653",
+        "src": "zone",
+        "m": 379,
+        "alt": []
+      }
     }
   },
   {
@@ -2067,6 +2466,21 @@ const listings = [
     "renovation": false,
     "landRights": "owned",
     "cityGas": true,
+    "roadM": null,
+    "roads": 0,
+    "frontM": null,
+    "privateRoad": false,
+    "bcr": null,
+    "far": null,
+    "zoning": null,
+    "energyStars": null,
+    "insulation": null,
+    "utilityYen": null,
+    "feat": [
+      "garden"
+    ],
+    "covered": false,
+    "fibre": false,
     "isNew": false,
     "suumoUrl": "https://suumo.jp/chukoikkodate/chiba/sc_chibashimihama/nc_21726112/",
     "imageUrl": "https://img01.suumo.com/jj/resizeImage?src=gazo%2Fbukken%2F030%2FN010000%2Fimg%2F112%2F21726112%2F21726112_0021.jpg&w=640&h=480",
@@ -2094,6 +2508,28 @@ const listings = [
       "kind": "scenario",
       "landforms": null,
       "verify": "https://www.city.chiba.jp/other/jf_hazardmap/map.html?lay=saigai-02&lat=35.625084&lng=140.056473&zoom=16"
+    },
+    "geo": {
+      "lat": 35.625084,
+      "lon": 140.056473
+    },
+    "school": {
+      "e": {
+        "name": "磯辺第三小学校",
+        "code": "B112210000854",
+        "src": "zone",
+        "m": 904,
+        "alt": [
+          "磯辺小学校"
+        ]
+      },
+      "j": {
+        "name": "磯辺中学校",
+        "code": "C112210003653",
+        "src": "zone",
+        "m": 872,
+        "alt": []
+      }
     }
   },
   {
@@ -2114,6 +2550,29 @@ const listings = [
     "renovation": false,
     "landRights": "owned",
     "cityGas": true,
+    "roadM": 5.9,
+    "roads": 1,
+    "frontM": 6.2,
+    "privateRoad": false,
+    "bcr": 50,
+    "far": 100,
+    "zoning": "1種低層",
+    "energyStars": null,
+    "insulation": null,
+    "utilityYen": null,
+    "feat": [
+      "longLife",
+      "perfCert",
+      "groundSurvey",
+      "inspCert",
+      "ecoHeater",
+      "floorHeat",
+      "catv",
+      "quiet",
+      "ecoMeasures"
+    ],
+    "covered": false,
+    "fibre": false,
     "isNew": false,
     "suumoUrl": "https://suumo.jp/chukoikkodate/chiba/sc_chibashimihama/nc_21563446/",
     "imageUrl": "https://img01.suumo.com/jj/resizeImage?src=gazo%2Fbukken%2F030%2FN010000%2Fimg%2F446%2F21563446%2F21563446_0001.jpg&w=640&h=480",
@@ -2141,6 +2600,26 @@ const listings = [
       "kind": "scenario",
       "landforms": null,
       "verify": "https://www.city.chiba.jp/other/jf_hazardmap/map.html?lay=saigai-02&lat=35.628517&lng=140.054901&zoom=16"
+    },
+    "geo": {
+      "lat": 35.628517,
+      "lon": 140.054901
+    },
+    "school": {
+      "e": {
+        "name": "磯辺小学校",
+        "code": "B112210007571",
+        "src": "zone",
+        "m": 481,
+        "alt": []
+      },
+      "j": {
+        "name": "磯辺中学校",
+        "code": "C112210003653",
+        "src": "zone",
+        "m": 470,
+        "alt": []
+      }
     }
   },
   {
@@ -2161,6 +2640,26 @@ const listings = [
     "renovation": false,
     "landRights": "owned",
     "cityGas": true,
+    "roadM": 12.0,
+    "roads": 2,
+    "frontM": 15.4,
+    "privateRoad": false,
+    "bcr": 50,
+    "far": 100,
+    "zoning": "1種低層",
+    "energyStars": null,
+    "insulation": null,
+    "utilityYen": null,
+    "feat": [
+      "rectLot",
+      "flatLand",
+      "road6",
+      "land50",
+      "garden",
+      "quiet"
+    ],
+    "covered": false,
+    "fibre": false,
     "isNew": false,
     "suumoUrl": "https://suumo.jp/chukoikkodate/chiba/sc_chibashimihama/nc_21696287/",
     "imageUrl": "https://img01.suumo.com/jj/resizeImage?src=gazo%2Fbukken%2F030%2FN010000%2Fimg%2F287%2F21696287%2F21696287_0001.jpg&w=640&h=480",
@@ -2187,6 +2686,26 @@ const listings = [
       "kind": "scenario",
       "landforms": null,
       "verify": "https://www.city.chiba.jp/other/jf_hazardmap/map.html?lay=saigai-02&lat=35.645367&lng=140.062897&zoom=16"
+    },
+    "geo": {
+      "lat": 35.645367,
+      "lon": 140.062897
+    },
+    "school": {
+      "e": {
+        "name": "真砂西小学校",
+        "code": "B112210007535",
+        "src": "zone",
+        "m": 484,
+        "alt": []
+      },
+      "j": {
+        "name": "真砂中学校",
+        "code": "C112210003626",
+        "src": "zone",
+        "m": 28,
+        "alt": []
+      }
     }
   },
   {
@@ -2207,6 +2726,22 @@ const listings = [
     "renovation": false,
     "landRights": "owned",
     "cityGas": true,
+    "roadM": 6.0,
+    "roads": 1,
+    "frontM": null,
+    "privateRoad": false,
+    "bcr": 50,
+    "far": 100,
+    "zoning": "1種低層",
+    "energyStars": null,
+    "insulation": null,
+    "utilityYen": null,
+    "feat": [
+      "park2",
+      "road6"
+    ],
+    "covered": false,
+    "fibre": false,
     "isNew": false,
     "suumoUrl": "https://suumo.jp/chukoikkodate/chiba/sc_chibashimihama/nc_20338343/",
     "imageUrl": "https://img01.suumo.com/jj/resizeImage?src=gazo%2Fbukken%2F030%2FN010000%2Fimg%2F343%2F20338343%2F20338343_0001.jpg&w=640&h=480",
@@ -2233,6 +2768,26 @@ const listings = [
       "kind": "scenario",
       "landforms": null,
       "verify": "https://www.city.chiba.jp/other/jf_hazardmap/map.html?lay=saigai-02&lat=35.629711&lng=140.064056&zoom=16"
+    },
+    "geo": {
+      "lat": 35.629711,
+      "lon": 140.064056
+    },
+    "school": {
+      "e": {
+        "name": "磯辺第三小学校",
+        "code": "B112210000854",
+        "src": "zone",
+        "m": 62,
+        "alt": []
+      },
+      "j": {
+        "name": "磯辺中学校",
+        "code": "C112210003653",
+        "src": "zone",
+        "m": 952,
+        "alt": []
+      }
     }
   },
   {
@@ -2253,6 +2808,29 @@ const listings = [
     "renovation": false,
     "landRights": "owned",
     "cityGas": true,
+    "roadM": 6.0,
+    "roads": 1,
+    "frontM": null,
+    "privateRoad": false,
+    "bcr": 50,
+    "far": 100,
+    "zoning": "1種低層",
+    "energyStars": null,
+    "insulation": null,
+    "utilityYen": null,
+    "feat": [
+      "ecoHeater",
+      "floorHeat",
+      "park2",
+      "rectLot",
+      "flatLand",
+      "road6",
+      "land50",
+      "garden",
+      "quiet"
+    ],
+    "covered": false,
+    "fibre": false,
     "isNew": false,
     "suumoUrl": "https://suumo.jp/chukoikkodate/chiba/sc_chibashimihama/nc_21332682/",
     "imageUrl": "https://img01.suumo.com/jj/resizeImage?src=gazo%2Fbukken%2F030%2FN010000%2Fimg%2F682%2F21332682%2F21332682_0001.jpg&w=640&h=480",
@@ -2280,6 +2858,26 @@ const listings = [
       "kind": "scenario",
       "landforms": null,
       "verify": "https://www.city.chiba.jp/other/jf_hazardmap/map.html?lay=saigai-02&lat=35.628517&lng=140.054901&zoom=16"
+    },
+    "geo": {
+      "lat": 35.628517,
+      "lon": 140.054901
+    },
+    "school": {
+      "e": {
+        "name": "磯辺小学校",
+        "code": "B112210007571",
+        "src": "zone",
+        "m": 481,
+        "alt": []
+      },
+      "j": {
+        "name": "磯辺中学校",
+        "code": "C112210003653",
+        "src": "zone",
+        "m": 470,
+        "alt": []
+      }
     }
   }
 ];
@@ -2294,14 +2892,15 @@ const msGroups = [{"key": "mihama", "name": "Mihama-ku", "nameJa": "美浜区", 
 const mansionHistory = [{"date": "2026-09-23", "count": 736, "avgPrice": 3533, "medianPpm": 36.2, "areas": {"mihama": {"count": 341, "avgPrice": 4366, "medianPpm": 49.3}, "chibant": {"count": 139, "avgPrice": 2276, "medianPpm": 19.7}, "midori": {"count": 60, "avgPrice": 2220, "medianPpm": 29.1}, "narashino": {"count": 196, "avgPrice": 3378, "medianPpm": 38.0}}}, {"date": "2026-09-24", "count": 733, "avgPrice": 3543, "medianPpm": 36.2, "areas": {"mihama": {"count": 341, "avgPrice": 4375, "medianPpm": 49.6}, "chibant": {"count": 138, "avgPrice": 2284, "medianPpm": 20.1}, "midori": {"count": 58, "avgPrice": 2252, "medianPpm": 29.1}, "narashino": {"count": 196, "avgPrice": 3363, "medianPpm": 37.7}}}, {"date": "2026-09-25", "count": 728, "avgPrice": 3538, "medianPpm": 35.7, "areas": {"mihama": {"count": 341, "avgPrice": 4372, "medianPpm": 49.6}, "chibant": {"count": 137, "avgPrice": 2252, "medianPpm": 19.5}, "midori": {"count": 58, "avgPrice": 2244, "medianPpm": 29.1}, "narashino": {"count": 192, "avgPrice": 3365, "medianPpm": 37.5}}}, {"date": "2026-09-26", "count": 735, "avgPrice": 3532, "medianPpm": 35.4, "areas": {"mihama": {"count": 349, "avgPrice": 4325, "medianPpm": 49.2}, "chibant": {"count": 138, "avgPrice": 2256, "medianPpm": 19.7}, "midori": {"count": 58, "avgPrice": 2244, "medianPpm": 29.1}, "narashino": {"count": 190, "avgPrice": 3396, "medianPpm": 37.5}}}, {"date": "2026-09-27", "count": 733, "avgPrice": 3538, "medianPpm": 35.4, "areas": {"mihama": {"count": 346, "avgPrice": 4347, "medianPpm": 49.6}, "chibant": {"count": 141, "avgPrice": 2267, "medianPpm": 20.1}, "midori": {"count": 58, "avgPrice": 2264, "medianPpm": 29.8}, "narashino": {"count": 188, "avgPrice": 3396, "medianPpm": 37.5}}}, {"date": "2026-09-28", "count": 723, "avgPrice": 3524, "medianPpm": 35.3, "areas": {"mihama": {"count": 340, "avgPrice": 4319, "medianPpm": 49.3}, "chibant": {"count": 138, "avgPrice": 2259, "medianPpm": 20.1}, "midori": {"count": 58, "avgPrice": 2264, "medianPpm": 29.8}, "narashino": {"count": 187, "avgPrice": 3405, "medianPpm": 37.5}}}, {"date": "2026-09-29", "count": 718, "avgPrice": 3536, "medianPpm": 35.7, "areas": {"mihama": {"count": 333, "avgPrice": 4351, "medianPpm": 49.6}, "chibant": {"count": 136, "avgPrice": 2298, "medianPpm": 20.8}, "midori": {"count": 57, "avgPrice": 2269, "medianPpm": 29.8}, "narashino": {"count": 192, "avgPrice": 3376, "medianPpm": 37.5}}}, {"date": "2026-09-30", "count": 720, "avgPrice": 3530, "medianPpm": 36.2, "areas": {"mihama": {"count": 333, "avgPrice": 4354, "medianPpm": 49.6}, "chibant": {"count": 137, "avgPrice": 2298, "medianPpm": 20.8}, "midori": {"count": 59, "avgPrice": 2286, "medianPpm": 30.0}, "narashino": {"count": 191, "avgPrice": 3360, "medianPpm": 37.5}}}, {"date": "2026-10-01", "count": 725, "avgPrice": 3527, "medianPpm": 35.7, "areas": {"mihama": {"count": 337, "avgPrice": 4344, "medianPpm": 49.6}, "chibant": {"count": 139, "avgPrice": 2301, "medianPpm": 20.8}, "midori": {"count": 59, "avgPrice": 2286, "medianPpm": 30.0}, "narashino": {"count": 190, "avgPrice": 3359, "medianPpm": 37.5}}}, {"date": "2026-10-02", "count": 727, "avgPrice": 3524, "medianPpm": 35.9, "areas": {"mihama": {"count": 334, "avgPrice": 4346, "medianPpm": 50.1}, "chibant": {"count": 141, "avgPrice": 2288, "medianPpm": 20.8}, "midori": {"count": 59, "avgPrice": 2286, "medianPpm": 30.0}, "narashino": {"count": 193, "avgPrice": 3382, "medianPpm": 37.5}}}, {"date": "2026-10-03", "count": 734, "avgPrice": 3530, "medianPpm": 35.9, "areas": {"mihama": {"count": 337, "avgPrice": 4353, "medianPpm": 50.1}, "chibant": {"count": 146, "avgPrice": 2317, "medianPpm": 22.8}, "midori": {"count": 58, "avgPrice": 2276, "medianPpm": 30.0}, "narashino": {"count": 193, "avgPrice": 3387, "medianPpm": 37.7}}}, {"date": "2026-10-04", "count": 744, "avgPrice": 3525, "medianPpm": 36.3, "areas": {"mihama": {"count": 343, "avgPrice": 4311, "medianPpm": 49.7}, "chibant": {"count": 148, "avgPrice": 2358, "medianPpm": 22.9}, "midori": {"count": 59, "avgPrice": 2259, "medianPpm": 29.8}, "narashino": {"count": 194, "avgPrice": 3412, "medianPpm": 38.5}}}, {"date": "2026-10-05", "count": 746, "avgPrice": 3540, "medianPpm": 36.3, "areas": {"mihama": {"count": 346, "avgPrice": 4320, "medianPpm": 50.2}, "chibant": {"count": 147, "avgPrice": 2365, "medianPpm": 22.9}, "midori": {"count": 59, "avgPrice": 2259, "medianPpm": 29.8}, "narashino": {"count": 194, "avgPrice": 3430, "medianPpm": 38.8}}}, {"date": "2026-10-06", "count": 735, "avgPrice": 3544, "medianPpm": 36.3, "areas": {"mihama": {"count": 341, "avgPrice": 4322, "medianPpm": 49.7}, "chibant": {"count": 147, "avgPrice": 2377, "medianPpm": 23.9}, "midori": {"count": 57, "avgPrice": 2266, "medianPpm": 30.0}, "narashino": {"count": 190, "avgPrice": 3434, "medianPpm": 38.5}}}, {"date": "2026-10-07", "count": 740, "avgPrice": 3520, "medianPpm": 36.3, "areas": {"mihama": {"count": 340, "avgPrice": 4305, "medianPpm": 49.6}, "chibant": {"count": 148, "avgPrice": 2361, "medianPpm": 23.9}, "midori": {"count": 60, "avgPrice": 2228, "medianPpm": 29.1}, "narashino": {"count": 192, "avgPrice": 3426, "medianPpm": 38.8}}}, {"date": "2026-10-08", "count": 745, "avgPrice": 3531, "medianPpm": 36.3, "areas": {"mihama": {"count": 344, "avgPrice": 4313, "medianPpm": 49.7}, "chibant": {"count": 149, "avgPrice": 2369, "medianPpm": 23.9}, "midori": {"count": 58, "avgPrice": 2232, "medianPpm": 29.1}, "narashino": {"count": 194, "avgPrice": 3427, "medianPpm": 39.0}}}, {"date": "2026-10-09", "count": 749, "avgPrice": 3536, "medianPpm": 36.3, "areas": {"mihama": {"count": 349, "avgPrice": 4292, "medianPpm": 49.6}, "chibant": {"count": 149, "avgPrice": 2383, "medianPpm": 24.5}, "midori": {"count": 59, "avgPrice": 2242, "medianPpm": 29.2}, "narashino": {"count": 192, "avgPrice": 3455, "medianPpm": 39.0}}}, {"date": "2026-10-10", "count": 754, "avgPrice": 3535, "medianPpm": 36.3, "areas": {"mihama": {"count": 346, "avgPrice": 4299, "medianPpm": 49.6}, "chibant": {"count": 153, "avgPrice": 2391, "medianPpm": 24.5}, "midori": {"count": 57, "avgPrice": 2256, "medianPpm": 29.2}, "narashino": {"count": 198, "avgPrice": 3452, "medianPpm": 39.0}}}, {"date": "2026-10-11", "count": 747, "avgPrice": 3552, "medianPpm": 36.3, "areas": {"mihama": {"count": 340, "avgPrice": 4327, "medianPpm": 50.1}, "chibant": {"count": 152, "avgPrice": 2389, "medianPpm": 24.9}, "midori": {"count": 56, "avgPrice": 2279, "medianPpm": 30.0}, "narashino": {"count": 199, "avgPrice": 3473, "medianPpm": 39.0}}}, {"date": "2026-10-12", "count": 1234, "avgPrice": 4078, "medianPpm": 38.2, "areas": {"mihama": {"count": 341, "avgPrice": 4385, "medianPpm": 50.6}, "chibant": {"count": 151, "avgPrice": 2381, "medianPpm": 24.5}, "midori": {"count": 58, "avgPrice": 2267, "medianPpm": 29.2}, "narashino": {"count": 200, "avgPrice": 3470, "medianPpm": 39.2}, "urayasu": {"count": 65, "avgPrice": 7891, "medianPpm": 75.3}, "kashiwa": {"count": 68, "avgPrice": 3153, "medianPpm": 24.8}, "funabashi": {"count": 129, "avgPrice": 4081, "medianPpm": 37.7}, "ichikawa": {"count": 56, "avgPrice": 6122, "medianPpm": 58.0}, "inage": {"count": 57, "avgPrice": 3184, "medianPpm": 29.7}, "tama": {"count": 78, "avgPrice": 3805, "medianPpm": 31.6}, "arakawa": {"count": 31, "avgPrice": 8931, "medianPpm": 89.7}}}, {"date": "2026-10-13", "count": 1283, "avgPrice": 4457, "medianPpm": 43.5, "areas": {"mihama": {"count": 344, "avgPrice": 4357, "medianPpm": 50.2}, "chibant": {"count": 154, "avgPrice": 2420, "medianPpm": 25.0}, "midori": {"count": 57, "avgPrice": 2276, "medianPpm": 29.2}, "narashino": {"count": 200, "avgPrice": 3470, "medianPpm": 39.2}, "urayasu": {"count": 65, "avgPrice": 7891, "medianPpm": 75.3}, "funabashi": {"count": 129, "avgPrice": 4085, "medianPpm": 37.7}, "ichikawa": {"count": 56, "avgPrice": 6122, "medianPpm": 58.0}, "arakawa": {"count": 33, "avgPrice": 8925, "medianPpm": 89.7}, "matsudo": {"count": 63, "avgPrice": 3200, "medianPpm": 34.0}, "chibachuo": {"count": 54, "avgPrice": 4068, "medianPpm": 48.0}, "adachi": {"count": 88, "avgPrice": 7712, "medianPpm": 78.2}, "kawasaki": {"count": 40, "avgPrice": 6162, "medianPpm": 69.4}}}];
 </script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
-<script src="i18n.js?v=29"></script>
-<script src="cmp-glossary.js?v=29"></script>
-<script src="map-data.js?v=29"></script>
+<script src="i18n.js?v=30"></script>
+<script src="cmp-glossary.js?v=30"></script>
+<script src="map-data.js?v=30"></script>
 <script src="area-stats.js"></script>
-<script src="map.js?v=29"></script>
-<script src="map-tools.js?v=29"></script>
-<script src="loan.js?v=29"></script>
-<script src="deeplook.js?v=29"></script>
-<script src="app.js?v=29"></script>
+<script src="map.js?v=30"></script>
+<script src="map-tools.js?v=30"></script>
+<script src="map-house.js?v=30"></script>
+<script src="loan.js?v=30"></script>
+<script src="deeplook.js?v=30"></script>
+<script src="app.js?v=30"></script>
 </body>
 </html>

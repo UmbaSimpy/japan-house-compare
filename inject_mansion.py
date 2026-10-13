@@ -33,6 +33,7 @@ from datetime import date
 from pathlib import Path
 
 import hazard
+import schools
 
 SRC      = Path("mansions.json")
 CLEAN     = Path("mansions_clean.json")
@@ -294,7 +295,7 @@ def build(raw, today):
             "balconyM2": r["balconyM2"], "sameBldg": r["sameBldg"], "agents": r["agents"],
             "priceCut": r["priceCut"], "priceChange": r["priceChange"], "priceHistory": r["priceHistory"],
             "daysListed": r["daysListed"], "firstSeen": r["firstSeen"],
-            "liq": r.get("liq"), "why": why,
+            "liq": r.get("liq"), "school": r.get("school"), "why": why,
             "suumoUrl": r["suumoUrl"], "imageUrl": r["imageUrl"] and re.sub(r"&w=\d+&h=\d+", "&w=640&h=480", r["imageUrl"].replace("&amp;", "&")),
             "scores": {"value": value, "access": access, "condition": condition,
                        "running": running, "space": space, "extras": extras, "total": total},
@@ -308,6 +309,7 @@ def main():
         return
     raw = json.loads(SRC.read_text(encoding="utf-8"))
     hazard.annotate(raw, json.loads(Path("areas.json").read_text(encoding="utf-8")), lambda d: d["areaKey"])
+    schools.annotate(raw)          # assigned public ES / JHS (info only, DATA_LOG item 20)
     clean = build(raw, date.today())
     CLEAN.write_text(json.dumps(clean, ensure_ascii=False, indent=1), encoding="utf-8")
 

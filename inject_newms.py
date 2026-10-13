@@ -40,6 +40,7 @@ from datetime import date
 from pathlib import Path
 
 import hazard
+import schools
 from inject_mansion import clean_name, bldg_keys, AREAS, AREA_JA, AREA_GROUP, LIQ_PENALTY
 
 SRC   = Path("newms.json")
@@ -342,6 +343,7 @@ def main():
     used = json.loads(USED.read_text(encoding="utf-8")) if USED.exists() else []
     items = build_items(raw, today)
     hazard.annotate(items, AREAS, lambda d: d["areaKey"])
+    schools.annotate(items)          # assigned public ES / JHS (info only, DATA_LOG item 20)
     enrich(items, used, today)
     track(items, today)
     for it in items:

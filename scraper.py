@@ -235,6 +235,67 @@ def extract_image_url(soup, url):
             return m.group(1).replace("&amp;", "&")
     return None
 
+# ── HOUSE DETAILS (DATA_LOG item 21) ──────────────────
+# 特徴ピックアップ tag → key. Agents tick these, so a missing tag means "not advertised", not "absent".
+FEAT_TAGS = [
+    ("solar", "太陽光発電"), ("ev", "EV車充電"), ("longLife", "長期優良住宅"), ("perfCert", "住宅性能評価書"),
+    ("groundSurvey", "地盤調査済"), ("inspCert", "完了検査済証"), ("flat35s", "フラット３５"), ("defectIns", "瑕疵保険"),
+    ("ecoHeater", "省エネ給湯器"), ("doubleGlaze", "複層"), ("allElectric", "オール電化"), ("floorHeat", "床暖房"),
+    ("park2", "駐車２台可"), ("highRoof", "ハイルーフ駐車場"), ("corner", "角地"), ("rectLot", "整形地"), ("flatLand", "平坦地"),
+    ("road6", "前道６ｍ以上"), ("land50", "土地50坪以上"), ("southGarden", "南庭"), ("garden", "庭"), ("repairLog", "修繕・点検の記録"),
+    ("plans", "設計図"), ("catv", "CATV"), ("quiet", "閑静な住宅地"), ("ecoMeasures", "省エネルギー対策"),
+]
+ZEN = str.maketrans("０１２３４５６７８９．", "0123456789.")
+
+
+def feature_tags(soup):
+    h = soup.find("h3", string=re.compile("特徴ピックアップ"))
+    box = h.find_parent("div").find_next_sibling("div") if h else None
+    raw = [t.strip() for t in box.get_text().split("/")] if box else []
+    keys = []
+    for k, kw in FEAT_TAGS:
+        if any(kw in t for t in raw) and k not in keys:
+            if k == "garden" and all(("南庭" in t) or ("庭" not in t) for t in raw):
+                continue
+            keys.append(k)
+    return keys
+
+
+def sales_text(soup):
+    """Agent's PR block (catch line + description) — the only place carports / fibre are mentioned."""
+    p = soup.select_one("p.fs14")
+    return p.parent.get_text(" ", strip=True) if p and p.parent else ""
+
+
+def house_details(d, soup):
+    road = first_match(d, "私道負担・道路").translate(ZEN)
+    widths = [float(x) for x in re.findall(r"(\d+(?:\.\d+)?)ｍ幅", road)]
+    fronts = [float(x) for x in re.findall(r"接道幅(\d+(?:\.\d+)?)ｍ", road)]
+    bcr = re.findall(r"(\d+)％", first_match(d, "建ぺい率・容積率"))
+    zone = first_match(d, "用途地域").translate(ZEN).strip()
+    energy = first_match(d, "エネルギー消費性能")
+    ins = re.search(r"等級\s*(\d)", first_match(d, "断熱性能").translate(ZEN))
+    util = re.search(r"([\d,]+)\s*円", first_match(d, "目安光熱費").translate(ZEN))
+    pr = sales_text(soup).translate(ZEN)
+    feat = feature_tags(soup)
+    park_txt = re.search(r"(\d)\s*台(?:分|駐車|並列|縦列|可|まで)|駐車(?:場|スペース)?\s*(\d)\s*台", pr)
+    return {
+        "roadM": max(widths) if widths else None,
+        "roads": len(widths),
+        "frontM": max(fronts) if fronts else None,
+        "privateRoad": bool(re.match(r"\s*有", road)),
+        "bcr": int(bcr[0]) if len(bcr) >= 1 else None,
+        "far": int(bcr[1]) if len(bcr) >= 2 else None,
+        "zoning": None if zone in ("", "-") else zone,
+        "energyStars": energy.count("★") or None,
+        "insulation": int(ins.group(1)) if ins else None,
+        "utilityYen": int(util.group(1).replace(",", "")) if util else None,
+        "feat": feat,
+        "parkingText": int(next(g for g in park_txt.groups() if g)) if park_txt else None,
+        "covered": bool(re.search(r"(?:カーポート|ガレージ|屋根付き?駐車(?:場|スペース)?)\s*(?:\d台分?\s*)?(?:付|有|あり|完備|設置)|ビルトインガレージ|インナーガレージ", pr)),
+        "fibre": bool(re.search(r"(?:光ファイバー|光回線|光インターネット|インターネット)\s*(?:無料|対応|使い放題|完備|導入|引込)", pr)),
+    }
+
 # ── GRADIENT PALETTE ─────────────────────────────────
 GRADS = [
     "linear-gradient(140deg,#e8c46a 0%,#d4703a 100%)",
@@ -276,6 +337,11 @@ def scrape_detail(url, idx, area_name):
     cgas       = has_city_gas(d)
     rights     = land_rights(d)
     image_url  = extract_image_url(soup, url)
+    extra      = house_details(d, soup)
+    if extra["parkingText"]:
+        parking = max(parking, extra["parkingText"])
+    if "park2" in extra["feat"]:
+        parking = max(parking, 2)
     # debug: uncomment to inspect parsed fields
     # import pprint; pprint.pprint(d)
 
@@ -301,6 +367,7 @@ def scrape_detail(url, idx, area_name):
         "suumoUrl":    url,
         "imageUrl":    image_url,
         "grad":        GRADS[idx % len(GRADS)],
+        **{k: v for k, v in extra.items() if k != "parkingText"},
     }
 
 def collect_area_urls(area):
