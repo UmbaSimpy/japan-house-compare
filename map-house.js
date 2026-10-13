@@ -101,7 +101,7 @@ function mpHsLoad() {
   if (typeof AREA_HOUSES !== 'undefined' || MP.hsLoading) return;
   MP.hsLoading = true;
   const s = document.createElement('script');
-  s.src = 'area-house-listings.js?v=' + (MAP_DATA.houseGenerated || Date.now());
+  s.src = 'area-house-listings.js?v=' + ((typeof AREA_HOUSE_STATS !== 'undefined' && AREA_HOUSE_STATS.generated) || MAP_DATA.houseGenerated || Date.now());
   s.onload = () => { MP.hsLoading = false; if (mpBudgetCustom() && mpIsHouse()) { mpApply('still'); return; }
     const el = document.getElementById('mp-ls'); if (el && MP.sel && mpIsHouse()) el.innerHTML = mpHsHTML(mpById(MP.sel)); };
   s.onerror = () => { MP.hsLoading = false; MP.hsFailed = true; const el = document.getElementById('mp-ls'); if (el && mpIsHouse()) el.innerHTML = mpHsHTML(mpById(MP.sel)); };

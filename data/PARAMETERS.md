@@ -6,8 +6,8 @@ This file lists every input behind the **Area map** tab: what each field means, 
 
 | Track | What | How it updates | Who triggers |
 |---|---|---|---|
-| **A. Listings** (automatic) | SUUMO used/new condos and houses, price history, Telegram, **and the map's live area counts** (`area_stats.py` → `area-stats.js`) | GitHub Actions `.github/workflows/daily-scrape.yml`, daily 05:00 UTC | Automatic |
-| **B. Area study** (manual) | Everything else on the Area map (this file): study, area hazard (`area_hazard.py`), office commute matrix (`commute_matrix.py`), paediatrics (`area_health.py`), aircraft noise (`data/area_noise.json`), crime (`area_crime.py`), house snapshot (`house_stats.py`), schools (`schools.py build`, `school_info.py`) + listing liquefaction (`hazard.py`, `hazard_cache.json`) | Re-research + rebuild locally, then commit | **The user asks for it** (e.g. "refresh the area study"). Never run on a schedule. |
+| **A. Listings** (automatic) | SUUMO used/new condos and houses, price history, Telegram, **the map's live area counts** (`area_stats.py` → `area-stats.js`) **and the Houses map snapshot** (`house_stats.py` → `area-house-stats.js`, `area-house-listings.js`, history; DATA_LOG 23) | GitHub Actions `.github/workflows/daily-scrape.yml`, daily 05:00 UTC | Automatic |
+| **B. Area study** (manual) | Everything else on the Area map (this file): study, area hazard (`area_hazard.py`), office commute matrix (`commute_matrix.py`), paediatrics (`area_health.py`), aircraft noise (`data/area_noise.json`), crime (`area_crime.py`), schools (`schools.py build`, `school_info.py`) + listing liquefaction (`hazard.py`, `hazard_cache.json`) | Re-research + rebuild locally, then commit | **The user asks for it** (e.g. "refresh the area study"). Never run on a schedule. |
 
 Track B data changes slowly (yearly policies, annual statistics). The suggested cadence is in the last column of each table.
 
@@ -32,7 +32,9 @@ data/area_noise.json   (hand-curated)                          ← aircraft nois
 data/area_crime.json   (area_crime.py)                         ← police crime counts 2025 (info only)
 data/pipeline.json     (hand-curated, monthly sweep)           ← rail/redevelopment register → read by build_locations.py (growth)
 data/area_stats_history.json (track A)                         ← 30-day median of space inputs → read by build_locations.py
-data/house_stats.json  (house_stats.py)                        ← detached-house snapshot → read by build_locations.py (Houses map score)
+data/house_stats.json  (house_stats.py, track A daily)        ← detached-house snapshot → read by build_locations.py (Houses map score)
+data/house_stats_history.json (track A)                        ← 30-day median of house u80 + price → read by build_locations.py
+area-house-stats.js    (house_stats.py, track A daily)        ← live house counts ("Listings now" in house mode)
 area-house-listings.js (house_stats.py)                        ← light list of suitable homes per area (Houses map list + budget slider)
 data/schools.json, data/area_schools.json (schools.py build)   ← school zones/points + per-area counts (info only)
 data/school_info.json (school_info.py)                         ← national test, private JHS share, school choice, HS district (info only)
@@ -88,7 +90,7 @@ Shortlist = top 28 by house total among areas with house space ≥ 10. The map t
 ### house (`data/house_stats.json`, scored on the Houses map)
 | Field | Meaning | Source | Fetch method | Refresh |
 |---|---|---|---|---|
-| nUsed, nNew, nSuit | suitable homes (≥100 m², built 2000+) that are used / new / total | SUUMO 中古一戸建て bs=021 / 新築一戸建て bs=020 | `house_stats.py` (all pages, max 20) | monthly or when asked |
+| nUsed, nNew, nSuit | suitable homes (≥100 m², built 2000+) that are used / new / total | SUUMO 中古一戸建て bs=021 / 新築一戸建て bs=020 | `house_stats.py` (all pages, max 20) | daily (GitHub Action, 30-min cap); feature shares ~weekly (11 areas/run) |
 | u80 | suitable homes under ¥80M (Choice) | same | same | same |
 | medianPrice, median100to130, n100to130 | median price (¥) of suitable homes / of 100–130 m² ones, and that count | same | same | same |
 | medianLand, medianLandU80, landUnder100, medianBldg, medianWalk, walk15Share, busShare | median land m² (all / under ¥80M), % with land <100 m², median building m², median station walk, % walk ≥15 min, % bus access | same | same | same |

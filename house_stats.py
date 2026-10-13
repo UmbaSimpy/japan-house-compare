@@ -15,7 +15,16 @@ For each of the 77 municipalities in data/locations.json (SUUMO, same area codes
 Writes  data/house_stats.json      {generated, method, areas:{id:{…}}}
         area-house-listings.js     const AREA_HOUSES = {generated, areas:{id:{rows}}} — light list of suitable homes
                                    row = [path, price万, bldg m², land m², year (0 = new build), station, walk, bus, layout]
-Usage:  python house_stats.py [id,id,…]      (no ids = all areas; others are kept from the last run)
+        area-house-stats.js        const AREA_HOUSE_STATS = {generated, areas:{id:{u80, nSuit, nNew, median100to130,
+                                   medianPrice, date, d7, d30}}} — small, loaded with the page ("Listings now" layer)
+        data/house_stats_history.json  {id: {date: [nSuit, u80, priceForScore, n100to130]}} — 30-day smoothing of the
+                                   house space score at the next study rebuild (build_locations.py, DATA_LOG item 23)
+Daily (GitHub Action, DATA_LOG item 23, user: "the house map should be handled like the apartments one"):
+  • lists and prices for every area, oldest snapshot first, until --max-minutes (the rest keep yesterday's data);
+  • feature-filter counts (22 requests per area) only for the FEAT_PER_RUN areas with the oldest counts → each
+    area is re-counted about weekly.
+Usage:  python house_stats.py [id,id,…] [--max-minutes N] [--all-features] [--rebuild-only]
+        (no ids = all areas; others are kept from the last run; --rebuild-only re-writes the outputs without fetching)
 """
 import json
 import re
@@ -23,7 +32,7 @@ import statistics
 import sys
 import time
 import unicodedata
-from datetime import date
+from datetime import date, timedelta
 from pathlib import Path
 
 import requests
@@ -33,6 +42,9 @@ URL = ("https://suumo.jp/jj/bukken/ichiran/JJ012FC001/?ar=030&bs={bs}&ta={ta}&sc
        "&kb=1&kt=9999999&tb=0&tt=9999999&hb=100&ht=9999999&cnb=0&cn={cn}&pc={pc}&pn={page}{x}")
 OUT = Path("data/house_stats.json")
 OUT_LIST = Path("area-house-listings.js")
+OUT_JS = Path("area-house-stats.js")
+HIST = Path("data/house_stats_history.json")
+FEAT_PER_RUN = 11       # areas whose feature counts are refreshed per run (77 / 7 ≈ weekly)
 DELAY = 1.0
 MAX_PAGES = 20
 MIN_BLDG = 100          # m² building floor area (user choice 2026-10-13)
@@ -186,37 +198,79 @@ def area_codes():
     return [(a["id"], bnd[a["nameJa"]], a["nameJa"]) for a in loc["areas"]]
 
 
+def price_for_score(rec):
+    """build_locations HOUSE space price: median of 100–130 m² homes, all suitable if fewer than 3."""
+    return rec.get("median100to130") if (rec.get("n100to130") or 0) >= 3 else rec.get("medianPrice")
+
+
 def main():
+    args = [a for a in sys.argv[1:] if not a.startswith("--")]
+    opt = lambda k: k in sys.argv
+    max_min = next((float(sys.argv[i + 1]) for i, a in enumerate(sys.argv) if a == "--max-minutes"), None)
     prev = json.loads(OUT.read_text(encoding="utf-8")) if OUT.exists() else {"areas": {}}
     m = re.search(r"=\s*(\{.*\});?\s*$", OUT_LIST.read_text(encoding="utf-8"), re.S) if OUT_LIST.exists() else None
     prev_list = json.loads(m.group(1)) if m else {"areas": {}}
-    only = sys.argv[1].split(",") if len(sys.argv) > 1 else None
+    hist = json.loads(HIST.read_text(encoding="utf-8")) if HIST.exists() else {}
+    only = args[0].split(",") if args else None
     today = date.today().isoformat()
-    out, lists, failed = {}, {}, []
-    for aid, code, name in area_codes():
-        if only and aid not in only:
-            if aid in prev["areas"]: out[aid] = prev["areas"][aid]
+    t0 = time.time()
+    P = prev["areas"]
+    codes = sorted(area_codes(), key=lambda c: P.get(c[0], {}).get("date", ""))          # oldest snapshot first
+    feat_due = {c[0] for c in sorted(codes, key=lambda c: P.get(c[0], {}).get("featureDate") or P.get(c[0], {}).get("date", ""))
+                [:len(codes) if opt("--all-features") else FEAT_PER_RUN]}
+    out, lists, failed, kept = {}, {}, [], []
+    for aid, code, name in codes:
+        late = max_min is not None and time.time() - t0 > max_min * 60
+        if opt("--rebuild-only") or (only and aid not in only) or late:
+            if aid in P: out[aid] = P[aid]
             if aid in prev_list["areas"]: lists[aid] = prev_list["areas"][aid]
+            if late: kept.append(aid)
             continue
         ta = code[:2]
         try:
             u, ut = used_rows(ta, code, name)
             n, nt = new_rows(ta, code, name)
             suit, rec = stats(u + n)
-            rec.update({"usedHits100": ut, "newHits100": nt, **feature_counts(ta, code, name), "date": today})
+            if aid in feat_due or not P.get(aid, {}).get("featureShare"):
+                feats = {**feature_counts(ta, code, name), "featureDate": today}
+            else:
+                feats = {k: P[aid].get(k) for k in ("featureCounts", "featureShare", "featureBase", "featureDate")}
+            rec.update({"usedHits100": ut, "newHits100": nt, **feats, "date": today})
             out[aid] = rec
             lists[aid] = {"rows": sorted(suit, key=lambda r: r[1])}
             print(f"{aid:22} suitable {rec['nSuit']:4} (new {rec['nNew']:4})  <80M {rec['u80']:4}  median {rec['medianPrice'] and rec['medianPrice'] // 10**6}M  "
-                  f"land {rec['medianLand']}  walk {rec['medianWalk']}  park2 {rec['featureShare']['park2']}%  solar {rec['featureShare']['solar']}%", flush=True)
+                  f"land {rec['medianLand']}  walk {rec['medianWalk']}  park2 {(rec.get('featureShare') or {}).get('park2')}%"
+                  f"{'  (features refreshed)' if aid in feat_due else ''}", flush=True)
         except Exception as e:
             failed.append(aid); print(f"{aid:22} FAILED {e}", flush=True)
-            if aid in prev["areas"]: out[aid] = {**prev["areas"][aid], "stale": True}
+            if aid in P: out[aid] = {**P[aid], "stale": True}
             if aid in prev_list["areas"]: lists[aid] = prev_list["areas"][aid]
-    method = {"minBldg": MIN_BLDG, "minYear": MIN_YEAR, "under": UNDER, "features": FEATURES,
-              "note": "SUUMO 中古/新築一戸建て, building ≥100 m²; suitable = built 2000+ (all new builds). Feature shares = listings matching SUUMO's filter ÷ all ≥100 m² listings (used built ≈2001+, new all)."}
-    OUT.write_text(json.dumps({"generated": today, "method": method, "areas": out}, ensure_ascii=False, indent=1), encoding="utf-8")
-    OUT_LIST.write_text("const AREA_HOUSES = " + json.dumps({"generated": today, "areas": lists}, ensure_ascii=False, separators=(",", ":")) + ";\n", encoding="utf-8")
-    print(f"done: {len(out)} areas, failed {failed}")
+    # history (one row per area per snapshot date) + 7/30-day change, as area_stats.py does for condos
+    small = {}
+    for aid, rec in out.items():
+        h = hist.setdefault(aid, {})
+        if rec.get("date") and not rec.get("stale"):
+            h[rec["date"]] = [rec["nSuit"], rec["u80"], price_for_score(rec), rec.get("n100to130")]
+        for d in sorted(h)[:-180]:
+            del h[d]
+        cur = h.get(rec.get("date")) or [rec.get("nSuit"), rec.get("u80")]
+        delta = {}
+        for key, days in (("d7", 7), ("d30", 30)):
+            ref = [d for d in sorted(h) if rec.get("date") and (date.fromisoformat(rec["date"]) - date.fromisoformat(d)).days >= days]
+            delta[key] = [cur[0] - h[ref[-1]][0], cur[1] - h[ref[-1]][1]] if ref else None
+        small[aid] = {"u80": rec.get("u80"), "nSuit": rec.get("nSuit"), "nNew": rec.get("nNew"),
+                      "median100to130": rec.get("median100to130"), "medianPrice": rec.get("medianPrice"),
+                      "date": rec.get("date"), "stale": bool(rec.get("stale")), **delta}
+    method = {"minBldg": MIN_BLDG, "minYear": MIN_YEAR, "under": UNDER, "features": FEATURES, "featurePerRun": FEAT_PER_RUN,
+              "note": "SUUMO 中古/新築一戸建て, building ≥100 m²; suitable = built 2000+ (all new builds). Feature shares = listings matching SUUMO's filter ÷ all ≥100 m² listings (used built ≈2001+, new all); re-counted about weekly (featureDate)."}
+    gen = max((r.get("date") or "" for r in out.values()), default=today)
+    OUT.write_text(json.dumps({"generated": gen, "method": method, "areas": out}, ensure_ascii=False, indent=1), encoding="utf-8")
+    OUT_LIST.write_text("const AREA_HOUSES = " + json.dumps({"generated": gen, "areas": lists}, ensure_ascii=False, separators=(",", ":")) + ";\n", encoding="utf-8")
+    OUT_JS.write_text("/* generated daily by house_stats.py — do not edit. Detached houses ≥100 m², built 2000+ or new, per study area. */\n"
+                      "const AREA_HOUSE_STATS = " + json.dumps({"generated": gen, "areas": small}, ensure_ascii=False, separators=(",", ":")) + ";\n",
+                      encoding="utf-8")
+    HIST.write_text(json.dumps(hist, ensure_ascii=False, separators=(",", ":")), encoding="utf-8")
+    print(f"done: {len(out)} areas, failed {failed}, kept from last run (time cap) {len(kept)}")
     return 1 if failed and len(failed) > len(out) // 4 else 0
 
 

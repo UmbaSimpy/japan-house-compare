@@ -47,6 +47,11 @@ jobs:
         timeout-minutes: 35
         run: python area_stats.py
 
+      - name: Detached-house snapshot for the Houses map (all study areas, DATA_LOG item 23)
+        continue-on-error: true   # map extras must never block the listings update
+        timeout-minutes: 40
+        run: python house_stats.py --max-minutes 30
+
       - name: Inject listings into HTML
         run: python inject.py
 
@@ -83,7 +88,8 @@ jobs:
                   hazard_cache.json house_price_history.json \
                   newms_cache.json known_new.json newms_track.json \
                   area-stats.js data/area_stats_history.json \
-                  area-listings.js data/area_listings_state.json data/condo_peers.json
+                  area-listings.js data/area_listings_state.json data/condo_peers.json \
+                  area-house-listings.js area-house-stats.js data/house_stats.json data/house_stats_history.json
           git diff --staged --quiet && echo "No changes to commit" || \
             git commit -m "chore: auto-update listings $(date -u +'%Y-%m-%d')"
 

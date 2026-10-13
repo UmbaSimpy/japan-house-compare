@@ -40,6 +40,9 @@ HOUSE_WEIGHTS = {"commute": 20, "bus": 5, "childcare": 20, "space": 25, "growth"
 _HS = os.path.join(BASE, "data", "house_stats.json")
 HOUSE = json.load(open(_HS, encoding="utf-8")) if os.path.exists(_HS) else {"areas": {}, "generated": None}
 HOUSE_GENERATED = HOUSE.get("generated"); HOUSE = HOUSE["areas"]
+# daily house history (house_stats.py in the GitHub Action, DATA_LOG item 23): {id: {date: [nSuit, u80, priceForScore, n100to130]}}
+_HH = os.path.join(BASE, "data", "house_stats_history.json")
+HHIST = json.load(open(_HH, encoding="utf-8")) if os.path.exists(_HH) else {}
 HOUSE_WALK_FREE, HOUSE_WALK_PTS, HOUSE_WALK_CAP = 10, 1.5, 15   # commute −1.5 pts per minute of median walk over 10, max −15
 
 
@@ -353,6 +356,20 @@ def smoothed(aid):
     ppm = med(9)
     return dict(q80=round(med(7), 1), q_n=round(med(8), 1), q_ppm=(ppm / 10000 if ppm else None), days=len(win), last=last)
 
+def house_smoothed(aid):
+    """Houses: same window/minimum as smoothed() over data/house_stats_history.json."""
+    h = HHIST.get(aid, {})
+    days = sorted(d for d in h if len(h[d]) >= 4)
+    if not days:
+        return None
+    last = days[-1]
+    from datetime import date as _d
+    win = [d for d in days if (_d.fromisoformat(last) - _d.fromisoformat(d)).days < SMOOTH_DAYS]
+    if len(win) < SMOOTH_MIN_DAYS:
+        return None
+    pr = [h[d][2] for d in win if h[d][2]]
+    return dict(u80=statistics.median(h[d][1] for d in win), price=statistics.median(pr) if pr else None, days=len(win), last=last)
+
 def space_points(q_ppm, q80):
     """Price pts from the median ¥/m² of qualifying listings × 100 m²; choice pts from the count under budget."""
     P = q_ppm * 100 if q_ppm else None
@@ -528,14 +545,21 @@ for (en, ja, pref, typ, st, dest, mins, xf, pss, crowd, crowdtxt, lat, lng) in A
         HP, hpbasis = None, "no suitable house listed: price part = 0"
         hflags.append("no house ≥100 m² built 2000+ (or new) listed: house space price part scored 0")
     if 0 < hn < 5: hflags.append(f"only {hn} suitable house(s) listed: thin sample")
+    hsm = house_smoothed(aid)
+    hu80 = hst.get("u80", 0) or 0
+    if hsm:     # 30-day medians replace the single snapshot, as for condos
+        hu80 = hsm["u80"]
+        if hsm["price"]:
+            HP, hpbasis = hsm["price"] / 10000, f"{hsm['days']}-day median of the daily house price used for the score"
     hprice = 0.0 if HP is None else 100 * clamp((math.log(SPACE_P_LO) - math.log(HP)) / (math.log(SPACE_P_LO) - math.log(SPACE_P_HI)), 0, 1)
-    hchoice = 100 * min(1.0, math.log1p(hst.get("u80", 0) or 0) / math.log1p(SPACE_N_FULL))
+    hchoice = 100 * min(1.0, math.log1p(hu80) / math.log1p(SPACE_N_FULL))
     hss = 0.5 * hprice + 0.5 * hchoice
     hwalk = hst.get("medianWalk")
     hpen = min(HOUSE_WALK_CAP, HOUSE_WALK_PTS * max(0.0, hwalk - HOUSE_WALK_FREE)) if hwalk is not None else 0.0
     hcs = clamp(cs - hpen)
     hhs, hhparts = hazard_score_house(hz)
     htotal = sum(HOUSE_WEIGHTS[k] * v for k, v in zip(SUBS, [hcs, bs, ccs, hss, gs, cos, hhs])) / 100
+    if hsm: hflags.append(f"house space from {hsm['days']}-day medians of the daily snapshot (to {hsm['last']})")
     if (hst.get("u80") or 0) >= 100: hhl.append(f"{hst['u80']} suitable houses under ¥80M")
     if HP and HP <= 4500: hhl.append(f"Typical 100–130 m² house ¥{HP / 1000:.0f}M")
     if HP and HP >= 12000: hhl.append(f"Typical 100–130 m² house ≥¥{HP / 1000:.0f}M")

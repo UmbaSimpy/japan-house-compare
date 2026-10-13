@@ -18,7 +18,8 @@ const mpById = id => MAP_DATA.areas.find(a => a.id === id);
 const mpName = a => LANG === 'ja' ? a.nameJa : a.nameEn;
 const mpAlt = a => LANG === 'ja' ? a.nameEn : a.nameJa;
 const mpLive = a => (typeof AREA_STATS !== 'undefined' && AREA_STATS.areas?.[a.id]) || null;   // daily area-stats.js (track A)
-const mpVal = (a, l) => l === 'total' ? a.totalScore : l === 'live' ? (MP.mode === 'house' ? a.housing?.u80 ?? null : mpLive(a)?.u80 ?? null) : l === 'crime' ? (a.crime?.safetyIndex ?? null) : a.scores[l];
+const mpHouseLive = a => (typeof AREA_HOUSE_STATS !== 'undefined' && AREA_HOUSE_STATS.areas?.[a.id]) || null;   // daily area-house-stats.js
+const mpVal = (a, l) => l === 'total' ? a.totalScore : l === 'live' ? (MP.mode === 'house' ? mpHouseLive(a)?.u80 ?? a.housing?.u80 ?? null : mpLive(a)?.u80 ?? null) : l === 'crime' ? (a.crime?.safetyIndex ?? null) : a.scores[l];
 const mpLight = () => document.documentElement.classList.contains('light');
 const mpEsc = s => String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
 const mpLL = poly => poly.map(p => p.map(r => r.map(([x, y]) => [y, x])));

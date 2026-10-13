@@ -1220,7 +1220,7 @@ I18N.ja.ln = {
     gatedTipH: 'Scores well overall but has almost no house ≥100 m² (built 2000+ or new) at a reachable price.',
     layerDescH: {
       space: 'Detached houses you could actually buy: floor ≥100 m², built 2000+ or new. 50% Price: median asking price of such houses with 100–130 m² floor (¥30M = 100 … ¥150M = 0). 50% Choice: how many are under ¥80M.',
-      live: 'Number of suitable houses (≥100 m², built 2000+ or new) under ¥80M on SUUMO at the last house crawl. Not part of the score.',
+      live: 'Live count of suitable houses (≥100 m², built 2000+ or new) under ¥80M on SUUMO, refreshed daily. Not part of the score.',
       hazard: 'House version: shallow and mid flooding and liquefaction weigh more (a house stands on its lot and floods at the ground floor); earthquake slightly less. Higher = safer.',
       commute: 'Train time to Tokyo Stn/Otemachi as for apartments, minus 1.5 pts per minute that houses typically sit beyond a 10-min walk from a station (max −15).',
     },
@@ -1289,7 +1289,7 @@ I18N.ja.ln = {
     gatedTipH: '総合点は高いものの、手の届く価格の一戸建て（100㎡以上・2000年以降築または新築）がほとんどありません。',
     layerDescH: {
       space: '実際に買える一戸建て：延床100㎡以上・2000年以降築または新築。50%は価格：延床100〜130㎡の物件の価格中央値（3,000万円＝100…1億5,000万円＝0）。50%は選択肢：8,000万円未満の件数。',
-      live: '直近の一戸建て集計で8,000万円未満の条件に合う物件（100㎡以上・2000年以降築または新築）の件数。スコアには含みません。',
+      live: 'SUUMOに掲載中の8,000万円未満の条件に合う一戸建て（100㎡以上・2000年以降築または新築）の件数（毎日更新）。スコアには含みません。',
       hazard: '一戸建て版：浅い・中程度の浸水と液状化の比重を高くしています（建物が地面に建ち、1階が浸水するため）。地震はやや低め。高いほど安全。',
       commute: 'マンションと同じ電車時間から、物件の駅徒歩の中央値が10分を超える1分ごとに1.5点を差し引きます（最大−15）。',
     },

@@ -995,3 +995,24 @@ Houses and new condos are not covered yet.
 **Texts updated:** map layer description, the Space breakdown tooltip, pros/cons, budget note, ⓘ entries `a.sub.space`, `a.scorePrice`, `a.pool`, `a.poolAll` (EN + JA), the RUBRIC in locations.json and PARAMETERS.md.
 
 **Checked in the preview:** Sakura shows "#61 of 77 · outside top 28" with the tooltip; Minato shows "Below space gate" (dimmed); the budget slider at ¥60M gives Sakura n = 14.6 (weighted).
+
+## 23. Houses map refreshed daily, like the condo map (2026-10-13, user: "yes, the house map should be handled like the apartments one")
+
+**Same model as condos (track A data, track B scores):**
+
+| | Condos | Houses (now) |
+|---|---|---|
+| Daily crawl (GitHub Action) | `area_stats.py` | `house_stats.py --max-minutes 30` (step after area_stats, continue-on-error, 40-min timeout) |
+| Light list (area page, budget slider) | `area-listings.js` | `area-house-listings.js` |
+| Small live file loaded with the page ("Listings now" layer) | `area-stats.js` | `area-house-stats.js` (`AREA_HOUSE_STATS`: u80, nSuit, nNew, medians, d7/d30) |
+| History for the 30-day smoothing | `data/area_stats_history.json` | `data/house_stats_history.json` {id:{date:[nSuit, u80, priceForScore, n100to130]}} |
+| Scores | `build_locations.py` at a study refresh, using 30-day medians once 10 days exist | same: `house_smoothed()` replaces u80 and the price (median 100–130 m², or all sizes if fewer than 3) |
+
+**Keeping the daily run short:**
+- Lists and prices are crawled for every area, oldest snapshot first. After 30 minutes the remaining areas keep yesterday's data (`kept` in the log), so the next run starts with them.
+- The feature-filter counts cost 22 requests per area (≈1,700 per full run). Only the 11 areas with the oldest `featureDate` are re-counted per run, so each area is refreshed about weekly. Use `--all-features` for a full recount.
+- `--rebuild-only` re-writes all outputs from the last snapshot without fetching. It was used to seed the history with 2026-10-13.
+
+**Front end:** "Listings now" in house mode reads `AREA_HOUSE_STATS` (fallback: the study value). The house list is cache-keyed by `AREA_HOUSE_STATS.generated`.
+
+**Checked:** a daily-mode run on Chiba-Mihama (34 suitable, features refreshed, history row written); `build_locations.py` output is unchanged (smoothing starts after 10 days); the house live layer shows Kisarazu 245 in the preview.
