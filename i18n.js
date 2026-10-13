@@ -557,6 +557,14 @@ I18N.en.map = {
     row: (p, u) => `${p}/100 m² · ${u} under ¥80M`,
     budgetLive: d => `(your budget, SUUMO listings ${d})`,
   },
+  crime: {
+    title: 'Crime (police, 2025)', notScored: 'not in score', idx: (r, n) => `#${r}/${n} safest`,
+    burg: 'Home burglaries', viol: 'Violent crime', all: 'All recorded crime',
+    cases: n => `${n.toLocaleString()} cases`, rankTip: (r, n) => `#${r} lowest of ${n} areas (bar = share of areas with more crime)`,
+    notPub: 'not published per city', noData: 'no official data',
+    note: 'Per resident, counted where the crime happened. Home burglaries (空き巣 + 忍込み) are the best guide for families.',
+    hub: 'Commercial hub: commuters and shoppers inflate the per-resident rates; home burglaries are the better guide for residents.',
+  },
   kpi: { commute: 'to Tokyo', office: o => `to ${o}`, large: 'modern 100 m²', daycare: '0–2 daycare', costco: 'to Costco' },
   pers: {
     button: 'Personalise', office: 'Your office', officeDefault: 'Tokyo Stn / Otemachi (study default)',
@@ -729,6 +737,14 @@ I18N.ja.map = {
     short: (p, pp, u, cp) => `価格 ${p}/100㎡ → ${pp}点・選択肢 ${u}件 → ${cp}点`,
     row: (p, u) => `${p}/100㎡・8,000万円未満 ${u}件`,
     budgetLive: d => `（あなたの予算、SUUMO掲載 ${d}）`,
+  },
+  crime: {
+    title: '治安（警察 2025年）', notScored: 'スコア対象外', idx: (r, n) => `${n}中 安全な方から${r}位`,
+    burg: '住宅侵入', viol: '凶悪犯・粗暴犯', all: '刑法犯総数',
+    cases: n => `${n.toLocaleString()}件`, rankTip: (r, n) => `${n}地域中 少ない方から${r}位（バー＝これより犯罪が多い地域の割合）`,
+    notPub: '市町村別の公表なし', noData: '公式データなし',
+    note: '人口あたり、発生地で計上。家族には住宅侵入（空き巣＋忍込み）が最も参考になる。',
+    hub: '商業地：通勤・買物客のため人口あたりの値が高め。居住者には住宅侵入の方が目安になる。',
   },
   kpi: { commute: '東京まで', office: o => `${o}まで`, large: '築浅100㎡', daycare: '0〜2歳 保育料', costco: 'コストコまで' },
   pers: {

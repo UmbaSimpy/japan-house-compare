@@ -30,11 +30,11 @@ function mpDomain(l) {
   }
   return MP.domains[l];
 }
+const mpHue = x => `hsl(${Math.round(2 + x * 140)}, ${mpLight() ? 62 : 66}%, ${mpLight() ? 47 : 52}%)`;   // 0 = red … 1 = green
 function mpColor(v, l = MP.layer) {
   if (v == null) return '#777';
   const [lo, hi] = mpDomain(l);
-  const x = Math.max(0, Math.min(1, (v - lo) / ((hi - lo) || 1)));
-  return `hsl(${Math.round(2 + x * 140)}, ${mpLight() ? 62 : 66}%, ${mpLight() ? 47 : 52}%)`;
+  return mpHue(Math.max(0, Math.min(1, (v - lo) / ((hi - lo) || 1))));
 }
 
 /* ── pros / cons / info rules ── */
@@ -480,6 +480,39 @@ function mpKpis(a) {
   return `<div class="mp-kpis">${k.map(([key, v, x]) => `<div class="mp-kpi"><b>${v}</b><span>${t('map.kpi.' + key, x)}</span></div>`).join('')}</div>`;
 }
 
+// Crime card on the detail page (data/area_crime.json, info only — never in the score; DATA_LOG item 11).
+// Each rate is ranked among the areas that have it (#1 = lowest); the bar is the share of areas with more crime.
+const mpCrimeRanks = {};
+function mpCrimeRank(k) {
+  if (!mpCrimeRanks[k]) {
+    const vs = mpAreas().map(a => [a.id, a.crime?.[k]]).filter(x => x[1] != null).sort((x, y) => x[1] - y[1]);
+    const r = {};
+    vs.forEach(([id, v], i) => { r[id] = i && v === vs[i - 1][1] ? r[vs[i - 1][0]] : i + 1; });
+    mpCrimeRanks[k] = { r, n: vs.length };
+  }
+  return mpCrimeRanks[k];
+}
+function mpCrimeHTML(a) {
+  const cr = a.crime;
+  if (!cr) return '';
+  const si = cr.safetyIndex, sr = si != null ? mpLRank('crime')[a.id] : null, sn = mpAreas().filter(x => x.crime?.safetyIndex != null).length;
+  const rows = [['burg', 'burglaryPer10k', 'burglary', '/10k'], ['viol', 'violentPer10k', 'violent', '/10k'], ['all', 'totalPer1k', 'total', '/1k']];
+  const row = ([lab, k, nk, unit]) => {
+    const v = cr[k];
+    if (v == null) return `<div class="mp-crow na"><span>${t('map.crime.' + lab)}</span><em>${t(cr.total == null ? 'map.crime.noData' : 'map.crime.notPub')}</em></div>`;
+    const { r, n } = mpCrimeRank(k), x = n > 1 ? 1 - (r[a.id] - 1) / (n - 1) : 1;
+    return `<div class="mp-crow" title="${mpEsc(t('map.crime.rankTip', r[a.id], n))}"><span>${t('map.crime.' + lab)}</span>
+      <span class="mp-bt"><i style="width:${Math.max(3, x * 100)}%;background:${mpHue(x)}"></i></span>
+      <b>${v}<small>${unit}</small></b><small class="mp-brk">${t('map.crime.cases', cr[nk])} · #${r[a.id]}/${n}</small></div>`;
+  };
+  return `<section class="mp-crime">
+    <div class="mp-chead"><span>🚓 ${t('map.crime.title')}</span><span class="mp-badge">${t('map.crime.notScored')}</span>
+      ${si != null ? `<b style="color:${mpColor(si, 'crime')}" title="${mpEsc(t('map.layerDesc.crime'))}">${si.toFixed(0)}<small> ${t('map.crime.idx', sr, sn)}</small></b>` : ''}</div>
+    ${rows.map(row).join('')}
+    <p class="mp-cnote">${t(cr.totalPer1k >= 10 ? 'map.crime.hub' : 'map.crime.note')} <a target="_blank" rel="noopener" href="${mpEsc(cr.src)}">${t('map.r.crimeSrc')} ↗</a></p>
+  </section>`;
+}
+
 // 重ねるハザードマップ centred on the area with the flood (洪水) layer set on — URL captured from the portal UI 2026-10-12
 const mpHazardURL = a => `https://disaportal.gsi.go.jp/maps/?ll=${a.lat},${a.lng}&z=13&base=pale&ls=seamless%7Cflood_l2_kaokutoukai_kagan%2C0.8%7Cflood_l2_kaokutoukai_hanran%2C0.8%7Cflood_l2_keizoku%2C0.8%7Cflood_list%2C0.8%7Cflood_l1%2C0.8%7Ctameike_raster%2C0.8%7Cnaisui_raster%2C0.8%7Cflood_list_l2%2C0.75%7Cdisaster1&disp=0000001110&vs=c1j0l0u0t0h0z0`;
 
@@ -513,6 +546,7 @@ function mpDetailHTML(a) {
         <span class="mp-bt"><i style="width:0;background:${mpColor(v, s)}" data-to="width:${Math.max(2, v)}%"></i></span>
         <b>${v.toFixed(0)}</b><small class="mp-brk" title="${mpEsc(t('map.layerRank', r ?? '—', t('map.layers.' + s)))}">#${r ?? '—'}</small></div>`;
     }).join('')}</div>
+    ${mpCrimeHTML(a)}
     <div class="mp-tabs" role="tablist">${['pros', 'cons', 'info'].map(k =>
       `<button type="button" role="tab" class="mp-tab ${k}${MP.tab === k ? ' active' : ''}" data-mtab="${k}">
         ${t('map.' + k)} <span>${pts[k].length}</span></button>`).join('')}</div>
@@ -525,7 +559,6 @@ function mpDetailHTML(a) {
     ${a.tracked ? `<button type="button" class="mp-open" data-open="${a.tracked}">🏢 ${t('map.openListings')} →</button>` : ''}
     ${a.hazard && (MP.cat === 'all' || MP.cat === 'hazard') ? `<a class="mp-open" target="_blank" rel="noopener" href="${mpHazardURL(a)}">🌊 ${t('map.r.hazardMap')} ↗</a>` : ''}
     ${a.noise && (MP.cat === 'all' || MP.cat === 'hazard') ? [...new Set(a.noise.flags.map(f => f.url))].map(u => `<a class="mp-open" target="_blank" rel="noopener" href="${mpEsc(u)}">✈ ${t('map.r.noiseSrc')} ↗</a>`).join('') : ''}
-    ${a.crime && (MP.cat === 'all' || MP.cat === 'crime') ? `<a class="mp-open" target="_blank" rel="noopener" href="${mpEsc(a.crime.src)}">🚓 ${t('map.r.crimeSrc')} ↗</a>` : ''}
     ${MP.cat === 'all' || MP.cat === 'commute' ? `<a class="mp-open" target="_blank" rel="noopener" href="${mpYahooURL(a, MP.office ? mpOfficeInfo(MP.office).query : '東京')}">🚆 ${t('map.r.yahoo', MP.office ? mpOfficeName(mpOfficeInfo(MP.office)) : t('map.dest.Tokyo'))} ↗</a>` : ''}
     <details class="mp-src"><summary>${t('map.sources')} (${a.sources.length})</summary>
       <ul>${a.sources.map(u => { let host = u; try { host = new URL(u).hostname.replace(/^www\./, ''); } catch (e) {}

@@ -167,6 +167,8 @@ Watchlist (full scored pipeline, Apartments tab) = the areas in `areas.json`; si
 | violent, violentPer10k | 凶悪犯 + 粗暴犯, per 10,000; null in Saitama (not published per city) and Ibaraki | same | same | same |
 | safetyIndex | Crime map layer, 0–100 (100 = safest): 60% burglary (log 0.2→100 … 3.0→0) + 40% violent (log 2.5→100 … 25→0); burglary only where violent is null | derived | same | same |
 
+Shown as a card on every area's detail page (`mpCrimeHTML`: rate, cases, rank among areas with data), plus pros/cons rows, the Crime layer and Compare. Never scored (user decision 2026-10-13).
+
 Pros/cons thresholds (`map.js`): burglary ≤0.5/10k pro, ≥1.5 con; violent ≤3.5/10k pro, ≥10 con; all-crime ≥10/1k shown as a commercial-hub note.
 
 ### noise (`data/area_noise.json`, info only, hand-curated)

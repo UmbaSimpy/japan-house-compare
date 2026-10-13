@@ -455,6 +455,12 @@ Scripts: the session scratchpad `review.py` and `access.py`, read-only on `locat
   - Values outside the bounds are clamped.
   - Where violent is null (Saitama), burglary is used alone.
 
+**Detail-page card** (user 2026-10-13: "no scoring but show it in the detail page of each area"):
+- `mpCrimeHTML` in `map.js` draws a card below the score bars with the safety index and its rank, then three rows: burglary, violent and all crime.
+- Each row shows the rate, the case count and its rank among the areas with data (#1 = lowest).
+- The bar is the share of areas with more crime.
+- The card ends with the residential or commercial-hub note and the source link.
+
 **Pros/cons thresholds (`map.js`):**
 - burglary ≤0.5 pro, ≥1.5 con
 - violent ≤3.5 pro, ≥10 con
