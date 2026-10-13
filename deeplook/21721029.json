@@ -350,7 +350,8 @@
       "en": "Median ¥161k/m² · range ¥156k/m²–¥166k/m² · all ages in the area: median ¥619k/m² (55 flats)",
       "ja": "中央値 16.1万円/㎡・範囲 15.6万円/㎡〜16.6万円/㎡・エリア全体（築年問わず）の中央値 61.9万円/㎡（55件）"
      },
-     "ask": null
+     "ask": null,
+     "g": "ppm"
     },
     {
      "level": "info",
@@ -363,7 +364,8 @@
       "ja": "本物件はそれより狭く、一般に狭い住戸ほど㎡単価は高くなります。"
      },
      "cmp": "",
-     "ask": null
+     "ask": null,
+     "g": "ppm"
     },
     {
      "level": "good",
@@ -376,7 +378,8 @@
       "en": "Area median 15 min (90 m²+ listings, walk access only)",
       "ja": "エリア中央値 徒歩15分（90㎡以上・徒歩物件のみ）"
      },
-     "ask": null
+     "ask": null,
+     "g": "walk"
     },
     {
      "level": "info",
@@ -389,7 +392,8 @@
       "ja": "国土交通省「不動産情報ライブラリ」のAPIキー取得後に、地区別の取引価格を追加します。"
      },
      "cmp": "",
-     "ask": null
+     "ask": null,
+     "g": "sold"
     }
    ],
    "src": [
@@ -431,7 +435,8 @@
      "ask": {
       "en": "Please share the 長期修繕計画 and the current repair-fund balance. Are increases or a 一時金 planned?",
       "ja": "長期修繕計画書と修繕積立金の現在の残高を見せてください。値上げや一時金の予定はありますか？"
-     }
+     },
+     "g": "repair"
     },
     {
      "level": "ok",
@@ -447,7 +452,8 @@
       "en": "Peers of similar age and size (0–60 units): median ¥116/m² → 57th percentile (70 condos)",
       "ja": "築年・規模（0–60戸）の近い比較物件：中央値116円/㎡ → 下から57%の位置（70件）"
      },
-     "ask": null
+     "ask": null,
+     "g": "mgmt"
     },
     {
      "level": "info",
@@ -463,7 +469,8 @@
      "ask": {
       "en": "What was the last 固定資産税・都市計画税 bill for this unit?",
       "ja": "この住戸の固定資産税・都市計画税（年額）はいくらですか？"
-     }
+     },
+     "g": "monthly"
     },
     {
      "level": "info",
@@ -476,7 +483,8 @@
       "ja": "仲介手数料（物件価格×3%＋6万円＋消費税）653,400円。ほかに登録免許税・司法書士報酬、ローン事務手数料・保証料、火災保険・地震保険、印紙税、固定資産税・管理費等の日割り精算などで、物件価格の3〜5%程度。リフォーム費用は別途見込んでください。"
      },
      "cmp": "",
-     "ask": null
+     "ask": null,
+     "g": "buycost"
     }
    ],
    "src": [
@@ -509,7 +517,8 @@
       "ja": "敷地の所有権（共有持分）。マンションとして一般的です。"
      },
      "cmp": "",
-     "ask": null
+     "ask": null,
+     "g": "rights"
     },
     {
      "level": "ok",
@@ -522,7 +531,8 @@
       "ja": "住居系の用途地域のため、周辺に建てられる建物は制限されます。"
      },
      "cmp": "",
-     "ask": null
+     "ask": null,
+     "g": "zoning"
     },
     {
      "level": "info",
@@ -535,7 +545,8 @@
       "ja": "不動産情報ライブラリのAPIキー取得後に、都市計画道路・地区計画・周辺の用途地域を追加します。"
      },
      "cmp": "",
-     "ask": null
+     "ask": null,
+     "g": "plan"
     }
    ],
    "src": [
@@ -567,7 +578,8 @@
      "ask": {
       "en": "Has a 耐震診断 been done? Results and any retrofit (耐震改修) plans?",
       "ja": "耐震診断は実施済みですか？結果と耐震改修の予定を教えてください。"
-     }
+     },
+     "g": "seismic"
     },
     {
      "level": "info",
@@ -580,7 +592,8 @@
       "ja": "マンションではRC造・SRC造が一般的です。"
      },
      "cmp": "",
-     "ask": null
+     "ask": null,
+     "g": "struct"
     },
     {
      "level": "risk",
@@ -596,7 +609,8 @@
       "en": "Study areas (population-weighted, ≥ 6-lower): median 59%, range 24–89% → rank 59 of 78 from the safest",
       "ja": "調査対象エリア（人口加重、6弱以上）：中央値59%、範囲24〜89% → 安全な方から78中59位"
      },
-     "ask": null
+     "ask": null,
+     "g": "quake"
     },
     {
      "level": "risk",
@@ -612,7 +626,8 @@
      "ask": {
       "en": "What kind of foundation does the building have (支持層までの杭基礎)?",
       "ja": "建物の基礎の種類は何ですか（支持層までの杭基礎か）？"
-     }
+     },
+     "g": "ground"
     }
    ],
    "src": [
@@ -647,7 +662,8 @@
      "ask": {
       "en": "Where are the electrical room (電気室), water pumps and parking — basement or ground floor? Any flood barriers (止水板)?",
       "ja": "電気室・給水ポンプ・駐車場は地下ですか、1階ですか？止水板などの浸水対策はありますか？"
-     }
+     },
+     "g": "flood"
     },
     {
      "level": "risk",
@@ -663,7 +679,8 @@
      "ask": {
       "en": "Where are the electrical room (電気室), water pumps and parking — basement or ground floor? Any flood barriers (止水板)?",
       "ja": "電気室・給水ポンプ・駐車場は地下ですか、1階ですか？止水板などの浸水対策はありますか？"
-     }
+     },
+     "g": "surge"
     },
     {
      "level": "good",
@@ -673,7 +690,8 @@
      },
      "detail": "",
      "cmp": "",
-     "ask": null
+     "ask": null,
+     "g": "tsunami"
     },
     {
      "level": "good",
@@ -683,7 +701,8 @@
      },
      "detail": "",
      "cmp": "",
-     "ask": null
+     "ask": null,
+     "g": "slide"
     },
     {
      "level": "risk",
@@ -699,7 +718,8 @@
      "ask": {
       "en": "Was the building or site damaged in 2011 (東日本大震災)? Ground improvement?",
       "ja": "東日本大震災で建物や敷地に被害はありましたか？地盤改良はされていますか？"
-     }
+     },
+     "g": "liq"
     },
     {
      "level": "info",
@@ -712,7 +732,8 @@
       "en": "95% of residents live in some water zone · 97% on high-liquefaction ground · 0.5% in landslide zones",
       "ja": "住民の95%が何らかの浸水想定区域内・97%が液状化しやすい地盤・0.5%が土砂災害警戒区域内"
      },
-     "ask": null
+     "ask": null,
+     "g": "areahz"
     },
     {
      "level": "info",
@@ -725,7 +746,8 @@
       "ja": "今昔マップで以前の土地利用（海・水田・河川など）を確認してください。災害履歴と大規模盛土造成地はAPIキー取得後に追加します。"
      },
      "cmp": "",
-     "ask": null
+     "ask": null,
+     "g": "oldmap"
     }
    ],
    "src": [
@@ -768,7 +790,8 @@
       "en": "Faster than 50% of the 77 study areas' typical door-to-door (10 min walk at home)",
       "ja": "調査対象77エリアの標準的なドアツードア（自宅側徒歩10分）の50%より速い"
      },
-     "ask": null
+     "ask": null,
+     "g": "commute"
     },
     {
      "level": "watch",
@@ -784,7 +807,8 @@
       "en": "Faster than 5% of the 77 study areas' typical door-to-door (10 min walk at home)",
       "ja": "調査対象77エリアの標準的なドアツードア（自宅側徒歩10分）の5%より速い"
      },
-     "ask": null
+     "ask": null,
+     "g": "commute"
     },
     {
      "level": "ok",
@@ -800,7 +824,8 @@
       "en": "Faster than 25% of the 77 study areas' typical door-to-door (10 min walk at home)",
       "ja": "調査対象77エリアの標準的なドアツードア（自宅側徒歩10分）の25%より速い"
      },
-     "ask": null
+     "ask": null,
+     "g": "commute"
     },
     {
      "level": "info",
@@ -813,7 +838,8 @@
       "ja": "国土交通省のピーク時混雑率（150%＝新聞を折りたたんで読める程度、180%＝体が触れ合う程度）。"
      },
      "cmp": "",
-     "ask": null
+     "ask": null,
+     "g": "crowd"
     },
     {
      "level": "good",
@@ -826,7 +852,8 @@
       "ja": "マイタウンライナー ベイエリア線 (平和交通+あすか交通; 幕張ベイタウン・ベイパーク・検見川浜・稲毛海岸・高洲) → 東京駅日本橋口/銀座・朝4便・運賃800円"
      },
      "cmp": "",
-     "ask": null
+     "ask": null,
+     "g": "bus"
     },
     {
      "level": "good",
@@ -839,7 +866,8 @@
       "ja": "1路線が止まった時の代替手段になります（京葉線は強風で運転見合わせが多い路線です）。"
      },
      "cmp": "",
-     "ask": null
+     "ask": null,
+     "g": "lines"
     }
    ],
    "src": [
@@ -868,7 +896,8 @@
       "ja": "常駐＝管理員が住み込み、日勤・通勤＝平日の日中に管理員が勤務。"
      },
      "cmp": "",
-     "ask": null
+     "ask": null,
+     "g": "mgmtType"
     },
     {
      "level": "ok",
@@ -881,7 +910,8 @@
       "ja": "固定費を分担できる戸数があります。"
      },
      "cmp": "",
-     "ask": null
+     "ask": null,
+     "g": "units"
     },
     {
      "level": "info",
@@ -897,7 +927,8 @@
      "ask": {
       "en": "When was the last 大規模修繕, what did it cover and how was it paid? What is planned next?",
       "ja": "前回の大規模修繕はいつ、どんな工事で、費用はどう賄いましたか？次回の予定は？"
-     }
+     },
+     "g": "major"
     },
     {
      "level": "ask",
@@ -910,7 +941,8 @@
      "ask": {
       "en": "Who built it (施工会社)?",
       "ja": "施工会社はどこですか？"
-     }
+     },
+     "g": "builder"
     },
     {
      "level": "ask",
@@ -926,7 +958,8 @@
      "ask": {
       "en": "Can I see the 重要事項調査報告書 and the last 2–3 years of 総会議事録?",
       "ja": "重要事項調査報告書と直近2〜3年分の総会議事録を見せてください。"
-     }
+     },
+     "g": "docs"
     }
    ],
    "src": []
@@ -950,7 +983,8 @@
       "ja": "1階：湿気・虫・防犯面に注意。"
      },
      "cmp": "",
-     "ask": null
+     "ask": null,
+     "g": "floor"
     },
     {
      "level": "good",
@@ -960,7 +994,8 @@
      },
      "detail": "",
      "cmp": "",
-     "ask": null
+     "ask": null,
+     "g": "facing"
     },
     {
      "level": "info",
@@ -973,7 +1008,8 @@
       "ja": "住宅ローン控除などの床面積要件（50㎡以上）は登記簿上の内法面積で判定され、広告の壁芯面積より5〜8%程度小さくなります。"
      },
      "cmp": "",
-     "ask": null
+     "ask": null,
+     "g": "area"
     },
     {
      "level": "info",
@@ -983,7 +1019,8 @@
      },
      "detail": "",
      "cmp": "",
-     "ask": null
+     "ask": null,
+     "g": "reform"
     }
    ],
    "src": []
@@ -1010,7 +1047,8 @@
      "ask": {
       "en": "Is there a 住宅性能評価書, BELS or 長期優良住宅 certificate?",
       "ja": "住宅性能評価書、BELS、長期優良住宅の認定などはありますか？"
-     }
+     },
+     "g": "energy"
     },
     {
      "level": "watch",
@@ -1023,7 +1061,8 @@
       "ja": "あくまで目安です。省エネ基準への適合義務化は2025年からです。"
      },
      "cmp": "",
-     "ask": null
+     "ask": null,
+     "g": "era"
     },
     {
      "level": "ask",
@@ -1039,7 +1078,8 @@
      "ask": {
       "en": "Are the windows single or double glazed? Were sashes replaced in a major repair?",
       "ja": "窓は単板ガラスですか、複層ガラスですか？大規模修繕でサッシは交換されましたか？"
-     }
+     },
+     "g": "glazing"
     },
     {
      "level": "ask",
@@ -1055,7 +1095,8 @@
      "ask": {
       "en": "City gas or propane? Electricity contract (high-voltage bulk 一括受電)?",
       "ja": "都市ガスですか、プロパンガスですか？電気は一括受電ですか？"
-     }
+     },
+     "g": "gas"
     },
     {
      "level": "watch",
@@ -1068,7 +1109,8 @@
       "ja": "1982年より前の建築：耐震基準適合証明書が必要・登記面積50㎡以上 ✓。省エネ性能の証明がない中古住宅は「その他の住宅」：年末残高の0.7%、借入限度額2,000万円、控除期間10年（年最大14万円）。省エネ基準適合の証明があれば控除期間13年、ZEH水準・認定長期優良住宅なら限度額3,500万円。"
      },
      "cmp": "",
-     "ask": null
+     "ask": null,
+     "g": "taxcredit"
     }
    ],
    "src": [
@@ -1107,7 +1149,8 @@
      "ask": {
       "en": "Is a space available now? How long is the waiting list?",
       "ja": "現在空きはありますか？空き待ちは何台ですか？"
-     }
+     },
+     "g": "parking"
     },
     {
      "level": "info",
@@ -1117,7 +1160,8 @@
      },
      "detail": "",
      "cmp": "",
-     "ask": null
+     "ask": null,
+     "g": "bike"
     },
     {
      "level": "ask",
@@ -1130,7 +1174,8 @@
      "ask": {
       "en": "Bicycle parking: spaces available and fee? Large (child-seat) bikes allowed?",
       "ja": "駐輪場の空きと料金は？子ども乗せ自転車（大型）は置けますか？"
-     }
+     },
+     "g": "bike"
     }
    ],
    "src": []
@@ -1154,7 +1199,8 @@
      },
      "detail": "",
      "cmp": "",
-     "ask": null
+     "ask": null,
+     "g": "near"
     },
     {
      "level": "info",
@@ -1164,7 +1210,8 @@
      },
      "detail": "",
      "cmp": "",
-     "ask": null
+     "ask": null,
+     "g": "near"
     },
     {
      "level": "info",
@@ -1174,7 +1221,8 @@
      },
      "detail": "",
      "cmp": "",
-     "ask": null
+     "ask": null,
+     "g": "near"
     },
     {
      "level": "info",
@@ -1184,7 +1232,8 @@
      },
      "detail": "",
      "cmp": "",
-     "ask": null
+     "ask": null,
+     "g": "near"
     },
     {
      "level": "info",
@@ -1194,7 +1243,8 @@
      },
      "detail": "",
      "cmp": "",
-     "ask": null
+     "ask": null,
+     "g": "near"
     },
     {
      "level": "info",
@@ -1204,7 +1254,8 @@
      },
      "detail": "",
      "cmp": "",
-     "ask": null
+     "ask": null,
+     "g": "near"
     },
     {
      "level": "ask",
@@ -1220,7 +1271,8 @@
      "ask": {
       "en": "Which elementary and junior-high school is this address assigned to (通学区域)?",
       "ja": "この住所の通学区域の小学校・中学校はどこですか？"
-     }
+     },
+     "g": "school"
     },
     {
      "level": "good",
@@ -1233,7 +1285,8 @@
       "en": "0–2 daycare fee ~¥54,330/month · child medical subsidy to age 18",
       "ja": "0〜2歳の保育料 約54,330円/月・子ども医療費助成 18歳まで"
      },
-     "ask": null
+     "ask": null,
+     "g": "daycare"
     },
     {
      "level": "good",
@@ -1246,7 +1299,8 @@
       "en": "Burglary 0.51/10k residents · violent 4.16/10k · all 6.87/1k (2025)",
       "ja": "侵入窃盗 人口1万人あたり0.51件・粗暴犯 1万人あたり4.16件・刑法犯全体 千人あたり6.87件（2025年）"
      },
-     "ask": null
+     "ask": null,
+     "g": "crime"
     },
     {
      "level": "info",
@@ -1256,7 +1310,8 @@
      },
      "detail": "",
      "cmp": "",
-     "ask": null
+     "ask": null,
+     "g": "peds"
     },
     {
      "level": "info",
@@ -1269,7 +1324,8 @@
       "ja": "内見時と地図で確認：車の騒音、夜間のトラック、電車の音。"
      },
      "cmp": "",
-     "ask": null
+     "ask": null,
+     "g": "roads"
     }
    ],
    "src": []
@@ -1293,7 +1349,8 @@
       "ja": "人口が減る地域では、売却価格や生活サービスが弱くなりがちです。"
      },
      "cmp": "",
-     "ask": null
+     "ask": null,
+     "g": "population"
     },
     {
      "level": "info",
@@ -1306,7 +1363,8 @@
       "ja": "類似物件が多いと比較しやすい反面、売却時には競合になります。"
      },
      "cmp": "",
-     "ask": null
+     "ask": null,
+     "g": "supply"
     },
     {
      "level": "info",
@@ -1316,7 +1374,8 @@
      },
      "detail": "",
      "cmp": "",
-     "ask": null
+     "ask": null,
+     "g": "projects"
     },
     {
      "level": "watch",
@@ -1329,7 +1388,8 @@
       "ja": "住宅ローンや控除を使える買い手が限られ、売却に時間がかかりがちです。"
      },
      "cmp": "",
-     "ask": null
+     "ask": null,
+     "g": "oldstd"
     },
     {
      "level": "info",
@@ -1339,7 +1399,8 @@
      },
      "detail": "",
      "cmp": "",
-     "ask": null
+     "ask": null,
+     "g": "landprice"
     }
    ],
    "src": []
@@ -1366,7 +1427,8 @@
      "ask": {
       "en": "How long is the seller's 契約不適合責任, and is equipment excluded?",
       "ja": "売主の契約不適合責任の期間は？設備は免責ですか？"
-     }
+     },
+     "g": "deal"
     },
     {
      "level": "good",
@@ -1376,7 +1438,8 @@
      },
      "detail": "",
      "cmp": "",
-     "ask": null
+     "ask": null,
+     "g": "inspection"
     },
     {
      "level": "ask",
@@ -1389,7 +1452,8 @@
      "ask": {
       "en": "Any 告知事項 (incidents, leaks, disputes with neighbours, asbestos survey)?",
       "ja": "告知事項（事件・事故、漏水、近隣トラブル、アスベスト調査の有無など）はありますか？"
-     }
+     },
+     "g": "disclosure"
     },
     {
      "level": "info",
@@ -1399,7 +1463,8 @@
      },
      "detail": "",
      "cmp": "",
-     "ask": null
+     "ask": null,
+     "g": "handover"
     }
    ],
    "src": []

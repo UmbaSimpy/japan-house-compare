@@ -387,6 +387,36 @@ def lang(x, l):
     return x.get(l, x.get("en", "")) if isinstance(x, dict) else (x or "")
 
 
+# Which explanation (deeplook/glossary.js) belongs to a finding: first match on the English heading, per section
+GKEY = {
+    "A": [("Much cheaper", "cheap"), ("comparable flats|/m²$", "ppm"), ("Comparison set", "ppm"), ("other unit", "same"),
+          ("Price history|On our radar", "history"), ("min walk to", "walk"), ("Actual sale prices", "sold")],
+    "B": [("^Repair fund", "repair"), ("^Management fee", "mgmt"), ("Other fixed monthly", "extras"), ("/month", "monthly"), ("buying costs", "buycost")],
+    "C": [("Land rights|Leasehold", "rights"), ("Zoning", "zoning"), ("Other restrictions", "restrict"), ("Planned roads", "plan")],
+    "D": [("耐震基準適合証明書", "seismicCert"), ("seismic standard", "seismic"), ("isolation", "isolation"), ("^Structure", "struct"),
+          ("30-year chance", "quake"), ("^Ground", "ground")],
+    "E": [("^River flood", "flood"), ("^Storm surge", "surge"), ("^Tsunami", "tsunami"), ("[Ll]andslide", "slide"), ("Liquefaction", "liq"),
+          ("Area context", "areahz"), ("Old maps", "oldmap")],
+    "F": [("door-to-door|route lookup", "commute"), ("crowding", "crowd"), ("Commuter bus", "bus"), (r"line\(s\) listed", "lines")],
+    "G": [("^Management:", "mgmtType"), ("units$", "units"), ("^Age", "major"), ("^Builder", "builder"), ("Key documents", "docs")],
+    "H": [("^Floor", "floor"), ("Balcony faces", "facing"), ("Corner", "corner"), ("m² \\(", "area"), ("Renovation", "reform")],
+    "I": [("[Ee]nergy label", "energy"), ("designed to", "era"), ("glazing|Window type", "glazing"), ("Energy supply|Gas type", "gas"),
+          ("^Equipment", "equip"), ("tax credit", "taxcredit")],
+    "J": [("^Parking", "parking"), ("[Bb]icycle", "bike")],
+    "K": [("school district", "school"), ("^(Elementary|Junior|Kindergarten|Daycare:|Park|Supermarket|Clinic|Station)", "near"),
+          ("Daycare waitlist", "daycare"), ("^Crime", "crime"), ("Paediatrics", "peds"), ("^Noise", "noise"), ("Main roads", "roads")],
+    "L": [("^Population", "population"), ("flats for sale in the area", "supply"), ("Area projects", "projects"), ("Long walk", "farwalk"),
+          ("Old-standard", "oldstd"), ("Land-price", "landprice")],
+    "M": [("Seller is a company|Sold through an agent", "deal"), ("liability|免責", "liability"), ("[Ii]nspection", "inspection"),
+          ("Disclosure", "disclosure"), ("Handover", "handover")],
+}
+
+
+def gkey(sec, head):
+    h = head.get("en", "") if isinstance(head, dict) else str(head or "")
+    return next((k for rx, k in GKEY.get(sec, []) if re.search(rx, h)), None)
+
+
 class Report:
     def __init__(self):
         self.sections = []
@@ -395,8 +425,8 @@ class Report:
         self.cur = {"key": key, "title": title, "intro": intro, "items": [], "src": []}
         self.sections.append(self.cur)
 
-    def add(self, level, head, detail="", cmp="", ask=None):
-        self.cur["items"].append({"level": level, "head": head, "detail": detail, "cmp": cmp, "ask": ask})
+    def add(self, level, head, detail="", cmp="", ask=None, g=None):
+        self.cur["items"].append({"level": level, "head": head, "detail": detail, "cmp": cmp, "ask": ask, "g": g or gkey(self.cur["key"], head)})
 
     def src(self, *keys_or_pairs):
         for k in keys_or_pairs:
@@ -1003,7 +1033,8 @@ UI = {"back": T("← Deep look", "← 物件ディープ分析"), "print": T("Pr
       "fees": T("Fees", "管理費等"), "station": T("Station", "最寄駅"), "door": T("Door-to-door", "ドアツードア"), "buy": T("Buying costs", "諸費用"),
       "first": T("Check first", "まず確認すること"), "strong": T("Strengths", "良い点"), "nothing": T("Nothing flagged", "特になし"),
       "srcs": T("Sources:", "出典："), "askh": T("Ask the agent", "不動産会社への質問"), "docs": T("Documents to request", "取り寄せる書類"),
-      "visit": T("On the visit", "内見でのチェック")}
+      "visit": T("On the visit", "内見でのチェック"),
+      "ghint": T("Tap ⓘ next to any item for what it means, why it matters and what to do.", "各項目の ⓘ をタップすると、意味・重要な理由・確認すべきことが表示されます。")}
 
 
 def esc(s):
@@ -1015,6 +1046,11 @@ def tx(x):
     if isinstance(x, dict):
         return f'<span class="en">{esc(x.get("en"))}</span><span class="ja">{esc(x.get("ja"))}</span>'
     return esc(x)
+
+
+def gi(k):
+    """ⓘ button that opens the explanation for glossary key k (deeplook/glossary.js)."""
+    return f'<button type="button" class="gi" data-g="{k}" aria-label="?">i</button>' if k else ""
 
 
 def render(raw, L, A, office, R, facts, rate):
@@ -1029,6 +1065,7 @@ def render(raw, L, A, office, R, facts, rate):
                 seen.add(lang(a, "en")); asks.append(a)
     yrs = date.today().year - L["year"] if L["year"] else None
     a0 = L["access"][0] if L["access"] else None
+    kvg = ["ppm", "area", "seismic", "floor", "repair", "walk", "commute", "buycost"]
     kv = [(UI["price"], T(fmt_man(L["price"]), mj(L["price"]))),
           (UI["size"], T(f"{L['m2']} m² · {L['layout'] or ''}", f"{L['m2']}㎡・{L['layout'] or ''}")),
           (UI["built"], T(f"{L['year'] or '–'}" + (f" ({yrs} yrs)" if yrs is not None else ""), f"{L['year'] or '–'}年" + (f"（築{yrs}年）" if yrs is not None else ""))),
@@ -1038,13 +1075,13 @@ def render(raw, L, A, office, R, facts, rate):
                             f"{a0['station']}駅 " + (f"バス{a0['bus']}分＋" if a0["bus"] else "") + f"徒歩{a0['walk']}分") if a0 else "–"),
           (UI["door"], T(f"{facts['commute']} min to {office.get('en')}", f"{office.get('ja', '')}まで{facts['commute']}分") if facts.get("commute") else "–"),
           (UI["buy"], T(f"{fmt_yen(facts['buyCosts'][0])}–{fmt_yen(facts['buyCosts'][1])}", f"{yj(facts['buyCosts'][0])}〜{yj(facts['buyCosts'][1])}") if facts.get("buyCosts") else "–")]
-    item = lambda i: (f'<div class="it {i["level"]}"><span class="lv">{tx(LV[i["level"]][0])}</span><div><b>{tx(i["head"])}</b>'
+    item = lambda i: (f'<div class="it {i["level"]}"><span class="lv">{tx(LV[i["level"]][0])}</span><div><b>{tx(i["head"])}</b>{gi(i.get("g"))}'
                       + (f'<p>{tx(i["detail"])}</p>' if i["detail"] else "") + (f'<p class="cmp">{tx(i["cmp"])}</p>' if i["cmp"] else "") + "</div></div>")
     secs = []
     for s in R.sections:
         its = sorted(s["items"], key=lambda i: LV[i["level"]][1])
         src = "".join(f'<a href="{esc(u)}" target="_blank" rel="noopener">{tx(T(n, SRC_JA.get(n, n)))}</a>' for n, u in s["src"])
-        secs.append(f'<section id="s{s["key"]}"><h2><span>{s["key"]}</span>{tx(s["title"])}</h2>'
+        secs.append(f'<section id="s{s["key"]}"><h2><span>{s["key"]}</span>{tx(s["title"])}{gi("sec" + s["key"])}</h2>'
                     + (f'<p class="intro">{tx(s["intro"])}</p>' if s["intro"] else "") + "".join(item(i) for i in its)
                     + (f'<p class="src">{tx(UI["srcs"])} {src}</p>' if src else "") + "</section>")
     te, tj = f"Deep look: {raw['name']}", f"物件ディープ分析：{raw['name']}"
@@ -1080,29 +1117,51 @@ h2{{font-size:1.1rem;display:flex;gap:8px;align-items:center;margin:.4em 0}}h2>s
 .risk .lv,.cnt .risk{{background:var(--risk)}}.watch .lv,.cnt .watch{{background:var(--watch)}}.ask .lv,.cnt .ask{{background:var(--ask)}}.ok .lv,.cnt .ok{{background:var(--ok)}}.good .lv,.cnt .good{{background:var(--good)}}.info .lv,.cnt .info{{background:var(--info)}}
 .src{{font-size:.75rem;color:var(--mut)}}.src a{{margin-right:10px}}
 ol.q li,ul.docs li,ul.visit li{{margin:3px 0;font-size:.9rem}}.foot{{color:var(--mut);font-size:.75rem;margin-top:24px}}
+.gi{{display:inline-grid;place-items:center;width:1.25em;height:1.25em;margin-left:6px;padding:0;border-radius:50%;border:1px solid var(--mut);background:none;color:var(--mut);font:italic 700 .72rem/1 Georgia,serif;cursor:pointer;vertical-align:.12em;flex:none}}
+.gi:hover,.gi:focus-visible{{border-color:var(--ask);color:var(--ask);outline:none}}h2 .gi{{font-size:.68rem}}.kv .gi{{font-size:.62rem;margin-left:4px}}
+.ghint{{color:var(--mut);font-size:.78rem;margin:0 0 4px}}
+.gp{{position:fixed;inset:0;z-index:50;display:flex;align-items:center;justify-content:center;padding:16px;background:rgba(10,8,20,.45)}}.gp[hidden]{{display:none}}
+.gp>div{{background:var(--bg);color:var(--fg);border:1px solid var(--line);border-radius:12px;max-width:560px;width:100%;max-height:85vh;overflow:auto;padding:18px 20px 16px;box-shadow:0 12px 40px rgba(0,0,0,.3)}}
+.gp h3{{margin:0 28px 10px 0;font-size:1.1rem}}.gp h4{{margin:12px 0 2px;font-size:.78rem;text-transform:uppercase;letter-spacing:.04em;color:var(--mut)}}.gp p{{margin:0;font-size:.92rem;line-height:1.6}}
+.gp .x{{float:right;font:inherit;font-size:1.3rem;line-height:1;border:0;background:none;color:var(--mut);cursor:pointer;margin:-6px -8px 0 0;padding:4px 8px}}
+.gp .gtip{{margin-top:12px;padding:8px 10px;border-radius:8px;background:var(--card);border-left:3px solid var(--good)}}
 @media print{{@page{{size:A4;margin:12mm 11mm}}:root{{--bg:#fff;--fg:#000;--mut:#555;--line:#ddd;--card:#f6f6f6}}body{{font-size:9.5pt;line-height:1.4}}.noprint{{display:none!important}}main{{max-width:none;padding:0}}
  a{{color:#000;text-decoration:none}}section{{break-inside:auto}}h2{{break-after:avoid}}.it{{padding:3px 0}}.it,.kv div,.sum>div{{break-inside:avoid}}
- *{{-webkit-print-color-adjust:exact;print-color-adjust:exact}}#sQ{{break-before:page}}}}
+ *{{-webkit-print-color-adjust:exact;print-color-adjust:exact}}#sQ{{break-before:page}}.gi,.gp{{display:none!important}}}}
 </style></head><body><main>
 <div class="bar noprint"><a href="../index.html#deeplook">{tx(UI["back"])}</a><button onclick="window.print()">{tx(UI["print"])}</button><a href="{esc(raw['url'])}" target="_blank" rel="noopener">{tx(UI["suumo"])}</a>
 <span class="lang"><button type="button" data-l="en">EN</button><button type="button" data-l="ja">日本語</button></span></div>
 <h1>{esc(raw['name'])}</h1>
+<p class="ghint noprint">{tx(UI["ghint"])}</p>
 <div class="sub">{esc(L['address'])}{tx(area_t)}{tx(sub)}</div>
-<div class="kv">{''.join(f'<div><small>{tx(k)}</small>{tx(v)}</div>' for k, v in kv)}</div>
-<div class="cnt">{''.join(f'<span class="{k}">{tx(LV[k][0])} {counts[k]}</span>' for k in LV if counts[k])}</div>
+<div class="kv">{''.join(f'<div><small>{tx(k)}{gi(g)}</small>{tx(v)}</div>' for (k, v), g in zip(kv, kvg))}</div>
+<div class="cnt">{''.join(f'<span class="{k}">{tx(LV[k][0])} {counts[k]}</span>' for k in LV if counts[k])}{gi("levels")}</div>
 <div class="sum"><div><h3>{tx(UI["first"])}</h3><ul>{''.join(f'<li><b>{k}</b> {tx(i["head"])}</li>' for k, i in top[:8]) or f'<li>{tx(UI["nothing"])}</li>'}</ul></div>
 <div><h3>{tx(UI["strong"])}</h3><ul>{''.join(f'<li><b>{k}</b> {tx(i["head"])}</li>' for k, i in good[:8]) or '<li>–</li>'}</ul></div></div>
 {''.join(secs)}
-<section id="sQ"><h2><span>?</span>{tx(UI["askh"])}</h2><ol class="q">{''.join(f'<li>{tx(a)}</li>' for a in asks)}</ol>
-<h2><span>📄</span>{tx(UI["docs"])}</h2><ul class="docs">{''.join(f'<li><b>{esc(a)}</b> — {tx(b)}</li>' for a, b in DOCS)}</ul>
-<h2><span>👀</span>{tx(UI["visit"])}</h2><ul class="visit">{''.join(f'<li>{tx(v)}</li>' for v in VISIT)}</ul></section>
+<section id="sQ"><h2><span>?</span>{tx(UI["askh"])}{gi("askAgent")}</h2><ol class="q">{''.join(f'<li>{tx(a)}</li>' for a in asks)}</ol>
+<h2><span>📄</span>{tx(UI["docs"])}{gi("docsList")}</h2><ul class="docs">{''.join(f'<li><b>{esc(a)}</b> — {tx(b)}</li>' for a, b in DOCS)}</ul>
+<h2><span>👀</span>{tx(UI["visit"])}{gi("visit")}</h2><ul class="visit">{''.join(f'<li>{tx(v)}</li>' for v in VISIT)}</ul></section>
 <p class="foot">{tx(foot)}</p>
 </main>
+<div class="gp" id="gp" hidden role="dialog" aria-modal="true"><div><button type="button" class="x" aria-label="close">×</button><div id="gpb"></div></div></div>
+<script src="glossary.js"></script>
 <script>(function(){{var TT={{en:{json.dumps(te, ensure_ascii=False)},ja:{json.dumps(tj, ensure_ascii=False)}}};
 function set(l){{var h=document.documentElement;h.classList.toggle('ja',l==='ja');h.lang=l;document.title=TT[l];
 document.querySelectorAll('.lang button').forEach(function(b){{b.classList.toggle('on',b.dataset.l===l)}});try{{localStorage.setItem('lang',l)}}catch(e){{}}}}
 set(document.documentElement.classList.contains('ja')?'ja':'en');
-document.querySelectorAll('.lang button').forEach(function(b){{b.onclick=function(){{set(b.dataset.l)}}}});}})();</script>
+document.querySelectorAll('.lang button').forEach(function(b){{b.onclick=function(){{set(b.dataset.l);gt()}}}});
+/* ⓘ explanations (glossary.js): hover = one-line summary, click = full popup */
+var G=window.DLG||{{}},gp=document.getElementById('gp'),gb=document.getElementById('gpb'),last=null;
+var LB={{what:['What it is','何のこと？'],why:['Why it matters','なぜ重要？'],read:['How to read this result','結果の読み方'],tip:['What to do','確認・対策']}};
+function L(){{return document.documentElement.classList.contains('ja')?1:0}}
+function e(s){{return String(s).replace(/[&<>"]/g,function(c){{return{{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}}[c]}})}}
+function gt(){{document.querySelectorAll('.gi').forEach(function(b){{var g=G[b.dataset.g];if(!g){{b.hidden=true;return}}var w=(g.what||g.why)[L()];b.title=w.length>140?w.slice(0,138)+'…':w}})}}
+function show(k){{var g=G[k];if(!g)return;var l=L();gb.innerHTML='<h3>'+e(g.t[l])+'</h3>'+['what','why','read'].filter(function(f){{return g[f]}}).map(function(f){{return '<h4>'+LB[f][l]+'</h4><p>'+e(g[f][l])+'</p>'}}).join('')+(g.tip?'<div class="gtip"><h4>'+LB.tip[l]+'</h4><p>'+e(g.tip[l])+'</p></div>':'');gp.hidden=false;gp.querySelector('.x').focus()}}
+function hide(){{gp.hidden=true;if(last)last.focus()}}
+document.addEventListener('click',function(ev){{var b=ev.target.closest('.gi');if(b){{ev.preventDefault();last=b;show(b.dataset.g);return}}if(ev.target===gp||ev.target.closest('.gp .x'))hide()}});
+document.addEventListener('keydown',function(ev){{if(ev.key==='Escape'&&!gp.hidden)hide()}});
+gt();}})();</script>
 </body></html>"""
 
 

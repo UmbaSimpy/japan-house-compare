@@ -769,3 +769,8 @@ Houses and new condos are not covered yet.
 - The 4 reports were regenerated with the defaults.
 
 **To refresh monthly:** update `LN_PRESETS` and `LN_BANKS` (and `LN_RATES_DATE`) in `loan.js` from the banks' published rates. This can become `data/loan_rates.json` (proposal 5).
+
+**Explanations (2026-10-13, user: "i found myself not understanding some of the terms … explains in details, the purpose, why its important, what does it tell us … also bilingual"):**
+- Every finding, section header, key figure, the label legend and the three end lists now have an **ⓘ** button. Hover shows a one-line summary; click opens a popup with four parts: What it is / Why it matters / How to read this result / What to do. The popup closes with ×, Esc or a click outside, and is hidden in print.
+- The text lives in **`deeplook/glossary.js`** (70 entries, each in EN and JA), shared by all reports, so editing it updates every report without regenerating.
+- `deeplook.py` assigns a key to each finding (`GKEY`: per section, by regex on the English heading). All 4 regenerated reports were checked: every finding has a key and every key exists.
