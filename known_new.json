@@ -9,15 +9,15 @@
  "67729867": {
   "priceMin": 3748,
   "priceMax": 6098,
-  "units": 24,
+  "units": 23,
   "phase": "先着順",
-  "stock": 24
+  "stock": 23
  },
  "67730758": {
   "priceMin": 4578,
   "priceMax": 6158,
   "units": null,
-  "phase": "第5期3次",
+  "phase": "第5期4次",
   "stock": 2
  },
  "kawasaki:b:神奈川県川崎市川崎区塩浜1:7": {
@@ -55,19 +55,19 @@
   "phase": "第1期2次",
   "stock": 4
  },
- "67730383": {
-  "priceMin": 4498,
-  "priceMax": 5728,
-  "units": 9,
-  "phase": "先着順",
-  "stock": 9
- },
  "67734602": {
   "priceMin": null,
   "priceMax": null,
   "units": null,
   "phase": "第2期2次",
   "stock": null
+ },
+ "chibachuo:b:千葉市中央区祐光1:6": {
+  "priceMin": 4498,
+  "priceMax": 4498,
+  "units": 1,
+  "phase": null,
+  "stock": 1
  },
  "67729827": {
   "priceMin": 4100,
@@ -76,11 +76,18 @@
   "phase": "先着順",
   "stock": 30
  },
- "mihama:b:千葉県千葉市美浜区若葉3:38": {
-  "priceMin": 6530,
-  "priceMax": 10480,
+ "67729219": {
+  "priceMin": 4498,
+  "priceMax": 8998,
   "units": 14,
-  "phase": null,
+  "phase": "先着順",
+  "stock": 14
+ },
+ "67723770": {
+  "priceMin": 4890,
+  "priceMax": 5990,
+  "units": 14,
+  "phase": "先着順",
   "stock": 14
  },
  "67731663": {
@@ -97,6 +104,13 @@
   "phase": "第3期7次",
   "stock": 16
  },
+ "mihama:b:千葉県千葉市美浜区若葉3:38": {
+  "priceMin": 6530,
+  "priceMax": 10480,
+  "units": 13,
+  "phase": null,
+  "stock": 13
+ },
  "67732575": {
   "priceMin": 6140,
   "priceMax": 13100,
@@ -104,26 +118,26 @@
   "phase": "先着順",
   "stock": 19
  },
- "67729219": {
-  "priceMin": 4498,
-  "priceMax": 8998,
-  "units": 14,
-  "phase": "先着順",
-  "stock": 14
+ "67735724": {
+  "priceMin": 4698,
+  "priceMax": 6898,
+  "units": null,
+  "phase": "第1期6次",
+  "stock": 4
  },
- "67723770": {
-  "priceMin": 4890,
-  "priceMax": 5990,
-  "units": 13,
-  "phase": "先着順",
-  "stock": 13
+ "chibachuo:b:千葉市中央区問屋町 交通 JR内房線/本千葉 徒歩12:14": {
+  "priceMin": 3498,
+  "priceMax": 3498,
+  "units": 1,
+  "phase": null,
+  "stock": 1
  },
- "67733045": {
-  "priceMin": 4990,
-  "priceMax": 7180,
-  "units": 6,
-  "phase": "第1期",
-  "stock": 6
+ "67735100": {
+  "priceMin": null,
+  "priceMax": null,
+  "units": null,
+  "phase": "第1期1次",
+  "stock": null
  },
  "67731156": {
   "priceMin": null,
@@ -131,6 +145,13 @@
   "units": null,
   "phase": null,
   "stock": null
+ },
+ "67733045": {
+  "priceMin": 5280,
+  "priceMax": 7180,
+  "units": 5,
+  "phase": "第1期",
+  "stock": 5
  },
  "67730183": {
   "priceMin": 6148,
@@ -146,25 +167,11 @@
   "phase": null,
   "stock": 1
  },
- "67735724": {
-  "priceMin": 4698,
-  "priceMax": 6898,
-  "units": null,
-  "phase": "第1期6次",
-  "stock": 4
- },
  "67732475": {
   "priceMin": null,
   "priceMax": null,
   "units": null,
   "phase": "第3期2次",
-  "stock": null
- },
- "67736689": {
-  "priceMin": null,
-  "priceMax": null,
-  "units": null,
-  "phase": null,
   "stock": null
  },
  "67736149": {
@@ -173,13 +180,6 @@
   "units": null,
   "phase": "第2期",
   "stock": null
- },
- "67729238": {
-  "priceMin": 3498,
-  "priceMax": 5188,
-  "units": 3,
-  "phase": "第2期3次",
-  "stock": 3
  },
  "67734369": {
   "priceMin": null,
@@ -205,9 +205,9 @@
  "67725486": {
   "priceMin": 4998,
   "priceMax": 13998,
-  "units": 24,
+  "units": 23,
   "phase": "先着順",
-  "stock": 24
+  "stock": 23
  },
  "67725752": {
   "priceMin": 7400,
@@ -275,16 +275,9 @@
  "67732379": {
   "priceMin": 5858,
   "priceMax": 11980,
-  "units": 13,
+  "units": 12,
   "phase": "先着順",
-  "stock": 13
- },
- "67736146": {
-  "priceMin": null,
-  "priceMax": null,
-  "units": null,
-  "phase": "第1期3次",
-  "stock": null
+  "stock": 12
  },
  "67735723": {
   "priceMin": null,
@@ -293,19 +286,19 @@
   "phase": null,
   "stock": null
  },
+ "67736146": {
+  "priceMin": null,
+  "priceMax": null,
+  "units": null,
+  "phase": "第1期3次",
+  "stock": null
+ },
  "67737750": {
   "priceMin": null,
   "priceMax": null,
   "units": null,
   "phase": null,
   "stock": null
- },
- "67734543": {
-  "priceMin": 3998,
-  "priceMax": 6898,
-  "units": 9,
-  "phase": "第1期4次",
-  "stock": 9
  },
  "67735763": {
   "priceMin": null,
@@ -328,6 +321,20 @@
   "phase": null,
   "stock": 1
  },
+ "chibachuo:エクセレントシテイ蘇我ステーシヨンマークス": {
+  "priceMin": 3698,
+  "priceMax": 3698,
+  "units": 1,
+  "phase": null,
+  "stock": 1
+ },
+ "67733309": {
+  "priceMin": 7498,
+  "priceMax": 7498,
+  "units": null,
+  "phase": "第2期5次",
+  "stock": null
+ },
  "67730697": {
   "priceMin": 4499,
   "priceMax": 6750,
@@ -341,6 +348,13 @@
   "units": 1,
   "phase": null,
   "stock": 1
+ },
+ "67733751": {
+  "priceMin": 4578,
+  "priceMax": 7398,
+  "units": 10,
+  "phase": "先着順",
+  "stock": 10
  },
  "67733483": {
   "priceMin": 3580,
@@ -356,16 +370,9 @@
   "phase": "先着順",
   "stock": 12
  },
- "67733309": {
-  "priceMin": 7498,
-  "priceMax": 7498,
-  "units": null,
-  "phase": "第2期5次",
-  "stock": null
- },
  "chibachuo:b:千葉県千葉市中央区富士見2:23": {
-  "priceMin": 6880,
-  "priceMax": 6880,
+  "priceMin": 6780,
+  "priceMax": 6780,
   "units": 1,
   "phase": null,
   "stock": 1
@@ -391,12 +398,12 @@
   "phase": "第5期2次",
   "stock": 5
  },
- "67733751": {
-  "priceMin": 4578,
-  "priceMax": 7398,
-  "units": 10,
-  "phase": "先着順",
-  "stock": 10
+ "67734208": {
+  "priceMin": 4398,
+  "priceMax": 7098,
+  "units": null,
+  "phase": "第2期1次",
+  "stock": null
  },
  "adachi:b:東京都足立区綾瀬5:9": {
   "priceMin": 7480,
@@ -410,13 +417,6 @@
   "priceMax": null,
   "units": null,
   "phase": "第1期",
-  "stock": null
- },
- "67734208": {
-  "priceMin": 4398,
-  "priceMax": 7098,
-  "units": null,
-  "phase": "第2期1次",
   "stock": null
  },
  "67733320": {
