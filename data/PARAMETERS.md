@@ -182,7 +182,7 @@ Caveat: these are asking prices. In the 23 wards, 80–100 m² asking prices run
 | Field | Meaning | Source | Fetch method | Refresh |
 |---|---|---|---|---|
 | matrix[area][office] = [min, transfers, 1-month pass ¥] | home station → office hub, arrive by 08:45 Wed | Yahoo!乗換案内 | `commute_matrix.py` parses `__NEXT_DATA__`; validated first/last station; cached in `data/cache/commute_raw.json` | after a timetable revision (JR: every March) — bump `DATE` and delete the cache |
-| offices | 38 hubs (id, Yahoo name, EN/JA label, district) | hand list in `commute_matrix.py` | — | add hubs on request |
+| offices | 39 hubs (id, Yahoo name, EN/JA label, district; Jimbocho added 2026-10-14 on request) | hand list in `commute_matrix.py` | — | add hubs on request |
 
 ### live area counts (`area-stats.js`, track A, not scored)
 | Field | Meaning | Source | Fetch method | Refresh |

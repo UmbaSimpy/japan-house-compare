@@ -28,6 +28,7 @@ OFFICES = [
     ("nihombashi", "日本橋(東京都)", "Nihombashi", "日本橋", "Nihombashi"),
     ("kanda", "神田(東京都)", "Kanda", "神田", "Kanda"),
     ("akihabara", "秋葉原", "Akihabara", "秋葉原", "Kanda"),
+    ("jimbocho", "神保町", "Jimbocho", "神保町", "Kanda"),
     ("ginza", "銀座", "Ginza", "銀座", "Ginza"),
     ("yurakucho", "有楽町", "Yurakucho", "有楽町", "Ginza"),
     ("shimbashi", "新橋", "Shimbashi", "新橋", "Shimbashi"),
