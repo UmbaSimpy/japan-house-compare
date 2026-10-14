@@ -7,3 +7,8 @@ mansions_clean.json
 newms.json
 newms_clean.json
 data/cache/
+
+# Local secrets (API keys). Only the placeholder template is tracked.
+.env
+.env.*
+!.env.example

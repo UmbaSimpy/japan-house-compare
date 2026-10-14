@@ -283,7 +283,7 @@ Same model as the Apartments tab: scores are computed once in `inject.py`; the s
 | New this week | `daysListed` from `firstSeen`; an area's first crawl is `seeded` (no date) |
 
 ## Known gaps to fill on the next refresh
-- Deep look: MLIT 不動産情報ライブラリ API key (user to apply) → sale prices, zoning around the plot, planned roads, school districts, 大規模盛土, disaster history, 公示地価.
+- Deep look: MLIT 不動産情報ライブラリ API key **received 2026-10-14** (local `.env`, gitignored; read with `secrets_env.secret("REINFOLIB_API_KEY")`; Actions need repo secret `REINFOLIB_API_KEY`). Still to build → sale prices, zoning around the plot, planned roads, school districts, 大規模盛土, disaster history, 公示地価.
 - Crime: Ibaraki police statistics pages are offline (Tsukuba total only; Moriya, Tsukubamirai none). Saitama publishes no violent-crime figures per city.
 - 0–2 fees for 13 suburbs (imputed): Kashiwa, Inzai, Matsudo, Narashino, Shiroi, Yachiyo, Sakura, Kisarazu, Sodegaura, Ichihara, Kamagaya, Moriya, Toda, Koshigaya, Misato, Yashio.
 - Saitama cities' medical copay; つくば号 weekday timetable; 東名江田 bus timetable.
