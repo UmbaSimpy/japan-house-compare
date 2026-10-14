@@ -8,10 +8,14 @@ the neighbourhood (area study data) and contract terms — each compared with si
 the other study areas where that makes sense. Ends with the documents to request, questions for the
 agent and a visit checklist. Research + design: reports/Deep look - research and design.md.
 
-Sources (all public, no key): SUUMO detail pages (main / 物件概要 / 周辺環境); ハザードマップポータル raster
+Sources (public): SUUMO detail pages (main / 物件概要 / 周辺環境); ハザードマップポータル raster
 tiles + 国土地理院 地形分類 (via area_hazard.py); J-SHIS 確率論的地震動予測地図 Y2024 + 表層地盤 V4;
 Yahoo!乗換案内 (via commute_matrix.py); our own data: area-listings.js, data/condo_peers.json,
 map-data.js, data/area_listings_state.json, data/area_noise.json, data/commute_matrix.json.
+With REINFOLIB_API_KEY (env / .env, see secrets_env.py) also MLIT 不動産情報ライブラリ via reinfolib.py: recorded sale
+prices (XIT001), 公示地価/地価調査 history (XPT002), zoning / fire zone / district plan / planned roads / 立地適正化 (XKT002,
+014, 023, 030, 003), 大規模盛土 and designated slope / disaster zones (XKT020, 016, 021, 022), school zones (XKT004/005).
+Without the key those checks say "not available" and the rest of the report is unchanged.
 
 Run:  python deeplook.py <suumo url> [--office tokyo] [--rate 1.525] [--down 10] [--years 35] [--tax 0.25]      local
       python deeplook.py --ci                                              GitHub Action (env ISSUE_BODY / IN_URL)
@@ -34,6 +38,8 @@ from pathlib import Path
 
 import requests
 from bs4 import BeautifulSoup
+
+import reinfolib
 
 OUT = Path("deeplook")
 PEERS = Path("data/condo_peers.json")
@@ -64,6 +70,8 @@ SRC = {
     "label": ("MLIT 省エネ性能表示制度", "https://www.mlit.go.jp/shoene-label/index.html"),
     "konjaku": ("今昔マップ (old maps)", "https://ktgis.net/kjmapw/"),
     "reinfo": ("不動産情報ライブラリ (prices, zoning, school districts)", "https://www.reinfolib.mlit.go.jp/"),
+    "xit": ("不動産情報ライブラリ 不動産価格（取引価格・成約価格）", "https://www.reinfolib.mlit.go.jp/realEstatePrices/"),
+    "xpt": ("不動産情報ライブラリ 地価公示・地価調査", "https://www.reinfolib.mlit.go.jp/landPrices_/"),
 }
 SRC_JA = {"MLIT 修繕積立金ガイドライン (2024)": "国土交通省 修繕積立金ガイドライン（2024年改訂）", "MLIT 住宅ローン減税": "国土交通省 住宅ローン減税",
           "MLIT 省エネ性能表示制度": "国土交通省 省エネ性能表示制度", "今昔マップ (old maps)": "今昔マップ on the web",
@@ -439,6 +447,23 @@ class Report:
                 self.cur["src"].append(p)
 
 
+def reinfo_lookups(raw, L):
+    """All 不動産情報ライブラリ lookups for the listing point (each None without a key, {"error"} on failure)."""
+    lat, lon = raw.get("lat"), raw.get("lng")
+    if not (lat and lon):
+        return {}
+    return {"sales": reinfolib.sales(lat, lon, m2=L["m2"], year=L["year"], district=L["address"]),
+            "planning": reinfolib.planning(lat, lon), "ground": reinfolib.ground(lat, lon),
+            "schools": reinfolib.school_zones(lat, lon), "land": reinfolib.land_prices(lat, lon)}
+
+
+def reinfo_why(v):
+    if v is None:
+        return T("Needs the 不動産情報ライブラリ API key (REINFOLIB_API_KEY), or the listing has no map point.",
+                 "不動産情報ライブラリのAPIキー（REINFOLIB_API_KEY）が未設定か、物件の地図位置がありません。")
+    return T(f"The API did not answer: {v.get('error')}", f"APIから応答がありませんでした：{v.get('error')}")
+
+
 def analyse(raw, office_id="tokyo", rate=None):
     rate = LOAN["rate"] if rate is None else rate
     L = listing(raw)
@@ -462,6 +487,7 @@ def analyse(raw, office_id="tokyo", rate=None):
     ppm = price / m2 * 10000 if price and m2 else None                 # ¥/m²
     R = Report()
     facts = {}
+    RL = reinfo_lookups(raw, L)
 
     # ---------- A. price ----------
     R.section("A", T("Is the price fair?", "価格は妥当か"),
@@ -527,9 +553,31 @@ def analyse(raw, office_id="tokyo", rate=None):
               T(f"{acc0['walk']} min walk to {acc0['station']} — closer than {100 - p_}% of the area's large flats",
                 f"{acc0['station']}駅 徒歩{acc0['walk']}分 — エリア内の90㎡以上物件の{100 - p_}%より駅に近い"),
               cmp=T(f"Area median {med(walks):.0f} min (90 m²+ listings, walk access only)", f"エリア中央値 徒歩{med(walks):.0f}分（90㎡以上・徒歩物件のみ）"))
-    R.add("info", T("Actual sale prices nearby: not yet included", "周辺の成約価格：未対応"),
-          T("Needs the MLIT 不動産情報ライブラリ API key (transaction prices by district).", "国土交通省「不動産情報ライブラリ」のAPIキー取得後に、地区別の取引価格を追加します。"))
-    R.src(("SUUMO used condos (daily snapshot)", "https://suumo.jp/ms/chuko/"), "reinfo")
+    sa = RL.get("sales")
+    if not sa or sa.get("error"):
+        R.add("info", T("Recorded sale prices: not available", "成約価格・取引価格：取得できませんでした"), reinfo_why(sa))
+    else:
+        c, d = sa.get("comp"), sa.get("district")
+        span = f"{sa['periods'][0]}–{sa['periods'][1]}" if sa.get("periods") else ""
+        if c and ppm and c["n"] >= 5:
+            gap = round((ppm / c["med"] - 1) * 100)
+            lv = "good" if gap <= -5 else "watch" if gap >= 25 else "ok"
+            R.add(lv, T(f"Asking {ppm_en(ppm)} vs recorded sales: median {ppm_en(c['med'])} ({gap:+}%)",
+                        f"売出 {ppm_ja(ppm)} ／ 実際の成約・取引の中央値 {ppm_ja(c['med'])}（{gap:+}%）"),
+                  T(f"{c['n']} used-condo sales in the same city/ward ({span}) of {round(m2 * .7)}–{round(m2 * 1.3)} m², built within 10 years of this one. "
+                    f"{sa['nContract']} are REINS contract prices (成約価格), the rest MLIT buyer-survey prices (取引価格). Sales are a few % below asking; a big gap is a negotiation point.",
+                    f"同じ市区内の中古マンション{c['n']}件（{span}、専有{round(m2 * .7)}〜{round(m2 * 1.3)}㎡、築年±10年）。"
+                    f"うち{sa['nContract']}件がレインズの成約価格、残りは国土交通省アンケートによる取引価格。成約は売出より数%低いのが普通で、差が大きければ交渉材料になります。"),
+                  T(f"Middle half {ppm_en(c['q1'])}–{ppm_en(c['q3'])}" + (f" · same district ({d['n']} sales): median {ppm_en(d['med'])}" if d else ""),
+                    f"中間50% {ppm_ja(c['q1'])}〜{ppm_ja(c['q3'])}" + (f"・同じ町丁（{d['n']}件）中央値 {ppm_ja(d['med'])}" if d else "")),
+                  ask=T("What did comparable flats in this building or block actually sell for recently (成約事例)?", "このマンション・近隣の最近の成約事例を見せてください。") if gap >= 15 else None)
+            facts["saleMedian"] = round(c["med"])
+        elif sa.get("all"):
+            R.add("info", T(f"Recorded used-condo sales in the city/ward: median {ppm_en(sa['all']['med'])} ({sa['all']['n']} sales, {span})",
+                            f"市区内の中古マンション成約・取引：中央値 {ppm_ja(sa['all']['med'])}（{sa['all']['n']}件、{span}）"),
+                  T("Too few sales of a similar size and age to compare directly.", "広さ・築年が近い事例が少ないため、直接の比較はしていません。"))
+        R.add("info", T("About these figures", "データについて"), reinfolib.NOTICE)
+    R.src(("SUUMO used condos (daily snapshot)", "https://suumo.jp/ms/chuko/"), "xit")
 
     # ---------- B. costs ----------
     R.section("B", T("What it really costs", "実際にかかる費用"),
@@ -641,9 +689,44 @@ def analyse(raw, office_id="tokyo", rate=None):
               T("Check the zoning of the plot and the neighbouring blocks (city zoning map).", "敷地と周辺街区の用途地域を自治体の都市計画図で確認してください。"))
     if L["restrict"]:
         R.add("watch", T(f"Other restrictions: {L['restrict']}", f"その他制限事項：{L['restrict']}"))
-    R.add("info", T("Planned roads, district plans, filled-land and building-coverage checks: not yet automated", "都市計画道路・地区計画・盛土・建ぺい率等の確認：未対応"),
-          T("With the MLIT API key the report will add 都市計画道路, 地区計画 and 用途地域 of the surrounding blocks.",
-            "不動産情報ライブラリのAPIキー取得後に、都市計画道路・地区計画・周辺の用途地域を追加します。"))
+    pl = RL.get("planning")
+    if not pl or pl.get("error"):
+        R.add("info", T("City-planning checks: not available", "都市計画の確認：取得できませんでした"), reinfo_why(pl))
+    else:
+        z = pl.get("zoning")
+        if z:
+            R.add("info", T(f"City planning map at the point: {z['use']}, coverage {z['bcr']}, floor-area ratio {z['far']}",
+                            f"都市計画図（地点）：{z['use']}・建ぺい率{z['bcr']}・容積率{z['far']}"),
+                  T("The map point is approximate; check the plot boundary on the city's map.", "地図位置は概略のため、敷地の境界は自治体の都市計画図で確認してください。"))
+        if pl.get("zonesAround"):
+            com = any(re.search(r"商業|工業", x) for x in pl["zonesAround"])
+            R.add("watch" if com else "info", T("Other zoning within ~100 m: " + "、".join(pl["zonesAround"]), "半径約100m内の他の用途地域：" + "、".join(pl["zonesAround"])),
+                  T("Taller or non-residential buildings are allowed there — views, sun and noise can change.", "より高い建物や住宅以外の用途が建てられる地域です。眺望・日照・騒音が変わる可能性があります。") if com else "")
+        if pl.get("fire"):
+            R.add("info", T(f"Fire zone: {pl['fire']}", f"防火指定：{pl['fire']}"))
+        if pl.get("districtPlans"):
+            R.add("info", T("District plan: " + "、".join(pl["districtPlans"]), "地区計画：" + "、".join(pl["districtPlans"])),
+                  T("Extra local rules (height, use, walls, greenery) that protect the neighbourhood and also bind any rebuilding.",
+                    "高さ・用途・塀・緑化などの地区独自のルール。周辺環境を守る一方、建替え時にも適用されます。"),
+                  ask=T("Does the district plan affect a future rebuilding (height, floor area)?", "地区計画は将来の建替え（高さ・容積）に影響しますか？"))
+        rd = pl.get("roadDist")
+        if rd is not None:
+            R.add("risk" if rd <= 15 else "watch" if rd <= 60 else "info",
+                  T(f"Planned city road (都市計画道路) about {rd} m from the point", f"都市計画道路まで約{rd}m"),
+                  T("A planned road on or next to the plot can mean land acquisition, building limits or a new main road outside the window. The layer has no status — ask whether it is built, planned or on hold.",
+                    "敷地内や隣接地に計画道路があると、用地買収・建築制限や、窓の外が幹線道路になる可能性があります。このデータには事業状況がないため、整備済・事業中・未着手かを確認してください。"),
+                  ask=T("Is the site affected by the 都市計画道路 nearby (計画決定・事業決定の有無)?", "近くの都市計画道路は敷地にかかりますか？（計画決定・事業認可の状況）") if rd <= 60 else None)
+        else:
+            R.add("good", T("No planned city road within ~150 m", "半径約150m以内に都市計画道路なし"))
+        lo = pl.get("locOpt") or []
+        if lo:
+            inside = "居住誘導区域" in lo
+            R.add("good" if inside else "watch",
+                  T("Inside the city's 'residential guidance area' (居住誘導区域)" if inside else "Outside the city's residential guidance area",
+                    "居住誘導区域内" if inside else "居住誘導区域外（立地適正化計画区域内）"),
+                  T("The city plans to keep population and services here as it shrinks." if inside else
+                    "The city's long-term plan steers new housing elsewhere; services may thin out over decades.",
+                    "人口が減っても居住を維持する区域として市が計画しています。" if inside else "市の長期計画では居住を他の区域へ誘導する方針で、将来サービスが薄くなる可能性があります。"))
     R.src("reinfo")
 
     # ---------- D. earthquake & building ----------
@@ -749,10 +832,28 @@ def analyse(raw, office_id="tokyo", rate=None):
         R.add("info", T(f"Area context ({an})", f"エリアの状況（{aj}）"),
               cmp=T(f"{hz.get('waterAny', 0):.0f}% of residents live in some water zone · {hz.get('liqHigh', 0):.0f}% on high-liquefaction ground · {hz.get('landslide', 0):.1f}% in landslide zones",
                     f"住民の{hz.get('waterAny', 0):.0f}%が何らかの浸水想定区域内・{hz.get('liqHigh', 0):.0f}%が液状化しやすい地盤・{hz.get('landslide', 0):.1f}%が土砂災害警戒区域内"))
-    R.add("info", T("Old maps", "旧版地図"),
-          T("Check what the site was before (sea, paddy, river) on 今昔マップ; past disaster records and 大規模盛土 maps come with the MLIT API key.",
-            "今昔マップで以前の土地利用（海・水田・河川など）を確認してください。災害履歴と大規模盛土造成地はAPIキー取得後に追加します。"))
-    R.src("portal", "landform", "konjaku")
+    gr = RL.get("ground")
+    if not gr or gr.get("error"):
+        R.add("info", T("Large-fill and designated-zone checks: not available", "大規模盛土造成地等の確認：取得できませんでした"), reinfo_why(gr))
+    else:
+        if gr.get("fill"):
+            f0 = gr["fill"][0]
+            R.add("watch", T(f"Large fill (大規模盛土造成地, {f0['type'] or '–'}) about {f0['dist']} m away", f"大規模盛土造成地（{f0['type'] or '–'}）まで約{f0['dist']}m"),
+                  T("Valley-fill (谷埋め型) and side-fill (腹付け型) land can slide or settle in a big quake. The map is a screening list, not a verdict.",
+                    "谷埋め型・腹付け型の盛土は、大地震で滑動・沈下することがあります。マップは抽出結果で、危険の判定ではありません。"),
+                  ask=T("Is the building on the fill? What foundation (piles to bearing ground)?", "建物は盛土の上ですか？基礎は支持層までの杭ですか？"))
+        else:
+            R.add("good", T("No large-fill site (大規模盛土造成地) within ~100 m", "半径約100m以内に大規模盛土造成地なし"))
+        for k, en, ja in (("disasterZone", "Designated disaster zone (災害危険区域)", "災害危険区域"),
+                          ("landslideArea", "Landslide prevention area (地すべり防止区域)", "地すべり防止区域"),
+                          ("steepSlope", "Steep-slope hazard area (急傾斜地崩壊危険区域)", "急傾斜地崩壊危険区域")):
+            if gr.get(k) is not None:
+                R.add("risk" if gr[k] == 0 else "watch", T(f"{en} {'at the point' if gr[k] == 0 else f'about {gr[k]} m away'}",
+                                                         f"{ja}{'内' if gr[k] == 0 else f'まで約{gr[k]}m'}"))
+    R.add("info", T("Old maps and past disasters", "旧版地図・災害履歴"),
+          T("Check what the site was before (sea, paddy, river) on 今昔マップ, and the city's 災害履歴 / 浸水実績 maps — there is no national API for past disasters.",
+            "今昔マップで以前の土地利用（海・水田・河川など）を、自治体の災害履歴・浸水実績図で過去の被害を確認してください（災害履歴の全国APIはありません）。"))
+    R.src("portal", "landform", "konjaku", "reinfo")
 
     # ---------- F. commute ----------
     R.section("F", T(f"Commute to {oe}", f"{oj}への通勤"),
@@ -940,6 +1041,10 @@ def analyse(raw, office_id="tokyo", rate=None):
             SC = schools.lookup(lat, lon)
         except Exception as e:
             print("schools.lookup failed:", e)
+    sz = RL.get("schools") or {}
+    for kk in ("e", "j"):
+        if sz.get(kk) and (not SC.get(kk) or SC[kk].get("src") == "nearest"):
+            SC[kk] = {"name": sz[kk], "src": "reinfolib", "m": None}
     for kk, le, lj2 in (("e", "Assigned elementary", "指定の小学校"), ("j", "Assigned junior high", "指定の中学校")):
         sc = SC.get(kk)
         if not sc:
@@ -1014,7 +1119,26 @@ def analyse(raw, office_id="tokyo", rate=None):
     if L["year"] and L["year"] < 1982:
         R.add("watch", T("Old-standard building", "旧耐震の建物"),
               T("Fewer buyers can get a loan or tax credit → slower resale.", "住宅ローンや控除を使える買い手が限られ、売却に時間がかかりがちです。"))
-    R.add("info", T("Land-price trend at the nearest official point (公示地価): with the MLIT API key", "最寄りの地価公示地点の推移：APIキー取得後に追加"))
+    lp = RL.get("land")
+    if not lp or lp.get("error"):
+        R.add("info", T("Official land-price trend: not available", "地価公示・地価調査の推移：取得できませんでした"), reinfo_why(lp))
+    elif not lp.get("points"):
+        R.add("info", T("No residential land-price point within 1.5 km", "半径1.5km以内に住宅地の地価公示・調査地点なし"))
+    else:
+        for p in lp["points"]:
+            h = {y: v for y, v in p["history"].items() if v}
+            ys = sorted(h)
+            y5 = next((y for y in ys if y >= ys[-1] - 5), None) if ys else None
+            g5 = round((h[ys[-1]] / h[y5] - 1) * 100) if y5 and y5 != ys[-1] else None
+            yoy = p["yoy"] or 0
+            lv = "good" if g5 is not None and g5 >= 5 else "watch" if g5 is not None and g5 < 0 else "info"
+            R.add(lv, T(f"Land price {p['id']} ({p['dist']} m away): {fmt_yen(p['price'])}/m², {yoy:+.1f}% last year" + (f", {g5:+}% since {y5}" if g5 is not None else ""),
+                        f"地価 {p['id']}（約{p['dist']}m）：{yj(p['price'])}/㎡、前年比{yoy:+.1f}%" + (f"、{y5}年比{g5:+}%" if g5 is not None else "")),
+                  T(f"{'Public notice (公示)' if p['type'] == '公示' else 'Prefectural survey (調査)'} as of {p['asOf']} · {p['address']} · {p['zoning'] or ''} · {p['stationDist'] or ''} to {p['station'] or ''}",
+                    f"{'地価公示' if p['type'] == '公示' else '都道府県地価調査'}（{p['asOf']}）・{p['address']}・{p['zoning'] or ''}・{p['station'] or ''}駅 {p['stationDist'] or ''}"),
+                  " → ".join(f"{y}: {round(v / 1000)}k" for y, v in h.items()))
+        facts["landPriceYoY"] = lp["points"][0]["yoy"]
+    R.src("xpt")
 
     # ---------- M. contract ----------
     R.section("M", T("Contract terms", "契約条件"))

@@ -49,6 +49,7 @@ jobs:
           IN_RATE: ${{ inputs.rate }}
           TELEGRAM_TOKEN: ${{ secrets.TELEGRAM_TOKEN }}
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+          REINFOLIB_API_KEY: ${{ secrets.REINFOLIB_API_KEY }}   # optional: without it the 不動産情報ライブラリ checks say "not available"
         run: python deeplook.py --ci
 
       - name: Commit report

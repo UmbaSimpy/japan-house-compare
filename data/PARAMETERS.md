@@ -247,6 +247,12 @@ Pros/cons thresholds (`map.js`): burglary ≤0.5/10k pro, ≥1.5 con; violent �
 | loan example | 100% of price, 35 years, rate from the Apartments tab (default 1.0%) | |
 | buying costs | 仲介: (3% + ¥60k) × 1.1 + 3–5% other; 売主: 3–5% | |
 | registered area | 壁芯 × 0.94 | tax-credit ≥50 m² check |
+| recorded sales (A) | 不動産情報ライブラリ XIT001, same 市区 (GSI muniCd), this year + 2 before, 成約 (02) + 取引 (01), 中古マンション等, ±30% m², built ±10 y, ≥5 sales; gap ≤ −5% good, ≥ +25% watch, ≥ +15% ask | `reinfolib.sales` |
+| planning (C) | zoning polygon within 15 m of the point, other zones within 100 m (商業/工業 → watch), XKT014 fire zone, XKT023 district plan within 30 m, XKT030 planned road ≤15 m risk / ≤60 m watch / ≤150 m info, XKT003 居住誘導区域 in = good, out = watch | `reinfolib.planning` |
+| ground (E) | XKT020 大規模盛土 within 100 m → watch; XKT016 / 021 / 022 at the point → risk, within 100 m → watch | `reinfolib.ground` |
+| land price (L) | XPT002 nearest 2 住宅地 points within 1.5 km (tile z13), history by lot number, z15; 5-year growth ≥ +5% good, < 0 watch | `reinfolib.land_prices` |
+| school zone (K) | XKT004/005 polygon at the point when `schools.lookup` only found the nearest school | `reinfolib.school_zones` |
+| API cache | `data/cache/reinfolib/`, 30 days; key `REINFOLIB_API_KEY` (env / `.env`), absent → each check says "not available" | |
 
 ### Loan (`loan.js`, DATA_LOG item 16)
 | Parameter | Meaning | Value / source |
@@ -283,7 +289,7 @@ Same model as the Apartments tab: scores are computed once in `inject.py`; the s
 | New this week | `daysListed` from `firstSeen`; an area's first crawl is `seeded` (no date) |
 
 ## Known gaps to fill on the next refresh
-- Deep look: MLIT 不動産情報ライブラリ API key **received 2026-10-14** (local `.env`, gitignored; read with `secrets_env.secret("REINFOLIB_API_KEY")`; Actions need repo secret `REINFOLIB_API_KEY`). Still to build → sale prices, zoning around the plot, planned roads, school districts, 大規模盛土, disaster history, 公示地価.
+- Deep look (DATA_LOG 25): 不動産情報ライブラリ checks are built (`reinfolib.py`); Actions need repo secret `REINFOLIB_API_KEY` (user to set). No API for past disasters (災害履歴) — the report points to the city maps. 都市計画道路 layer has no status (planned / under way / built). Houses: no Deep look yet.
 - Crime: Ibaraki police statistics pages are offline (Tsukuba total only; Moriya, Tsukubamirai none). Saitama publishes no violent-crime figures per city.
 - 0–2 fees for 13 suburbs (imputed): Kashiwa, Inzai, Matsudo, Narashino, Shiroi, Yachiyo, Sakura, Kisarazu, Sodegaura, Ichihara, Kamagaya, Moriya, Toda, Koshigaya, Misato, Yashio.
 - Saitama cities' medical copay; つくば号 weekday timetable; 東名江田 bus timetable.

@@ -279,7 +279,7 @@
     "m": 2912
    }
   ],
-  "fetched": "2026-10-13"
+  "fetched": "2026-10-14"
  },
  "listing": {
   "price": 4880,
@@ -350,6 +350,7 @@
  "area": "chiba-mihama",
  "office": "tokyo",
  "facts": {
+  "saleMedian": 520000,
   "repairPerM2": 165,
   "monthlyLoan": 135015,
   "monthlyFees": 32980,
@@ -360,7 +361,8 @@
    4116400
   ],
   "quake6l": 73,
-  "commute": 50
+  "commute": 50,
+  "landPriceYoY": 7.3
  },
  "hazard": {
   "flood": {
@@ -415,7 +417,7 @@
     "ＪＲ京葉線快速・東京行"
    ],
    "ok": true,
-   "url": "https://transit.yahoo.co.jp/search/result?from=%E6%A4%9C%E8%A6%8B%E5%B7%9D%E6%B5%9C&to=%E6%9D%B1%E4%BA%AC&y=2026&m=10&d=14&hh=08&m1=4&m2=5&type=4&ticket=ic&expkind=1&ws=3&s=0&al=1&shin=0&ex=0&hb=1&lb=1&sr=1",
+   "url": "https://transit.yahoo.co.jp/search/result?from=%E6%A4%9C%E8%A6%8B%E5%B7%9D%E6%B5%9C&to=%E6%9D%B1%E4%BA%AC&y=2026&m=10&d=21&hh=08&m1=4&m2=5&type=4&ticket=ic&expkind=1&ws=3&s=0&al=1&shin=0&ex=0&hb=1&lb=1&sr=1",
    "station": "検見川浜",
    "line": "JR京葉線",
    "access": 8,
@@ -423,7 +425,7 @@
    "walk": 8,
    "bus": null,
    "door": 50,
-   "date": "2026-10-14"
+   "date": "2026-10-21"
   },
   {
    "min": 43,
@@ -437,7 +439,7 @@
     "ＪＲ総武線快速・品川行"
    ],
    "ok": true,
-   "url": "https://transit.yahoo.co.jp/search/result?from=%E6%96%B0%E6%A4%9C%E8%A6%8B%E5%B7%9D&to=%E6%9D%B1%E4%BA%AC&y=2026&m=10&d=14&hh=08&m1=4&m2=5&type=4&ticket=ic&expkind=1&ws=3&s=0&al=1&shin=0&ex=0&hb=1&lb=1&sr=1",
+   "url": "https://transit.yahoo.co.jp/search/result?from=%E6%96%B0%E6%A4%9C%E8%A6%8B%E5%B7%9D&to=%E6%9D%B1%E4%BA%AC&y=2026&m=10&d=21&hh=08&m1=4&m2=5&type=4&ticket=ic&expkind=1&ws=3&s=0&al=1&shin=0&ex=0&hb=1&lb=1&sr=1",
    "station": "新検見川",
    "line": "JR総武線",
    "access": 21,
@@ -445,7 +447,7 @@
    "walk": 6,
    "bus": 12,
    "door": 69,
-   "date": "2026-10-14"
+   "date": "2026-10-21"
   },
   {
    "min": 34,
@@ -458,7 +460,7 @@
     "ＪＲ京葉線快速・東京行"
    ],
    "ok": true,
-   "url": "https://transit.yahoo.co.jp/search/result?from=%E6%B5%B7%E6%B5%9C%E5%B9%95%E5%BC%B5&to=%E6%9D%B1%E4%BA%AC&y=2026&m=10&d=14&hh=08&m1=4&m2=5&type=4&ticket=ic&expkind=1&ws=3&s=0&al=1&shin=0&ex=0&hb=1&lb=1&sr=1",
+   "url": "https://transit.yahoo.co.jp/search/result?from=%E6%B5%B7%E6%B5%9C%E5%B9%95%E5%BC%B5&to=%E6%9D%B1%E4%BA%AC&y=2026&m=10&d=21&hh=08&m1=4&m2=5&type=4&ticket=ic&expkind=1&ws=3&s=0&al=1&shin=0&ex=0&hb=1&lb=1&sr=1",
    "station": "海浜幕張",
    "line": "JR京葉線",
    "access": 28,
@@ -466,7 +468,7 @@
    "walk": 28,
    "bus": null,
    "door": 67,
-   "date": "2026-10-14"
+   "date": "2026-10-21"
   }
  ],
  "sections": [
@@ -541,18 +543,32 @@
      "g": "walk"
     },
     {
-     "level": "info",
+     "level": "ok",
      "head": {
-      "en": "Actual sale prices nearby: not yet included",
-      "ja": "周辺の成約価格：未対応"
+      "en": "Asking ¥533k/m² vs recorded sales: median ¥520k/m² (+2%)",
+      "ja": "売出 53.3万円/㎡ ／ 実際の成約・取引の中央値 52.0万円/㎡（+2%）"
      },
      "detail": {
-      "en": "Needs the MLIT 不動産情報ライブラリ API key (transaction prices by district).",
-      "ja": "国土交通省「不動産情報ライブラリ」のAPIキー取得後に、地区別の取引価格を追加します。"
+      "en": "575 used-condo sales in the same city/ward (2024年第1四半期–2026年第1四半期) of 64–119 m², built within 10 years of this one. 466 are REINS contract prices (成約価格), the rest MLIT buyer-survey prices (取引価格). Sales are a few % below asking; a big gap is a negotiation point.",
+      "ja": "同じ市区内の中古マンション575件（2024年第1四半期–2026年第1四半期、専有64〜119㎡、築年±10年）。うち466件がレインズの成約価格、残りは国土交通省アンケートによる取引価格。成約は売出より数%低いのが普通で、差が大きければ交渉材料になります。"
      },
+     "cmp": {
+      "en": "Middle half ¥443k/m²–¥632k/m² · same district (36 sales): median ¥539k/m²",
+      "ja": "中間50% 44.3万円/㎡〜63.2万円/㎡・同じ町丁（36件）中央値 53.9万円/㎡"
+     },
+     "ask": null,
+     "g": null
+    },
+    {
+     "level": "info",
+     "head": {
+      "en": "About these figures",
+      "ja": "データについて"
+     },
+     "detail": "このサービスは、国土交通省不動産情報ライブラリのAPI機能を使用していますが、提供情報の最新性、正確性、完全性等が保証されたものではありません。",
      "cmp": "",
      "ask": null,
-     "g": "sold"
+     "g": null
     }
    ],
    "src": [
@@ -561,8 +577,8 @@
      "https://suumo.jp/ms/chuko/"
     ],
     [
-     "不動産情報ライブラリ (prices, zoning, school districts)",
-     "https://www.reinfolib.mlit.go.jp/"
+     "不動産情報ライブラリ 不動産価格（取引価格・成約価格）",
+     "https://www.reinfolib.mlit.go.jp/realEstatePrices/"
     ]
    ]
   },
@@ -588,8 +604,8 @@
       "ja": "国土交通省「マンションの修繕積立金に関するガイドライン」の目安（20階未満・延床5,000〜10,000㎡、延床面積は約5,700㎡と推定）：平均252円/㎡、事例の3分の2が170〜320円/㎡。（延床面積は概算で5,000㎡の境界付近のため、5,000㎡未満の区分では平均335円/㎡。）ガイドライン平均なら本住戸は月約23,073円（現在より+7,973円）。目安を下回る場合、将来の値上げや一時金徴収の可能性が高くなります。"
      },
      "cmp": {
-      "en": "Peers built ±5 years (428 watchlist condos): median ¥196/m², middle half ¥140–240 → this flat is at the 38th percentile.",
-      "ja": "築年±5年の比較物件（428件）：中央値196円/㎡、中位50%は140〜240円/㎡ → 本物件は下から38%の位置。"
+      "en": "Peers built ±5 years (433 watchlist condos): median ¥196/m², middle half ¥140–240 → this flat is at the 38th percentile.",
+      "ja": "築年±5年の比較物件（433件）：中央値196円/㎡、中位50%は140〜240円/㎡ → 本物件は下から38%の位置。"
      },
      "ask": {
       "en": "Please share the 長期修繕計画 and the current repair-fund balance. Are increases or a 一時金 planned?",
@@ -710,16 +726,52 @@
     {
      "level": "info",
      "head": {
-      "en": "Planned roads, district plans, filled-land and building-coverage checks: not yet automated",
-      "ja": "都市計画道路・地区計画・盛土・建ぺい率等の確認：未対応"
+      "en": "City planning map at the point: 第１種中高層住居専用地域, coverage 60%, floor-area ratio 200%",
+      "ja": "都市計画図（地点）：第１種中高層住居専用地域・建ぺい率60%・容積率200%"
      },
      "detail": {
-      "en": "With the MLIT API key the report will add 都市計画道路, 地区計画 and 用途地域 of the surrounding blocks.",
-      "ja": "不動産情報ライブラリのAPIキー取得後に、都市計画道路・地区計画・周辺の用途地域を追加します。"
+      "en": "The map point is approximate; check the plot boundary on the city's map.",
+      "ja": "地図位置は概略のため、敷地の境界は自治体の都市計画図で確認してください。"
      },
      "cmp": "",
      "ask": null,
-     "g": "plan"
+     "g": null
+    },
+    {
+     "level": "info",
+     "head": {
+      "en": "Other zoning within ~100 m: 第１種低層住居専用地域",
+      "ja": "半径約100m内の他の用途地域：第１種低層住居専用地域"
+     },
+     "detail": "",
+     "cmp": "",
+     "ask": null,
+     "g": null
+    },
+    {
+     "level": "good",
+     "head": {
+      "en": "No planned city road within ~150 m",
+      "ja": "半径約150m以内に都市計画道路なし"
+     },
+     "detail": "",
+     "cmp": "",
+     "ask": null,
+     "g": null
+    },
+    {
+     "level": "good",
+     "head": {
+      "en": "Inside the city's 'residential guidance area' (居住誘導区域)",
+      "ja": "居住誘導区域内"
+     },
+     "detail": {
+      "en": "The city plans to keep population and services here as it shrinks.",
+      "ja": "人口が減っても居住を維持する区域として市が計画しています。"
+     },
+     "cmp": "",
+     "ask": null,
+     "g": null
     }
    ],
    "src": [
@@ -906,14 +958,25 @@
      "g": "areahz"
     },
     {
+     "level": "good",
+     "head": {
+      "en": "No large-fill site (大規模盛土造成地) within ~100 m",
+      "ja": "半径約100m以内に大規模盛土造成地なし"
+     },
+     "detail": "",
+     "cmp": "",
+     "ask": null,
+     "g": null
+    },
+    {
      "level": "info",
      "head": {
-      "en": "Old maps",
-      "ja": "旧版地図"
+      "en": "Old maps and past disasters",
+      "ja": "旧版地図・災害履歴"
      },
      "detail": {
-      "en": "Check what the site was before (sea, paddy, river) on 今昔マップ; past disaster records and 大規模盛土 maps come with the MLIT API key.",
-      "ja": "今昔マップで以前の土地利用（海・水田・河川など）を確認してください。災害履歴と大規模盛土造成地はAPIキー取得後に追加します。"
+      "en": "Check what the site was before (sea, paddy, river) on 今昔マップ, and the city's 災害履歴 / 浸水実績 maps — there is no national API for past disasters.",
+      "ja": "今昔マップで以前の土地利用（海・水田・河川など）を、自治体の災害履歴・浸水実績図で過去の被害を確認してください（災害履歴の全国APIはありません）。"
      },
      "cmp": "",
      "ask": null,
@@ -932,6 +995,10 @@
     [
      "今昔マップ (old maps)",
      "https://ktgis.net/kjmapw/"
+    ],
+    [
+     "不動産情報ライブラリ (prices, zoning, school districts)",
+     "https://www.reinfolib.mlit.go.jp/"
     ]
    ]
   },
@@ -1327,8 +1394,8 @@
       "ja": ""
      },
      "cmp": {
-      "en": "Area watchlist listings with on-site parking: median ¥7,350/month (228 listings)",
-      "ja": "エリア内の敷地内駐車場の月額：中央値7,350円（228件）"
+      "en": "Area watchlist listings with on-site parking: median ¥7,100/month (228 listings)",
+      "ja": "エリア内の敷地内駐車場の月額：中央値7,100円（228件）"
      },
      "ask": null,
      "g": "parking"
@@ -1439,21 +1506,63 @@
      "g": "near"
     },
     {
+     "level": "info",
+     "head": {
+      "en": "Assigned elementary: 磯辺小学校 — 668 m",
+      "ja": "指定の小学校：磯辺小学校 — 668 m"
+     },
+     "detail": {
+      "en": "From 国土数値情報 school zones (A27/A32, 2023); boundaries can change.",
+      "ja": "国土数値情報 小学校区・中学校区（A27/A32、2023年）より。区域は変更されることがあります。"
+     },
+     "cmp": "",
+     "ask": null,
+     "g": "school"
+    },
+    {
+     "level": "info",
+     "head": {
+      "en": "Assigned junior high: 磯辺中学校 — 450 m",
+      "ja": "指定の中学校：磯辺中学校 — 450 m"
+     },
+     "detail": {
+      "en": "From 国土数値情報 school zones (A27/A32, 2023); boundaries can change.",
+      "ja": "国土数値情報 小学校区・中学校区（A27/A32、2023年）より。区域は変更されることがあります。"
+     },
+     "cmp": "",
+     "ask": null,
+     "g": "school"
+    },
+    {
      "level": "ask",
      "head": {
       "en": "Assigned school district",
       "ja": "通学区域（学区）"
      },
      "detail": {
-      "en": "The school you are assigned to (学区) is not always the nearest one.",
-      "ja": "指定される学校は、最寄りの学校とは限りません。"
+      "en": "Information only, not scored. Japan publishes national test results by city or prefecture, never by school.",
+      "ja": "参考情報（スコアには含めません）。全国学力テストの結果は市区町村・都道府県単位で公表され、学校別の順位はありません。"
      },
      "cmp": "",
      "ask": {
-      "en": "Which elementary and junior-high school is this address assigned to (通学区域)?",
-      "ja": "この住所の通学区域の小学校・中学校はどこですか？"
+      "en": "Confirm the assigned elementary and junior-high school (通学区域) with the city's 学務課 for this exact address.",
+      "ja": "この住所の指定校（小学校・中学校）を市区町村の学務課で確認してください。"
      },
      "g": "school"
+    },
+    {
+     "level": "info",
+     "head": {
+      "en": "National test 2025 (city): grade 6 +0.0, grade 9 +0.7 points vs national",
+      "ja": "全国学力・学習状況調査 2025（市区町村）：小6 全国比+0.0、中3 全国比+0.7ポイント"
+     },
+     "detail": {
+      "en": "Mean gap in correct-answer rate over the subjects (Japanese, maths; science for grade 6).",
+      "ja": "各教科の平均正答率と全国平均との差の平均（国語・算数/数学、小6は理科も）。"
+     },
+     "cmp": "",
+     "ask": null,
+     "g": "schtest"
     },
     {
      "level": "good",
@@ -1559,18 +1668,40 @@
      "g": "projects"
     },
     {
-     "level": "info",
+     "level": "good",
      "head": {
-      "en": "Land-price trend at the nearest official point (公示地価): with the MLIT API key",
-      "ja": "最寄りの地価公示地点の推移：APIキー取得後に追加"
+      "en": "Land price 美浜-5 (83 m away): ¥220,000/m², +7.3% last year, +26% since 2021",
+      "ja": "地価 美浜-5（約83m）：220,000円/㎡、前年比+7.3%、2021年比+26%"
      },
-     "detail": "",
-     "cmp": "",
+     "detail": {
+      "en": "Prefectural survey (調査) as of 令和8年7月1日 · 千葉県千葉市美浜区磯辺７丁目５８番１３６ · 第一種低層住居専用地域 · 800m to 検見川浜",
+      "ja": "都道府県地価調査（令和8年7月1日）・千葉県千葉市美浜区磯辺７丁目５８番１３６・第一種低層住居専用地域・検見川浜駅 800m"
+     },
+     "cmp": "2021: 175k → 2022: 179k → 2023: 183k → 2024: 193k → 2025: 205k → 2026: 220k",
      "ask": null,
-     "g": "landprice"
+     "g": null
+    },
+    {
+     "level": "good",
+     "head": {
+      "en": "Land price 千葉美浜-4 (694 m away): ¥207,000/m², +6.2% last year, +21% since 2021",
+      "ja": "地価 千葉美浜-4（約694m）：207,000円/㎡、前年比+6.2%、2021年比+21%"
+     },
+     "detail": {
+      "en": "Public notice (公示) as of 令和8年1月1日 · 千葉県千葉市美浜区真砂４丁目１４番２ · 第一種低層住居専用地域 · 750m to 検見川浜",
+      "ja": "地価公示（令和8年1月1日）・千葉県千葉市美浜区真砂４丁目１４番２・第一種低層住居専用地域・検見川浜駅 750m"
+     },
+     "cmp": "2021: 171k → 2022: 174k → 2023: 178k → 2024: 185k → 2025: 195k → 2026: 207k",
+     "ask": null,
+     "g": null
     }
    ],
-   "src": []
+   "src": [
+    [
+     "不動産情報ライブラリ 地価公示・地価調査",
+     "https://www.reinfolib.mlit.go.jp/landPrices_/"
+    ]
+   ]
   },
   {
    "key": "M",

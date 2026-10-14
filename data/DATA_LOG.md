@@ -1038,3 +1038,19 @@ Houses and new condos are not covered yet.
 **Result (2026-10-13):** 863 houses — Funabashi 184, Matsudo 127, Chiba New Town 102, Ichikawa 92, Midori 87, Chuo 75, Adachi 75, Narashino 38, Kawasaki 26, Urayasu 23, Arakawa 19, Mihama 15. vs-similar spread: p10 −30%, p90 +45%. Page size 3.3 → 4.9 MB.
 
 **Not yet:** new houses (新築一戸建て) in the tab; Deep look for houses. The Trends "houses tracked" line jumps from ~15 to ~860 on 2026-10-14.
+
+## 25. Deep look: 不動産情報ライブラリ checks (2026-10-14, user: "Do the feartures that needed this key")
+
+**Key handling:** `REINFOLIB_API_KEY` in the gitignored `.env` locally (`secrets_env.py`), repo secret for the `deep-look.yml` Action. Without a key every new check shows "not available" and the rest of the report is unchanged. Responses are cached 30 days in `data/cache/reinfolib/` (gitignored). The MLIT notice (提供情報の最新性、正確性、完全性等が保証されたものではありません) is shown with the prices, as the API terms require.
+
+**`reinfolib.py`** — small client: tile maths (z13–15), point-in-polygon and point-to-line distance in metres, GSI reverse geocoder for the 市区 code. Tile polygons are clipped at tile edges, so all pieces are kept (the first version deduped by id and missed the zone under the point).
+
+**What Deep look adds (deeplook.py):**
+- **A — recorded sale prices (XIT001):** used condos sold in the same city/ward this year and the two before, REINS 成約価格 + MLIT 取引価格, ±30% floor area, built ±10 years. Asking ¥/m² vs their median, middle half, same-町丁 median. Test (ヴィークコート検見川浜, Mihama): asking ¥533k/m² vs 575 sales median ¥520k (+2%).
+- **C — city planning:** zoning, coverage and floor-area ratio at the point (XKT002); other zones within 100 m; fire zone (XKT014); district plan (XKT023); distance to a 都市計画道路 line (XKT030, no status in the data, so it becomes a question); inside/outside 居住誘導区域 (XKT003).
+- **E — ground:** 大規模盛土造成地 within 100 m (XKT020), 災害危険区域 / 地すべり防止区域 / 急傾斜地崩壊危険区域 (XKT016/021/022). Past disasters: no national API → points to the city's 災害履歴 / 浸水実績 maps.
+- **K — school zone:** XKT004/005 polygon when our own lookup only found the nearest school (same 国土数値情報 source, so Funabashi etc. stay "nearest").
+- **L — land price:** the two nearest 住宅地 公示/調査 points within 1.5 km with 10 years of history (by lot number), last-year and 5-year change. Test: 美浜-5 (83 m) ¥220,000/m², +7.3% last year, +26% since 2021.
+
+**Probed but not used:** XPT001 (empty); XIT001 for houses (宅地(土地と建物)) — for a future house Deep look.
+
