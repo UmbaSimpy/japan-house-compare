@@ -1,6 +1,27 @@
 {
  "items": [
   {
+   "id": "21797158",
+   "name": "サングランデ印西牧の原ドアシティ",
+   "area": "Inzai",
+   "areaJa": "印西市",
+   "areaId": "inzai",
+   "price": 4080,
+   "m2": 120.02,
+   "year": 2013,
+   "date": "2026-10-14",
+   "office": "tokyo",
+   "url": "https://suumo.jp/ms/chuko/chiba/sc_inzai/nc_21797158/",
+   "counts": {
+    "risk": 2,
+    "watch": 6,
+    "ask": 10,
+    "good": 17
+   },
+   "commute": 72,
+   "ts": "2026-10-14T13:00:52Z"
+  },
+  {
    "id": "21658849",
    "name": "ヴィークコート検見川浜",
    "area": "Chiba Mihama",
@@ -20,27 +41,6 @@
    },
    "commute": 50,
    "ts": "2026-10-14T12:24:08Z"
-  },
-  {
-   "id": "21797158",
-   "name": "サングランデ印西牧の原ドアシティ",
-   "area": "Inzai",
-   "areaJa": "印西市",
-   "areaId": "inzai",
-   "price": 4200,
-   "m2": 120.02,
-   "year": 2013,
-   "date": "2026-10-13",
-   "office": "tokyo",
-   "url": "https://suumo.jp/ms/chuko/chiba/sc_inzai/nc_21797158/",
-   "counts": {
-    "risk": 2,
-    "watch": 6,
-    "ask": 10,
-    "good": 12
-   },
-   "commute": 72,
-   "ts": "2026-10-13T06:32:33Z"
   },
   {
    "id": "21709728",
