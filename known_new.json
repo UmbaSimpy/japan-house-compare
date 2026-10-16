@@ -174,13 +174,6 @@
   "phase": "第2期3次",
   "stock": null
  },
- "67732475": {
-  "priceMin": null,
-  "priceMax": null,
-  "units": null,
-  "phase": "第3期2次",
-  "stock": null
- },
  "67736149": {
   "priceMin": 3998,
   "priceMax": 6398,
@@ -260,7 +253,7 @@
  },
  "67733954": {
   "priceMin": 8548,
-  "priceMax": 11548,
+  "priceMax": 9898,
   "units": null,
   "phase": "第1期5次",
   "stock": null
@@ -298,6 +291,13 @@
   "priceMax": null,
   "units": null,
   "phase": "第1期3次",
+  "stock": null
+ },
+ "67732475": {
+  "priceMin": 13990,
+  "priceMax": 14790,
+  "units": null,
+  "phase": "第3期3次",
   "stock": null
  },
  "67737750": {
@@ -359,9 +359,9 @@
  "67733751": {
   "priceMin": 4578,
   "priceMax": 7398,
-  "units": 10,
+  "units": 9,
   "phase": "先着順",
-  "stock": 10
+  "stock": 9
  },
  "67733512": {
   "priceMin": 5988,
@@ -392,11 +392,11 @@
   "stock": 1
  },
  "67730678": {
-  "priceMin": 7428,
+  "priceMin": 6818,
   "priceMax": 9198,
-  "units": 5,
+  "units": 7,
   "phase": "第5期2次",
-  "stock": 5
+  "stock": 7
  },
  "67734208": {
   "priceMin": 4398,

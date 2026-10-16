@@ -797,5 +797,73 @@
         "medianPpm": 69.4
       }
     }
+  },
+  {
+    "date": "2026-10-16",
+    "count": 1285,
+    "avgPrice": 4457,
+    "medianPpm": 43.4,
+    "areas": {
+      "mihama": {
+        "count": 341,
+        "avgPrice": 4350,
+        "medianPpm": 50.2
+      },
+      "chibant": {
+        "count": 155,
+        "avgPrice": 2413,
+        "medianPpm": 24.9
+      },
+      "midori": {
+        "count": 61,
+        "avgPrice": 2270,
+        "medianPpm": 29.2
+      },
+      "narashino": {
+        "count": 200,
+        "avgPrice": 3522,
+        "medianPpm": 39.2
+      },
+      "urayasu": {
+        "count": 67,
+        "avgPrice": 7856,
+        "medianPpm": 75.3
+      },
+      "funabashi": {
+        "count": 129,
+        "avgPrice": 4127,
+        "medianPpm": 38.6
+      },
+      "ichikawa": {
+        "count": 57,
+        "avgPrice": 6059,
+        "medianPpm": 54.3
+      },
+      "arakawa": {
+        "count": 34,
+        "avgPrice": 8832,
+        "medianPpm": 89.7
+      },
+      "matsudo": {
+        "count": 62,
+        "avgPrice": 3185,
+        "medianPpm": 34.0
+      },
+      "chibachuo": {
+        "count": 53,
+        "avgPrice": 4074,
+        "medianPpm": 48.0
+      },
+      "adachi": {
+        "count": 88,
+        "avgPrice": 7703,
+        "medianPpm": 78.2
+      },
+      "kawasaki": {
+        "count": 38,
+        "avgPrice": 6088,
+        "medianPpm": 65.4
+      }
+    }
   }
 ]
