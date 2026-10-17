@@ -48,6 +48,13 @@
   "phase": "第2期2次",
   "stock": null
  },
+ "67729219": {
+  "priceMin": 4498,
+  "priceMax": 8998,
+  "units": 14,
+  "phase": "先着順",
+  "stock": 14
+ },
  "67732364": {
   "priceMin": null,
   "priceMax": null,
@@ -62,6 +69,13 @@
   "phase": "第2期2次",
   "stock": null
  },
+ "67735724": {
+  "priceMin": 4698,
+  "priceMax": 6898,
+  "units": null,
+  "phase": "第1期6次",
+  "stock": 4
+ },
  "chibachuo:b:千葉市中央区祐光1:6": {
   "priceMin": 4498,
   "priceMax": 4498,
@@ -75,13 +89,6 @@
   "units": 30,
   "phase": "先着順",
   "stock": 30
- },
- "67729219": {
-  "priceMin": 4498,
-  "priceMax": 8998,
-  "units": 14,
-  "phase": "先着順",
-  "stock": 14
  },
  "mihama:b:千葉県千葉市美浜区若葉3:38": {
   "priceMin": 6530,
@@ -104,26 +111,12 @@
   "phase": "第2期",
   "stock": 10
  },
- "67731943": {
-  "priceMin": 5898,
-  "priceMax": 7298,
-  "units": 16,
-  "phase": "第3期7次",
-  "stock": 16
- },
  "67732575": {
-  "priceMin": 6140,
-  "priceMax": 13100,
-  "units": 19,
+  "priceMin": 7340,
+  "priceMax": 13000,
+  "units": 6,
   "phase": "先着順",
-  "stock": 19
- },
- "67735724": {
-  "priceMin": 4698,
-  "priceMax": 6898,
-  "units": null,
-  "phase": "第1期6次",
-  "stock": 4
+  "stock": 6
  },
  "chibachuo:b:千葉市中央区問屋町 交通 JR内房線/本千葉 徒歩12:14": {
   "priceMin": 3498,
@@ -138,6 +131,13 @@
   "units": null,
   "phase": "第1期1次",
   "stock": null
+ },
+ "adachi:b:東京都足立区梅島2:8": {
+  "priceMin": 6180,
+  "priceMax": 6180,
+  "units": 1,
+  "phase": null,
+  "stock": 1
  },
  "67731156": {
   "priceMin": null,
@@ -160,18 +160,25 @@
   "phase": "第2期2次",
   "stock": null
  },
- "adachi:b:東京都足立区梅島2:8": {
-  "priceMin": 6180,
-  "priceMax": 6180,
-  "units": 1,
-  "phase": null,
-  "stock": 1
+ "67731943": {
+  "priceMin": 5898,
+  "priceMax": 7298,
+  "units": null,
+  "phase": "第3期7次",
+  "stock": null
  },
  "67734870": {
   "priceMin": null,
   "priceMax": null,
   "units": null,
   "phase": "第2期3次",
+  "stock": null
+ },
+ "67734877": {
+  "priceMin": 6270,
+  "priceMax": 9290,
+  "units": null,
+  "phase": "第1期2次",
   "stock": null
  },
  "67736149": {
@@ -251,6 +258,13 @@
   "phase": null,
   "stock": null
  },
+ "67733309": {
+  "priceMin": 7498,
+  "priceMax": 7498,
+  "units": null,
+  "phase": "第2期5次",
+  "stock": null
+ },
  "67733954": {
   "priceMin": 8548,
   "priceMax": 9898,
@@ -265,12 +279,12 @@
   "phase": "第3期1次",
   "stock": null
  },
- "67734877": {
-  "priceMin": null,
-  "priceMax": null,
-  "units": null,
-  "phase": "第1期",
-  "stock": null
+ "67733751": {
+  "priceMin": 4578,
+  "priceMax": 7398,
+  "units": 9,
+  "phase": "先着順",
+  "stock": 9
  },
  "67732379": {
   "priceMin": 5858,
@@ -299,6 +313,13 @@
   "units": null,
   "phase": "第3期3次",
   "stock": null
+ },
+ "arakawa:b:東京都荒川区西日暮里1:13": {
+  "priceMin": 12500,
+  "priceMax": 12500,
+  "units": 1,
+  "phase": null,
+  "stock": 1
  },
  "67737750": {
   "priceMin": null,
@@ -335,20 +356,6 @@
   "phase": null,
   "stock": 1
  },
- "67733309": {
-  "priceMin": 7498,
-  "priceMax": 7498,
-  "units": null,
-  "phase": "第2期5次",
-  "stock": null
- },
- "67730697": {
-  "priceMin": 4499,
-  "priceMax": 6750,
-  "units": 6,
-  "phase": "先着順",
-  "stock": 6
- },
  "adachi:b:東京都足立区梅田2:8": {
   "priceMin": 6060,
   "priceMax": 6060,
@@ -356,12 +363,12 @@
   "phase": null,
   "stock": 1
  },
- "67733751": {
-  "priceMin": 4578,
-  "priceMax": 7398,
-  "units": 9,
+ "67730697": {
+  "priceMin": 4499,
+  "priceMax": 6750,
+  "units": 6,
   "phase": "先着順",
-  "stock": 9
+  "stock": 6
  },
  "67733512": {
   "priceMin": 5988,
@@ -376,6 +383,13 @@
   "units": 1,
   "phase": null,
   "stock": 1
+ },
+ "67734208": {
+  "priceMin": 4398,
+  "priceMax": 7098,
+  "units": null,
+  "phase": "第2期1次",
+  "stock": null
  },
  "67733316": {
   "priceMin": null,
@@ -397,13 +411,6 @@
   "units": 7,
   "phase": "第5期2次",
   "stock": 7
- },
- "67734208": {
-  "priceMin": 4398,
-  "priceMax": 7098,
-  "units": null,
-  "phase": "第2期1次",
-  "stock": null
  },
  "adachi:b:東京都足立区綾瀬5:9": {
   "priceMin": 7480,
