@@ -34,13 +34,6 @@
   "phase": "先着順",
   "stock": 37
  },
- "67728905": {
-  "priceMin": 3990,
-  "priceMax": 19620,
-  "units": 7,
-  "phase": "先着順",
-  "stock": 7
- },
  "67731552": {
   "priceMin": null,
   "priceMax": null,
@@ -62,6 +55,13 @@
   "phase": null,
   "stock": 1
  },
+ "67728905": {
+  "priceMin": 3990,
+  "priceMax": 19620,
+  "units": 7,
+  "phase": "先着順",
+  "stock": 7
+ },
  "67734602": {
   "priceMin": 4698,
   "priceMax": 9998,
@@ -75,6 +75,13 @@
   "units": 1,
   "phase": null,
   "stock": 1
+ },
+ "67729827": {
+  "priceMin": 4100,
+  "priceMax": 6290,
+  "units": 30,
+  "phase": "先着順",
+  "stock": 30
  },
  "67729219": {
   "priceMin": 4498,
@@ -110,13 +117,6 @@
   "units": 6,
   "phase": "先着順",
   "stock": 6
- },
- "67729827": {
-  "priceMin": 4100,
-  "priceMax": 6290,
-  "units": 30,
-  "phase": "先着順",
-  "stock": 30
  },
  "67735724": {
   "priceMin": 4698,
