@@ -76,6 +76,13 @@
   "phase": null,
   "stock": 1
  },
+ "mihama:b:千葉県千葉市美浜区若葉3:38": {
+  "priceMin": 6490,
+  "priceMax": 10480,
+  "units": 13,
+  "phase": null,
+  "stock": 13
+ },
  "67729827": {
   "priceMin": 4100,
   "priceMax": 6290,
@@ -104,13 +111,6 @@
   "phase": "第2期",
   "stock": 10
  },
- "mihama:b:千葉県千葉市美浜区若葉3:38": {
-  "priceMin": 6490,
-  "priceMax": 10480,
-  "units": 12,
-  "phase": null,
-  "stock": 12
- },
  "67732575": {
   "priceMin": 7340,
   "priceMax": 13000,
@@ -124,6 +124,13 @@
   "units": null,
   "phase": "第1期7次",
   "stock": 4
+ },
+ "67723770": {
+  "priceMin": 4890,
+  "priceMax": 5990,
+  "units": 13,
+  "phase": "先着順",
+  "stock": 13
  },
  "67735100": {
   "priceMin": null,
@@ -145,13 +152,6 @@
   "units": null,
   "phase": "第3期",
   "stock": null
- },
- "67723770": {
-  "priceMin": 4890,
-  "priceMax": 5990,
-  "units": 13,
-  "phase": "先着順",
-  "stock": 13
  },
  "67733045": {
   "priceMin": 5280,
@@ -230,18 +230,18 @@
   "phase": "先着順",
   "stock": 23
  },
- "67732826": {
-  "priceMin": null,
-  "priceMax": null,
-  "units": null,
-  "phase": "第2期1次",
-  "stock": null
- },
  "67736149": {
   "priceMin": 3998,
   "priceMax": 6398,
   "units": null,
   "phase": "第2期",
+  "stock": null
+ },
+ "67732826": {
+  "priceMin": null,
+  "priceMax": null,
+  "units": null,
+  "phase": "第2期1次",
   "stock": null
  },
  "67734877": {
