@@ -27,19 +27,19 @@
   "phase": null,
   "stock": 1
  },
- "67728162": {
-  "priceMin": 4348,
-  "priceMax": 6448,
-  "units": 37,
-  "phase": "先着順",
-  "stock": 37
- },
  "67731552": {
   "priceMin": null,
   "priceMax": null,
   "units": null,
   "phase": "第2期2次",
   "stock": null
+ },
+ "67728162": {
+  "priceMin": 4348,
+  "priceMax": 6448,
+  "units": 35,
+  "phase": "先着順",
+  "stock": 35
  },
  "67732364": {
   "priceMin": null,
@@ -56,8 +56,8 @@
   "stock": 7
  },
  "67734602": {
-  "priceMin": 4698,
-  "priceMax": 9998,
+  "priceMin": null,
+  "priceMax": null,
   "units": null,
   "phase": "第2期3次",
   "stock": null
@@ -118,12 +118,12 @@
   "phase": "先着順",
   "stock": 6
  },
- "67723770": {
-  "priceMin": 4890,
-  "priceMax": 5990,
-  "units": 13,
-  "phase": "先着順",
-  "stock": 13
+ "chibachuo:b:千葉市中央区問屋町 交通 JR内房線/本千葉 徒歩12:14": {
+  "priceMin": 3498,
+  "priceMax": 3498,
+  "units": 1,
+  "phase": null,
+  "stock": 1
  },
  "67735724": {
   "priceMin": 4698,
@@ -146,12 +146,12 @@
   "phase": null,
   "stock": 1
  },
- "67734870": {
-  "priceMin": null,
-  "priceMax": null,
-  "units": null,
-  "phase": "第3期",
-  "stock": null
+ "67723770": {
+  "priceMin": 4890,
+  "priceMax": 5990,
+  "units": 13,
+  "phase": "先着順",
+  "stock": 13
  },
  "67733045": {
   "priceMin": 5280,
@@ -195,13 +195,6 @@
   "phase": null,
   "stock": null
  },
- "67729238": {
-  "priceMin": 3498,
-  "priceMax": 5188,
-  "units": 3,
-  "phase": "第2期3次",
-  "stock": 3
- },
  "67725486": {
   "priceMin": 4998,
   "priceMax": 13998,
@@ -242,6 +235,13 @@
   "priceMax": null,
   "units": null,
   "phase": "第2期2次",
+  "stock": null
+ },
+ "67736443": {
+  "priceMin": null,
+  "priceMax": null,
+  "units": null,
+  "phase": null,
   "stock": null
  },
  "67734877": {
@@ -292,6 +292,13 @@
   "units": null,
   "phase": null,
   "stock": null
+ },
+ "67734870": {
+  "priceMin": 9198,
+  "priceMax": 10298,
+  "units": 4,
+  "phase": "第3期",
+  "stock": 4
  },
  "67736146": {
   "priceMin": null,
@@ -377,13 +384,6 @@
   "phase": "第2期5次",
   "stock": null
  },
- "67731312": {
-  "priceMin": 8188,
-  "priceMax": 9298,
-  "units": 3,
-  "phase": "第2期6次",
-  "stock": 3
- },
  "chibachuo:b:千葉県千葉市中央区富士見2:23": {
   "priceMin": 6730,
   "priceMax": 6780,
@@ -398,13 +398,6 @@
   "phase": "第1期3次",
   "stock": null
  },
- "67733751": {
-  "priceMin": 4578,
-  "priceMax": 7398,
-  "units": 9,
-  "phase": "先着順",
-  "stock": 9
- },
  "67730678": {
   "priceMin": 6818,
   "priceMax": 9198,
@@ -412,12 +405,33 @@
   "phase": "第5期2次",
   "stock": 7
  },
+ "adachi:更新ザ・パークハウス北綾瀬": {
+  "priceMin": 7188,
+  "priceMax": 7188,
+  "units": 1,
+  "phase": null,
+  "stock": 1
+ },
+ "67733751": {
+  "priceMin": 4578,
+  "priceMax": 7398,
+  "units": 9,
+  "phase": "先着順",
+  "stock": 9
+ },
  "67733545": {
   "priceMin": 2950,
   "priceMax": 2950,
   "units": 1,
   "phase": "第5期1次",
   "stock": 1
+ },
+ "67731312": {
+  "priceMin": 8188,
+  "priceMax": 9298,
+  "units": 3,
+  "phase": "第3期",
+  "stock": 3
  },
  "adachi:b:東京都足立区綾瀬5:9": {
   "priceMin": 7480,
@@ -446,12 +460,5 @@
   "units": 2,
   "phase": "第2期",
   "stock": 2
- },
- "67734372": {
-  "priceMin": 7048,
-  "priceMax": 12998,
-  "units": 44,
-  "phase": "第1期1次",
-  "stock": 44
  }
 }
