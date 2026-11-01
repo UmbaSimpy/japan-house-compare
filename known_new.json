@@ -48,12 +48,26 @@
   "phase": "第1期2次",
   "stock": 4
  },
+ "67734602": {
+  "priceMin": null,
+  "priceMax": null,
+  "units": null,
+  "phase": "第2期3次",
+  "stock": null
+ },
  "mihama:b:千葉県千葉市美浜区若葉3:38": {
   "priceMin": 6380,
   "priceMax": 10480,
   "units": 13,
   "phase": null,
   "stock": 13
+ },
+ "chibachuo:b:千葉市中央区神明町 交通 JR外房線/本千葉 徒歩4:11": {
+  "priceMin": 4400,
+  "priceMax": 4400,
+  "units": 1,
+  "phase": null,
+  "stock": 1
  },
  "67728905": {
   "priceMin": 4300,
@@ -62,16 +76,16 @@
   "phase": "先着順",
   "stock": 7
  },
- "67734602": {
-  "priceMin": null,
-  "priceMax": null,
+ "67730183": {
+  "priceMin": 6148,
+  "priceMax": 7808,
   "units": null,
   "phase": "第2期3次",
   "stock": null
  },
- "chibachuo:b:千葉市中央区神明町 交通 JR外房線/本千葉 徒歩4:11": {
-  "priceMin": 4400,
-  "priceMax": 4400,
+ "chibachuo:b:千葉市中央区祐光1:6": {
+  "priceMin": 4498,
+  "priceMax": 4498,
   "units": 1,
   "phase": null,
   "stock": 1
@@ -83,19 +97,12 @@
   "phase": "第3期7次",
   "stock": 2
  },
- "chibachuo:b:千葉市中央区祐光1:6": {
-  "priceMin": 4498,
-  "priceMax": 4498,
-  "units": 1,
-  "phase": null,
-  "stock": 1
- },
- "67730183": {
-  "priceMin": 6148,
-  "priceMax": 7808,
-  "units": null,
-  "phase": "第2期3次",
-  "stock": null
+ "67729827": {
+  "priceMin": 4100,
+  "priceMax": 6290,
+  "units": 30,
+  "phase": "先着順",
+  "stock": 30
  },
  "67729219": {
   "priceMin": 4498,
@@ -110,13 +117,6 @@
   "units": 10,
   "phase": "第2期",
   "stock": 10
- },
- "67729827": {
-  "priceMin": 4100,
-  "priceMax": 6290,
-  "units": 30,
-  "phase": "先着順",
-  "stock": 30
  },
  "chibachuo:b:千葉市中央区問屋町 交通 JR内房線/本千葉 徒歩12:14": {
   "priceMin": 3498,
@@ -167,6 +167,13 @@
   "phase": "第3期3次",
   "stock": null
  },
+ "67734368": {
+  "priceMin": null,
+  "priceMax": null,
+  "units": null,
+  "phase": null,
+  "stock": null
+ },
  "67733045": {
   "priceMin": 5280,
   "priceMax": 7180,
@@ -181,11 +188,11 @@
   "phase": null,
   "stock": null
  },
- "67734368": {
+ "67733483": {
   "priceMin": null,
   "priceMax": null,
   "units": null,
-  "phase": null,
+  "phase": "第1期4次",
   "stock": null
  },
  "67725486": {
@@ -200,13 +207,6 @@
   "priceMax": null,
   "units": null,
   "phase": null,
-  "stock": null
- },
- "67733483": {
-  "priceMin": null,
-  "priceMax": null,
-  "units": null,
-  "phase": "第1期4次",
   "stock": null
  },
  "67725752": {
@@ -272,6 +272,13 @@
   "phase": "第1期5次",
   "stock": null
  },
+ "67731156": {
+  "priceMin": 6810,
+  "priceMax": 13990,
+  "units": 13,
+  "phase": "先着順",
+  "stock": 13
+ },
  "67732379": {
   "priceMin": 5858,
   "priceMax": 11980,
@@ -279,12 +286,12 @@
   "phase": "先着順",
   "stock": 11
  },
- "67731156": {
-  "priceMin": 6810,
-  "priceMax": 13990,
-  "units": 13,
-  "phase": "先着順",
-  "stock": 13
+ "67737750": {
+  "priceMin": null,
+  "priceMax": null,
+  "units": null,
+  "phase": null,
+  "stock": null
  },
  "67735723": {
   "priceMin": null,
@@ -320,13 +327,6 @@
   "units": 1,
   "phase": null,
   "stock": 1
- },
- "67737750": {
-  "priceMin": null,
-  "priceMax": null,
-  "units": null,
-  "phase": null,
-  "stock": null
  },
  "67735763": {
   "priceMin": 5798,
@@ -391,13 +391,6 @@
   "phase": "第1期3次",
   "stock": null
  },
- "67730678": {
-  "priceMin": 6818,
-  "priceMax": 9198,
-  "units": 7,
-  "phase": "第5期2次",
-  "stock": 7
- },
  "arakawa:b:荒川区荒川4:9": {
   "priceMin": 8490,
   "priceMax": 8490,
@@ -411,6 +404,13 @@
   "units": 9,
   "phase": "先着順",
   "stock": 9
+ },
+ "67730678": {
+  "priceMin": 6818,
+  "priceMax": 9198,
+  "units": 7,
+  "phase": "第5期2次",
+  "stock": 7
  },
  "67733545": {
   "priceMin": 2950,
