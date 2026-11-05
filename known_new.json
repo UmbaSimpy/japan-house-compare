@@ -1,6 +1,6 @@
 {
  "67728023": {
-  "priceMin": 4478,
+  "priceMin": 4548,
   "priceMax": 6908,
   "units": null,
   "phase": "第3期5次",
@@ -28,11 +28,11 @@
   "stock": 1
  },
  "67728162": {
-  "priceMin": 4348,
+  "priceMin": 4698,
   "priceMax": 6448,
-  "units": 35,
+  "units": 33,
   "phase": "先着順",
-  "stock": 35
+  "stock": 33
  },
  "67731552": {
   "priceMin": null,
@@ -188,13 +188,6 @@
   "phase": null,
   "stock": null
  },
- "67733483": {
-  "priceMin": null,
-  "priceMax": null,
-  "units": null,
-  "phase": "第1期4次",
-  "stock": null
- },
  "67725486": {
   "priceMin": 4998,
   "priceMax": 13998,
@@ -208,13 +201,6 @@
   "units": null,
   "phase": null,
   "stock": null
- },
- "67725752": {
-  "priceMin": 7400,
-  "priceMax": 29300,
-  "units": 22,
-  "phase": "先着順",
-  "stock": 22
  },
  "67736149": {
   "priceMin": 3998,
@@ -237,6 +223,13 @@
   "phase": "第2期2次",
   "stock": null
  },
+ "67725752": {
+  "priceMin": 7400,
+  "priceMax": 29300,
+  "units": 22,
+  "phase": "先着順",
+  "stock": 22
+ },
  "67736443": {
   "priceMin": null,
   "priceMax": null,
@@ -258,19 +251,19 @@
   "phase": "第1期2次",
   "stock": null
  },
+ "67733954": {
+  "priceMin": 7998,
+  "priceMax": 9898,
+  "units": 7,
+  "phase": "第1期5次",
+  "stock": 7
+ },
  "67725532": {
   "priceMin": 8800,
   "priceMax": 13200,
   "units": 17,
   "phase": "先着順",
   "stock": 17
- },
- "67733954": {
-  "priceMin": 8548,
-  "priceMax": 9898,
-  "units": null,
-  "phase": "第1期5次",
-  "stock": null
  },
  "67731156": {
   "priceMin": 6810,
@@ -289,9 +282,9 @@
  "67732379": {
   "priceMin": 5858,
   "priceMax": 11980,
-  "units": 11,
+  "units": 10,
   "phase": "先着順",
-  "stock": 11
+  "stock": 10
  },
  "67737750": {
   "priceMin": null,
@@ -328,6 +321,13 @@
   "phase": null,
   "stock": 1
  },
+ "67733483": {
+  "priceMin": 3780,
+  "priceMax": 8270,
+  "units": null,
+  "phase": "第1期4次",
+  "stock": null
+ },
  "arakawa:b:荒川区西日暮里3:7": {
   "priceMin": 12300,
   "priceMax": 12300,
@@ -350,10 +350,10 @@
   "stock": 6
  },
  "67735763": {
-  "priceMin": 5798,
-  "priceMax": 6798,
+  "priceMin": 6398,
+  "priceMax": 8598,
   "units": 3,
-  "phase": "第1期2次",
+  "phase": "第2期1次",
   "stock": 3
  },
  "67733309": {
@@ -450,8 +450,8 @@
  "67734372": {
   "priceMin": 7188,
   "priceMax": 9658,
-  "units": 4,
+  "units": 3,
   "phase": "先着順",
-  "stock": 4
+  "stock": 3
  }
 }
