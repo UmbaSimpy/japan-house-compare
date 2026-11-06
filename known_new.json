@@ -146,6 +146,13 @@
   "phase": "先着順",
   "stock": 13
  },
+ "67733045": {
+  "priceMin": 5330,
+  "priceMax": 7180,
+  "units": 2,
+  "phase": "第2期",
+  "stock": 2
+ },
  "67732575": {
   "priceMin": 7340,
   "priceMax": 13000,
@@ -173,13 +180,6 @@
   "units": null,
   "phase": null,
   "stock": null
- },
- "67733045": {
-  "priceMin": 5280,
-  "priceMax": 7180,
-  "units": 5,
-  "phase": "第1期",
-  "stock": 5
  },
  "67734369": {
   "priceMin": null,
@@ -236,6 +236,13 @@
   "units": null,
   "phase": null,
   "stock": null
+ },
+ "67734372": {
+  "priceMin": 7188,
+  "priceMax": 9658,
+  "units": 5,
+  "phase": "第2期1次",
+  "stock": 5
  },
  "67737352": {
   "priceMin": null,
@@ -356,6 +363,13 @@
   "phase": "第2期1次",
   "stock": 3
  },
+ "adachi:b:東京都足立区梅田2:8": {
+  "priceMin": 6060,
+  "priceMax": 6060,
+  "units": 1,
+  "phase": null,
+  "stock": 1
+ },
  "67733309": {
   "priceMin": 7498,
   "priceMax": 7498,
@@ -384,6 +398,13 @@
   "phase": "第5期1次",
   "stock": 1
  },
+ "67730678": {
+  "priceMin": 6818,
+  "priceMax": 9198,
+  "units": 7,
+  "phase": "第5期2次",
+  "stock": 7
+ },
  "arakawa:b:荒川区荒川4:9": {
   "priceMin": 8490,
   "priceMax": 8490,
@@ -397,13 +418,6 @@
   "units": 9,
   "phase": "先着順",
   "stock": 9
- },
- "67730678": {
-  "priceMin": 6818,
-  "priceMax": 9198,
-  "units": 7,
-  "phase": "第5期2次",
-  "stock": 7
  },
  "67731312": {
   "priceMin": 7998,
@@ -446,12 +460,5 @@
   "units": 2,
   "phase": "第2期",
   "stock": 2
- },
- "67734372": {
-  "priceMin": 7188,
-  "priceMax": 9658,
-  "units": 3,
-  "phase": "先着順",
-  "stock": 3
  }
 }
