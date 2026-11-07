@@ -1,18 +1,4 @@
 {
- "67728023": {
-  "priceMin": 4548,
-  "priceMax": 6908,
-  "units": null,
-  "phase": "第3期5次",
-  "stock": 3
- },
- "67729867": {
-  "priceMin": 3748,
-  "priceMax": 6098,
-  "units": 20,
-  "phase": "先着順",
-  "stock": 20
- },
  "67730758": {
   "priceMin": 4648,
   "priceMax": 6158,
@@ -90,19 +76,12 @@
   "phase": "第2期3次",
   "stock": null
  },
- "67731943": {
-  "priceMin": 5898,
-  "priceMax": 7298,
+ "67728023": {
+  "priceMin": 4548,
+  "priceMax": 6908,
   "units": null,
-  "phase": "第3期7次",
-  "stock": 2
- },
- "67729827": {
-  "priceMin": 4100,
-  "priceMax": 6290,
-  "units": 30,
-  "phase": "先着順",
-  "stock": 30
+  "phase": "第3期5次",
+  "stock": 3
  },
  "67729219": {
   "priceMin": 4498,
@@ -111,12 +90,12 @@
   "phase": "先着順",
   "stock": 14
  },
- "67731663": {
-  "priceMin": 5278,
-  "priceMax": 6408,
-  "units": 10,
-  "phase": "第2期",
-  "stock": 10
+ "67729867": {
+  "priceMin": 3748,
+  "priceMax": 6098,
+  "units": 20,
+  "phase": "先着順",
+  "stock": 20
  },
  "chibachuo:b:千葉市中央区問屋町 交通 JR内房線/本千葉 徒歩12:14": {
   "priceMin": 3498,
@@ -124,6 +103,13 @@
   "units": 1,
   "phase": null,
   "stock": 1
+ },
+ "67729827": {
+  "priceMin": 4100,
+  "priceMax": 6290,
+  "units": 30,
+  "phase": "先着順",
+  "stock": 30
  },
  "67735724": {
   "priceMin": 4698,
@@ -137,6 +123,27 @@
   "priceMax": null,
   "units": null,
   "phase": "第1期1次",
+  "stock": null
+ },
+ "67731943": {
+  "priceMin": 6348,
+  "priceMax": 7498,
+  "units": 2,
+  "phase": "第3期8次",
+  "stock": 2
+ },
+ "arakawa:b:東京都荒川区西日暮里1:13": {
+  "priceMin": 12500,
+  "priceMax": 12500,
+  "units": 1,
+  "phase": null,
+  "stock": 1
+ },
+ "67732575": {
+  "priceMin": 7340,
+  "priceMax": 13000,
+  "units": null,
+  "phase": "第3期2次",
   "stock": null
  },
  "67723770": {
@@ -153,12 +160,12 @@
   "phase": "第2期",
   "stock": 2
  },
- "67732575": {
-  "priceMin": 7340,
-  "priceMax": 13000,
-  "units": null,
-  "phase": "第3期2次",
-  "stock": null
+ "arakawa:b:荒川区西日暮里3:7": {
+  "priceMin": 12300,
+  "priceMax": 12300,
+  "units": 1,
+  "phase": null,
+  "stock": 1
  },
  "adachi:b:東京都足立区梅島2:8": {
   "priceMin": 6180,
@@ -188,6 +195,13 @@
   "phase": null,
   "stock": null
  },
+ "67731663": {
+  "priceMin": 5278,
+  "priceMax": 6408,
+  "units": 10,
+  "phase": "第2期",
+  "stock": 10
+ },
  "67725486": {
   "priceMin": 4998,
   "priceMax": 13998,
@@ -200,13 +214,6 @@
   "priceMax": null,
   "units": null,
   "phase": null,
-  "stock": null
- },
- "67736149": {
-  "priceMin": 3998,
-  "priceMax": 6398,
-  "units": null,
-  "phase": "第2期",
   "stock": null
  },
  "67727525": {
@@ -229,6 +236,20 @@
   "units": 22,
   "phase": "先着順",
   "stock": 22
+ },
+ "arakawa:b:荒川区荒川4:9": {
+  "priceMin": 8490,
+  "priceMax": 8490,
+  "units": 1,
+  "phase": null,
+  "stock": 1
+ },
+ "67736149": {
+  "priceMin": 3998,
+  "priceMax": 6398,
+  "units": null,
+  "phase": "第2期",
+  "stock": null
  },
  "67736443": {
   "priceMin": null,
@@ -264,6 +285,13 @@
   "units": 7,
   "phase": "第1期5次",
   "stock": 7
+ },
+ "67731312": {
+  "priceMin": 7998,
+  "priceMax": 9558,
+  "units": 3,
+  "phase": "第3期",
+  "stock": 3
  },
  "67725532": {
   "priceMin": 8800,
@@ -321,26 +349,12 @@
   "phase": "第1期3次",
   "stock": null
  },
- "arakawa:b:東京都荒川区西日暮里1:13": {
-  "priceMin": 12500,
-  "priceMax": 12500,
-  "units": 1,
-  "phase": null,
-  "stock": 1
- },
  "67733483": {
   "priceMin": 3780,
   "priceMax": 8270,
   "units": null,
   "phase": "第1期4次",
   "stock": null
- },
- "arakawa:b:荒川区西日暮里3:7": {
-  "priceMin": 12300,
-  "priceMax": 12300,
-  "units": 1,
-  "phase": null,
-  "stock": 1
  },
  "chibachuo:エクセレントシテイ蘇我ステーシヨンマークス": {
   "priceMin": 3698,
@@ -405,26 +419,12 @@
   "phase": "第5期2次",
   "stock": 7
  },
- "arakawa:b:荒川区荒川4:9": {
-  "priceMin": 8490,
-  "priceMax": 8490,
-  "units": 1,
-  "phase": null,
-  "stock": 1
- },
  "67733751": {
   "priceMin": 4578,
   "priceMax": 7398,
   "units": 9,
   "phase": "先着順",
   "stock": 9
- },
- "67731312": {
-  "priceMin": 7998,
-  "priceMax": 9558,
-  "units": 3,
-  "phase": "第3期",
-  "stock": 3
  },
  "adachi:b:東京都足立区綾瀬5:9": {
   "priceMin": 7280,
@@ -446,13 +446,6 @@
   "units": 1,
   "phase": null,
   "stock": 1
- },
- "67733320": {
-  "priceMin": null,
-  "priceMax": null,
-  "units": null,
-  "phase": "第1期2次",
-  "stock": null
  },
  "67735389": {
   "priceMin": 4890,
