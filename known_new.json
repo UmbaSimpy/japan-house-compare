@@ -83,6 +83,13 @@
   "phase": "先着順",
   "stock": 14
  },
+ "67731943": {
+  "priceMin": 5898,
+  "priceMax": 7298,
+  "units": 15,
+  "phase": "第3期8次",
+  "stock": 15
+ },
  "mihama:b:千葉県千葉市美浜区若葉3:38": {
   "priceMin": 6350,
   "priceMax": 10480,
@@ -106,10 +113,10 @@
  },
  "67729827": {
   "priceMin": 4100,
-  "priceMax": 6290,
-  "units": 30,
+  "priceMax": 4780,
+  "units": 4,
   "phase": "先着順",
-  "stock": 30
+  "stock": 4
  },
  "67735724": {
   "priceMin": 4698,
@@ -125,23 +132,9 @@
   "phase": "第1期1次",
   "stock": null
  },
- "67731943": {
-  "priceMin": 6348,
-  "priceMax": 7498,
-  "units": 2,
-  "phase": "第3期8次",
-  "stock": 2
- },
  "arakawa:b:東京都荒川区西日暮里1:13": {
   "priceMin": 12500,
   "priceMax": 12500,
-  "units": 1,
-  "phase": null,
-  "stock": 1
- },
- "adachi:b:東京都足立区梅島2:8": {
-  "priceMin": 6180,
-  "priceMax": 6180,
   "units": 1,
   "phase": null,
   "stock": 1
@@ -170,9 +163,9 @@
  "67723770": {
   "priceMin": 4890,
   "priceMax": 5990,
-  "units": 13,
+  "units": 12,
   "phase": "先着順",
-  "stock": 13
+  "stock": 12
  },
  "67732475": {
   "priceMin": null,
@@ -180,6 +173,13 @@
   "units": null,
   "phase": "第3期3次",
   "stock": null
+ },
+ "adachi:b:東京都足立区梅島2:8": {
+  "priceMin": 6180,
+  "priceMax": 6180,
+  "units": 1,
+  "phase": null,
+  "stock": 1
  },
  "67734368": {
   "priceMin": null,
@@ -224,7 +224,7 @@
   "stock": 5
  },
  "67734372": {
-  "priceMin": 7188,
+  "priceMin": 9098,
   "priceMax": 9658,
   "units": 5,
   "phase": "第2期1次",
@@ -314,12 +314,19 @@
   "phase": "第1期2次",
   "stock": 3
  },
+ "67734543": {
+  "priceMin": 3698,
+  "priceMax": 6498,
+  "units": 6,
+  "phase": "第1期4次",
+  "stock": 6
+ },
  "67732379": {
   "priceMin": 5858,
   "priceMax": 11980,
-  "units": 10,
+  "units": 11,
   "phase": "先着順",
-  "stock": 10
+  "stock": 11
  },
  "67737750": {
   "priceMin": null,
@@ -349,13 +356,6 @@
   "phase": "第1期3次",
   "stock": null
  },
- "67735763": {
-  "priceMin": 6398,
-  "priceMax": 8598,
-  "units": 3,
-  "phase": "第2期1次",
-  "stock": 3
- },
  "67733483": {
   "priceMin": 3780,
   "priceMax": 8270,
@@ -363,19 +363,12 @@
   "phase": "第1期4次",
   "stock": null
  },
- "chibachuo:エクセレントシテイ蘇我ステーシヨンマークス": {
-  "priceMin": 3698,
-  "priceMax": 3698,
-  "units": 1,
-  "phase": null,
-  "stock": 1
- },
- "adachi:b:東京都足立区梅田2:8": {
-  "priceMin": 6060,
-  "priceMax": 6060,
-  "units": 1,
-  "phase": null,
-  "stock": 1
+ "67735763": {
+  "priceMin": 6398,
+  "priceMax": 8398,
+  "units": 3,
+  "phase": "第2期1次",
+  "stock": 3
  },
  "67730697": {
   "priceMin": 4499,
@@ -418,6 +411,13 @@
   "units": 7,
   "phase": "第5期2次",
   "stock": 7
+ },
+ "adachi:b:東京都足立区梅田2:8": {
+  "priceMin": 6060,
+  "priceMax": 6060,
+  "units": 1,
+  "phase": null,
+  "stock": 1
  },
  "67733751": {
   "priceMin": 4578,
