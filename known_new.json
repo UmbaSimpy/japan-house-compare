@@ -41,6 +41,13 @@
   "phase": "第2期3次",
   "stock": null
  },
+ "67729219": {
+  "priceMin": 4498,
+  "priceMax": 8998,
+  "units": 14,
+  "phase": "先着順",
+  "stock": 14
+ },
  "chibachuo:b:千葉市中央区神明町 交通 JR外房線/本千葉 徒歩4:11": {
   "priceMin": 4400,
   "priceMax": 4400,
@@ -62,6 +69,13 @@
   "phase": "先着順",
   "stock": 7
  },
+ "67735724": {
+  "priceMin": 4698,
+  "priceMax": 6898,
+  "units": null,
+  "phase": "第1期7次",
+  "stock": 4
+ },
  "67730183": {
   "priceMin": 6148,
   "priceMax": 7808,
@@ -82,13 +96,6 @@
   "units": null,
   "phase": "第3期6次",
   "stock": 3
- },
- "67729219": {
-  "priceMin": 4498,
-  "priceMax": 8998,
-  "units": 14,
-  "phase": "先着順",
-  "stock": 14
  },
  "67731943": {
   "priceMin": 5898,
@@ -123,13 +130,6 @@
   "priceMax": 4780,
   "units": 4,
   "phase": "先着順",
-  "stock": 4
- },
- "67735724": {
-  "priceMin": 4698,
-  "priceMax": 6898,
-  "units": null,
-  "phase": "第1期7次",
   "stock": 4
  },
  "67735100": {
@@ -258,6 +258,13 @@
   "phase": null,
   "stock": null
  },
+ "67733751": {
+  "priceMin": 4578,
+  "priceMax": 7398,
+  "units": 9,
+  "phase": "第2期6次",
+  "stock": 9
+ },
  "67737352": {
   "priceMin": null,
   "priceMax": null,
@@ -313,6 +320,13 @@
   "units": 13,
   "phase": "先着順",
   "stock": 13
+ },
+ "67733309": {
+  "priceMin": 7498,
+  "priceMax": 7498,
+  "units": null,
+  "phase": "第2期5次",
+  "stock": null
  },
  "67732363": {
   "priceMin": 3990,
@@ -370,13 +384,6 @@
   "phase": "第2期1次",
   "stock": 3
  },
- "67733751": {
-  "priceMin": 4578,
-  "priceMax": 7398,
-  "units": 9,
-  "phase": "第2期6次",
-  "stock": 9
- },
  "67730697": {
   "priceMin": 4499,
   "priceMax": 6750,
@@ -391,19 +398,19 @@
   "phase": "先着順",
   "stock": 12
  },
- "67733309": {
-  "priceMin": 7498,
-  "priceMax": 7498,
-  "units": null,
-  "phase": "第2期5次",
-  "stock": null
- },
  "chibachuo:b:千葉県千葉市中央区富士見2:23": {
   "priceMin": 6730,
   "priceMax": 6780,
   "units": 2,
   "phase": null,
   "stock": 2
+ },
+ "67734208": {
+  "priceMin": 4398,
+  "priceMax": 7098,
+  "units": null,
+  "phase": "第2期1次",
+  "stock": null
  },
  "67733316": {
   "priceMin": null,
@@ -439,13 +446,6 @@
   "units": 1,
   "phase": null,
   "stock": 1
- },
- "67734208": {
-  "priceMin": 4398,
-  "priceMax": 7098,
-  "units": null,
-  "phase": "第2期1次",
-  "stock": null
  },
  "67735389": {
   "priceMin": 4890,
