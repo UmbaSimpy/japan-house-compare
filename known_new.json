@@ -62,13 +62,6 @@
   "phase": "第2期3次",
   "stock": null
  },
- "chibachuo:b:千葉市中央区神明町 交通 JR外房線/本千葉 徒歩4:11": {
-  "priceMin": 4400,
-  "priceMax": 4400,
-  "units": 1,
-  "phase": null,
-  "stock": 1
- },
  "67730183": {
   "priceMin": 6148,
   "priceMax": 7808,
@@ -91,11 +84,11 @@
   "stock": 14
  },
  "mihama:b:千葉県千葉市美浜区若葉3:38": {
-  "priceMin": 6350,
+  "priceMin": 6850,
   "priceMax": 10480,
-  "units": 11,
+  "units": 10,
   "phase": null,
-  "stock": 11
+  "stock": 10
  },
  "67729867": {
   "priceMin": 3748,
@@ -209,13 +202,6 @@
   "phase": null,
   "stock": null
  },
- "67731663": {
-  "priceMin": 5278,
-  "priceMax": 6408,
-  "units": 10,
-  "phase": "第2期",
-  "stock": 10
- },
  "67725486": {
   "priceMin": 4998,
   "priceMax": 13998,
@@ -229,6 +215,13 @@
   "units": null,
   "phase": null,
   "stock": null
+ },
+ "matsudo:b:松戸市新松戸7:7": {
+  "priceMin": 3900,
+  "priceMax": 3900,
+  "units": 1,
+  "phase": null,
+  "stock": 1
  },
  "67727525": {
   "priceMin": null,
@@ -321,19 +314,19 @@
   "phase": "先着順",
   "stock": 13
  },
- "67732363": {
-  "priceMin": 3990,
-  "priceMax": 5490,
-  "units": 3,
-  "phase": "第1期2次",
-  "stock": 3
- },
  "67734543": {
   "priceMin": 3698,
   "priceMax": 6498,
   "units": 6,
   "phase": "第1期4次",
   "stock": 6
+ },
+ "67732363": {
+  "priceMin": 3990,
+  "priceMax": 5490,
+  "units": 3,
+  "phase": "第1期2次",
+  "stock": 3
  },
  "67732379": {
   "priceMin": 5858,
@@ -363,19 +356,26 @@
   "phase": "第1期3次",
   "stock": null
  },
+ "67737063": {
+  "priceMin": null,
+  "priceMax": null,
+  "units": null,
+  "phase": null,
+  "stock": null
+ },
  "67735763": {
-  "priceMin": 6398,
-  "priceMax": 8398,
+  "priceMin": 6598,
+  "priceMax": 6998,
   "units": 3,
   "phase": "第2期1次",
   "stock": 3
  },
  "67733483": {
-  "priceMin": 3780,
+  "priceMin": 7480,
   "priceMax": 8270,
-  "units": 3,
+  "units": 2,
   "phase": "先着順",
-  "stock": 3
+  "stock": 2
  },
  "67730697": {
   "priceMin": 4499,
@@ -418,6 +418,13 @@
   "units": null,
   "phase": "第1期3次",
   "stock": null
+ },
+ "chibachuo:b:千葉市中央区松波2:7": {
+  "priceMin": 5898,
+  "priceMax": 5898,
+  "units": 1,
+  "phase": null,
+  "stock": 1
  },
  "adachi:b:東京都足立区梅田2:8": {
   "priceMin": 6060,
