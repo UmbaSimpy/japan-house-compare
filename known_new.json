@@ -167,26 +167,12 @@
   "phase": null,
   "stock": 1
  },
- "67732475": {
-  "priceMin": null,
-  "priceMax": null,
-  "units": null,
-  "phase": "第3期3次",
-  "stock": null
- },
  "adachi:b:東京都足立区梅島2:8": {
   "priceMin": 6180,
   "priceMax": 6180,
   "units": 1,
   "phase": null,
   "stock": 1
- },
- "67723770": {
-  "priceMin": 4890,
-  "priceMax": 5990,
-  "units": 12,
-  "phase": "先着順",
-  "stock": 12
  },
  "67734368": {
   "priceMin": null,
@@ -202,12 +188,26 @@
   "phase": null,
   "stock": null
  },
+ "67732475": {
+  "priceMin": 16990,
+  "priceMax": 29000,
+  "units": null,
+  "phase": "最終期",
+  "stock": null
+ },
  "67725486": {
   "priceMin": 4998,
   "priceMax": 13998,
   "units": 23,
   "phase": "先着順",
   "stock": 23
+ },
+ "67723770": {
+  "priceMin": 4890,
+  "priceMax": 5990,
+  "units": 14,
+  "phase": "先着順",
+  "stock": 14
  },
  "67736145": {
   "priceMin": null,
@@ -370,6 +370,13 @@
   "phase": "第2期1次",
   "stock": 3
  },
+ "67733751": {
+  "priceMin": 4578,
+  "priceMax": 7398,
+  "units": 15,
+  "phase": "先着順",
+  "stock": 15
+ },
  "67733483": {
   "priceMin": 7480,
   "priceMax": 8270,
@@ -404,13 +411,6 @@
   "units": 4,
   "phase": null,
   "stock": 4
- },
- "67733751": {
-  "priceMin": 4578,
-  "priceMax": 7398,
-  "units": 9,
-  "phase": "先着順",
-  "stock": 9
  },
  "67733316": {
   "priceMin": null,
