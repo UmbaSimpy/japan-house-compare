@@ -153,19 +153,19 @@
   "phase": "先着順",
   "stock": 30
  },
- "67723770": {
-  "priceMin": 4890,
-  "priceMax": 5990,
-  "units": 14,
-  "phase": "先着順",
-  "stock": 14
- },
  "67734368": {
   "priceMin": null,
   "priceMax": null,
   "units": null,
   "phase": null,
   "stock": null
+ },
+ "67723770": {
+  "priceMin": 4890,
+  "priceMax": 5990,
+  "units": 14,
+  "phase": "先着順",
+  "stock": 14
  },
  "67734369": {
   "priceMin": null,
