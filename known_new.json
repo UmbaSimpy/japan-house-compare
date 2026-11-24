@@ -79,9 +79,9 @@
  "mihama:b:千葉県千葉市美浜区若葉3:38": {
   "priceMin": 6850,
   "priceMax": 10480,
-  "units": 10,
+  "units": 9,
   "phase": null,
-  "stock": 10
+  "stock": 9
  },
  "chibachuo:b:千葉市中央区問屋町 交通 JR内房線/本千葉 徒歩12:14": {
   "priceMin": 3498,
@@ -335,13 +335,6 @@
   "phase": "第1期3次",
   "stock": null
  },
- "67732363": {
-  "priceMin": 3990,
-  "priceMax": 5490,
-  "units": 3,
-  "phase": "第1期2次",
-  "stock": 3
- },
  "67735763": {
   "priceMin": 6598,
   "priceMax": 6998,
@@ -355,6 +348,13 @@
   "units": null,
   "phase": null,
   "stock": null
+ },
+ "67732363": {
+  "priceMin": 3990,
+  "priceMax": 5490,
+  "units": 3,
+  "phase": "第1期2次",
+  "stock": 3
  },
  "67733751": {
   "priceMin": 4578,
