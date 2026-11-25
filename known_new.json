@@ -3,15 +3,8 @@
   "priceMin": 4648,
   "priceMax": 6158,
   "units": null,
-  "phase": "第5期5次",
+  "phase": "第5期6次",
   "stock": 2
- },
- "chibachuo:b:千葉市中央区祐光1:6": {
-  "priceMin": 4198,
-  "priceMax": 4198,
-  "units": 1,
-  "phase": null,
-  "stock": 1
  },
  "kawasaki:b:神奈川県川崎市川崎区塩浜1:7": {
   "priceMin": 4200,
@@ -79,9 +72,16 @@
  "mihama:b:千葉県千葉市美浜区若葉3:38": {
   "priceMin": 6850,
   "priceMax": 10480,
-  "units": 9,
+  "units": 10,
   "phase": null,
-  "stock": 9
+  "stock": 10
+ },
+ "67730383": {
+  "priceMin": 4198,
+  "priceMax": 4198,
+  "units": 1,
+  "phase": "先着順",
+  "stock": 1
  },
  "chibachuo:b:千葉市中央区問屋町 交通 JR内房線/本千葉 徒歩12:14": {
   "priceMin": 3498,
@@ -97,19 +97,19 @@
   "phase": "第1期7次",
   "stock": 4
  },
- "67728905": {
-  "priceMin": 4300,
-  "priceMax": 19620,
-  "units": 7,
-  "phase": "先着順",
-  "stock": 7
- },
  "67735100": {
   "priceMin": null,
   "priceMax": null,
   "units": null,
   "phase": "第1期1次",
   "stock": null
+ },
+ "67728905": {
+  "priceMin": 4510,
+  "priceMax": 19620,
+  "units": 7,
+  "phase": "先着順",
+  "stock": 7
  },
  "67731943": {
   "priceMin": 5898,
@@ -125,19 +125,19 @@
   "phase": null,
   "stock": 1
  },
- "67732575": {
-  "priceMin": 7340,
-  "priceMax": 13000,
-  "units": null,
-  "phase": "第3期2次",
-  "stock": null
- },
  "arakawa:b:荒川区西日暮里3:7": {
   "priceMin": 12300,
   "priceMax": 12300,
   "units": 1,
   "phase": null,
   "stock": 1
+ },
+ "67732575": {
+  "priceMin": 8550,
+  "priceMax": 13000,
+  "units": null,
+  "phase": "第3期2次",
+  "stock": null
  },
  "67729827": {
   "priceMin": 4100,
@@ -167,19 +167,12 @@
   "phase": null,
   "stock": null
  },
- "67732475": {
-  "priceMin": 16990,
-  "priceMax": 29000,
-  "units": null,
-  "phase": "最終期",
-  "stock": null
- },
  "67725486": {
   "priceMin": 4998,
   "priceMax": 13998,
-  "units": 23,
+  "units": 25,
   "phase": "先着順",
-  "stock": 23
+  "stock": 25
  },
  "67736145": {
   "priceMin": null,
@@ -222,6 +215,13 @@
   "units": 1,
   "phase": null,
   "stock": 1
+ },
+ "67732475": {
+  "priceMin": null,
+  "priceMax": null,
+  "units": null,
+  "phase": "最終期",
+  "stock": null
  },
  "67736443": {
   "priceMin": null,
@@ -415,13 +415,6 @@
  "matsudo:b:松戸市新松戸7:7": {
   "priceMin": 3900,
   "priceMax": 3900,
-  "units": 1,
-  "phase": null,
-  "stock": 1
- },
- "chibachuo:b:千葉市中央区松波2:7": {
-  "priceMin": 5898,
-  "priceMax": 5898,
   "units": 1,
   "phase": null,
   "stock": 1
