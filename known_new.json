@@ -49,10 +49,10 @@
   "stock": null
  },
  "67734602": {
-  "priceMin": null,
-  "priceMax": null,
+  "priceMin": 4598,
+  "priceMax": 7498,
   "units": null,
-  "phase": "第2期3次",
+  "phase": "第2期4次",
   "stock": null
  },
  "67730183": {
@@ -65,9 +65,9 @@
  "67729219": {
   "priceMin": 4498,
   "priceMax": 8998,
-  "units": 14,
+  "units": 15,
   "phase": "先着順",
-  "stock": 14
+  "stock": 15
  },
  "mihama:b:千葉県千葉市美浜区若葉3:38": {
   "priceMin": 6850,
@@ -82,6 +82,13 @@
   "units": 1,
   "phase": "先着順",
   "stock": 1
+ },
+ "67731943": {
+  "priceMin": 5898,
+  "priceMax": 7298,
+  "units": 15,
+  "phase": "第3期8次",
+  "stock": 15
  },
  "chibachuo:b:千葉市中央区問屋町 交通 JR内房線/本千葉 徒歩12:14": {
   "priceMin": 3498,
@@ -110,13 +117,6 @@
   "units": 7,
   "phase": "先着順",
   "stock": 7
- },
- "67731943": {
-  "priceMin": 5898,
-  "priceMax": 7298,
-  "units": 15,
-  "phase": "第3期8次",
-  "stock": 15
  },
  "arakawa:b:東京都荒川区西日暮里1:13": {
   "priceMin": 11880,
@@ -237,6 +237,13 @@
   "phase": "第3期6次",
   "stock": 3
  },
+ "67729867": {
+  "priceMin": 3898,
+  "priceMax": 4788,
+  "units": 5,
+  "phase": "先着順",
+  "stock": 5
+ },
  "67737352": {
   "priceMin": null,
   "priceMax": null,
@@ -272,16 +279,9 @@
   "phase": "第3期",
   "stock": 3
  },
- "67729867": {
-  "priceMin": 3748,
-  "priceMax": 6098,
-  "units": 19,
-  "phase": "先着順",
-  "stock": 19
- },
  "67725532": {
   "priceMin": 8800,
-  "priceMax": 13200,
+  "priceMax": 14500,
   "units": 17,
   "phase": "先着順",
   "stock": 17
@@ -308,11 +308,11 @@
   "stock": 6
  },
  "67732379": {
-  "priceMin": 5858,
-  "priceMax": 11980,
-  "units": 11,
+  "priceMin": 9068,
+  "priceMax": 9068,
+  "units": 1,
   "phase": "先着順",
-  "stock": 11
+  "stock": 1
  },
  "67735723": {
   "priceMin": null,
@@ -336,8 +336,8 @@
   "stock": null
  },
  "67735763": {
-  "priceMin": 6598,
-  "priceMax": 6998,
+  "priceMin": 6498,
+  "priceMax": 8598,
   "units": 3,
   "phase": "第2期1次",
   "stock": 3
@@ -419,19 +419,19 @@
   "phase": null,
   "stock": 1
  },
- "67733545": {
-  "priceMin": 2950,
-  "priceMax": 2950,
-  "units": 1,
-  "phase": "第5期1次",
-  "stock": 1
- },
  "67730678": {
   "priceMin": 6818,
   "priceMax": 9198,
   "units": 6,
   "phase": "第5期2次",
   "stock": 6
+ },
+ "67733545": {
+  "priceMin": 2950,
+  "priceMax": 2950,
+  "units": 1,
+  "phase": "第5期1次",
+  "stock": 1
  },
  "adachi:b:東京都足立区綾瀬5:9": {
   "priceMin": 7280,
